@@ -13,13 +13,16 @@ import {
   PlayCircle, 
   RotateCcw,
   Menu,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const { 
     currentRole, 
     roleMetadata,
+    currentUser,
+    logout,
     setCurrentRole, 
     activeProject, 
     allProjects, 
@@ -161,6 +164,27 @@ export const Header: React.FC = () => {
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
+
+          {/* User Profile & Sign Out */}
+          <div className="flex items-center gap-1.5 pl-1.5 border-l border-slate-800">
+            <div className="hidden xl:flex flex-col text-right">
+              <span className="text-[11px] font-bold text-slate-200 leading-tight truncate max-w-[110px]">
+                {currentUser?.name || 'Pranjal Saikia'}
+              </span>
+              <span className="text-[9px] font-mono text-slate-400 leading-tight">
+                {currentUser?.employeeId || 'OIL-PLN-4421'}
+              </span>
+            </div>
+
+            <button
+              onClick={logout}
+              className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors border border-transparent hover:border-rose-900/50"
+              title={`Sign Out (${currentUser?.name})`}
+              aria-label="Sign Out"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </header>

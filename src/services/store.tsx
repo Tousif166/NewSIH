@@ -144,6 +144,73 @@ export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
   },
 };
 
+export interface EnterpriseUser extends UserProfile {
+  designation: string;
+  department: string;
+  employeeId: string;
+  password?: string;
+  phone?: string;
+}
+
+export const DEMO_USERS: Record<UserRole, EnterpriseUser> = {
+  planner: {
+    id: 'usr-01',
+    name: 'Pranjal Saikia',
+    email: 'pranjal.saikia@oilindia.in',
+    role: 'planner',
+    organization: 'Oil India Limited',
+    discipline: 'Piping & Mechanical',
+    designation: 'Lead Planning & Controls Engineer',
+    department: 'Projects & Technical Services, Duliajan HQ',
+    employeeId: 'OIL-PLN-4421',
+    password: 'planner123',
+    phone: '+91 94350 12890',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250',
+  },
+  supervisor: {
+    id: 'usr-02',
+    name: 'Debashis Gogoi',
+    email: 'debashis.gogoi@oilindia.in',
+    role: 'supervisor',
+    organization: 'Oil India Limited',
+    discipline: 'Field Pipeline Construction',
+    designation: 'Senior Field Construction Supervisor',
+    department: 'Field Execution Cell, Digboi Pipeline Corridor',
+    employeeId: 'OIL-SUP-8893',
+    password: 'field123',
+    phone: '+91 94351 98421',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250',
+  },
+  project_manager: {
+    id: 'usr-03',
+    name: 'Rajiv K. Sharma',
+    email: 'rajiv.sharma@oilindia.in',
+    role: 'project_manager',
+    organization: 'Oil India Limited',
+    discipline: 'Project Management & Governance',
+    designation: 'Chief General Manager (Infrastructure Projects)',
+    department: 'Project Directorate, Oil India Limited',
+    employeeId: 'OIL-CGM-1002',
+    password: 'pm123',
+    phone: '+91 94352 66710',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250',
+  },
+  admin: {
+    id: 'usr-04',
+    name: 'Dr. Ananya Baruah',
+    email: 'vigilance.admin@oilindia.in',
+    role: 'admin',
+    organization: 'Oil India Limited',
+    discipline: 'Corporate Vigilance & Audit',
+    designation: 'Chief Vigilance & Cryptographic Systems Officer',
+    department: 'Corporate Vigilance & Integrity Directorate',
+    employeeId: 'OIL-VIG-0042',
+    password: 'admin123',
+    phone: '+91 94353 44019',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250',
+  },
+};
+
 export interface OfflineQueueItem {
   id: string;
   rawText: string;
@@ -155,6 +222,10 @@ export interface OfflineQueueItem {
 }
 
 interface AppContextType {
+  isAuthenticated: boolean;
+  currentUser: EnterpriseUser;
+  login: (roleOrUser: UserRole | EnterpriseUser) => void;
+  logout: () => void;
   currentRole: UserRole;
   roleMetadata: RoleDefinition;
   setCurrentRole: (role: UserRole, autoNavigate?: boolean) => void;
@@ -209,6 +280,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const saved = localStorage.getItem('sitesync_current_role');
     return (saved as UserRole) || 'planner';
   });
+
+  const [currentUser, setCurrentUser] = useState<EnterpriseUser>(() => {
+    const savedRole = (localStorage.getItem('sitesync_current_role') as UserRole) || 'planner';
+    return DEMO_USERS[savedRole] || DEMO_USERS.planner;
+  });
+
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    const saved = localStorage.getItem('sitesync_authenticated');
+    // Default to true if already authenticated, otherwise false so user sees login page
+    return saved === 'true';
+  });
+
   const [allProjects] = useState<ProjectSummary[]>(DEMO_PROJECTS);
   const [activeProject, setActiveProject] = useState<ProjectSummary>(DEMO_PROJECTS[0]);
   
@@ -302,8 +385,46 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setTimeout(() => setToastMessage(null), 4000);
   };
 
+  const login = (roleOrUser: UserRole | EnterpriseUser) => {
+    let targetUser: EnterpriseUser;
+    if (typeof roleOrUser === 'string') {
+      targetUser = DEMO_USERS[roleOrUser] || DEMO_USERS.planner;
+    } else {
+      targetUser = roleOrUser;
+    }
+
+    setIsAuthenticated(true);
+    setCurrentUser(targetUser);
+    setCurrentRoleState(targetUser.role);
+    try {
+      localStorage.setItem('sitesync_authenticated', 'true');
+      localStorage.setItem('sitesync_current_role', targetUser.role);
+    } catch (e) {
+      // ignore
+    }
+
+    const meta = ROLE_DEFINITIONS[targetUser.role];
+    if (meta) {
+      setActiveTab(meta.defaultTab);
+      showToast(`Welcome, ${targetUser.name}! (${meta.label} session active)`);
+    }
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    try {
+      localStorage.setItem('sitesync_authenticated', 'false');
+    } catch (e) {
+      // ignore
+    }
+    showToast('Signed out of Oil India Enterprise Portal.');
+  };
+
   const setCurrentRole = (newRole: UserRole, autoNavigate: boolean = true) => {
     setCurrentRoleState(newRole);
+    if (DEMO_USERS[newRole]) {
+      setCurrentUser(DEMO_USERS[newRole]);
+    }
     try {
       localStorage.setItem('sitesync_current_role', newRole);
     } catch (e) {
@@ -562,6 +683,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
+        currentUser,
+        login,
+        logout,
         currentRole,
         roleMetadata: ROLE_DEFINITIONS[currentRole],
         setCurrentRole,

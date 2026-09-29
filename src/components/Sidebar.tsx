@@ -11,7 +11,8 @@ import {
   Sliders, 
   History, 
   PlayCircle,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -20,6 +21,8 @@ export const Sidebar: React.FC = () => {
     setActiveTab, 
     currentRole, 
     roleMetadata,
+    currentUser,
+    logout,
     setCurrentRole,
     matches, 
     conflicts, 
@@ -169,6 +172,32 @@ export const Sidebar: React.FC = () => {
         </div>
         {navItems.slice(6).map(renderNavItem)}
       </nav>
+
+      {/* Enterprise User Profile & Sign Out */}
+      <div className="p-3 border-t border-slate-800/80 bg-slate-950/40 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center font-bold text-slate-950 text-xs shadow-sm shrink-0">
+            {currentUser?.name.charAt(0) || 'P'}
+          </div>
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-white truncate">
+              {currentUser?.name || 'Pranjal Saikia'}
+            </div>
+            <div className="text-[10px] text-slate-400 font-mono truncate">
+              {currentUser?.employeeId || 'OIL-PLN-4421'}
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={logout}
+          className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors border border-transparent hover:border-rose-900/50 shrink-0"
+          title="Sign Out of Oil India Portal"
+          aria-label="Sign Out"
+        >
+          <LogOut className="w-4 h-4" />
+        </button>
+      </div>
 
       {/* Footer Info Box */}
       <div className="p-3 border-t border-slate-800/80 bg-slate-950/60 text-slate-400 text-[11px] space-y-1">

@@ -14,11 +14,26 @@ import { ActivityDNAView } from './components/views/ActivityDNAView';
 import { WhatIfSimulator } from './components/views/WhatIfSimulator';
 import { AuditTrailView } from './components/views/AuditTrailView';
 import { JudgeDemoWalkthrough } from './components/views/JudgeDemoWalkthrough';
+import { LoginPage } from './components/views/LoginPage';
 import { CopilotDrawer } from './components/views/CopilotDrawer';
 import { Sparkles } from 'lucide-react';
 
 const MainLayout: React.FC = () => {
-  const { activeTab, toastMessage } = useApp();
+  const { activeTab, toastMessage, isAuthenticated } = useApp();
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200">
+        <LoginPage />
+        {toastMessage && (
+          <div className="fixed top-14 sm:top-16 right-4 sm:right-6 z-50 bg-slate-900 border border-amber-500/60 text-slate-100 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-xs animate-bounce max-w-[90vw]">
+            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+            <span className="font-medium line-clamp-2">{toastMessage}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   const renderActiveView = () => {
     switch (activeTab) {
