@@ -52,12 +52,12 @@ export const LoginPage: React.FC = () => {
       title: DEMO_USERS.planner.designation,
       department: DEMO_USERS.planner.department,
       empId: DEMO_USERS.planner.employeeId,
-      badge: 'Controls & Baseline',
+      badge: 'Controls',
       color: 'text-emerald-400',
       borderColor: 'border-emerald-500/40',
       bgColor: 'bg-emerald-500/10',
       ringColor: 'ring-emerald-400/50',
-      icon: <Compass className="w-5 h-5 text-emerald-400" />,
+      icon: <Compass className="w-4 h-4 text-emerald-400" />,
       features: ['AI Review Center', 'Primavera Baseline Approval', 'Teach AI Vocabulary']
     },
     {
@@ -66,12 +66,12 @@ export const LoginPage: React.FC = () => {
       title: DEMO_USERS.supervisor.designation,
       department: DEMO_USERS.supervisor.department,
       empId: DEMO_USERS.supervisor.employeeId,
-      badge: 'Field Operations',
+      badge: 'Field Ops',
       color: 'text-amber-400',
       borderColor: 'border-amber-500/40',
       bgColor: 'bg-amber-500/10',
       ringColor: 'ring-amber-400/50',
-      icon: <HardHat className="w-5 h-5 text-amber-400" />,
+      icon: <HardHat className="w-4 h-4 text-amber-400" />,
       features: ['Voice Time Agent', 'Camera Geotag Photos', 'Offline SQLite Queue']
     },
     {
@@ -80,12 +80,12 @@ export const LoginPage: React.FC = () => {
       title: DEMO_USERS.project_manager.designation,
       department: DEMO_USERS.project_manager.department,
       empId: DEMO_USERS.project_manager.employeeId,
-      badge: 'Executive Oversight',
+      badge: 'Executive',
       color: 'text-sky-400',
       borderColor: 'border-sky-500/40',
       bgColor: 'bg-sky-500/10',
       ringColor: 'ring-sky-400/50',
-      icon: <Briefcase className="w-5 h-5 text-sky-400" />,
+      icon: <Briefcase className="w-4 h-4 text-sky-400" />,
       features: ['Executive Health S-Curves', 'What-If Monte Carlo', 'Contractor Dispute Adjudication']
     },
     {
@@ -94,15 +94,22 @@ export const LoginPage: React.FC = () => {
       title: DEMO_USERS.admin.designation,
       department: DEMO_USERS.admin.department,
       empId: DEMO_USERS.admin.employeeId,
-      badge: 'Vigilance & Audit',
+      badge: 'Vigilance',
       color: 'text-purple-400',
       borderColor: 'border-purple-500/40',
       bgColor: 'bg-purple-500/10',
       ringColor: 'ring-purple-400/50',
-      icon: <ShieldCheck className="w-5 h-5 text-purple-400" />,
+      icon: <ShieldCheck className="w-4 h-4 text-purple-400" />,
       features: ['Immutable SHA-256 Provenance', 'Anti-Tamper Audit Logs', 'Activity Archetype DNA']
     }
   ];
+
+  const quickSelectLabels: Record<UserRole, { icon: string; name: string; tag: string }> = {
+    planner: { icon: '📐', name: 'Pranjal', tag: 'Controls' },
+    supervisor: { icon: '👷', name: 'Debashis', tag: 'Field Ops' },
+    project_manager: { icon: '👔', name: 'Rajiv', tag: 'Executive' },
+    admin: { icon: '🛡️', name: 'Dr. Ananya', tag: 'Vigilance' },
+  };
 
   // Quick switch role prefill
   const handleSelectRole = (r: UserRole) => {
@@ -150,14 +157,14 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between font-sans selection:bg-amber-500/30 selection:text-amber-200 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 relative overflow-x-hidden">
       {/* Background Decorative Ambient Glows */}
       <div className="absolute top-[-20%] left-[-10%] w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full bg-gradient-to-br from-amber-500/10 via-amber-600/5 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full bg-gradient-to-tl from-emerald-500/10 via-emerald-600/5 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute top-[40%] right-[30%] w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-3xl pointer-events-none" />
 
       {/* Top Corporate Bar */}
-      <header className="px-4 sm:px-8 py-3.5 border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-30">
+      <header className="px-4 sm:px-8 py-3.5 border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-30 shadow-md">
         <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center font-bold text-slate-950 text-lg shadow-lg ring-1 ring-amber-400/50 shrink-0">
@@ -186,7 +193,7 @@ export const LoginPage: React.FC = () => {
 
             <button
               onClick={() => handleInstantSignIn('planner')}
-              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center gap-1.5 active:scale-95"
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
             >
               <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
               <span className="hidden sm:inline">Skip to Demo</span>
@@ -197,15 +204,18 @@ export const LoginPage: React.FC = () => {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-[1500px] w-full mx-auto px-4 sm:px-6 py-6 sm:py-10 flex flex-col justify-center">
+      <main className="flex-1 max-w-[1500px] w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col justify-start">
         {/* Title & Tagline Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-semibold mb-1">
-            <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
             <span>Oil India Enterprise Access & Ground-Truth Portal</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            From Field Information to Trusted Schedule Progress — <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400">Automatically.</span>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            From Field Information to Trusted Schedule Progress —{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400">
+              Automatically.
+            </span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Select an enterprise role below to test the intelligent execution bridge, or enter credentials for corporate single sign-on access.
@@ -213,14 +223,14 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Dual Layout: Evaluator 1-Click Cards + Enterprise Login Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start max-w-6xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start max-w-7xl mx-auto w-full">
           
           {/* LEFT: 1-Click Evaluator Personas (7 Cols) */}
-          <div className="lg:col-span-7 space-y-3.5 sm:space-y-4">
+          <div className="lg:col-span-7 space-y-3 sm:space-y-3.5">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+                <h2 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                   <span>1-Click Evaluator Personas (Hackathon Fast Access)</span>
                 </h2>
                 <p className="text-xs text-slate-400 mt-0.5">
@@ -237,43 +247,46 @@ export const LoginPage: React.FC = () => {
                     key={p.role}
                     className={`p-4 rounded-xl border transition-all duration-200 relative group flex flex-col justify-between ${
                       isSelected 
-                        ? `${p.bgColor} ${p.borderColor} ring-1 ${p.ringColor} shadow-xl scale-[1.01]` 
+                        ? `${p.bgColor} ${p.borderColor} ring-1 ${p.ringColor} shadow-xl` 
                         : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
                     }`}
                   >
                     <div>
-                      {/* Top Role Header */}
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2.5">
-                          <div className={`p-2 rounded-lg bg-slate-950 border ${p.borderColor} shadow-sm shrink-0`}>
+                      {/* Top Meta Row: Role Icon + Role Badge on Left, Employee ID on Right */}
+                      <div className="flex items-center justify-between gap-2 mb-2.5">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <div className={`p-1.5 rounded-lg bg-slate-950 border ${p.borderColor} shadow-sm shrink-0`}>
                             {p.icon}
                           </div>
-                          <div>
-                            <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
-                              {p.name}
-                            </div>
-                            <div className="text-[11px] text-slate-400 truncate max-w-[180px]">
-                              {p.title}
-                            </div>
-                          </div>
+                          <span className={`text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-md border ${p.borderColor} ${p.color} bg-slate-950/90 shrink-0`}>
+                            {p.badge}
+                          </span>
                         </div>
 
-                        <span className={`text-[9px] uppercase font-mono font-bold px-2 py-0.5 rounded-full border ${p.borderColor} ${p.color} bg-slate-950/80 shrink-0`}>
-                          {p.badge}
+                        <span className="text-[10px] text-slate-400 font-mono bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 shrink-0">
+                          {p.empId}
                         </span>
                       </div>
 
-                      {/* Department & Employee ID */}
-                      <div className="text-[10px] text-slate-500 font-mono mb-3 line-clamp-1">
-                        {p.empId} • {p.department.split(',')[0]}
+                      {/* Identity: Name, Designation, Department */}
+                      <div className="mb-3 space-y-0.5">
+                        <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-snug">
+                          {p.name}
+                        </div>
+                        <div className="text-xs text-slate-300 font-medium leading-snug line-clamp-1" title={p.title}>
+                          {p.title}
+                        </div>
+                        <div className="text-[10px] text-slate-500 font-mono truncate" title={p.department}>
+                          {p.department}
+                        </div>
                       </div>
 
                       {/* Capabilities Checklist */}
-                      <div className="space-y-1 mb-4">
+                      <div className="space-y-1.5 mb-4 pt-2.5 border-t border-slate-800/80">
                         {p.features.map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-center gap-1.5 text-[11px] text-slate-300">
+                          <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-300">
                             <CheckCircle2 className={`w-3.5 h-3.5 ${p.color} shrink-0`} />
-                            <span>{feat}</span>
+                            <span className="truncate">{feat}</span>
                           </div>
                         ))}
                       </div>
@@ -283,14 +296,14 @@ export const LoginPage: React.FC = () => {
                     <button
                       onClick={() => handleInstantSignIn(p.role)}
                       disabled={isAuthenticating}
-                      className={`w-full py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow active:scale-95 cursor-pointer ${
+                      className={`w-full py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow active:scale-95 cursor-pointer ${
                         isSelected
-                          ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950'
+                          ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-amber-500/20'
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:text-white'
                       }`}
                     >
                       <span>Sign In as {p.role === 'project_manager' ? 'PM' : p.role.charAt(0).toUpperCase() + p.role.slice(1)}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   </div>
                 );
@@ -300,7 +313,7 @@ export const LoginPage: React.FC = () => {
             {/* Hackathon Evaluator Note */}
             <div className="p-3 bg-slate-900/50 rounded-xl border border-slate-800/80 flex items-start gap-2.5 text-xs text-slate-400">
               <HelpCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-              <div>
+              <div className="leading-relaxed">
                 <span className="text-slate-300 font-semibold">Judge Evaluator Note:</span> Switching roles dynamically changes the application’s view, navigation desk, and approval authorities (e.g. Site Supervisors submit field DPRs; Project Planners verify candidate linkages and commit actuals to Primavera P6).
               </div>
             </div>
@@ -328,22 +341,29 @@ export const LoginPage: React.FC = () => {
               <label className="text-[10px] uppercase font-mono text-slate-400 block mb-1.5">
                 Quick Select Enterprise Persona:
               </label>
-              <div className="grid grid-cols-2 gap-1.5">
-                {personaList.map((p) => (
-                  <button
-                    key={p.role}
-                    type="button"
-                    onClick={() => handleSelectRole(p.role)}
-                    className={`py-1 px-2 rounded text-[11px] font-semibold border transition-all text-left truncate flex items-center gap-1.5 ${
-                      selectedRole === p.role
-                        ? 'bg-slate-800 border-amber-500 text-amber-300 font-bold'
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    <span>{p.role === 'planner' ? '📐' : p.role === 'supervisor' ? '👷' : p.role === 'project_manager' ? '👔' : '🛡️'}</span>
-                    <span className="truncate">{p.name.split(' ')[0]} ({p.badge.split(' ')[0]})</span>
-                  </button>
-                ))}
+              <div className="grid grid-cols-2 gap-2">
+                {personaList.map((p) => {
+                  const info = quickSelectLabels[p.role];
+                  const isCurrent = selectedRole === p.role;
+                  return (
+                    <button
+                      key={p.role}
+                      type="button"
+                      onClick={() => handleSelectRole(p.role)}
+                      className={`py-1.5 px-2.5 rounded-lg text-xs border transition-all text-left flex items-center gap-2 min-w-0 cursor-pointer ${
+                        isCurrent
+                          ? 'bg-amber-500/15 border-amber-500/70 text-amber-300 font-bold ring-1 ring-amber-500/30'
+                          : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                      }`}
+                    >
+                      <span className="text-sm shrink-0">{info.icon}</span>
+                      <div className="min-w-0 flex-1 leading-tight">
+                        <div className="font-semibold truncate text-[11px] text-slate-200">{info.name}</div>
+                        <div className="text-[10px] text-slate-400 truncate font-mono">{info.tag}</div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
