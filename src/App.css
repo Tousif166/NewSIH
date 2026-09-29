@@ -1,0 +1,11 @@
+/* SiteSync AI Layout Overrides */
+#root {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  min-height: 100vh !important;
+  display: block !important;
+  text-align: left !important;
+}

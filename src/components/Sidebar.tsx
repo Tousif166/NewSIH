@@ -1,0 +1,197 @@
+import React from 'react';
+import { useApp, NavigationTab } from '../services/store';
+import { 
+  LayoutDashboard, 
+  Mic, 
+  CheckCircle2, 
+  FolderTree, 
+  BarChart3, 
+  AlertCircle, 
+  Dna, 
+  Sliders, 
+  History, 
+  PlayCircle,
+  Clock,
+  Sparkles
+} from 'lucide-react';
+
+export const Sidebar: React.FC = () => {
+  const { activeTab, setActiveTab, currentRole, matches, conflicts, offlineQueue } = useApp();
+
+  const pendingMatchesCount = matches.filter(m => m.status === 'PENDING_REVIEW').length;
+  const unresolvedConflictsCount = conflicts.filter(c => c.status === 'UNRESOLVED').length;
+
+  const navItems: { tab: NavigationTab; label: string; icon: React.ReactNode; badge?: number; badgeColor?: string; roleFilter?: string[] }[] = [
+    { 
+      tab: 'DASHBOARD', 
+      label: 'Executive Health', 
+      icon: <LayoutDashboard className="w-4 h-4" /> 
+    },
+    { 
+      tab: 'FIELD_INPUT', 
+      label: 'Field Input Center', 
+      icon: <Mic className="w-4 h-4 text-amber-400" />,
+      badge: offlineQueue.length > 0 ? offlineQueue.length : undefined,
+      badgeColor: 'bg-amber-500 text-slate-950'
+    },
+    { 
+      tab: 'REVIEW_CENTER', 
+      label: 'AI Review Center', 
+      icon: <CheckCircle2 className="w-4 h-4 text-emerald-400" />,
+      badge: pendingMatchesCount > 0 ? pendingMatchesCount : undefined,
+      badgeColor: 'bg-emerald-500 text-slate-950 font-bold'
+    },
+    { 
+      tab: 'SCHEDULE_EXPLORER', 
+      label: 'WBS & Schedule Tree', 
+      icon: <FolderTree className="w-4 h-4 text-sky-400" /> 
+    },
+    { 
+      tab: 'GANTT_4D', 
+      label: '4D Gantt Digital Twin', 
+      icon: <BarChart3 className="w-4 h-4 text-indigo-400" /> 
+    },
+    { 
+      tab: 'CONFLICT_CENTER', 
+      label: 'Conflicts & Chronology', 
+      icon: <AlertCircle className="w-4 h-4 text-rose-400" />,
+      badge: unresolvedConflictsCount > 0 ? unresolvedConflictsCount : undefined,
+      badgeColor: 'bg-rose-500 text-white font-bold animate-pulse'
+    },
+    { 
+      tab: 'ACTIVITY_DNA', 
+      label: 'Activity DNA & Memory', 
+      icon: <Dna className="w-4 h-4 text-teal-400" /> 
+    },
+    { 
+      tab: 'WHAT_IF', 
+      label: 'What-If Simulator', 
+      icon: <Sliders className="w-4 h-4 text-amber-300" /> 
+    },
+    { 
+      tab: 'AUDIT_TRAIL', 
+      label: 'Audit & Provenance', 
+      icon: <History className="w-4 h-4 text-slate-400" /> 
+    },
+    { 
+      tab: 'DEMO_WALKTHROUGH', 
+      label: '5-Min Judge Demo', 
+      icon: <PlayCircle className="w-4 h-4 text-amber-400" />,
+      badge: 11,
+      badgeColor: 'bg-amber-400/20 text-amber-300 border border-amber-400/40'
+    },
+  ];
+
+  return (
+    <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 min-h-[calc(100vh-61px)]">
+      {/* Role banner for context awareness */}
+      <div className="p-3 border-b border-slate-800/80 bg-slate-950/40">
+        <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+          <span>Active Persona</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+        </div>
+        <div className="text-xs font-semibold text-slate-200 capitalize flex items-center gap-1.5">
+          <span>{currentRole.replace('_', ' ')}</span>
+        </div>
+      </div>
+
+      {/* Nav List */}
+      <nav className="p-2 space-y-1 flex-1 overflow-y-auto">
+        <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
+          Execution Intelligence
+        </div>
+        {navItems.slice(0, 3).map((item) => {
+          const isActive = activeTab === item.tab;
+          return (
+            <button
+              key={item.tab}
+              onClick={() => setActiveTab(item.tab)}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                isActive
+                  ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                {item.icon}
+                <span>{item.label}</span>
+              </div>
+              {item.badge !== undefined && (
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${item.badgeColor || 'bg-slate-700 text-slate-300'}`}>
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
+
+        <div className="px-3 pt-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
+          Schedule & Controls
+        </div>
+        {navItems.slice(3, 6).map((item) => {
+          const isActive = activeTab === item.tab;
+          return (
+            <button
+              key={item.tab}
+              onClick={() => setActiveTab(item.tab)}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                isActive
+                  ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                {item.icon}
+                <span>{item.label}</span>
+              </div>
+              {item.badge !== undefined && (
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${item.badgeColor || 'bg-slate-700 text-slate-300'}`}>
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
+
+        <div className="px-3 pt-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
+          Analytics & Memory
+        </div>
+        {navItems.slice(6).map((item) => {
+          const isActive = activeTab === item.tab;
+          return (
+            <button
+              key={item.tab}
+              onClick={() => setActiveTab(item.tab)}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                isActive
+                  ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                {item.icon}
+                <span>{item.label}</span>
+              </div>
+              {item.badge !== undefined && (
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${item.badgeColor || 'bg-slate-700 text-slate-300'}`}>
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Footer Info Box */}
+      <div className="p-3 border-t border-slate-800/80 bg-slate-950/60 text-slate-400 text-[11px] space-y-1">
+        <div className="flex items-center justify-between text-slate-300 font-mono text-[10px]">
+          <span>ENGINE VERSION</span>
+          <span className="text-amber-400">v2.4 (Oil-Assam)</span>
+        </div>
+        <p className="text-[10px] text-slate-500 leading-tight">
+          Calibrated for Primavera P6 & MS Project WBS L1-L6 schemas.
+        </p>
+      </div>
+    </aside>
+  );
+};
