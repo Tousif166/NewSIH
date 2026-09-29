@@ -107,7 +107,7 @@ export const CopilotDrawer: React.FC = () => {
       </div>
 
       {/* Suggested Quick Prompt Chips */}
-      <div className="p-3 bg-slate-950/60 border-b border-slate-800/80 overflow-x-auto flex gap-2 shrink-0">
+      <div className="p-2.5 sm:p-3 bg-slate-950/60 border-b border-slate-800/80 overflow-x-auto no-scrollbar flex gap-2 shrink-0">
         <button
           onClick={() => handleSend('Which activities are delayed?')}
           className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 whitespace-nowrap transition-colors"
@@ -198,7 +198,7 @@ export const CopilotDrawer: React.FC = () => {
       </div>
 
       {/* Input Form */}
-      <div className="p-3 bg-slate-950 border-t border-slate-800">
+      <div className="p-3 bg-slate-950 border-t border-slate-800 safe-area-pb">
         <form
           onSubmit={(e) => {
             e.preventDefault();

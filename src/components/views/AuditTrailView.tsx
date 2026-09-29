@@ -29,12 +29,12 @@ export const AuditTrailView: React.FC = () => {
   });
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <History className="w-5 h-5 text-slate-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <History className="w-5 h-5 text-slate-400 shrink-0" />
             Immutable Audit Trail & Data Provenance
           </h1>
           <p className="text-xs text-slate-400 mt-1">

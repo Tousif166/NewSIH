@@ -35,18 +35,19 @@ export const ReviewCenter: React.FC = () => {
   const [termModalOpen, setTermModalOpen] = useState(false);
   const [newTermField, setNewTermField] = useState('');
   const [newTermActivityCode, setNewTermActivityCode] = useState('');
+  const [mobileTab, setMobileTab] = useState<'QUEUE' | 'INSPECTION'>('QUEUE');
 
   const pendingMatches = matches.filter(m => m.status === 'PENDING_REVIEW');
   const activeMatch = matches.find(m => m.matchId === (selectedMatchId || pendingMatches[0]?.matchId)) || matches[0];
   const relatedEvent = activeMatch ? fieldEvents.find(e => e.eventId === activeMatch.eventId) : null;
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner & Learning Metric */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
             AI Review Center (Human-in-the-Loop)
           </h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -54,21 +55,21 @@ export const ReviewCenter: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 flex items-center gap-2.5">
-            <BookOpen className="w-4 h-4 text-amber-400" />
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
+          <div className="bg-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800 flex items-center gap-2 flex-1 sm:flex-initial">
+            <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
-              <div className="text-[10px] uppercase font-mono text-slate-400">System Learning</div>
+              <div className="text-[9px] uppercase font-mono text-slate-400">Memory Rules</div>
               <div className="text-xs font-bold text-slate-200">
-                <span className="text-amber-400">{terminologyMappings.length}</span> Project Terms Active
+                <span className="text-amber-400">{terminologyMappings.length}</span> Active
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 flex items-center gap-2.5">
-            <UserCheck className="w-4 h-4 text-emerald-400" />
+          <div className="bg-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800 flex items-center gap-2 flex-1 sm:flex-initial">
+            <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
             <div>
-              <div className="text-[10px] uppercase font-mono text-slate-400">Pending Review</div>
+              <div className="text-[9px] uppercase font-mono text-slate-400">Pending Review</div>
               <div className="text-xs font-bold text-emerald-400">
                 {pendingMatches.length} Proposals
               </div>
@@ -77,10 +78,41 @@ export const ReviewCenter: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Tab Switcher (Visible only on < lg screens) */}
+      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button
+          onClick={() => setMobileTab('QUEUE')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'QUEUE'
+              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <span>Queue ({matches.length})</span>
+          {pendingMatches.length > 0 && (
+            <span className="bg-amber-500 text-slate-950 text-[9px] font-bold px-1.5 py-0.2 rounded-full">
+              {pendingMatches.length}
+            </span>
+          )}
+        </button>
+
+        <button
+          onClick={() => setMobileTab('INSPECTION')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'INSPECTION'
+              ? 'bg-amber-500 text-slate-950 shadow font-bold'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Candidate Match</span>
+        </button>
+      </div>
+
       {/* Main Grid: Queue on Left, Inspection Card on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left Col: Review Queue List */}
-        <div className="lg:col-span-4 space-y-3">
+        <div className={`lg:col-span-4 space-y-3 ${mobileTab === 'INSPECTION' ? 'hidden lg:block' : 'block'}`}>
           <div className="flex items-center justify-between text-xs font-mono uppercase text-slate-400 px-1">
             <span>Review Queue ({matches.length})</span>
             <span>Sorted by Priority</span>
@@ -95,7 +127,10 @@ export const ReviewCenter: React.FC = () => {
               return (
                 <button
                   key={m.matchId}
-                  onClick={() => setSelectedMatchId(m.matchId)}
+                  onClick={() => {
+                    setSelectedMatchId(m.matchId);
+                    setMobileTab('INSPECTION');
+                  }}
                   className={`w-full text-left p-3.5 rounded-xl border transition-all text-xs space-y-2 ${
                     isSelected 
                       ? 'bg-slate-800/90 border-amber-400/80 shadow-md ring-1 ring-amber-400/30' 
@@ -122,8 +157,8 @@ export const ReviewCenter: React.FC = () => {
                   </div>
 
                   <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
-                    <span className="font-mono text-amber-400/90">{topCand?.activityCode || 'No candidate'}</span>
-                    <span>{evt?.sourceType} • {evt?.reportedDate}</span>
+                    <span className="font-mono text-amber-400/90 truncate mr-2">{topCand?.activityCode || 'No candidate'}</span>
+                    <span className="shrink-0">{evt?.sourceType} • {evt?.reportedDate}</span>
                   </div>
                 </button>
               );
@@ -132,7 +167,7 @@ export const ReviewCenter: React.FC = () => {
         </div>
 
         {/* Right Col: Deep Inspection & Human Adjudication Panel */}
-        <div className="lg:col-span-8">
+        <div className={`lg:col-span-8 ${mobileTab === 'QUEUE' ? 'hidden lg:block' : 'block'}`}>
           {activeMatch && relatedEvent ? (
             <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
               {/* Event Extraction Header */}
@@ -239,7 +274,7 @@ export const ReviewCenter: React.FC = () => {
 
                         {/* Action buttons for this candidate */}
                         {activeMatch.status === 'PENDING_REVIEW' && (
-                          <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-2.5 border-t border-slate-800/80">
                             <button
                               type="button"
                               onClick={() => {
@@ -247,7 +282,7 @@ export const ReviewCenter: React.FC = () => {
                                 setNewTermActivityCode(cand.activityCode);
                                 setTermModalOpen(true);
                               }}
-                              className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium"
+                              className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center justify-center sm:justify-start gap-1 font-medium py-1"
                             >
                               <BookOpen className="w-3.5 h-3.5" />
                               <span>Teach Vocabulary ("{cand.activityCode}")</span>
@@ -255,7 +290,7 @@ export const ReviewCenter: React.FC = () => {
 
                             <button
                               onClick={() => approveMatch(activeMatch.matchId, cand.activityId, plannerNote)}
-                              className="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow transition-all active:scale-95"
+                              className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
                             >
                               <Check className="w-3.5 h-3.5" />
                               <span>Approve & Update Schedule Actuals</span>
@@ -270,17 +305,17 @@ export const ReviewCenter: React.FC = () => {
 
               {/* Status or Rejection Controls */}
               {activeMatch.status === 'PENDING_REVIEW' ? (
-                <div className="pt-2 flex items-center justify-between border-t border-slate-800">
+                <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 border-t border-slate-800">
                   <input
                     type="text"
                     value={plannerNote}
                     onChange={(e) => setPlannerNote(e.target.value)}
                     placeholder="Optional planner verification notes for audit log..."
-                    className="bg-slate-950 text-slate-200 text-xs px-3 py-2 rounded-lg border border-slate-700 w-2/3 focus:outline-none focus:border-amber-400"
+                    className="bg-slate-950 text-slate-200 text-xs px-3 py-2.5 rounded-lg border border-slate-700 w-full sm:w-2/3 focus:outline-none focus:border-amber-400"
                   />
                   <button
                     onClick={() => rejectMatch(activeMatch.matchId, plannerNote || 'Rejected by planner')}
-                    className="px-4 py-2 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800 text-xs font-semibold flex items-center gap-1.5"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800 text-xs font-semibold flex items-center justify-center gap-1.5 shrink-0 active:scale-95"
                   >
                     <XCircle className="w-3.5 h-3.5" />
                     <span>Reject Proposal</span>

@@ -11,28 +11,36 @@ import {
   Sliders, 
   History, 
   PlayCircle,
-  Clock,
-  Sparkles
+  X
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
-  const { activeTab, setActiveTab, currentRole, matches, conflicts, offlineQueue } = useApp();
+  const { 
+    activeTab, 
+    setActiveTab, 
+    currentRole, 
+    matches, 
+    conflicts, 
+    offlineQueue,
+    isMobileMenuOpen,
+    setIsMobileMenuOpen
+  } = useApp();
 
   const pendingMatchesCount = matches.filter(m => m.status === 'PENDING_REVIEW').length;
   const unresolvedConflictsCount = conflicts.filter(c => c.status === 'UNRESOLVED').length;
 
-  const navItems: { tab: NavigationTab; label: string; icon: React.ReactNode; badge?: number; badgeColor?: string; roleFilter?: string[] }[] = [
+  const navItems: { tab: NavigationTab; label: string; icon: React.ReactNode; badge?: number; badgeColor?: string }[] = [
     { 
       tab: 'DASHBOARD', 
       label: 'Executive Health', 
-      icon: <LayoutDashboard className="w-4 h-4" /> 
+      icon: <LayoutDashboard className="w-4 h-4 text-amber-400" /> 
     },
     { 
       tab: 'FIELD_INPUT', 
       label: 'Field Input Center', 
       icon: <Mic className="w-4 h-4 text-amber-400" />,
       badge: offlineQueue.length > 0 ? offlineQueue.length : undefined,
-      badgeColor: 'bg-amber-500 text-slate-950'
+      badgeColor: 'bg-amber-500 text-slate-950 font-bold'
     },
     { 
       tab: 'REVIEW_CENTER', 
@@ -78,12 +86,12 @@ export const Sidebar: React.FC = () => {
       label: '5-Min Judge Demo', 
       icon: <PlayCircle className="w-4 h-4 text-amber-400" />,
       badge: 11,
-      badgeColor: 'bg-amber-400/20 text-amber-300 border border-amber-400/40'
+      badgeColor: 'bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold'
     },
   ];
 
-  return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 min-h-[calc(100vh-61px)]">
+  const renderNavContent = () => (
+    <>
       {/* Role banner for context awareness */}
       <div className="p-3 border-b border-slate-800/80 bg-slate-950/40">
         <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
@@ -105,8 +113,11 @@ export const Sidebar: React.FC = () => {
           return (
             <button
               key={item.tab}
-              onClick={() => setActiveTab(item.tab)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+              onClick={() => {
+                setActiveTab(item.tab);
+                setIsMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
                   ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -133,8 +144,11 @@ export const Sidebar: React.FC = () => {
           return (
             <button
               key={item.tab}
-              onClick={() => setActiveTab(item.tab)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+              onClick={() => {
+                setActiveTab(item.tab);
+                setIsMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
                   ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -161,8 +175,11 @@ export const Sidebar: React.FC = () => {
           return (
             <button
               key={item.tab}
-              onClick={() => setActiveTab(item.tab)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+              onClick={() => {
+                setActiveTab(item.tab);
+                setIsMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
                   ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -192,6 +209,34 @@ export const Sidebar: React.FC = () => {
           Calibrated for Primavera P6 & MS Project WBS L1-L6 schemas.
         </p>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden md:flex md:w-64 bg-slate-900 border-r border-slate-800 flex-col shrink-0 min-h-[calc(100vh-61px)]">
+        {renderNavContent()}
+      </aside>
+
+      {/* Mobile Slide-Over Drawer */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden bg-black/70 backdrop-blur-xs flex">
+          <div className="w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
+            <div className="p-3 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+              <span className="font-bold text-white text-xs font-mono">ALL MODULES</span>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {renderNavContent()}
+          </div>
+          <div className="flex-1" onClick={() => setIsMobileMenuOpen(false)} />
+        </div>
+      )}
+    </>
   );
 };

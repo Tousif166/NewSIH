@@ -17,31 +17,58 @@ import { ActivityDNA } from '../../types';
 
 export const ActivityDNAView: React.FC = () => {
   const [selectedDNA, setSelectedDNA] = useState<ActivityDNA>(DEMO_ACTIVITY_DNA[0]);
+  const [mobileTab, setMobileTab] = useState<'LIST' | 'PROFILE'>('LIST');
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Dna className="w-5 h-5 text-teal-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <Dna className="w-5 h-5 text-teal-400 shrink-0" />
             Institutional Memory & Activity DNA Profiles
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Historical benchmarking across completed Oil India projects: Typical durations, empirical variance, recurring delay drivers, and contractor performance profiles.
+            Historical benchmarking across completed Oil India projects: Typical durations, empirical variance, and contractor performance profiles.
           </p>
         </div>
 
-        <div className="bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 text-xs font-mono">
+        <div className="bg-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800 text-xs font-mono self-start sm:self-auto">
           <span className="text-slate-400">Knowledge Base: </span>
-          <strong className="text-teal-400">54 Historical Projects Indexed</strong>
+          <strong className="text-teal-400">54 Historical Projects</strong>
         </div>
       </div>
 
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button
+          onClick={() => setMobileTab('LIST')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'LIST'
+              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <span>Archetype Profiles</span>
+        </button>
+
+        <button
+          onClick={() => setMobileTab('PROFILE')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'PROFILE'
+              ? 'bg-teal-600 text-white shadow font-bold'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Dna className="w-3.5 h-3.5" />
+          <span>DNA Benchmarks</span>
+        </button>
+      </div>
+
       {/* Main Grid: Activity Selector on Left, Deep DNA Profile on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left Col: Activity Archetypes */}
-        <div className="lg:col-span-4 space-y-3">
+        <div className={`lg:col-span-4 space-y-3 ${mobileTab === 'PROFILE' ? 'hidden lg:block' : 'block'}`}>
           <div className="text-xs font-mono uppercase text-slate-400 px-1">
             Infrastructure Activity Profiles
           </div>
@@ -52,8 +79,11 @@ export const ActivityDNAView: React.FC = () => {
               return (
                 <button
                   key={dna.activityType}
-                  onClick={() => setSelectedDNA(dna)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all text-xs space-y-2 ${
+                  onClick={() => {
+                    setSelectedDNA(dna);
+                    setMobileTab('PROFILE');
+                  }}
+                  className={`w-full text-left p-3.5 rounded-xl border transition-all text-xs space-y-2 ${
                     isSelected 
                       ? 'bg-slate-800 border-teal-400/80 shadow-md ring-1 ring-teal-400/30' 
                       : 'bg-slate-900 border-slate-800 hover:border-slate-700'
@@ -83,8 +113,8 @@ export const ActivityDNAView: React.FC = () => {
         </div>
 
         {/* Right Col: Deep DNA Analytics */}
-        <div className="lg:col-span-8 space-y-6">
-          <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
+        <div className={`lg:col-span-8 space-y-4 sm:space-y-6 ${mobileTab === 'LIST' ? 'hidden lg:block' : 'block'}`}>
+          <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 space-y-4 sm:space-y-6 shadow-sm">
             {/* Header */}
             <div className="border-b border-slate-800 pb-4">
               <div className="flex items-center gap-2 mb-1.5">

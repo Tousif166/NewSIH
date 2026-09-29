@@ -83,6 +83,8 @@ interface AppContextType {
   setActiveTab: (tab: NavigationTab) => void;
   isCopilotOpen: boolean;
   setIsCopilotOpen: (open: boolean) => void;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
   isOnline: boolean;
   setIsOnline: (online: boolean) => void;
   offlineQueue: OfflineQueueItem[];
@@ -149,6 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<NavigationTab>('DASHBOARD');
   const [isCopilotOpen, setIsCopilotOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [currentWhatIf, setCurrentWhatIf] = useState<WhatIfScenario>({
@@ -462,6 +465,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setActiveTab,
         isCopilotOpen,
         setIsCopilotOpen,
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
         isOnline,
         setIsOnline,
         offlineQueue,

@@ -16,12 +16,12 @@ export const WhatIfSimulator: React.FC = () => {
   const { currentWhatIf, updateWhatIfParams, activeProject } = useApp();
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Sliders className="w-5 h-5 text-amber-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <Sliders className="w-5 h-5 text-amber-400 shrink-0" />
             What-If Schedule Recovery Simulator
           </h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -29,7 +29,7 @@ export const WhatIfSimulator: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-amber-500/10 border border-amber-500/30 px-3.5 py-2 rounded-lg text-amber-300 text-xs font-mono font-semibold">
+        <div className="bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-amber-300 text-xs font-mono font-semibold self-start sm:self-auto">
           ⚡ Interactive CPM Simulation Engine
         </div>
       </div>

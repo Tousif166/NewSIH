@@ -209,9 +209,9 @@ export const JudgeDemoWalkthrough: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-[1400px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1400px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-amber-950/60 via-slate-900 to-slate-900 p-5 rounded-xl border border-amber-500/30 shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-gradient-to-r from-amber-950/60 via-slate-900 to-slate-900 p-4 sm:p-5 rounded-xl border border-amber-500/30 shadow-lg">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500 text-slate-950">
@@ -219,7 +219,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
             </span>
             <span className="text-xs text-amber-300 font-mono">SIH26122 • Smart Automation Narrative</span>
           </div>
-          <h1 className="text-xl font-bold text-white tracking-tight">
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
             SiteSync AI: Intelligent Planning-to-Execution Bridge
           </h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -229,15 +229,15 @@ export const JudgeDemoWalkthrough: React.FC = () => {
 
         <button
           onClick={resetToDefaultDemo}
-          className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 border border-slate-700"
+          className="self-start sm:self-auto px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 border border-slate-700 active:scale-95"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Demo Data</span>
         </button>
       </div>
 
-      {/* Step Stepper Progress Bar */}
-      <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex items-center gap-1.5 overflow-x-auto">
+      {/* Step Stepper Progress Bar (Horizontal Touch Scroll with no scrollbars) */}
+      <div className="bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-800 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
         {steps.map((st, i) => {
           const isDone = i < currentStepIndex;
           const isCurrent = i === currentStepIndex;
@@ -245,7 +245,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
             <button
               key={st.stepNumber}
               onClick={() => setCurrentStepIndex(i)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-all shrink-0 active:scale-95 ${
                 isCurrent 
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md ring-1 ring-amber-400' 
                   : isDone
@@ -254,20 +254,20 @@ export const JudgeDemoWalkthrough: React.FC = () => {
               }`}
             >
               <span>{st.stepNumber}.</span>
-              <span className="hidden md:inline">{st.title.split(' ')[0]}</span>
+              <span>{st.title.split(' ')[0]}</span>
             </button>
           );
         })}
       </div>
 
       {/* Active Step Deep-Dive Card */}
-      <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
+      <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 space-y-4 sm:space-y-6 shadow-sm">
         <div className="border-b border-slate-800 pb-4">
           <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-1">
             <span className="text-amber-400 font-bold">NARRATIVE STEP {currentStep.stepNumber} OF {steps.length}</span>
-            <span>Est. Demo Time: ~25 sec</span>
+            <span>Est. Demo: ~25 sec</span>
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
             {currentStep.title}
           </h2>
           <div className="text-sm font-semibold text-amber-300 mt-1">
@@ -275,7 +275,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
           </div>
         </div>
 
-        <p className="text-sm text-slate-200 leading-relaxed bg-slate-950 p-4 rounded-xl border border-slate-800">
+        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed bg-slate-950 p-3.5 sm:p-4 rounded-xl border border-slate-800">
           {currentStep.description}
         </p>
 
@@ -285,7 +285,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
             <Sparkles className="w-4 h-4 text-amber-400" />
             Key Technical Innovations to Highlight to Judges:
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
             {currentStep.explanation.map((exp, idx) => (
               <div key={idx} className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs text-slate-300 flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -295,32 +295,34 @@ export const JudgeDemoWalkthrough: React.FC = () => {
           </div>
         </div>
 
-        {/* Step Navigation Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
-          <button
-            onClick={handlePrev}
-            disabled={currentStepIndex === 0}
-            className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-semibold flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Previous Step</span>
-          </button>
+        {/* Step Navigation Controls (Thumb-friendly mobile stacking) */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-between gap-2 order-2 sm:order-1">
+            <button
+              onClick={handlePrev}
+              disabled={currentStepIndex === 0}
+              className="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 flex-1 sm:flex-initial active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Previous</span>
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={currentStepIndex === steps.length - 1}
+              className="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 flex-1 sm:flex-initial active:scale-95"
+            >
+              <span>Next</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
 
           <button
             onClick={executeStepAction}
-            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95 ring-1 ring-amber-300/40"
+            className="order-1 sm:order-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 ring-1 ring-amber-300/40 cursor-pointer"
           >
             <PlayCircle className="w-4 h-4" />
             <span>{currentStep.actionLabel}</span>
-          </button>
-
-          <button
-            onClick={handleNext}
-            disabled={currentStepIndex === steps.length - 1}
-            className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-semibold flex items-center gap-2"
-          >
-            <span>Next Step</span>
-            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

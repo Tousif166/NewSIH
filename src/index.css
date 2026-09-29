@@ -10,7 +10,30 @@
     font-family: var(--font-sans);
     background-color: #0b0f19;
     color: #f1f5f9;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+}
+
+/* Safe area utilities for modern mobile browsers (iOS notch & Android bar) */
+.safe-area-pb {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+.safe-area-pt {
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+}
+
+/* Hide scrollbar for clean horizontal touch scrolling on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom scrollbars for high-density tables and Gantt charts */

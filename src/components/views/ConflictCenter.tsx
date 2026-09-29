@@ -21,6 +21,7 @@ export const ConflictCenter: React.FC = () => {
   const [selectedConflictId, setSelectedConflictId] = useState<string | null>(null);
   const [resolutionChoice, setResolutionChoice] = useState<string>('SOURCE_1');
   const [resolutionNotes, setResolutionNotes] = useState<string>('');
+  const [mobileTab, setMobileTab] = useState<'LIST' | 'ADJUDICATE'>('LIST');
 
   const unresolved = conflicts.filter(c => c.status === 'UNRESOLVED');
   const activeConflict = conflicts.find(c => c.id === (selectedConflictId || unresolved[0]?.id)) || conflicts[0];
@@ -36,12 +37,12 @@ export const ConflictCenter: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-rose-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
             Data Conflict & Chronology Center
           </h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -51,9 +52,9 @@ export const ConflictCenter: React.FC = () => {
 
         <div className="flex items-center gap-3">
           <div className="bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 flex items-center gap-2.5">
-            <ShieldAlert className="w-4 h-4 text-rose-400" />
+            <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
             <div>
-              <div className="text-[10px] uppercase font-mono text-slate-400">Open Conflicts</div>
+              <div className="text-[9px] uppercase font-mono text-slate-400">Open Conflicts</div>
               <div className="text-xs font-bold text-rose-400">
                 {unresolved.length} Adjudications Pending
               </div>
@@ -62,10 +63,41 @@ export const ConflictCenter: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button
+          onClick={() => setMobileTab('LIST')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'LIST'
+              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <span>Conflict Queue ({conflicts.length})</span>
+          {unresolved.length > 0 && (
+            <span className="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full">
+              {unresolved.length}
+            </span>
+          )}
+        </button>
+
+        <button
+          onClick={() => setMobileTab('ADJUDICATE')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'ADJUDICATE'
+              ? 'bg-rose-600 text-white shadow font-bold'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Scale className="w-3.5 h-3.5" />
+          <span>Adjudicate</span>
+        </button>
+      </div>
+
       {/* Main Grid: Conflict List on Left, Resolution Workbench on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left Col: Conflict Cards */}
-        <div className="lg:col-span-5 space-y-3">
+        <div className={`lg:col-span-5 space-y-3 ${mobileTab === 'ADJUDICATE' ? 'hidden lg:block' : 'block'}`}>
           <div className="text-xs font-mono uppercase text-slate-400 px-1">
             Detected Contradictions ({conflicts.length})
           </div>
@@ -78,7 +110,10 @@ export const ConflictCenter: React.FC = () => {
               return (
                 <button
                   key={cnf.id}
-                  onClick={() => setSelectedConflictId(cnf.id)}
+                  onClick={() => {
+                    setSelectedConflictId(cnf.id);
+                    setMobileTab('ADJUDICATE');
+                  }}
                   className={`w-full text-left p-4 rounded-xl border transition-all text-xs space-y-2 ${
                     isSelected 
                       ? 'bg-slate-800/90 border-rose-500/80 shadow-md ring-1 ring-rose-500/30' 
@@ -119,9 +154,9 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Right Col: Deep Cross-Examination & Reconciliation Workbench */}
-        <div className="lg:col-span-7">
+        <div className={`lg:col-span-7 ${mobileTab === 'LIST' ? 'hidden lg:block' : 'block'}`}>
           {activeConflict ? (
-            <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
+            <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 space-y-4 sm:space-y-6 shadow-sm">
               <div>
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-mono font-bold">

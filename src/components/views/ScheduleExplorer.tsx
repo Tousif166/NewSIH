@@ -34,6 +34,7 @@ export const ScheduleExplorer: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [importReport, setImportReport] = useState<any>(null);
+  const [mobileTab, setMobileTab] = useState<'TREE' | 'DETAILS'>('TREE');
 
   const toggleNode = (id: string) => {
     setExpandedNodes(prev => ({ ...prev, [id]: !prev[id] }));
@@ -63,28 +64,28 @@ export const ScheduleExplorer: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-[1700px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1700px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <FolderTree className="w-5 h-5 text-sky-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <FolderTree className="w-5 h-5 text-sky-400 shrink-0" />
             Schedule Hierarchy Explorer (L1 to L6 Tree)
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Browse structured WBS nodes, inspect baseline vs actuals for L5/L6 executable activities, or import Primavera/MS Project schedules.
+            Browse structured WBS nodes, inspect baseline vs actuals for L5/L6 activities, or import Primavera/MS Project schedules.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+          <div className="relative w-full sm:w-64">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search code, name, discipline..."
-              className="bg-slate-950 text-slate-200 text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-700 w-64 focus:outline-none focus:border-sky-400"
+              className="bg-slate-950 text-slate-200 text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-700 w-full focus:outline-none focus:border-sky-400"
             />
           </div>
 
@@ -93,7 +94,7 @@ export const ScheduleExplorer: React.FC = () => {
               setIsImportModalOpen(true);
               setImportReport(null);
             }}
-            className="px-3.5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow transition-all"
+            className="w-full sm:w-auto px-3.5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95"
           >
             <Upload className="w-4 h-4" />
             <span>Import Schedule (P6/MSP)</span>
@@ -101,10 +102,39 @@ export const ScheduleExplorer: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button
+          onClick={() => setMobileTab('TREE')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'TREE'
+              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <FolderTree className="w-3.5 h-3.5" />
+          <span>WBS Hierarchy</span>
+        </button>
+
+        <button
+          onClick={() => setMobileTab('DETAILS')}
+          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'DETAILS'
+              ? 'bg-sky-600 text-white shadow font-bold'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <FileCode className="w-3.5 h-3.5" />
+          <span>Activity Node Details</span>
+        </button>
+      </div>
+
       {/* Main Grid: Tree Browser on Left, Activity Health Card on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left Col: Tree */}
-        <div className="lg:col-span-6 bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+        <div className={`lg:col-span-6 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 space-y-4 ${
+          mobileTab === 'DETAILS' ? 'hidden lg:block' : 'block'
+        }`}>
           <div className="flex items-center justify-between border-b border-slate-800 pb-3 text-xs text-slate-400 font-mono">
             <span>WBS Node Hierarchy</span>
             <span>Level L1 - L6</span>
@@ -115,11 +145,11 @@ export const ScheduleExplorer: React.FC = () => {
               const isExpanded = !!expandedNodes[node.id];
               const levelIndent = {
                 L1: 'pl-0 font-bold text-white',
-                L2: 'pl-4 font-semibold text-sky-300',
-                L3: 'pl-8 font-medium text-slate-300',
-                L4: 'pl-12 text-slate-300',
-                L5: 'pl-16 text-amber-300',
-                L6: 'pl-20 text-slate-400'
+                L2: 'pl-2 sm:pl-4 font-semibold text-sky-300',
+                L3: 'pl-3 sm:pl-8 font-medium text-slate-300',
+                L4: 'pl-4 sm:pl-12 text-slate-300',
+                L5: 'pl-5 sm:pl-16 text-amber-300',
+                L6: 'pl-6 sm:pl-20 text-slate-400'
               }[node.level];
 
               return (
@@ -148,8 +178,11 @@ export const ScheduleExplorer: React.FC = () => {
                     return (
                       <div
                         key={act.id}
-                        onClick={() => setSelectedActivity(act)}
-                        className={`ml-20 flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all border ${
+                        onClick={() => {
+                          setSelectedActivity(act);
+                          setMobileTab('DETAILS');
+                        }}
+                        className={`ml-4 sm:ml-10 md:ml-16 flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all border ${
                           isSelected 
                             ? 'bg-slate-800 border-sky-400 text-white font-semibold' 
                             : 'bg-slate-950/60 border-slate-800/80 hover:bg-slate-800/50 text-slate-300'
@@ -182,9 +215,9 @@ export const ScheduleExplorer: React.FC = () => {
         </div>
 
         {/* Right Col: Activity Health Card & Provenance */}
-        <div className="lg:col-span-6 space-y-4">
+        <div className={`lg:col-span-6 space-y-4 ${mobileTab === 'TREE' ? 'hidden lg:block' : 'block'}`}>
           {selectedActivity ? (
-            <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
+            <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 space-y-4 sm:space-y-6 shadow-sm">
               {/* Header */}
               <div className="border-b border-slate-800 pb-4">
                 <div className="flex items-center justify-between gap-2 mb-1.5">

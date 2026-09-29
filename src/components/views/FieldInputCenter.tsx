@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../../services/store';
 import { 
   Mic, 
@@ -14,7 +14,9 @@ import {
   WifiOff,
   Layers,
   RefreshCw,
-  Eye
+  Eye,
+  Image as ImageIcon,
+  CheckCircle2
 } from 'lucide-react';
 
 export const FieldInputCenter: React.FC = () => {
@@ -27,6 +29,46 @@ export const FieldInputCenter: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedPreview, setExtractedPreview] = useState<any>(null);
   const [attachedPhoto, setAttachedPhoto] = useState<string | null>(null);
+  const [isListeningSpeech, setIsListeningSpeech] = useState(false);
+
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+  const speechRecognitionRef = useRef<any>(null);
+
+  // Initialize Web Speech API if supported in browser
+  useEffect(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      try {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-IN'; // Optimized for Indian English field reporting
+
+        recognition.onresult = (event: any) => {
+          let currentTranscript = '';
+          for (let i = 0; i < event.results.length; i++) {
+            currentTranscript += event.results[i][0].transcript;
+          }
+          if (currentTranscript.trim()) {
+            setTextInput(currentTranscript);
+          }
+        };
+
+        recognition.onerror = () => {
+          setIsListeningSpeech(false);
+        };
+
+        recognition.onend = () => {
+          setIsListeningSpeech(false);
+        };
+
+        speechRecognitionRef.current = recognition;
+      } catch (e) {
+        console.warn('SpeechRecognition initialization error:', e);
+      }
+    }
+  }, []);
 
   // Timer for voice recording
   useEffect(() => {
@@ -45,12 +87,43 @@ export const FieldInputCenter: React.FC = () => {
     setIsRecording(true);
     setTextInput('');
     setExtractedPreview(null);
+
+    if (speechRecognitionRef.current) {
+      try {
+        speechRecognitionRef.current.start();
+        setIsListeningSpeech(true);
+      } catch (err) {
+        console.warn('Speech recognition start fallback:', err);
+      }
+    }
   };
 
   const handleStopVoice = (presetText?: string) => {
     setIsRecording(false);
+    if (speechRecognitionRef.current && isListeningSpeech) {
+      try {
+        speechRecognitionRef.current.stop();
+      } catch (e) {}
+      setIsListeningSpeech(false);
+    }
+
     const transcript = presetText || textInput || '12 inch spool erected near compressor section today. Around 18 meters completed between 9:00 AM and 4:30 PM.';
     setTextInput(transcript);
+  };
+
+  const handleCameraCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        setAttachedPhoto(result);
+        if (!textInput.trim()) {
+          setTextInput('Photo evidence attached: Field spool assembly and foundation alignment inspection.');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async () => {
@@ -76,72 +149,89 @@ export const FieldInputCenter: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-[1200px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1200px] mx-auto space-y-4 sm:space-y-6">
+      {/* Hidden File Inputs for Native Camera and Photo Upload */}
+      <input 
+        type="file" 
+        accept="image/*" 
+        capture="environment" 
+        ref={cameraInputRef} 
+        onChange={handleCameraCapture} 
+        className="hidden" 
+      />
+      <input 
+        type="file" 
+        accept="image/*" 
+        ref={galleryInputRef} 
+        onChange={handleCameraCapture} 
+        className="hidden" 
+      />
+
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Mic className="w-5 h-5 text-amber-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <Mic className="w-5 h-5 text-amber-400 shrink-0" />
             Field Input Center & Voice Time Agent
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Zero-friction site reporting for supervisors: Speak, type, or upload DPRs to automatically link physical execution to schedule nodes.
+            Zero-friction site reporting: Speak into your phone mic, snap a site photo, or upload DPRs to link progress to schedule nodes.
           </p>
         </div>
 
         {/* Offline Queue Badge */}
         {!isOnline && (
-          <div className="flex items-center gap-2 bg-rose-950/70 border border-rose-600/50 px-3 py-1.5 rounded-lg text-rose-300 text-xs font-semibold">
-            <WifiOff className="w-4 h-4 animate-pulse" />
+          <div className="flex items-center gap-2 bg-rose-950/70 border border-rose-600/50 px-3 py-1.5 rounded-lg text-rose-300 text-xs font-semibold self-start sm:self-auto">
+            <WifiOff className="w-4 h-4 animate-pulse shrink-0" />
             <span>Offline Mode Active ({offlineQueue.length} queued)</span>
           </div>
         )}
       </div>
 
-      {/* Input Channel Tabs */}
-      <div className="flex border-b border-slate-800 gap-2">
+      {/* Input Channel Tabs (Mobile Responsive 2x2 Grid, 4-col on tablet/desktop) */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
         <button
           onClick={() => setActiveMode('VOICE')}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-2 ${
+          className={`py-2.5 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             activeMode === 'VOICE'
-              ? 'bg-slate-900 text-amber-400 border-t-2 border-amber-400 border-x border-slate-800'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
           }`}
         >
           <Mic className="w-4 h-4" />
-          <span>Voice Time Agent</span>
+          <span>Voice Agent</span>
         </button>
 
         <button
           onClick={() => setActiveMode('TEXT')}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-2 ${
+          className={`py-2.5 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             activeMode === 'TEXT'
-              ? 'bg-slate-900 text-sky-400 border-t-2 border-sky-400 border-x border-slate-800'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-sky-500 text-slate-950 shadow-md font-bold'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
           }`}
         >
           <FileText className="w-4 h-4" />
-          <span>Quick Text Report</span>
+          <span>Quick Text</span>
         </button>
 
         <button
           onClick={() => setActiveMode('DPR')}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-2 ${
+          className={`py-2.5 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             activeMode === 'DPR'
-              ? 'bg-slate-900 text-emerald-400 border-t-2 border-emerald-400 border-x border-slate-800'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-emerald-500 text-slate-950 shadow-md font-bold'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
           }`}
         >
           <UploadCloud className="w-4 h-4" />
-          <span>DPR / File Ingestion</span>
+          <span>DPR Report</span>
         </button>
 
         <button
           onClick={() => setActiveMode('PHOTO')}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-2 ${
+          className={`py-2.5 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             activeMode === 'PHOTO'
-              ? 'bg-slate-900 text-purple-400 border-t-2 border-purple-400 border-x border-slate-800'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-purple-500 text-slate-950 shadow-md font-bold'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
           }`}
         >
           <Camera className="w-4 h-4" />
@@ -150,14 +240,14 @@ export const FieldInputCenter: React.FC = () => {
       </div>
 
       {/* Main Mode Workspace */}
-      <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm space-y-6">
+      <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 shadow-sm space-y-5 sm:space-y-6">
         {/* VOICE MODE */}
         {activeMode === 'VOICE' && (
-          <div className="space-y-6">
-            <div className="text-center py-6 bg-slate-950 rounded-xl border border-slate-800/80 relative overflow-hidden">
+          <div className="space-y-5">
+            <div className="text-center py-6 sm:py-8 bg-slate-950 rounded-xl border border-slate-800/80 relative overflow-hidden">
               {/* Simulated Audio Waveform when recording */}
               {isRecording ? (
-                <div className="space-y-4">
+                <div className="space-y-4 px-4">
                   <div className="flex items-center justify-center gap-1.5 h-16">
                     {[35, 60, 90, 45, 80, 100, 70, 50, 85, 95, 40, 65, 80, 55, 30].map((h, i) => (
                       <div
@@ -167,62 +257,71 @@ export const FieldInputCenter: React.FC = () => {
                       />
                     ))}
                   </div>
-                  <div className="text-rose-400 font-mono text-sm font-semibold flex items-center justify-center gap-2">
+
+                  <div className="text-rose-400 font-mono text-xs sm:text-sm font-semibold flex items-center justify-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
-                    Recording in progress... 00:{recordingSeconds < 10 ? `0${recordingSeconds}` : recordingSeconds}
+                    <span>Recording... 00:{recordingSeconds < 10 ? `0${recordingSeconds}` : recordingSeconds}</span>
                   </div>
+
+                  {isListeningSpeech && (
+                    <div className="text-xs text-emerald-400 font-mono flex items-center justify-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>Web Speech API Active: Transcribing your voice in real-time</span>
+                    </div>
+                  )}
+
                   <button
                     onClick={() => handleStopVoice()}
-                    className="px-6 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs inline-flex items-center gap-2 shadow-lg transition-all"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs inline-flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95"
                   >
                     <Square className="w-4 h-4 fill-white" />
                     <span>Stop Recording & Transcribe</span>
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 shadow-inner">
-                    <Mic className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-white">Tap to Speak Site Progress</h3>
-                    <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-                      "Line 24 spool erection completed at compressor area. 18 meters completed today."
-                    </p>
-                  </div>
+                <div className="space-y-4 px-4">
+                  {/* Big Touch-Friendly Mic Button */}
                   <button
                     onClick={handleStartVoice}
-                    className="px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs inline-flex items-center gap-2 shadow-lg transition-all active:scale-95"
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 text-slate-950 flex items-center justify-center mx-auto shadow-xl shadow-amber-500/30 ring-4 ring-amber-400/20 active:scale-90 transition-all cursor-pointer group"
+                    title="Tap to speak"
+                    aria-label="Start Voice Recording"
                   >
-                    <Mic className="w-4 h-4" />
-                    <span>Start Voice Recording</span>
+                    <Mic className="w-10 h-10 stroke-[2.5] group-hover:scale-110 transition-transform" />
                   </button>
+
+                  <div>
+                    <h3 className="text-base font-bold text-white">Tap Mic to Speak Site Progress</h3>
+                    <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+                      Speak naturally in Indian English or site terms. Our acoustic normalizer extracts quantities, locations, and disciplines.
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {/* Quick Preset Samples for Hackathon Demo */}
-              <div className="mt-6 pt-4 border-t border-slate-800/80 px-4">
-                <span className="text-[11px] font-mono uppercase text-slate-400 block mb-2 font-semibold">
-                  Or Test Preset Supervisor Field Voice Samples:
+              {/* Quick Preset Samples for Hackathon Demo / Field Supervisor Presets */}
+              <div className="mt-6 pt-4 border-t border-slate-800/80 px-3 sm:px-4">
+                <span className="text-[11px] font-mono uppercase text-slate-400 block mb-2 font-semibold text-center sm:text-left">
+                  Or 1-Tap Preset Supervisor Field Logs:
                 </span>
-                <div className="flex flex-wrap items-center justify-center gap-2">
+                <div className="overflow-x-auto no-scrollbar flex items-center gap-2 pb-1 sm:flex-wrap sm:justify-start">
                   <button
                     onClick={() => handleStopVoice('12 inch spool erected near compressor section today. Around 18 meters completed between 9:00 AM and 4:30 PM.')}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-300 transition-colors text-left"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-300 transition-colors text-left shrink-0 active:scale-95"
                   >
-                    🎙️ Piping: "12 inch spool erected near compressor..."
+                    🎙️ Piping: "12-in spool erected near compressor (18m)..."
                   </button>
                   <button
                     onClick={() => handleStopVoice('Electrical cable tray installation in unit two started this morning. 30 meters fixed before rain stoppage.')}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sky-300 transition-colors text-left"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sky-300 transition-colors text-left shrink-0 active:scale-95"
                   >
-                    🎙️ Electrical: "Unit 2 cable tray installation started..."
+                    🎙️ Electrical: "Unit 2 cable tray (30m fixed)..."
                   </button>
                   <button
                     onClick={() => handleStopVoice('Concrete pouring for foundation F-102 completed at 17:00. Batching plant delivered 75 m3 grade M35 concrete.')}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-300 transition-colors text-left"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-300 transition-colors text-left shrink-0 active:scale-95"
                   >
-                    🎙️ Civil: "Foundation F-102 poured 75 m3..."
+                    🎙️ Civil: "Foundation F-102 poured (75 m3)..."
                   </button>
                 </div>
               </div>
@@ -233,57 +332,79 @@ export const FieldInputCenter: React.FC = () => {
         {/* DPR / FILE MODE */}
         {activeMode === 'DPR' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-8 text-center bg-slate-950/60 transition-colors cursor-pointer">
+            <div className="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-5 sm:p-8 text-center bg-slate-950/60 transition-colors">
               <UploadCloud className="w-10 h-10 text-emerald-400 mx-auto mb-2" />
               <div className="text-sm font-semibold text-white">Upload Daily Progress Report (DPR) or Site Diary</div>
               <p className="text-xs text-slate-400 mt-1">Supports PDF, DOCX, TXT, Scanned TIFF, and Excel (.xlsx, .csv)</p>
-              <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
                   onClick={() => setTextInput('DPR Ref OIL-DPR-2026-09-28:\n1. Area 04 GCU: Foundation F-102 concreting finished at 17:00 hrs. 75 m3 poured.\n2. Piping Area 04: 12-inch suction line spool erection ongoing. 18m erected today.\n3. Electrical: Trench cable tray mounting held due to afternoon monsoon precipitation.')}
-                  className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-mono border border-slate-700"
+                  className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-mono border border-slate-700 active:scale-95"
                 >
-                  Load Sample DPR (OIL-DPR-28Sep.pdf)
+                  📄 Load Sample DPR (OIL-DPR-28Sep.pdf)
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* PHOTO MODE */}
+        {/* PHOTO MODE (Optimized for Mobile Camera) */}
         {activeMode === 'PHOTO' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-slate-700 hover:border-purple-500/60 rounded-xl p-6 text-center bg-slate-950/60 transition-colors">
+            <div className="border-2 border-dashed border-slate-700 hover:border-purple-500/60 rounded-xl p-5 sm:p-6 text-center bg-slate-950/60 transition-colors">
               <Camera className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-              <div className="text-sm font-semibold text-white">Attach Site Construction Photograph</div>
-              <p className="text-xs text-slate-400 mt-1">Supporting visual provenance for civil foundations, spools, and electrical trays.</p>
-              <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="text-sm font-semibold text-white">Site Construction Evidence Photo</div>
+              <p className="text-xs text-slate-400 mt-1">Supporting visual proof for civil foundations, spools, and electrical trays.</p>
+              
+              <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                {/* Real Native Smartphone Camera Button */}
+                <button
+                  type="button"
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow transition-all active:scale-95"
+                >
+                  <Camera className="w-4 h-4" />
+                  <span>Snap Photo (Phone Camera)</span>
+                </button>
+
+                {/* Choose from Gallery */}
+                <button
+                  type="button"
+                  onClick={() => galleryInputRef.current?.click()}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 border border-slate-700 active:scale-95"
+                >
+                  <ImageIcon className="w-4 h-4 text-slate-400" />
+                  <span>Upload from Gallery</span>
+                </button>
+
+                {/* Sample Photo */}
                 <button
                   type="button"
                   onClick={() => {
                     setAttachedPhoto('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80');
                     setTextInput('12 inch spool erected near compressor section. Flange bolts tightened and aligned to plinth.');
                   }}
-                  className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-purple-300 text-xs font-mono border border-slate-700"
+                  className="w-full sm:w-auto px-3 py-2.5 rounded-lg bg-slate-850 hover:bg-slate-800 text-purple-300 text-xs font-mono border border-slate-700 active:scale-95"
                 >
-                  Attach Sample Photo (Area 04 Spool Erection)
+                  Use Sample Photo
                 </button>
               </div>
             </div>
 
             {attachedPhoto && (
-              <div className="p-3 bg-slate-950 rounded-lg border border-purple-500/30 flex items-center gap-4">
-                <img src={attachedPhoto} alt="Site" className="w-20 h-20 object-cover rounded-lg border border-slate-800" />
+              <div className="p-3 bg-slate-950 rounded-lg border border-purple-500/30 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <img src={attachedPhoto} alt="Site Evidence" className="w-full sm:w-24 h-32 sm:h-24 object-cover rounded-lg border border-slate-800 shrink-0" />
                 <div className="text-xs space-y-1">
                   <div className="font-semibold text-white flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                    AI Computer Vision Hint (Advisory Only)
+                    AI Computer Vision Hint (Advisory Provenance)
                   </div>
                   <p className="text-slate-300">
                     Detected: Process piping assembly, high-pressure flange, industrial scaffolding.
                   </p>
                   <p className="text-[10px] text-amber-400">
-                    Human verification required before schedule commitment.
+                    Human verification required by Planner before schedule progress commitment.
                   </p>
                 </div>
               </div>
@@ -295,7 +416,7 @@ export const FieldInputCenter: React.FC = () => {
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span className="font-mono uppercase font-semibold">Report Content / Transcript</span>
-            <span className="text-[11px]">{textInput.length} characters</span>
+            <span className="text-[11px]">{textInput.length} chars</span>
           </div>
           <textarea
             value={textInput}
@@ -307,16 +428,16 @@ export const FieldInputCenter: React.FC = () => {
         </div>
 
         {/* Action Button */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
           <div className="text-xs text-slate-400 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>AI will extract structured event and propose Top-3 L5/L6 matches</span>
           </div>
 
           <button
             onClick={handleSubmit}
             disabled={!textInput.trim() || isProcessing}
-            className="px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95"
+            className="w-full sm:w-auto px-6 py-3 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 cursor-pointer"
           >
             {isProcessing ? (
               <>

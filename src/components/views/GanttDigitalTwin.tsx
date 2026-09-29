@@ -63,12 +63,12 @@ export const GanttDigitalTwin: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-[1700px] mx-auto space-y-6">
+    <div className="p-3.5 sm:p-6 max-w-[1700px] mx-auto space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-indigo-400" />
+          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-indigo-400 shrink-0" />
             4D Progress Digital Twin & Interactive Gantt
           </h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -77,7 +77,7 @@ export const GanttDigitalTwin: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-[10px] sm:text-[11px] font-mono bg-slate-950 px-3 py-2 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800">
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-2 rounded bg-sky-500" />
             <span className="text-slate-300">Baseline Plan</span>
@@ -98,24 +98,26 @@ export const GanttDigitalTwin: React.FC = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-slate-400" />
-          <span className="text-xs text-slate-400 font-mono uppercase">Filter:</span>
-          <select
-            value={selectedDiscipline}
-            onChange={(e) => setSelectedDiscipline(e.target.value)}
-            className="bg-slate-950 text-slate-200 text-xs px-2.5 py-1.5 rounded border border-slate-700 focus:outline-none cursor-pointer"
-          >
-            <option value="ALL">All Disciplines</option>
-            <option value="Piping">Piping</option>
-            <option value="Civil">Civil</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Rotating Equipment">Rotating Equipment</option>
-            <option value="Instrumentation">Instrumentation</option>
-          </select>
+      <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5">
+            <Filter className="w-4 h-4 text-slate-400" />
+            <span className="text-xs text-slate-400 font-mono uppercase">Filter:</span>
+            <select
+              value={selectedDiscipline}
+              onChange={(e) => setSelectedDiscipline(e.target.value)}
+              className="bg-slate-950 text-slate-200 text-xs px-2.5 py-1.5 rounded border border-slate-700 focus:outline-none cursor-pointer"
+            >
+              <option value="ALL">All Disciplines</option>
+              <option value="Piping">Piping</option>
+              <option value="Civil">Civil</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Rotating Equipment">Rotating Equipment</option>
+              <option value="Instrumentation">Instrumentation</option>
+            </select>
+          </div>
 
-          <label className="flex items-center gap-1.5 text-xs text-slate-300 ml-3 cursor-pointer">
+          <label className="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
             <input
               type="checkbox"
               checked={onlyCriticalPath}
@@ -127,24 +129,32 @@ export const GanttDigitalTwin: React.FC = () => {
         </div>
 
         <div className="text-xs text-slate-400 font-mono">
-          Showing <strong>{filteredActivities.length}</strong> of {activities.length} schedule nodes
+          Showing <strong>{filteredActivities.length}</strong> of {activities.length} nodes
         </div>
+      </div>
+
+      {/* Mobile Swipe Hint */}
+      <div className="md:hidden flex items-center justify-between bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-mono">
+        <span>Timeline Canvas</span>
+        <span className="text-amber-400 font-semibold">👉 Swipe horizontally to view full dates</span>
       </div>
 
       {/* Gantt Timeline Canvas */}
       <div className="bg-slate-900 rounded-xl border border-slate-800 shadow-sm overflow-hidden">
-        {/* Timeline Header Dates */}
-        <div className="grid grid-cols-12 border-b border-slate-800 bg-slate-950/80 py-2.5 px-4 text-[10px] font-mono text-slate-400">
-          <div className="col-span-4 font-semibold text-slate-300">Activity & Scope Code</div>
-          <div className="col-span-8 flex justify-between pr-4">
-            <span>15-Sep</span>
-            <span>22-Sep</span>
-            <span>29-Sep</span>
-            <span>06-Oct</span>
-            <span>13-Oct</span>
-            <span>20-Oct</span>
-          </div>
-        </div>
+        <div className="overflow-x-auto">
+          <div className="min-w-[680px]">
+            {/* Timeline Header Dates */}
+            <div className="grid grid-cols-12 border-b border-slate-800 bg-slate-950/80 py-2.5 px-4 text-[10px] font-mono text-slate-400">
+              <div className="col-span-4 font-semibold text-slate-300">Activity & Scope Code</div>
+              <div className="col-span-8 flex justify-between pr-4">
+                <span>15-Sep</span>
+                <span>22-Sep</span>
+                <span>29-Sep</span>
+                <span>06-Oct</span>
+                <span>13-Oct</span>
+                <span>20-Oct</span>
+              </div>
+            </div>
 
         {/* Timeline Rows */}
         <div className="divide-y divide-slate-800/60 max-h-[500px] overflow-y-auto">
@@ -219,6 +229,8 @@ export const GanttDigitalTwin: React.FC = () => {
               </div>
             );
           })}
+        </div>
+          </div>
         </div>
       </div>
 
