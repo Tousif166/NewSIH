@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 export const FieldInputCenter: React.FC = () => {
-  const { submitFieldInput, isOnline, offlineQueue, syncOfflineQueue, setActiveTab } = useApp();
+  const { currentRole, setCurrentRole, submitFieldInput, isOnline, offlineQueue, syncOfflineQueue, setActiveTab } = useApp();
 
   const [activeMode, setActiveMode] = useState<'VOICE' | 'TEXT' | 'DPR' | 'PHOTO'>('VOICE');
   const [textInput, setTextInput] = useState('');
@@ -185,6 +185,33 @@ export const FieldInputCenter: React.FC = () => {
             <WifiOff className="w-4 h-4 animate-pulse shrink-0" />
             <span>Offline Mode Active ({offlineQueue.length} queued)</span>
           </div>
+        )}
+      </div>
+
+      {/* Persona Mode Banner */}
+      <div className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
+        currentRole === 'supervisor'
+          ? 'bg-amber-500/10 border-amber-500/30 text-amber-200'
+          : 'bg-slate-900 border-slate-800 text-slate-300'
+      }`}>
+        <div className="flex items-center gap-2.5">
+          <span className="text-xl">👷</span>
+          <div>
+            <span className="font-bold text-white">Active Field Reporter: </span>
+            {currentRole === 'supervisor' ? (
+              <span className="text-amber-300 font-semibold">Site Supervisor (Field Mobile App Active — Voice, Camera & Offline Queue Enabled)</span>
+            ) : (
+              <span>Testing Field Ingestion as <span className="font-semibold capitalize text-amber-400">{currentRole.replace('_', ' ')}</span></span>
+            )}
+          </div>
+        </div>
+        {currentRole !== 'supervisor' && (
+          <button
+            onClick={() => setCurrentRole('supervisor')}
+            className="text-[11px] px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500 hover:text-slate-950 font-semibold transition-all shrink-0 self-start sm:self-auto"
+          >
+            Switch to Site Supervisor
+          </button>
         )}
       </div>
 

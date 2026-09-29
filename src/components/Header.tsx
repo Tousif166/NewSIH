@@ -19,6 +19,7 @@ import {
 export const Header: React.FC = () => {
   const { 
     currentRole, 
+    roleMetadata,
     setCurrentRole, 
     activeProject, 
     allProjects, 
@@ -137,16 +138,18 @@ export const Header: React.FC = () => {
           </button>
 
           {/* Role Switcher */}
-          <div className="flex items-center gap-1 bg-slate-950 px-1.5 py-1 rounded-lg border border-slate-800">
+          <div className={`flex items-center gap-1.5 bg-slate-950 px-2 py-1 rounded-lg border transition-all ${roleMetadata.borderColor} ${roleMetadata.bgColor} shadow-sm ring-1 ring-white/5`}>
+            <span className="text-[10px] uppercase font-mono font-bold text-slate-400 hidden lg:inline">Role:</span>
             <select
               value={currentRole}
               onChange={(e) => setCurrentRole(e.target.value as UserRole)}
-              className="bg-transparent text-[11px] sm:text-xs font-semibold text-slate-200 focus:outline-none cursor-pointer max-w-[110px] sm:max-w-none"
+              className={`bg-transparent text-[11px] sm:text-xs font-bold focus:outline-none cursor-pointer max-w-[125px] sm:max-w-none ${roleMetadata.color}`}
+              aria-label="Active Persona Selector"
             >
-              <option value="planner" className="bg-slate-900 text-emerald-400">📐 Planner</option>
-              <option value="supervisor" className="bg-slate-900 text-amber-400">👷 Supervisor</option>
-              <option value="project_manager" className="bg-slate-900 text-sky-400">👔 PM</option>
-              <option value="admin" className="bg-slate-900 text-purple-400">🛡️ Admin</option>
+              <option value="planner" className="bg-slate-900 text-emerald-400">📐 Project Planner</option>
+              <option value="supervisor" className="bg-slate-900 text-amber-400">👷 Site Supervisor</option>
+              <option value="project_manager" className="bg-slate-900 text-sky-400">👔 Project Manager</option>
+              <option value="admin" className="bg-slate-900 text-purple-400">🛡️ System Admin</option>
             </select>
           </div>
 

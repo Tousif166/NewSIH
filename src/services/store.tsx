@@ -50,6 +50,100 @@ export type NavigationTab =
   | 'AUDIT_TRAIL'
   | 'DEMO_WALKTHROUGH';
 
+export interface RoleDefinition {
+  id: UserRole;
+  label: string;
+  shortLabel: string;
+  badge: string;
+  emoji: string;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  defaultTab: NavigationTab;
+  description: string;
+  authority: string;
+  permissions: string[];
+}
+
+export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
+  planner: {
+    id: 'planner',
+    label: 'Project Planner',
+    shortLabel: 'Planner',
+    badge: 'Controls & Baseline',
+    emoji: '📐',
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/40',
+    defaultTab: 'REVIEW_CENTER',
+    description: 'Verifies semantic linkages, teaches project terminology & approves schedule actuals for Primavera/MS Project.',
+    authority: 'Full Schedule Actuals Approval Authority',
+    permissions: [
+      'AI Linkage Review & Approval',
+      'Teach AI Vocabulary Rules',
+      'Commit Primavera Actuals',
+      'WBS & Critical Path Inspection'
+    ],
+  },
+  supervisor: {
+    id: 'supervisor',
+    label: 'Site Supervisor',
+    shortLabel: 'Supervisor',
+    badge: 'Field Operations',
+    emoji: '👷',
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/10',
+    borderColor: 'border-amber-500/40',
+    defaultTab: 'FIELD_INPUT',
+    description: 'Captures daily progress via speech-to-text, photo proofs & WhatsApp notes with offline SQLite queueing.',
+    authority: 'Field Data Ingestion & Evidence Capture (Approvals Restricted)',
+    permissions: [
+      'Voice & Text DPR Ingestion',
+      'Geotagged Photo Evidence',
+      'Offline Queue & Sync',
+      'Personal Submission Tracking'
+    ],
+  },
+  project_manager: {
+    id: 'project_manager',
+    label: 'Project Manager',
+    shortLabel: 'Project Manager',
+    badge: 'Executive Oversight',
+    emoji: '👔',
+    color: 'text-sky-400',
+    bgColor: 'bg-sky-500/10',
+    borderColor: 'border-sky-500/40',
+    defaultTab: 'DASHBOARD',
+    description: 'Monitors real-time S-Curves, critical path delay attribution, Monte Carlo simulations & contractor disputes.',
+    authority: 'Executive Governance & Dispute Adjudication',
+    permissions: [
+      'Critical Path Delay Attribution',
+      'Contractor Dispute Adjudication',
+      'Monte Carlo What-If Simulation',
+      'Earned Value KPIs'
+    ],
+  },
+  admin: {
+    id: 'admin',
+    label: 'System Admin',
+    shortLabel: 'System Admin',
+    badge: 'Vigilance & Security',
+    emoji: '🛡️',
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/10',
+    borderColor: 'border-purple-500/40',
+    defaultTab: 'AUDIT_TRAIL',
+    description: 'Ensures vigilance compliance, inspects immutable SHA-256 cryptographic provenance & configures activity DNA.',
+    authority: 'Vigilance Provenance & Cryptographic Audit',
+    permissions: [
+      'Immutable SHA-256 Chain Verification',
+      'Anti-Tamper Vigilance Export',
+      'Activity Archetype DNA Benchmarks',
+      'System Configuration'
+    ],
+  },
+};
+
 export interface OfflineQueueItem {
   id: string;
   rawText: string;
@@ -62,7 +156,8 @@ export interface OfflineQueueItem {
 
 interface AppContextType {
   currentRole: UserRole;
-  setCurrentRole: (role: UserRole) => void;
+  roleMetadata: RoleDefinition;
+  setCurrentRole: (role: UserRole, autoNavigate?: boolean) => void;
   activeProject: ProjectSummary;
   setActiveProject: (p: ProjectSummary) => void;
   allProjects: ProjectSummary[];
@@ -110,7 +205,10 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentRole, setCurrentRole] = useState<UserRole>('planner');
+  const [currentRole, setCurrentRoleState] = useState<UserRole>(() => {
+    const saved = localStorage.getItem('sitesync_current_role');
+    return (saved as UserRole) || 'planner';
+  });
   const [allProjects] = useState<ProjectSummary[]>(DEMO_PROJECTS);
   const [activeProject, setActiveProject] = useState<ProjectSummary>(DEMO_PROJECTS[0]);
   
@@ -202,6 +300,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const setCurrentRole = (newRole: UserRole, autoNavigate: boolean = true) => {
+    setCurrentRoleState(newRole);
+    try {
+      localStorage.setItem('sitesync_current_role', newRole);
+    } catch (e) {
+      // ignore
+    }
+
+    const meta = ROLE_DEFINITIONS[newRole];
+    if (autoNavigate && meta) {
+      setActiveTab(meta.defaultTab);
+    }
+    if (meta) {
+      showToast(`${meta.emoji} Switched to ${meta.label} mode — ${meta.description}`);
+    }
   };
 
   // Submit Field Input (Voice, Text, DPR, etc.)
@@ -448,6 +563,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     <AppContext.Provider
       value={{
         currentRole,
+        roleMetadata: ROLE_DEFINITIONS[currentRole],
         setCurrentRole,
         activeProject,
         setActiveProject,

@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 export const ProjectDashboard: React.FC = () => {
-  const { activeProject, activities, conflicts, riskScore, matches, setActiveTab } = useApp();
+  const { currentRole, roleMetadata, setCurrentRole, activeProject, activities, conflicts, riskScore, matches, setActiveTab } = useApp();
 
   const delayedActivities = activities.filter(a => a.forecastVarianceDays > 0);
   const criticalActivities = activities.filter(a => a.isCriticalPath);
@@ -76,6 +76,34 @@ export const ProjectDashboard: React.FC = () => {
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Dynamic Persona Operational Briefing */}
+      <div className={`p-3.5 sm:p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
+        <div className="flex items-start sm:items-center gap-3">
+          <span className="text-2xl">{roleMetadata.emoji}</span>
+          <div>
+            <div className="font-bold text-white flex items-center gap-2">
+              <span>{roleMetadata.label} Dashboard Perspective</span>
+              <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded border ${roleMetadata.borderColor} ${roleMetadata.color} bg-slate-950/80`}>
+                {roleMetadata.badge}
+              </span>
+            </div>
+            <p className="text-slate-300 text-[11px] mt-0.5">
+              {currentRole === 'project_manager' && 'Critical path variance currently sits at +14 days due to Compressor Foundation soil stabilization. Monte Carlo scenario modeling indicates adding 15 workers eliminates liquidated damages.'}
+              {currentRole === 'supervisor' && 'Today\'s priority: Complete Section 4B welding & trenching. Use the mobile voice recorder or camera snapshot to upload proof for planner approval.'}
+              {currentRole === 'planner' && '3 candidate field matches are queued in the Review Center. Reconcile evidence and update schedule actuals before the Primavera P6 weekly baseline sync.'}
+              {currentRole === 'admin' && '100% cryptographic SHA-256 integrity verified across all historical field records. Zero tamper attempts detected in the Oil India immutable ledger.'}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setActiveTab(roleMetadata.defaultTab)}
+          className={`px-3 py-1.5 rounded-lg border ${roleMetadata.borderColor} bg-slate-950 hover:bg-slate-900 ${roleMetadata.color} font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shrink-0 self-start sm:self-auto cursor-pointer`}
+        >
+          <span>Open {roleMetadata.shortLabel} Desk</span>
+          <ChevronRight className="w-3.5 h-3.5" />
+        </button>
       </div>
 
       {/* 4-Dimension Project View (Baseline vs Actual vs Forecast vs Variance) */}

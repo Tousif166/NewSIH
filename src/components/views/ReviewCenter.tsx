@@ -15,11 +15,15 @@ import {
   FileText,
   UserCheck,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Lock
 } from 'lucide-react';
 
 export const ReviewCenter: React.FC = () => {
   const { 
+    currentRole,
+    roleMetadata,
+    setCurrentRole,
     matches, 
     fieldEvents, 
     activities, 
@@ -77,6 +81,42 @@ export const ReviewCenter: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Role Authority Context Banner */}
+      {currentRole === 'supervisor' ? (
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-200">
+          <div className="flex items-start sm:items-center gap-2.5">
+            <span className="text-xl">👷</span>
+            <div>
+              <div className="font-bold text-white flex items-center gap-1.5">
+                <span>Site Supervisor Persona (Field Submissions View)</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">READ-ONLY AUDIT</span>
+              </div>
+              <p className="text-amber-300/80 text-[11px] mt-0.5">
+                Viewing field proposal status. Oil India Vigilance requires Project Planner or PM sign-off to update schedule actuals.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setCurrentRole('planner')}
+            className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow shrink-0 self-start sm:self-auto flex items-center gap-1.5"
+          >
+            <span>Switch to Planner Role</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      ) : (
+        <div className={`p-2.5 px-3.5 rounded-xl border flex items-center justify-between gap-2 text-xs ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
+          <div className="flex items-center gap-2">
+            <span className="text-base">{roleMetadata.emoji}</span>
+            <span className="font-semibold text-white">{roleMetadata.label}:</span>
+            <span className={roleMetadata.color}>{roleMetadata.authority}</span>
+          </div>
+          <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold border ${roleMetadata.borderColor} ${roleMetadata.color} bg-slate-950/80 hidden sm:inline-block`}>
+            FULL APPROVAL AUTHORITY
+          </span>
+        </div>
+      )}
 
       {/* Mobile Tab Switcher (Visible only on < lg screens) */}
       <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
@@ -288,13 +328,24 @@ export const ReviewCenter: React.FC = () => {
                               <span>Teach Vocabulary ("{cand.activityCode}")</span>
                             </button>
 
-                            <button
-                              onClick={() => approveMatch(activeMatch.matchId, cand.activityId, plannerNote)}
-                              className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
-                            >
-                              <Check className="w-3.5 h-3.5" />
-                              <span>Approve & Update Schedule Actuals</span>
-                            </button>
+                            {currentRole === 'supervisor' ? (
+                              <button
+                                onClick={() => setCurrentRole('planner')}
+                                className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-slate-800 border border-amber-500/50 text-amber-300 hover:bg-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
+                                title="Site Supervisors have view-only access. Click to switch to Project Planner to authorize & commit to Primavera baseline."
+                              >
+                                <Lock className="w-3.5 h-3.5 text-amber-400" />
+                                <span>Switch to Planner to Approve</span>
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => approveMatch(activeMatch.matchId, cand.activityId, plannerNote)}
+                                className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
+                              >
+                                <Check className="w-3.5 h-3.5" />
+                                <span>Approve & Update Schedule Actuals ({roleMetadata.shortLabel})</span>
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>

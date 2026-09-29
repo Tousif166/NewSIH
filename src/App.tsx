@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppProvider, useApp } from './services/store';
 import { Header } from './components/Header';
+import { RolePersonaBar } from './components/RolePersonaBar';
 import { Sidebar } from './components/Sidebar';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { ProjectDashboard } from './components/views/ProjectDashboard';
@@ -49,6 +50,7 @@ const MainLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200">
       <Header />
+      <RolePersonaBar />
 
       {/* Global Toast Notification */}
       {toastMessage && (

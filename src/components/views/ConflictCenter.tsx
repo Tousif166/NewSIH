@@ -16,7 +16,7 @@ import {
 import { DataConflict } from '../../types';
 
 export const ConflictCenter: React.FC = () => {
-  const { conflicts, resolveConflict, activities } = useApp();
+  const { currentRole, roleMetadata, setCurrentRole, conflicts, resolveConflict, activities } = useApp();
 
   const [selectedConflictId, setSelectedConflictId] = useState<string | null>(null);
   const [resolutionChoice, setResolutionChoice] = useState<string>('SOURCE_1');
@@ -61,6 +61,35 @@ export const ConflictCenter: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Adjudication Authority Banner */}
+      <div className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
+        currentRole === 'project_manager' || currentRole === 'planner'
+          ? 'bg-sky-500/10 border-sky-500/30 text-sky-200'
+          : 'bg-amber-500/10 border-amber-500/30 text-amber-200'
+      }`}>
+        <div className="flex items-center gap-2.5">
+          <span className="text-xl">⚖️</span>
+          <div>
+            <span className="font-bold text-white">Dispute Adjudication Authority: </span>
+            {currentRole === 'project_manager' ? (
+              <span className="text-sky-300 font-semibold">Project Manager (Executive Binding Resolution Authority)</span>
+            ) : currentRole === 'planner' ? (
+              <span className="text-emerald-300 font-semibold">Lead Project Planner (Schedule Ground Truth Authority)</span>
+            ) : (
+              <span>Site Supervisor Persona (Read-Only Status — Disputes must be ratified by PM or Planner)</span>
+            )}
+          </div>
+        </div>
+        {currentRole === 'supervisor' && (
+          <button
+            onClick={() => setCurrentRole('project_manager')}
+            className="text-[11px] px-3 py-1.5 bg-sky-500/20 text-sky-300 border border-sky-500/40 rounded-lg hover:bg-sky-500 hover:text-slate-950 font-bold transition-all shrink-0 self-start sm:self-auto cursor-pointer"
+          >
+            Switch to Project Manager to Adjudicate
+          </button>
+        )}
       </div>
 
       {/* Mobile Tab Switcher */}
@@ -257,13 +286,22 @@ export const ConflictCenter: React.FC = () => {
                     />
                   </div>
 
-                  <button
-                    onClick={handleResolve}
-                    className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98"
-                  >
-                    <Check className="w-4 h-4" />
-                    <span>Confirm Adjudication & Log Schedule Resolution</span>
-                  </button>
+                  {currentRole === 'supervisor' ? (
+                    <button
+                      onClick={() => setCurrentRole('project_manager')}
+                      className="w-full py-2.5 rounded-lg bg-slate-800 border border-amber-500/50 text-amber-300 hover:bg-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98 cursor-pointer"
+                    >
+                      <span>🔒 Requires PM Authority (Click to Switch to Project Manager & Adjudicate)</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleResolve}
+                      className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98 cursor-pointer"
+                    >
+                      <Check className="w-4 h-4" />
+                      <span>Confirm Adjudication & Log Schedule Resolution ({roleMetadata.shortLabel})</span>
+                    </button>
+                  )}
                 </div>
               ) : (
                 <div className="p-4 bg-emerald-950/40 rounded-xl border border-emerald-600/40 text-xs space-y-1.5">
