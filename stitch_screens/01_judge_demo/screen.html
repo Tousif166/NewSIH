@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* Engineered Micro-Interactions & Transitions */
+    .gate-card {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .gate-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px -2px rgba(0, 55, 176, 0.12);
+    }
+    .gate-card.gate-selected {
+      border: 1px solid #1d4ed8;
+      box-shadow: 0 0 0 1px #1d4ed8, 0 4px 12px -2px rgba(29, 78, 216, 0.18);
+    }
+
+    /* Column Staggered Fade-in */
+    @keyframes colFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .stage-col-1 { animation: colFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .stage-col-2 { animation: colFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards; opacity: 0; }
+    .stage-col-3 { animation: colFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards; opacity: 0; }
+
+    /* Dynamic Waveform Oscillating Heights */
+    @keyframes waveOscillate {
+      0%, 100% { height: 12%; }
+      50% { height: 95%; }
+    }
+    .waveform-bar.active-anim {
+      animation: waveOscillate 1.1s ease-in-out infinite alternate;
+    }
+
+    /* Radar Scan / Pulse sweeps */
+    @keyframes radarSweep {
+      0% { transform: translateY(-100%); opacity: 0.1; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(200%); opacity: 0; }
+    }
+    .radar-line {
+      animation: radarSweep 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    /* Scorecard Shimmer */
+    @keyframes shimmerEffect {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-badge {
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(29, 78, 216, 0.08) 50%, rgba(255,255,255,0) 100%);
+      background-size: 200% 100%;
+      animation: shimmerEffect 4.5s infinite;
+    }
+
+    /* Tactile button active states */
+    .tactile-btn {
+      transition: transform 0.1s ease, box-shadow 0.15s ease;
+    }
+    .tactile-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Accessibility: Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .waveform-bar.active-anim, .radar-line, .shimmer-badge {
+        animation: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-container": "#ffc7c1",
+            "primary-container": "#1d4ed8",
+            "background": "#f8f9ff",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#dae2fd",
+            "on-secondary": "#ffffff",
+            "secondary": "#565e74",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#213145",
+            "surface-container-highest": "#d3e4fe",
+            "on-background": "#0b1c30",
+            "surface-container": "#e5eeff",
+            "surface-container-low": "#eff4ff",
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-secondary-fixed": "#131b2e",
+            "tertiary-fixed": "#ffdad6",
+            "on-primary-container": "#cad3ff",
+            "on-primary-fixed-variant": "#0039b5",
+            "tertiary-fixed-dim": "#ffb4ab",
+            "secondary-fixed-dim": "#bec6e0",
+            "surface-container-high": "#dce9ff",
+            "outline": "#747686",
+            "tertiary": "#8f000b",
+            "primary-fixed-dim": "#b7c4ff",
+            "error": "#ba1a1a",
+            "inverse-primary": "#b7c4ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "primary": "#0037b0",
+            "on-surface": "#0b1c30",
+            "on-tertiary-fixed-variant": "#93000b",
+            "on-tertiary-fixed": "#410002",
+            "on-primary-fixed": "#001551",
+            "secondary-container": "#dae2fd",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed": "#dce1ff",
+            "on-error": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface": "#f8f9ff",
+            "surface-tint": "#2151da",
+            "tertiary-container": "#bb0112",
+            "surface-variant": "#d3e4fe",
+            "error-container": "#ffdad6",
+            "outline-variant": "#c4c5d7",
+            "on-secondary-container": "#5c647a",
+            brand: {
+              primary: "#0037b0",
+              cobalt: "#1d4ed8",
+              tint: "#2151da",
+              light: "#eff4ff"
+            },
+            surface: {
+              base: "#f8fafc",
+              card: "#ffffff",
+              well: "#f1f5f9",
+              muted: "#e2e8f0"
+            },
+            slate: {
+              50: "#f8fafc",
+              100: "#f1f5f9",
+              200: "#e2e8f0",
+              300: "#cbd5e1",
+              400: "#94a3b8",
+              500: "#64748b",
+              600: "#475569",
+              700: "#334155",
+              800: "#1e293b",
+              900: "#0f172a"
+            }
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+            "body-sm": ["Inter"],
+            "label-xs": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-md": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"]
+          },
+          fontSize: {
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "label-xs": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }],
+            "body-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-xl-mobile": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-md": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+            "headline-xl": ["32px", { lineHeight: "38px", letterSpacing: "-0.025em", fontWeight: "700" }],
+            "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-sm": ["15px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-800 antialiased min-h-screen">
+<!-- Left Sidebar (Clean Industrial / Foundry Technical Light) -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between overflow-y-auto">
+<div class="flex flex-col">
+<!-- Workspace Brand Badge -->
+<div class="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[19px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 text-sm tracking-tight leading-snug uppercase">OIL / SiteSync</span>
+<span class="font-mono text-[10px] text-slate-500 font-semibold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            P6 LIVE
+          </div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-200/80 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-slate-400">hub</span>NODE-AS04 // SECURE</span>
+<span class="text-blue-700 font-semibold">ORACLE EPPM SYNCED</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col px-3 py-4 gap-5">
+<!-- Group 1 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Execution Intelligence</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded border border-blue-200 bg-blue-50/80 text-blue-900 font-semibold shadow-xs" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-blue-700">grid_view</span>
+<span class="text-[13px]">Executive Health</span>
+</div>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">KPI</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">mic</span>
+<span class="text-[13px]">Field Input Center</span>
+</div>
+<span class="font-mono text-[10px] text-slate-500">TELEMETRY</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">check_circle</span>
+<span class="text-[13px]">AI Review Center</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">DESK 1</span>
+</a>
+</div>
+<!-- Group 2 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Schedule &amp; Controls</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">account_tree</span>
+<span class="text-[13px]">WBS &amp; Schedule Tree</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">waterfall_chart</span>
+<span class="text-[13px]">4D Gantt Digital Twin</span>
+</div>
+<span class="font-mono text-[10px] text-slate-400 font-medium">4D-V</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-red-500">warning</span>
+<span class="text-[13px]">Conflicts &amp; Chronology</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-red-100 text-red-700 font-mono text-[10px] font-bold">2</span>
+</a>
+</div>
+<!-- Group 3 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analytics &amp; Memory</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">vital_signs</span>
+<span class="text-[13px]">Activity DNA &amp; Memory</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">tune</span>
+<span class="text-[13px]">What-If Simulator</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified_user</span>
+<span class="text-[13px]">Audit &amp; Provenance</span>
+</div>
+<span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1 rounded">SHA-256</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-amber-500">play_circle</span>
+<span class="text-[13px]">5-Min Judge Demo</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[10px] font-bold">11</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Security Tier Badge -->
+<div class="p-3 border-t border-slate-200 bg-slate-50 flex flex-col gap-1">
+<div class="flex items-center justify-between font-mono text-[10px] text-slate-500">
+<span>SECURITY LEVEL</span>
+<span class="text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">IL-5 RESTRICTED</span>
+</div>
+<div class="font-mono text-[10px] text-slate-600 truncate mt-0.5">SEAL: OIL-EXP-994821</div>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="pl-72 flex flex-col min-h-screen bg-[#f8fafc]">
+<!-- Header Bar (Crisp White / Technical Header) -->
+<header class="fixed top-0 left-72 right-0 h-16 bg-white border-b border-slate-200 z-40 px-6 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-base tracking-tight">Digboi–Duliajan 132km Crude Trunkline</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[11px] font-bold text-slate-700">WBS-REV-4.8</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px] text-slate-500">
+<span>PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+<span class="text-slate-300">•</span>
+<span class="text-slate-600">LAT: 27.3805° N, 95.3182° E</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-3 pl-4 border-l border-slate-200 font-mono text-[11px]">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            18ms LATENCY
+          </div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+            LEDGER VALIDATED
+          </div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<!-- Operator Pill -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-left">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">switch_account</span>
+<div class="flex flex-col">
+<span class="font-mono text-[11px] font-bold text-slate-800 leading-tight">Pranjal Saikia</span>
+<span class="font-mono text-[10px] text-slate-500 leading-tight">Chief Eng / Shift A</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[16px] ml-1">expand_more</span>
+</div>
+<!-- Action Buttons -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-mono text-xs font-semibold shadow-xs transition-colors tactile-btn" type="button">
+<span class="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
+          Export Audit PKG
+        </button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs transition-colors tactile-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+          Commit to P6
+        </button>
+<div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs">
+          PS
+        </div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 pt-20 pb-12 w-full px-8"><div class="flex flex-col w-full gap-5">
+<!-- Top Header Banner & Actions -->
+<div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 bg-surface-container-lowest p-5 rounded-lg shadow-sm border border-slate-200/70">
+<div class="flex flex-col gap-1.5 max-w-4xl">
+<!-- Compliance Badges Ribbon -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-primary-container text-on-primary font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[13px]">military_tech</span>
+          Hackathon Jury Showcase
+        </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs tracking-wider">
+          OIL-EXEC-DEMO-V4.8
+        </span>
+<span class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-primary">verified</span>
+          Ministry of Petroleum &amp; Natural Gas Compliant
+        </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-label-xs text-label-xs">
+          STRICT AUDIT CVC-SEC-8.4
+        </span>
+</div>
+<!-- Main Title & Technical Subtitle -->
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+        SiteSync AI — 5-Minute Executive Jury &amp; Hackathon Demonstration Console
+      </h1>
+<p class="font-body-md text-body-md text-secondary">
+        End-to-End Upstream Construction Intelligence: From Assamese Field Voice Memo to Oracle Primavera P6 Epistemic Ground Truth
+      </p>
+</div>
+<!-- Top Action Controls -->
+<div class="flex flex-wrap items-center gap-2.5 w-full xl:w-auto justify-end">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm shadow-sm transition-all tactile-btn" id="resetDemoBtn" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">restart_alt</span>
+        Reset Live Sandbox
+      </button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm shadow-sm transition-all tactile-btn" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">folder_zip</span>
+        CVC Integrity Proof (.ZIP)
+      </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm transition-all tactile-btn" id="startTourBtn" type="button">
+<span class="material-symbols-outlined text-[17px]">play_circle</span>
+        Start Guided 5-Min Tour
+      </button>
+</div>
+</div>
+<!-- 5-Gate Guided Progression Pipeline Ribbon -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-2 bg-surface-container-lowest p-3 rounded-lg shadow-sm border border-slate-200/70" id="pipelineRibbon">
+<!-- Gate 01 -->
+<div class="gate-card flex flex-col gap-1 p-2.5 rounded bg-surface-container-low border border-transparent" data-gate="1">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Gate 01</span>
+<span class="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">check</span> DONE
+        </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Field Voice Ingestion</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant truncate">
+        Audio DPR #8820-03 Assamese/Hindi
+      </div>
+</div>
+<!-- Gate 02 -->
+<div class="gate-card flex flex-col gap-1 p-2.5 rounded bg-surface-container-low border border-transparent" data-gate="2">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Gate 02</span>
+<span class="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">check</span> DONE
+        </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Entity Disambiguation</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant truncate">
+        420m laid, 2x PC300 → ACT-TR-4290
+      </div>
+</div>
+<!-- Gate 03 -->
+<div class="gate-card flex flex-col gap-1 p-2.5 rounded bg-surface-container-low border border-transparent" data-gate="3">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Gate 03</span>
+<span class="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">check</span> DONE
+        </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Multi-Sensor Corroboration</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant truncate">
+        Sentinel-1 SAR + GNSS hard rock
+      </div>
+</div>
+<!-- Gate 04: Active Arbitration -->
+<div class="gate-card gate-selected flex flex-col gap-1 p-2.5 rounded bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30" data-gate="4">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-on-tertiary-fixed uppercase font-semibold">Gate 04</span>
+<span class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-tertiary text-on-tertiary font-label-xs text-label-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest animate-pulse"></span>
+          ARBITRATION
+        </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-tertiary">Dispute &amp; Claim Rejection</div>
+<div class="font-label-xs text-label-xs text-on-tertiary-fixed-variant truncate">
+        11 dry days disproven: ₹2.10 Cr LD
+      </div>
+</div>
+<!-- Gate 05 -->
+<div class="gate-card flex flex-col gap-1 p-2.5 rounded bg-surface-container-low border border-transparent" data-gate="5">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Gate 05</span>
+<span class="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">schedule</span> READY
+        </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Ledger Sync Oracle P6</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant truncate">
+        Merkle Root committed to EPPM
+      </div>
+</div>
+</div>
+<!-- 3-Column Demonstration Interactive Cockpit -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+<!-- COLUMN 1: Stage 01 // Edge Ingestion -->
+<div class="stage-col-1 flex flex-col gap-4 bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/70">
+<!-- Section Tag Header -->
+<div class="flex items-center justify-between pb-3 bg-surface-container-lowest border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-2 h-4 rounded bg-primary"></div>
+<span class="font-label-xs text-label-xs text-secondary uppercase tracking-wider font-bold">
+            STAGE 01 // EDGE INGESTION
+          </span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-semibold">
+          Assamese-Hindi ASR v3.2
+        </span>
+</div>
+<!-- Subtitle & Reference -->
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary -mt-1">
+<span>FIELD TELEMETRY DPR #8820-03</span>
+<span class="font-label-xs text-label-xs text-primary font-mono">MIC LATENCY: 220ms</span>
+</div>
+<!-- Audio Player Card with Visual Waveform -->
+<div class="flex flex-col gap-2.5 p-3 rounded bg-surface-container-low border border-slate-200/50">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center shadow-sm hover:bg-primary-container transition-all tactile-btn" id="togglePlayBtn" title="Play telemetry recording" type="button">
+<span class="material-symbols-outlined text-[18px]" id="playIcon">play_arrow</span>
+</button>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">DPR_8820_03_AssamSec4.wav</span>
+<span class="font-label-xs text-label-xs text-secondary">16kHz 24-bit PCM • Recorded 07:42 IST</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold font-mono" id="audioTimestamp">00:14 / 00:38</span>
+</div>
+<!-- Inline Waveform Display with Equalizer Dynamic Animation -->
+<div class="h-10 w-full bg-surface-container-highest rounded p-1.5 flex items-center gap-1 overflow-hidden" id="waveformBox">
+<span class="waveform-bar w-1 rounded bg-primary h-[35%]" style="animation-delay: 0.05s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[60%]" style="animation-delay: 0.15s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[85%]" style="animation-delay: 0.3s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[45%]" style="animation-delay: 0.1s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[95%]" style="animation-delay: 0.4s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[70%]" style="animation-delay: 0.25s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[30%]" style="animation-delay: 0.08s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[80%]" style="animation-delay: 0.35s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[100%]" style="animation-delay: 0.5s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[65%]" style="animation-delay: 0.22s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[90%]" style="animation-delay: 0.42s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[50%]" style="animation-delay: 0.18s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[75%]" style="animation-delay: 0.28s;"></span>
+<span class="waveform-bar w-1 rounded bg-primary h-[85%]" style="animation-delay: 0.38s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[40%]" style="animation-delay: 0.12s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[60%]" style="animation-delay: 0.2s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[25%]" style="animation-delay: 0.05s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[70%]" style="animation-delay: 0.32s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[50%]" style="animation-delay: 0.16s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[80%]" style="animation-delay: 0.36s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[35%]" style="animation-delay: 0.09s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[25%]" style="animation-delay: 0.04s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[50%]" style="animation-delay: 0.21s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[30%]" style="animation-delay: 0.07s;"></span>
+<span class="waveform-bar w-1 rounded bg-secondary h-[15%]" style="animation-delay: 0.02s;"></span>
+</div>
+</div>
+<!-- Auto-Transcript Card -->
+<div class="flex flex-col gap-2 p-3 rounded bg-surface-container-low border border-slate-200/50">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">ASR Transcript (Dialect Disambiguated)</span>
+<span class="font-label-xs text-label-xs text-primary font-bold">98.4% Confidence</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+          “Encountered subterranean hard rock strata at chainage <span class="bg-secondary-container text-on-secondary-fixed font-bold px-1 rounded">42+650</span>. Deployed two auxiliary <span class="bg-secondary-container text-on-secondary-fixed font-bold px-1 rounded">Komatsu PC300</span> excavators. Completed <span class="bg-secondary-container text-on-secondary-fixed font-bold px-1 rounded">420m</span> laid today without safety incident.”
+        </p>
+</div>
+<!-- Real-Time NLP Entity Tags -->
+<div class="flex flex-col gap-2">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Parsed Entity Extraction</span>
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2 rounded bg-surface-container flex flex-col hover:bg-surface-container-high transition-colors">
+<span class="font-label-xs text-label-xs text-secondary">Action / Phase</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Trenching &amp; Stringing</span>
+</div>
+<div class="p-2 rounded bg-surface-container flex flex-col hover:bg-surface-container-high transition-colors">
+<span class="font-label-xs text-label-xs text-secondary">Linear Progress</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">420 Meters</span>
+</div>
+<div class="p-2 rounded bg-surface-container flex flex-col hover:bg-surface-container-high transition-colors">
+<span class="font-label-xs text-label-xs text-secondary">Asset Assignment</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">2x Komatsu PC300</span>
+</div>
+<div class="p-2 rounded bg-surface-container flex flex-col hover:bg-surface-container-high transition-colors">
+<span class="font-label-xs text-label-xs text-secondary">WBS Mapping Code</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">ACT-TR-4290</span>
+</div>
+</div>
+</div>
+<!-- Drone Recon Orthophoto Snippet with Live Radar Sweep -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary">
+<span>DRONE RECON ORTHOPHOTO (KM 42+650)</span>
+<span class="text-primary font-mono">GSD: 1.8cm/px</span>
+</div>
+<div class="relative w-full h-36 rounded overflow-hidden shadow-xs border border-slate-200/80 group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Aerial orthophoto survey of heavy industrial pipeline excavation trench through dense subtropical terrain with two yellow Komatsu PC300 excavators at chainage 42+650 under crisp daylight, high contrast geological rock formation visible." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Ezr_RrncvQtbWZI71c9ilTXb4RnPlTEHWZWmLMXEV8ls10HxMGL_HKSuspDRhX26LfmstJoFpDhRnAyiDbdzGRqkZAq7AdgEIp-xHAWGqnxCtGsyjGaUwYsZi-RIMVn-PcN-ViE2Pz8lIHpXRVGRlrrrFb4OzkIqmseGxAvRIqvHmEAIsOE7qruubCfsiHOTWu-NrG7pJaqUu-myaqKj-gXlNQ3cPVs4oEzKUwMHr_QYKkAl4xc"/>
+<!-- Radar Scan line overlay -->
+<div class="absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-blue-400/25 to-blue-500/40 pointer-events-none radar-line"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/85 via-transparent to-transparent flex flex-col justify-end p-2.5">
+<div class="flex items-center justify-between text-on-primary font-label-xs text-label-xs">
+<span class="flex items-center gap-1.5 font-bold">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+                PINCH POINT ANNOTATED: KM 42+650
+              </span>
+<span class="font-mono text-[10px] text-blue-200">BEARING: 042° NNE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: Stage 02 // Satellite Arbitration -->
+<div class="stage-col-2 flex flex-col gap-4 bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/70">
+<!-- Section Tag Header -->
+<div class="flex items-center justify-between pb-3 bg-surface-container-lowest border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-2 h-4 rounded bg-tertiary"></div>
+<span class="font-label-xs text-label-xs text-tertiary uppercase tracking-wider font-bold">
+            STAGE 02 // SATELLITE ARBITRATION
+          </span>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-semibold">
+          Sentinel-1 SAR C-Band
+        </span>
+</div>
+<!-- Subtitle & Reference -->
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary -mt-1">
+<span>MULTI-SENSOR DISCREPANCY MATRIX</span>
+<span class="font-label-xs text-label-xs text-tertiary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+          DISPUTE IDENTIFIED
+        </span>
+</div>
+<!-- Contractor Claim Card -->
+<div class="p-3 rounded bg-surface-container-low flex flex-col gap-1.5 border border-slate-200/50">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Contractor Force Majeure Claim</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary text-on-tertiary font-label-xs text-label-xs font-bold">CLAIM CONTESTED</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+          “14 Days Unworkable Soil Due To Severe Monsoon Flooding &amp; Submersion across Chainage 41+000 to 44+200.”
+        </p>
+</div>
+<!-- Sentinel-1 SAR Soil Moisture Index Visualization with Radar Sweep overlay -->
+<div class="flex flex-col gap-2 p-3 rounded bg-surface-container-low border border-slate-200/50 relative overflow-hidden">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-on-surface font-semibold">Sentinel-1 SAR Soil Moisture Backscatter</span>
+<span class="text-tertiary font-mono font-bold">11 OF 14 DAYS DRY GROUND</span>
+</div>
+<!-- Synthetic Chart Simulation (Soil Moisture vs Flood Cutoff) -->
+<div class="w-full h-28 bg-surface-container-lowest rounded p-2 flex flex-col justify-between border border-slate-200/60 relative overflow-hidden">
+<!-- Micro Radar Ping across chart -->
+<div class="absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent pointer-events-none animate-pulse"></div>
+<div class="flex justify-between text-secondary font-label-xs text-label-xs">
+<span>-5 dB (Dry Soil)</span>
+<span class="text-tertiary font-bold">FLOOD THRESHOLD: -8.0 dB</span>
+</div>
+<!-- Bar Graph / Telemetry Track with hover micro-interaction -->
+<div class="flex items-end justify-between gap-1 h-14 w-full pt-1">
+<!-- Day 1-3 Flooded -->
+<div class="w-full h-12 bg-tertiary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 1: -9.1 dB [Flooded]"></div>
+<div class="w-full h-11 bg-tertiary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 2: -8.8 dB [Flooded]"></div>
+<div class="w-full h-10 bg-tertiary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 3: -8.2 dB [Flooded]"></div>
+<!-- Day 4-14 Dry, disproving contractor claim -->
+<div class="w-full h-4 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 4: -5.4 dB [Dry Ground]"></div>
+<div class="w-full h-3 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 5: -5.1 dB [Dry Ground]"></div>
+<div class="w-full h-4 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 6: -5.2 dB [Dry Ground]"></div>
+<div class="w-full h-3 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 7: -4.9 dB [Dry Ground]"></div>
+<div class="w-full h-5 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 8: -5.6 dB [Dry Ground]"></div>
+<div class="w-full h-4 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 9: -5.0 dB [Dry Ground]"></div>
+<div class="w-full h-3 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 10: -4.8 dB [Dry Ground]"></div>
+<div class="w-full h-3 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 11: -4.7 dB [Dry Ground]"></div>
+<div class="w-full h-4 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 12: -5.3 dB [Dry Ground]"></div>
+<div class="w-full h-4 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 13: -5.1 dB [Dry Ground]"></div>
+<div class="w-full h-3 bg-primary rounded-xs transition-all hover:brightness-125 cursor-help" title="Day 14: -4.9 dB [Dry Ground]"></div>
+</div>
+<div class="flex justify-between font-label-xs text-label-xs text-secondary pt-1 font-mono">
+<span>Day 01 (Flooded)</span>
+<span>Day 07 (Dry)</span>
+<span>Day 14 (Dry)</span>
+</div>
+</div>
+</div>
+<!-- AI Arbitration Verdict Card -->
+<div class="p-3 rounded bg-tertiary-fixed text-on-tertiary-fixed flex flex-col gap-1.5 border border-tertiary/20 shadow-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs uppercase font-bold text-on-tertiary-fixed">Autonomous Arbitration Verdict</span>
+<span class="font-label-xs text-label-xs text-tertiary font-bold bg-white/70 px-1.5 py-0.5 rounded">STATUTORY REJECTION</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-tertiary">
+          11 Calendar Days Extension Disallowed
+        </p>
+<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant">
+          Adhering to Central Vigilance Commission (CVC) Engineering Manual Sec 8.4 Liquidated Damages enforcement.
+        </p>
+</div>
+<!-- Financial Metric Callout: LD Exposure Mitigated -->
+<div class="p-3 rounded bg-surface-container flex items-center justify-between border border-blue-200/50 shadow-xs">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Liquidated Damages Protected</span>
+<span class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">₹2,10,00,000</span>
+</div>
+<span class="px-2.5 py-1 rounded bg-primary-container text-on-primary font-label-sm text-label-sm font-bold shadow-xs">
+          ₹2.10 Cr SAVED
+        </span>
+</div>
+<!-- 4D Spatial Corridor Preview Map Container -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary">
+<span>4D SPATIAL CORRIDOR (CH 41+000 TO 44+200)</span>
+<span class="text-primary font-mono">RTK 1.4cm RMS</span>
+</div>
+<div class="w-full h-32 bg-slate-100 rounded relative overflow-hidden shadow-xs border border-slate-200" data-location="Digboi, Assam, India">
+<!-- Satellite Terrain Visual grid simulation -->
+<div class="absolute inset-0 bg-[radial-gradient(#1d4ed8_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<span class="px-3 py-1 rounded bg-surface-container-lowest/90 text-on-surface font-label-xs text-label-xs font-bold shadow-sm border border-slate-200">
+              GIS DIGITAL TWIN LIVE CORRIDOR
+            </span>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] font-mono text-slate-600 bg-white/80 px-1.5 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            GNSS FIX: ACTIVE
+          </div>
+</div>
+</div>
+</div>
+<!-- COLUMN 3: Stage 03 // Enterprise P6 Sync -->
+<div class="stage-col-3 flex flex-col gap-4 bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/70">
+<!-- Section Tag Header -->
+<div class="flex items-center justify-between pb-3 bg-surface-container-lowest border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-2 h-4 rounded bg-primary"></div>
+<span class="font-label-xs text-label-xs text-secondary uppercase tracking-wider font-bold">
+            STAGE 03 // ENTERPRISE P6 SYNC
+          </span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs font-semibold">
+          Oracle EPPM Gateway
+        </span>
+</div>
+<!-- Subtitle & Reference -->
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary -mt-1">
+<span>SCHEDULE RECOVERY &amp; MERKLE SEALING</span>
+<span class="font-label-xs text-label-xs text-primary font-bold">BUFFER RECOVERED</span>
+</div>
+<!-- What-If Monte Carlo Analysis -->
+<div class="p-3 rounded bg-surface-container-low flex flex-col gap-2 border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Schedule Delta Simulation</span>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-secondary">Contractor Baseline Slip:</span>
+<span class="text-tertiary font-bold font-mono">-4.2 Days Projected</span>
+</div>
+<div class="w-full h-2 rounded bg-tertiary-fixed overflow-hidden">
+<div class="w-2/3 h-full bg-tertiary transition-all duration-1000"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">SiteSync AI Re-sequencing:</span>
+<span class="text-primary font-bold font-mono">+1.8 Days Buffer Secured</span>
+</div>
+<div class="w-full h-2 rounded bg-secondary-container overflow-hidden">
+<div class="w-4/5 h-full bg-primary transition-all duration-1000"></div>
+</div>
+</div>
+<div class="mt-1 p-2 rounded bg-surface-container-lowest flex items-center justify-between text-on-surface border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary font-semibold">NET CRITICAL PATH DELTA</span>
+<span class="font-label-sm text-label-sm text-primary font-bold font-mono">+6.0 CALENDAR DAYS</span>
+</div>
+</div>
+<!-- Action Taken Box -->
+<div class="p-3 rounded bg-surface-container-low flex flex-col gap-1 border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Dynamic Resource Auto-Allocation</span>
+<p class="font-body-md text-body-md text-on-surface font-medium">
+          Auto-dispatched 2x CAT 336D hydraulic rock breakers from Duliajan Depot to bypass granitic pinch point at KM 42+650.
+        </p>
+</div>
+<!-- Cryptographic Proof Anchor -->
+<div class="p-3 rounded bg-surface-container flex flex-col gap-1.5 border border-blue-200/50">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase font-semibold">Cryptographic Ground Truth Anchor</span>
+<span class="font-label-xs text-label-xs text-primary font-bold font-mono">SHA-256 + RSA-4096</span>
+</div>
+<div class="font-label-xs text-label-xs text-on-surface break-all bg-surface-container-lowest p-2 rounded font-mono border border-slate-200/60 shadow-2xs">
+          MERKLE ROOT: 0x9AF572B104...ED312C889104
+        </div>
+<div class="flex items-center gap-1.5 font-label-xs text-label-xs text-secondary">
+<span class="material-symbols-outlined text-[13px] text-primary">verified_user</span>
+          Permanent immutable proof recorded for statutory vigilance audits.
+        </div>
+</div>
+<!-- Prominent 1-Click Commit CTA -->
+<button class="w-full py-3 px-4 rounded bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all tactile-btn cursor-pointer" id="commitP6Btn" type="button">
+<span class="material-symbols-outlined text-[18px]">send_time_extension</span>
+        Simulate 1-Click Commit to Oracle P6
+      </button>
+<!-- Hackathon Value Impact Scorecard with Shimmer and Metric Highlighting -->
+<div class="grid grid-cols-2 gap-2 pt-1" id="scorecardMetrics">
+<div class="shimmer-badge p-2.5 rounded bg-surface-container-low flex flex-col border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary">Schedule Saved</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold count-metric" data-val="4.2 Days">4.2 Days</span>
+</div>
+<div class="shimmer-badge p-2.5 rounded bg-surface-container-low flex flex-col border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary">Funds Protected</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold count-metric" data-val="₹2.10 Cr">₹2.10 Cr</span>
+</div>
+<div class="shimmer-badge p-2.5 rounded bg-surface-container-low flex flex-col border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary">Latency to Audit</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold count-metric" data-val="14s">14s <span class="font-label-xs text-secondary font-normal">(was 48h)</span></span>
+</div>
+<div class="shimmer-badge p-2.5 rounded bg-surface-container-low flex flex-col border border-slate-200/50">
+<span class="font-label-xs text-label-xs text-secondary">Throughput Gain</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold count-metric" data-val="12,342x">12,342x Faster</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Client-side Script for Demo Flow & Tour -->
+<script>
+    (function() {
+      const commitBtn = document.getElementById('commitP6Btn');
+      const startTourBtn = document.getElementById('startTourBtn');
+      const resetDemoBtn = document.getElementById('resetDemoBtn');
+      const togglePlayBtn = document.getElementById('togglePlayBtn');
+      const playIcon = document.getElementById('playIcon');
+      const waveformBars = document.querySelectorAll('.waveform-bar');
+      const audioTimestamp = document.getElementById('audioTimestamp');
+      const gateCards = document.querySelectorAll('.gate-card');
+
+      let isPlaying = false;
+      let playTimer = null;
+      let currentSeconds = 14;
+
+      // 1. Audio Waveform Toggle & Oscillating equalizer bars
+      if (togglePlayBtn && playIcon) {
+        togglePlayBtn.addEventListener('click', function() {
+          isPlaying = !isPlaying;
+          if (isPlaying) {
+            playIcon.textContent = 'pause';
+            waveformBars.forEach(bar => bar.classList.add('active-anim'));
+            playTimer = setInterval(function() {
+              currentSeconds++;
+              if (currentSeconds > 38) currentSeconds = 1;
+              const formatted = (currentSeconds < 10 ? '0' : '') + currentSeconds;
+              if (audioTimestamp) audioTimestamp.textContent = '00:' + formatted + ' / 00:38';
+            }, 1000);
+          } else {
+            playIcon.textContent = 'play_arrow';
+            waveformBars.forEach(bar => bar.classList.remove('active-anim'));
+            if (playTimer) clearInterval(playTimer);
+          }
+        });
+      }
+
+      // 2. Interactive Gate Pipeline Cards
+      gateCards.forEach(gate => {
+        gate.addEventListener('click', function() {
+          gateCards.forEach(g => {
+            g.classList.remove('gate-selected', 'bg-tertiary-fixed', 'text-on-tertiary-fixed');
+            if (g.getAttribute('data-gate') !== '4') {
+              g.classList.add('bg-surface-container-low');
+            }
+          });
+          this.classList.add('gate-selected');
+        });
+      });
+
+      // 3. Tactile 1-Click Commit Transition with Loading State
+      if (commitBtn) {
+        commitBtn.addEventListener('click', function() {
+          commitBtn.disabled = true;
+          commitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Committing SHA-256 Merkle Block to Oracle P6...';
+          commitBtn.classList.add('opacity-90', 'cursor-wait');
+
+          setTimeout(function() {
+            commitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span> Synchronized to Oracle EPPM #TR-4290';
+            commitBtn.classList.remove('bg-primary', 'hover:bg-primary-container', 'opacity-90', 'cursor-wait');
+            commitBtn.classList.add('bg-secondary-container', 'text-on-secondary-fixed');
+          }, 1200);
+        });
+      }
+
+      // 4. Reset Live Sandbox Handler
+      if (resetDemoBtn && commitBtn) {
+        resetDemoBtn.addEventListener('click', function() {
+          commitBtn.disabled = false;
+          commitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">send_time_extension</span> Simulate 1-Click Commit to Oracle P6';
+          commitBtn.className = 'w-full py-3 px-4 rounded bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all tactile-btn cursor-pointer';
+
+          // Reset Audio
+          if (isPlaying && togglePlayBtn) {
+            togglePlayBtn.click();
+          }
+          currentSeconds = 14;
+          if (audioTimestamp) audioTimestamp.textContent = '00:14 / 00:38';
+
+          // Reset Gate Active state back to Gate 04
+          gateCards.forEach(g => {
+            g.classList.remove('gate-selected');
+            if (g.getAttribute('data-gate') === '4') {
+              g.classList.add('gate-selected', 'bg-tertiary-fixed', 'text-on-tertiary-fixed');
+            }
+          });
+        });
+      }
+
+      // 5. Start Guided Tour with Gate Step Illumination
+      if (startTourBtn) {
+        startTourBtn.addEventListener('click', function() {
+          startTourBtn.innerHTML = '<span class="material-symbols-outlined text-[17px] animate-pulse">record_voice_over</span> Tour in Progress (Step 1/3)';
+          
+          let step = 1;
+          const tourInterval = setInterval(function() {
+            step++;
+            if (step <= 3) {
+              startTourBtn.innerHTML = `<span class="material-symbols-outlined text-[17px] animate-pulse">record_voice_over</span> Tour in Progress (Step ${step}/3)`;
+              gateCards.forEach(g => {
+                g.classList.remove('gate-selected');
+                if (parseInt(g.getAttribute('data-gate')) === step) {
+                  g.classList.add('gate-selected');
+                }
+              });
+            } else {
+              clearInterval(tourInterval);
+              startTourBtn.innerHTML = '<span class="material-symbols-outlined text-[17px]">play_circle</span> Start Guided 5-Min Tour';
+              // Return focus to Gate 4
+              gateCards.forEach(g => {
+                g.classList.remove('gate-selected');
+                if (g.getAttribute('data-gate') === '4') {
+                  g.classList.add('gate-selected');
+                }
+              });
+            }
+          }, 1300);
+        });
+      }
+    })();
+  </script>
+</div></main>
+<!-- Footer -->
+<footer class="w-full bg-white border-t border-slate-200 py-3.5 px-8 mt-auto">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2 text-slate-500 font-mono text-[11px]">
+<div>OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</div>
+<div class="flex items-center gap-3">
+<span>VERIFICATION PUBKEY: 0x9AF...D312</span>
+<span>•</span>
+<span>SYSTEM PROTOCOL: AIR-GAP/V2</span>
+<span>•</span>
+<span class="text-emerald-700 font-semibold">NODE TELEMETRY NOMINAL</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

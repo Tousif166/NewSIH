@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+
+/* Micro-interaction & Keyframe animations */
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlowRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+}
+
+@keyframes pulseGlowEmerald {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0); }
+}
+
+@keyframes pulseBeacon {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  50% { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.85; }
+}
+
+@keyframes criticalShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.panel-stagger-1 { animation: panelFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.panel-stagger-2 { animation: panelFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; opacity: 0; }
+.panel-stagger-3 { animation: panelFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards; opacity: 0; }
+.panel-stagger-4 { animation: panelFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards; opacity: 0; }
+
+.beacon-pulse {
+  animation: pulseBeacon 2s ease-in-out infinite;
+}
+
+.pulse-emerald-ring {
+  animation: pulseGlowEmerald 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.pulse-red-ring {
+  animation: pulseGlowRed 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.critical-bar-active {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+  background-size: 200% 100%;
+  animation: criticalShimmer 2.5s linear infinite;
+}
+
+/* Layer transition smoothness */
+.gis-layer-transition {
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), filter 0.28s ease;
+}
+
+/* Gantt Bar interactive tooltip */
+.gantt-bar-item {
+  transition: filter 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.gantt-bar-item:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px -2px rgba(15, 23, 42, 0.15);
+  z-index: 25;
+}
+
+/* Timeline scrubber custom styling */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 18px;
+  background: #1d4ed8;
+  border-radius: 3px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: ew-resize;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #1e40af;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error-container": "#ffdad6",
+          "inverse-primary": "#b7c4ff",
+          "primary-fixed-dim": "#b7c4ff",
+          "tertiary-fixed-dim": "#ffb4ab",
+          "on-background": "#0b1c30",
+          "surface-variant": "#e2e8f0",
+          "surface-dim": "#cbdbf5",
+          "tertiary-container": "#bb0112",
+          "surface-tint": "#2151da",
+          "on-tertiary-container": "#ffc7c1",
+          "surface-container-low": "#f8f9ff",
+          "inverse-surface": "#213145",
+          "on-primary-container": "#cad3ff",
+          "on-surface-variant": "#434655",
+          "on-secondary-fixed-variant": "#3f465c",
+          "secondary-fixed": "#dae2fd",
+          "on-secondary-fixed": "#131b2e",
+          "on-primary": "#ffffff",
+          "on-tertiary": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "on-secondary": "#ffffff",
+          "primary-container": "#1d4ed8",
+          "on-tertiary-fixed": "#410002",
+          "background": "#f8f9ff",
+          "primary-fixed": "#dce1ff",
+          "surface-container-highest": "#e2e8f0",
+          "error": "#b91c1c",
+          "on-tertiary-fixed-variant": "#93000b",
+          "on-primary-fixed": "#001551",
+          "on-error": "#ffffff",
+          "inverse-on-surface": "#eaf1ff",
+          "tertiary-fixed": "#ffdad6",
+          "outline-variant": "#cbd5e1",
+          "surface": "#f8f9ff",
+          "surface-container-high": "#f1f5f9",
+          "secondary-fixed-dim": "#bec6e0",
+          "primary": "#1d4ed8",
+          "tertiary": "#b91c1c",
+          "on-surface": "#0f172a",
+          "secondary": "#475569",
+          "on-error-container": "#93000a",
+          "on-secondary-container": "#5c647a",
+          "secondary-container": "#e2e8f0",
+          "outline": "#94a3b8",
+          "on-primary-fixed-variant": "#0039b5",
+          "surface-container": "#ffffff",
+          "surface-bright": "#ffffff",
+          "emerald-telemetry": "#059669",
+          "emerald-glow": "#ecfdf5"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "space-xl": "1.5rem",
+          "margin": "1rem",
+          "space-xs": "0.25rem",
+          "gutter": "0.75rem",
+          "space-sm": "0.375rem",
+          "space-md": "0.75rem",
+          "space-lg": "1rem"
+        },
+        "fontFamily": {
+          "headline-xl": ["Plus Jakarta Sans"],
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "body-md": ["Inter"],
+          "body-lg": ["Inter"],
+          "label-sm": ["JetBrains Mono"],
+          "label-md": ["JetBrains Mono"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "label-xs": ["JetBrains Mono"],
+          "body-sm": ["Inter"],
+          "label-mono-xs": ["JetBrains Mono"],
+          "label-mono-lg": ["JetBrains Mono"],
+          "label-mono-md": ["JetBrains Mono"]
+        },
+        "fontSize": {
+          "headline-xl": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+          "headline-xl-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+          "body-lg": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+          "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+          "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+          "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+          "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "headline-sm": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "label-xs": ["10px", { "lineHeight": "12px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+          "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+          "label-mono-xs": ["10px", { "lineHeight": "13px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+          "label-mono-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+          "label-mono-md": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+        }
+      }
+    }
+  }
+</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest border-r border-outline-variant z-50 flex flex-col justify-between select-none shadow-sm"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-sm transition-transform hover:scale-105 duration-200"><span class="material-symbols-outlined text-white font-bold text-[18px]">precision_manufacturing</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-slate-900 font-bold">OIL / SITESYNC</span><span class="font-label-mono-xs text-[9px] text-slate-500 tracking-widest font-mono">ENTERPRISE RUNTIME v4.8</span></div></div><div class="flex items-center px-2 py-0.5 rounded border border-emerald-200 bg-emerald-50 pulse-emerald-ring"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5 beacon-pulse"></span><span class="font-label-mono-xs text-[10px] text-emerald-700 font-semibold tracking-wide uppercase font-mono">P6 LIVE</span></div></div><nav class="flex flex-col px-space-xs py-space-sm gap-y-4" data-active-classes="bg-blue-50/70 text-primary border-l-2 border-primary font-semibold"><div class="flex flex-col"><div class="px-space-sm py-1 font-label-mono-xs text-[10px] text-slate-400 uppercase tracking-wider font-semibold font-mono">EXECUTION INTELLIGENCE</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="executive-health" href="#"><span class="font-body-md text-body-md">Executive Health</span><span class="material-symbols-outlined text-[16px] text-slate-400">monitoring</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="field-input-center" href="#"><span class="font-body-md text-body-md">Field Input Center</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-slate-100 text-slate-600 font-mono">TELEMETRY</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="ai-review-center" href="#"><span class="font-body-md text-body-md">AI Review Center</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-blue-50 text-blue-700 font-semibold font-mono">DESK 1</span></a></div></div><div class="flex flex-col"><div class="px-space-sm py-1 font-label-mono-xs text-[10px] text-slate-400 uppercase tracking-wider font-semibold font-mono">SCHEDULE &amp; CONTROLS</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="wbs-schedule-tree" href="#"><span class="font-body-md text-body-md">WBS &amp; Schedule Tree</span><span class="material-symbols-outlined text-[16px] text-slate-400">account_tree</span></a><a aria-current="page" class="flex items-center justify-between px-space-sm py-2 rounded transition-all bg-blue-50/80 text-primary border-l-2 border-primary font-semibold shadow-xs" data-path="4d-gantt-digital-twin" href="#"><span class="font-body-md text-body-md text-blue-900 font-semibold">4D Gantt Digital Twin</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-blue-100 text-blue-700 font-bold font-mono">4D-V</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="conflicts-chronology" href="#"><span class="font-body-md text-body-md">Conflicts &amp; Chronology</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-red-100 text-red-700 font-bold font-mono">2</span></a></div></div><div class="flex flex-col"><div class="px-space-sm py-1 font-label-mono-xs text-[10px] text-slate-400 uppercase tracking-wider font-semibold font-mono">ANALYTICS &amp; MEMORY</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="activity-dna-memory" href="#"><span class="font-body-md text-body-md">Activity DNA &amp; Memory</span><span class="material-symbols-outlined text-[16px] text-slate-400">fingerprint</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="what-if-simulator" href="#"><span class="font-body-md text-body-md">What-If Simulator</span><span class="material-symbols-outlined text-[16px] text-slate-400">tune</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="audit-provenance" href="#"><span class="font-body-md text-body-md">Audit &amp; Provenance</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-slate-100 text-slate-600 font-mono">SHA-256</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all hover:translate-x-0.5" data-path="5-min-judge-demo" href="#"><span class="font-body-md text-body-md">5-Min Judge Demo</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[9px] bg-blue-600 text-white font-bold font-mono">11</span></a></div></div></nav></div><div class="p-space-md bg-slate-50 m-space-xs rounded-lg border border-slate-200 flex flex-col gap-1.5"><div class="flex items-center justify-between"><span class="font-label-mono-xs text-[10px] text-slate-500 uppercase font-mono">SECURITY LEVEL</span><span class="font-label-mono-xs text-[10px] text-red-600 font-bold font-mono">IL-5 RESTRICTED</span></div><div class="flex items-center justify-between"><span class="font-label-mono-xs text-[10px] text-slate-500 uppercase font-mono">SEAL CODE</span><span class="font-label-mono-xs text-[10px] text-slate-700 font-mono font-medium">OIL-EXP-994821</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen bg-slate-50"><header class="fixed top-0 left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-gutter flex items-center justify-between shadow-sm"><div class="flex items-center gap-space-md overflow-hidden"><div class="flex items-center gap-2"><span class="font-label-mono-xs text-[10px] px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-bold font-mono tracking-wide">NODE-AS04</span><span class="font-label-mono-xs text-[10px] text-emerald-700 font-semibold uppercase tracking-wider hidden lg:inline font-mono">SECURE ORACLE EPPM SYNCED</span></div><div class="h-4 w-px bg-slate-200 hidden sm:block"></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-2"><span class="font-body-md text-body-md text-slate-900 font-bold truncate">Digboi–Duliajan 132km Crude Trunkline</span><span class="font-label-mono-xs text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold font-mono border border-slate-200">WBS-REV-4.8</span></div><div class="flex items-center gap-space-sm font-label-mono-xs text-[10px] text-slate-500 font-mono"><span class="truncate">PIPELINE REINFORCEMENT SEGMENT 04-A</span><span class="hidden xl:inline">• LAT: 27.3805° N, 95.3182° E</span><span class="hidden xl:inline">• 18ms LATENCY</span><span class="hidden xl:inline text-emerald-700 font-medium">• LEDGER VALIDATED</span></div></div></div><div class="flex items-center gap-space-md shrink-0"><div class="hidden md:flex items-center gap-space-xs px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white shadow-xs hover:border-slate-300 transition-colors"><div class="flex flex-col text-right"><span class="font-body-sm text-body-sm font-semibold text-slate-900">Pranjal Saikia</span><span class="font-label-mono-xs text-[10px] text-slate-500 font-mono">Chief Eng / Shift A</span></div><div class="w-7 h-7 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center ml-1"><span class="material-symbols-outlined text-blue-700 text-[16px]">person</span></div><span class="material-symbols-outlined text-slate-400 text-[16px]">arrow_drop_down</span></div><button class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 font-body-sm text-body-sm font-medium transition-all shadow-xs active:scale-95" type="button"><span class="material-symbols-outlined text-[16px] text-slate-500">file_download</span><span>Export Audit PKG</span></button><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-body-sm text-body-sm font-semibold transition-all shadow-xs active:scale-95 hover:shadow" type="button"><span class="material-symbols-outlined text-[16px]">cloud_upload</span><span>Commit to P6</span></button></div></header><main class="flex-1 pt-16 bg-slate-50 px-gutter py-space-lg w-full min-h-[calc(100vh-4rem-2.5rem)]"><div class="flex flex-col w-full gap-space-md">
+<!-- TOP HEADER / TIME MACHINE SCRUBBER BAR -->
+<div class="w-full bg-white rounded-xl p-space-md border border-slate-200 shadow-sm flex flex-col gap-space-sm panel-stagger-1">
+<!-- Row 1: Epoch, Speed, View Switchers, Layer Filters -->
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<!-- Simulation Epoch & Playhead Controls -->
+<div class="flex items-center gap-space-sm bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-2xs">
+<button class="w-7 h-7 rounded bg-blue-700 hover:bg-blue-800 text-white flex items-center justify-center transition-all shadow-xs active:scale-90" id="play-pause-btn" title="Toggle simulation autoplay">
+<span class="material-symbols-outlined text-[18px]" id="play-icon">play_arrow</span>
+</button>
+<button class="w-7 h-7 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center transition-all shadow-xs active:scale-90" id="step-fwd-btn" title="Step forward 1 week">
+<span class="material-symbols-outlined text-[16px]">fast_forward</span>
+</button>
+<div class="flex flex-col ml-1">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600 beacon-pulse" id="sim-status-dot"></span>
+<span class="font-label-mono-xs text-[9px] text-blue-700 font-bold uppercase tracking-wider font-mono">SIMULATION EPOCH</span>
+</div>
+<span class="font-label-mono-md text-label-mono-md text-slate-900 font-bold font-mono tracking-tight" id="current-epoch-label">24 OCT 2024 [W43]</span>
+</div>
+<div class="h-6 w-px bg-slate-200 mx-1"></div>
+<!-- Speed Multipliers -->
+<div class="flex items-center bg-white border border-slate-200 rounded p-0.5 gap-0.5" id="speed-controls-group">
+<button class="speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all duration-150 font-mono" data-speed="1">1x</button>
+<button class="speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-white bg-blue-700 font-bold font-mono shadow-xs transition-all duration-150" data-speed="2">2x</button>
+<button class="speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all duration-150 font-mono" data-speed="5">5x</button>
+<button class="speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all duration-150 font-mono" data-speed="10">10x</button>
+</div>
+</div>
+<!-- View Modes -->
+<div class="flex items-center bg-slate-100 border border-slate-200 p-1 rounded-lg gap-1" id="view-mode-group">
+<button class="view-btn px-2.5 py-1 rounded bg-white text-slate-900 font-body-sm text-body-sm font-semibold flex items-center gap-1.5 shadow-xs border border-slate-200 transition-all">
+<span class="material-symbols-outlined text-[15px] text-blue-700">view_stream</span>
+<span>4D Split Twin</span>
+</button>
+<button class="view-btn px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 hover:bg-white/60 font-body-sm text-body-sm flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[15px] text-slate-500">table_chart</span>
+<span>Gantt Master</span>
+</button>
+<button class="view-btn px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-body-sm text-body-sm flex items-center gap-1.5 transition-all hover:bg-white/60">
+<span class="material-symbols-outlined text-[15px] text-slate-500">satellite_alt</span>
+<span>Spatial Corridor</span>
+</button>
+</div>
+<!-- Telemetry Layers Checkboxes -->
+<div class="flex flex-wrap items-center gap-2">
+<label class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 hover:border-slate-300 transition-all select-none">
+<input checked="" class="w-3.5 h-3.5 rounded border-slate-300 text-blue-700 focus:ring-0 accent-blue-700 cursor-pointer transition-transform active:scale-90" id="layer-uav" type="checkbox"/>
+<span class="font-label-mono-xs text-[10px] text-slate-700 font-semibold font-mono">UAV ORTHOMOSAIC</span>
+</label>
+<label class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 hover:border-slate-300 transition-all select-none">
+<input checked="" class="w-3.5 h-3.5 rounded border-slate-300 text-blue-700 focus:ring-0 accent-blue-700 cursor-pointer transition-transform active:scale-90" id="layer-rtk" type="checkbox"/>
+<span class="font-label-mono-xs text-[10px] text-slate-700 font-semibold font-mono">RTK GNSS STRING</span>
+</label>
+<label class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 hover:border-slate-300 transition-all select-none">
+<input checked="" class="w-3.5 h-3.5 rounded border-slate-300 text-blue-700 focus:ring-0 accent-blue-700 cursor-pointer transition-transform active:scale-90" id="layer-geo" type="checkbox"/>
+<span class="font-label-mono-xs text-[10px] text-slate-700 font-semibold font-mono">GEO BOREHOLES</span>
+</label>
+<label class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-red-200 bg-red-50/70 cursor-pointer hover:bg-red-50 hover:border-red-300 transition-all select-none">
+<input checked="" class="w-3.5 h-3.5 rounded border-red-300 text-red-600 focus:ring-0 accent-red-600 cursor-pointer transition-transform active:scale-90" id="layer-critical" type="checkbox"/>
+<span class="font-label-mono-xs text-[10px] text-red-700 font-bold flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600 beacon-pulse"></span>CRITICAL PATH
+</span>
+</label>
+</div>
+</div>
+<!-- Row 2: Synchronized Timeline Slider & Key Phase Markers -->
+<div class="w-full flex flex-col gap-1 pt-1">
+<div class="relative w-full h-8 bg-slate-100 border border-slate-200 rounded-lg px-2 flex items-center">
+<!-- Baseline track background -->
+<div class="absolute inset-x-2 h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="w-[36%] h-full bg-emerald-500 transition-all duration-300" id="timeline-progress-fill"></div>
+<div class="absolute left-[36%] w-[12%] h-full bg-blue-600" id="timeline-active-slice"></div>
+<div class="absolute left-[48%] w-[18%] h-full bg-amber-400"></div>
+</div>
+<!-- Native / Styled scrub range slider -->
+<input class="relative z-10 w-full h-2 bg-transparent appearance-none cursor-pointer accent-blue-700" id="timeline-slider" max="100" min="0" title="Slide to scrub project timeline" type="range" value="36"/>
+<!-- Milestone Pins -->
+<div class="absolute left-[12%] -top-1 font-label-mono-xs text-[9px] text-slate-500 font-mono pointer-events-none select-none">KM 00 TERM</div>
+<div class="absolute left-[36%] -top-1 font-label-mono-xs text-[9px] text-blue-700 font-bold font-mono pointer-events-none select-none transition-all duration-150" id="scrubber-data-marker">DATA DATE (W43)</div>
+<div class="absolute left-[54%] -top-1 font-label-mono-xs text-[9px] text-slate-600 font-medium font-mono pointer-events-none select-none">HDD RIVER CUT</div>
+<div class="absolute left-[92%] -top-1 font-label-mono-xs text-[9px] text-slate-500 font-mono pointer-events-none select-none">P85 NOV'25</div>
+</div>
+<div class="flex items-center justify-between font-label-mono-xs text-[10px] text-slate-500 font-mono px-1">
+<span>OCT 2024 (COMMENCEMENT)</span>
+<span class="text-slate-800 font-semibold">OVERALL PIPELINE S-CURVE: <span class="text-emerald-700 font-bold" id="actual-scurve-val">41.8% ACTUAL</span> vs <span class="text-slate-600 font-bold" id="plan-scurve-val">46.2% PLAN</span> (<span class="text-red-600 font-bold" id="slippage-scurve-val">-4.4% SLIPPAGE</span>)</span>
+<span>28 NOV 2025 (P85 COMMERCIAL HANDOVER)</span>
+</div>
+</div>
+</div>
+<!-- MAIN SPLIT WORKSPACE -->
+<div class="w-full flex flex-col gap-space-md">
+<!-- UPPER SECTION: GIS CORRIDOR DIGITAL TWIN & GIS STRIP -->
+<div class="w-full bg-white rounded-xl p-space-md border border-slate-200 shadow-sm flex flex-col gap-space-sm relative overflow-hidden panel-stagger-2">
+<!-- Section Micro Header -->
+<div class="flex items-center justify-between z-10">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-xs">
+<span class="material-symbols-outlined text-[18px]">maps_ar</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-slate-900 font-bold">132KM GIS CORRIDOR DIGITAL TWIN</span>
+<span class="px-2 py-0.5 rounded font-label-mono-xs text-[10px] bg-slate-100 border border-slate-200 text-slate-700 font-mono font-medium">CHAINAGE 00+000 TO 132+000</span>
+<span class="px-2 py-0.5 rounded font-label-mono-xs text-[10px] bg-blue-50 border border-blue-200 text-blue-700 font-mono font-medium">SRTM-30M + UAV 2.5CM/PX</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-mono-xs text-[11px] font-mono">
+<span class="text-slate-400">SUBSURFACE DEPTH:</span>
+<span class="text-slate-800 font-bold">2.40m TRENCH INCLINE</span>
+<span class="text-slate-300 ml-2">|</span>
+<span class="text-slate-400 ml-2">DATUM:</span>
+<span class="text-slate-700 font-bold">WGS-84 / UTM ZONE 46N</span>
+</div>
+</div>
+<!-- Corridor Strip Overview Indicator Bar -->
+<div class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 flex flex-col gap-1.5 z-10">
+<div class="flex items-center justify-between font-label-mono-xs text-[10px] font-mono">
+<span class="text-emerald-700 font-bold">DIGBOI TERMINAL [KM 00+000]</span>
+<span class="text-blue-700 font-bold">SPREAD 2 WORK-FRONT [KM 42+650]</span>
+<span class="text-slate-600 font-medium">BURHI DIHING HDD [KM 71+200]</span>
+<span class="text-slate-600 font-medium">DULIAJAN REFINERY [KM 132+000]</span>
+</div>
+<!-- 4-segment visual strip -->
+<div class="w-full h-3 rounded flex overflow-hidden shadow-inner gap-0.5 bg-slate-200 p-0.5">
+<div class="w-[23%] h-full bg-emerald-600 rounded-sm flex items-center justify-center transition-all duration-200 hover:brightness-110 cursor-pointer" title="KM 0-30 Completed">
+<span class="font-label-mono-xs text-[8px] text-white font-bold tracking-tight font-mono">100% INSTALLED</span>
+</div>
+<div class="w-[26%] h-full bg-blue-600 rounded-sm relative flex items-center justify-center transition-all duration-200 hover:brightness-110 cursor-pointer" title="Active Focus Spread">
+<span class="font-label-mono-xs text-[8px] text-white font-bold tracking-tight font-mono">KM 30-65 ACTIVE TRENCHING</span>
+<div class="absolute -top-1 left-[45%] w-2 h-4 bg-red-600 rounded-sm shadow-xs border border-white beacon-pulse" id="corridor-active-marker"></div>
+</div>
+<div class="w-[27%] h-full bg-amber-500 rounded-sm flex items-center justify-center transition-all duration-200 hover:brightness-110 cursor-pointer" title="KM 65-100 NDT Verification">
+<span class="font-label-mono-xs text-[8px] text-white font-bold tracking-tight font-mono">KM 65-100 STRINGING/NDT</span>
+</div>
+<div class="w-[24%] h-full bg-slate-400 rounded-sm flex items-center justify-center transition-all duration-200 hover:brightness-110 cursor-pointer" title="KM 100-132 Pre-Commissioning">
+<span class="font-label-mono-xs text-[8px] text-white font-bold tracking-tight font-mono">KM 100-132 HYDRO-TEST PREP</span>
+</div>
+</div>
+</div>
+<!-- High Clarity Technical GIS & Telematics Canvas -->
+<div class="w-full h-72 bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200 rounded-xl relative overflow-hidden flex flex-col justify-between p-space-md shadow-xs">
+<!-- Engineering Grid Overlay -->
+<svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="32" id="light-contour-grid" patternunits="userSpaceOnUse" width="32">
+<path class="text-slate-300" d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#light-contour-grid)" height="100%" width="100%"></rect>
+<!-- Pipe Profile Path -->
+<path class="text-blue-700 gis-layer-transition" d="M 0 160 Q 250 140 450 190 T 800 170 T 1200 200" fill="none" id="pipe-path-svg" stroke="currentColor" stroke-dasharray="8 4" stroke-width="5"></path>
+<!-- Excavation Trench Bed -->
+<path class="text-slate-400" d="M 0 180 Q 250 160 450 210 T 800 190 T 1200 220" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+</svg>
+<!-- Aerial Segment Photo Context Layer (UAV Layer) -->
+<div class="absolute right-4 top-4 w-60 h-28 rounded-lg overflow-hidden shadow-sm border border-slate-300 bg-white z-10 flex flex-col gis-layer-transition hover:shadow-md transition-shadow" id="uav-photo-overlay">
+<div class="w-full h-full bg-cover bg-center relative" data-alt="High resolution orthomosaic aerial view of industrial oil pipeline excavation trench through dense tropical terrain with heavy yellow machinery in Assam India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALFEjrQ0PIpRUVA4oq8YFlaoJn17uKzLIjEAhmnehav5J5jv4N5bjn3x-gk1IT0_-BnakiT70jR2OPsZumm1vLB2PhG5llGzes4PyYM5EDC_7CanmMdJYl2vtFcDxfed9vxlo1a3Yf1B86A8kom_AU-S3xQPVOrpSKQ2T8ZiL3WMDF63O_6Ui1S0tcWnxQL2XkqxOhkp0mTjFNUSWC3kNbzpDO5A5r-o8HdWxH-lKdEfMtdi7XFaw')">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+<div class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-white/95 text-blue-800 font-label-mono-xs text-[9px] font-bold font-mono flex items-center gap-1 shadow-xs border border-slate-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse"></span>UAV ORTHO CAM-3
+</div>
+<div class="absolute bottom-1 left-1.5 right-1.5 flex justify-between font-label-mono-xs text-[9px] text-white font-mono">
+<span class="truncate">SEC-04 ROU: 18M</span>
+<span class="text-emerald-400 font-semibold font-mono">GSD: 1.8cm</span>
+</div>
+</div>
+</div>
+<!-- Callout Banner: Burhi Dihing HDD Crossing -->
+<div class="absolute left-6 top-4 z-10 flex items-center gap-2 bg-white/95 border border-slate-200 px-3 py-1.5 rounded-lg shadow-xs backdrop-blur-sm hover:border-blue-300 transition-colors">
+<span class="material-symbols-outlined text-blue-700 text-[16px]">water</span>
+<span class="font-label-mono-xs text-[10px] text-slate-500 font-mono uppercase">MAJOR WATERWAY CROSSING:</span>
+<span class="font-label-mono-xs text-[10px] text-slate-800 font-bold font-mono">BURHI DIHING RIVER HDD - 1,240M [PULLBACK COMPLETED]</span>
+</div>
+<!-- 3D Pipe Trench & Telematics Center Stage: Active Focus Zone KM 42+650 -->
+<div class="relative z-10 my-auto grid grid-cols-1 lg:grid-cols-12 gap-space-md items-center">
+<!-- Subsurface & Rock Strata Inspection Gauge (Geo Layer) -->
+<div class="lg:col-span-4 bg-white/95 border border-slate-200 p-space-sm rounded-lg shadow-xs flex flex-col gap-1.5 gis-layer-transition hover:border-slate-300" id="card-geo-profile">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-xs text-[10px] text-slate-500 font-mono uppercase font-bold">GEOTECHNICAL PROFILE @ KM 42+650</span>
+<span class="px-1.5 py-0.5 rounded bg-red-50 border border-red-200 text-red-700 font-label-mono-xs text-[9px] font-bold font-mono pulse-red-ring">SLOPE INSTABILITY</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-slate-500">Strata Classification:</span>
+<span class="text-slate-900 font-semibold font-mono text-[11px]">Granite-Sandstone Blend</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-slate-500">Rock Density / Hardness:</span>
+<span class="text-slate-800 font-mono text-[11px] font-medium">2,650 kg/m³ | RQD 68%</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-slate-500">Measured Trench Depth:</span>
+<span class="text-emerald-700 font-bold font-mono text-[11px]">2.42m (Req. 2.40m min)</span>
+</div>
+<!-- Strata visual bar -->
+<div class="w-full h-2 rounded bg-slate-100 border border-slate-200 overflow-hidden flex">
+<div class="w-[30%] bg-amber-200 transition-all hover:brightness-95" title="Alluvium topsoil"></div>
+<div class="w-[45%] bg-amber-400 transition-all hover:brightness-95" title="Weathered sandstone"></div>
+<div class="w-[25%] bg-slate-600 transition-all hover:brightness-95" title="Granite bedrock layer"></div>
+</div>
+</div>
+<!-- Machine Telematics Node: Komatsu PC300 #EX-09 -->
+<div class="lg:col-span-4 bg-white/95 border border-slate-200 p-space-sm rounded-lg shadow-xs flex flex-col gap-1.5 hover:border-slate-300 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-blue-700 text-[16px]">precision_manufacturing</span>
+<span class="font-label-mono-xs text-[10px] text-slate-900 font-bold font-mono">KOMATSU PC300-8M0 [SPREAD 2]</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-label-mono-xs text-[9px] font-semibold font-mono flex items-center gap-1 pulse-emerald-ring" id="komatsu-pill">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse"></span>CAN-BUS LIVE
+</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm">
+<div class="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
+<span class="text-slate-500 text-[10px] font-mono">ENGINE LOAD</span>
+<span class="text-red-600 font-bold font-mono text-label-mono-md" id="telemetry-load">84.2% [PEAK]</span>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
+<span class="text-slate-500 text-[10px] font-mono">DIESEL BURN RATE</span>
+<span class="text-slate-900 font-bold font-mono text-label-mono-md" id="telemetry-fuel">22.4 L/hr</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-slate-500">Hydraulic Pressure:</span>
+<span class="text-slate-800 font-mono text-[11px] font-semibold" id="telemetry-pressure">34.8 MPa [Ripper Active]</span>
+</div>
+</div>
+<!-- Live RTK Positioning Coordinates (RTK Layer) -->
+<div class="lg:col-span-4 bg-white/95 border border-slate-200 p-space-sm rounded-lg shadow-xs flex flex-col gap-1.5 gis-layer-transition hover:border-slate-300" id="card-rtk-gnss">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-xs text-[10px] text-blue-700 font-bold flex items-center gap-1 font-mono">
+<span class="material-symbols-outlined text-[14px] beacon-pulse">my_location</span>TRIMBLE R12i GNSS BASE
+</span>
+<span class="font-label-mono-xs text-[9px] text-emerald-700 bg-emerald-50 px-1 rounded font-bold font-mono pulse-emerald-ring">DOP 0.7 (FIXED)</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-xs text-[10px] font-mono">
+<span class="text-slate-500">LATITUDE:</span>
+<span class="text-slate-900 font-bold">27° 23' 21.12" N (27.3892°)</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-xs text-[10px] font-mono">
+<span class="text-slate-500">LONGITUDE:</span>
+<span class="text-slate-900 font-bold">95° 37' 02.64" E (95.6174°)</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-xs text-[10px] font-mono">
+<span class="text-slate-500">ELEVATION (MSL):</span>
+<span class="text-blue-700 font-bold">+142.48 m AMSL</span>
+</div>
+<div class="w-full bg-slate-50 border border-slate-200 rounded px-2 py-0.5 flex items-center justify-between">
+<span class="text-[9px] text-slate-500 font-mono">CHAINAGE OFFSET</span>
+<span class="font-label-mono-xs text-[10px] text-emerald-700 font-bold font-mono">CL + 0.12m TOLERANCE</span>
+</div>
+</div>
+</div>
+<!-- Bottom Twin Status Strip -->
+<div class="relative z-10 flex flex-wrap items-center justify-between pt-2 bg-white/95 border-t border-slate-200 -mx-space-md -mb-space-md px-space-md py-1.5 rounded-b-xl">
+<div class="flex items-center gap-space-md text-slate-600 font-label-mono-xs text-[10px] font-mono">
+<span>24" API 5L X70 PSL2 SUBMERGED ARC WELDED</span>
+<span class="text-slate-300">•</span>
+<span>WALL THICKNESS: 14.3mm</span>
+<span class="text-slate-300">•</span>
+<span>3LPE EXTERNAL COATING</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono-xs text-[10px] text-slate-500 font-mono">PHYSICAL COMPLETION:</span>
+<span class="font-label-mono-xs text-[11px] text-blue-700 font-bold font-mono" id="physical-completion-label">54.2 KM / 132.0 KM (41.06%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- LOWER SECTION: PRIMAVERA P6 SYNCHRONIZED GANTT SCHEDULE GRID -->
+<div class="w-full bg-white rounded-xl p-space-md border border-slate-200 shadow-sm flex flex-col gap-space-sm overflow-hidden panel-stagger-3">
+<!-- Gantt Workspace Control Ribbon -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-1">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-xs">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-slate-900 font-bold">ORACLE PRIMAVERA P6 EPPM SYNCHRONIZED REPOSITORY</span>
+<span class="px-2 py-0.5 rounded font-label-mono-xs text-[9px] bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold font-mono uppercase pulse-emerald-ring">LIVE EPPM REST LINK</span>
+</div>
+<span class="font-label-mono-xs text-[10px] text-slate-500 font-mono">BASE SCHEDULE: OIL_TRUNK_REV4.8_FINAL • DATA DATE: 24-OCT-2024</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex items-center gap-3 font-label-mono-xs text-[10px] font-mono">
+<div class="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="w-3.5 h-2 bg-slate-300 rounded-xs"></div>
+<span class="text-slate-600">Baseline Target</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="w-3.5 h-2 bg-emerald-600 rounded-xs"></div>
+<span class="text-slate-600">Verified Physical</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="w-3.5 h-2 bg-blue-600 rounded-xs"></div>
+<span class="text-slate-600">AI Forecast</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="w-3.5 h-2 bg-red-600 rounded-xs shadow-xs beacon-pulse"></div>
+<span class="text-red-700 font-bold">Critical Delay Path</span>
+</div>
+</div>
+</div>
+<!-- Dynamic Tooltip Hover Badge Container -->
+<div class="hidden text-xs bg-slate-900 text-white px-2 py-1 rounded shadow-lg fixed z-50 pointer-events-none font-mono text-[11px]" id="gantt-tooltip"></div>
+<!-- Gantt Dual-Pane Container -->
+<div class="w-full grid grid-cols-1 xl:grid-cols-12 rounded-lg overflow-hidden border border-slate-200 bg-white">
+<!-- Left Activity Sheet (5 Columns Span on XL) -->
+<div class="xl:col-span-5 flex flex-col bg-white border-r border-slate-200 overflow-x-auto">
+<!-- Table Header -->
+<div class="grid grid-cols-12 bg-slate-100/80 border-b border-slate-200 py-2.5 px-3 font-label-mono-xs text-[10px] text-slate-600 font-bold uppercase tracking-wider font-mono">
+<div class="col-span-3">Activity ID</div>
+<div class="col-span-5">Activity Description</div>
+<div class="col-span-2 text-right">Float</div>
+<div class="col-span-2 text-right">Phys %</div>
+</div>
+<!-- Activity Rows List -->
+<div class="flex flex-col text-body-sm font-body-sm divide-y divide-slate-100" id="activity-rows-container">
+<!-- Row 1: ACT-RC-0120 -->
+<div class="activity-row grid grid-cols-12 py-2 px-3 items-center hover:bg-slate-50 transition-all cursor-pointer" data-act-id="ACT-RC-0120" data-row-idx="0">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-slate-600 font-mono">ACT-RC-0120</div>
+<div class="col-span-5 font-medium text-slate-800 truncate">Row Clearing &amp; Grubbing (Km 30-50)</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-emerald-700 font-bold font-mono">+14.0d</div>
+<div class="col-span-2 text-right">
+<span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold font-mono">100%</span>
+</div>
+</div>
+<!-- Row 2: ACT-SB-2210 -->
+<div class="activity-row grid grid-cols-12 py-2 px-3 items-center bg-slate-50/50 hover:bg-slate-50 transition-all cursor-pointer" data-act-id="ACT-SB-2210" data-row-idx="1">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-slate-600 font-mono">ACT-SB-2210</div>
+<div class="col-span-5 text-slate-800 truncate">Stringing &amp; Field Bending (Km 30-65)</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-slate-600 font-mono">+2.0d</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-blue-700 font-bold font-mono">84%</div>
+</div>
+<!-- Row 3: ACT-WD-3105 -->
+<div class="activity-row grid grid-cols-12 py-2 px-3 items-center hover:bg-slate-50 transition-all cursor-pointer" data-act-id="ACT-WD-3105" data-row-idx="2">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-red-600 font-mono font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600 beacon-pulse"></span>ACT-WD-3105
+</div>
+<div class="col-span-5 text-slate-800 truncate">Orbital Welding &amp; Auto NDT (Km 42)</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-red-600 font-bold font-mono">-1.5d</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-slate-800 font-bold font-mono">62%</div>
+</div>
+<!-- Row 4: ACT-TR-4290 (SELECTED BOTTLENECK) -->
+<div class="activity-row grid grid-cols-12 py-2.5 px-3 items-center bg-red-50/70 border-l-4 border-l-red-600 border-y border-red-100 transition-all cursor-pointer shadow-2xs" data-act-id="ACT-TR-4290" data-row-idx="3">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-red-700 font-mono font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-red-600 beacon-pulse"></span>ACT-TR-4290
+</div>
+<div class="col-span-5 font-bold text-red-900 truncate">Trenching &amp; Lowering (Km 42+650)</div>
+<div class="col-span-2 text-right">
+<span class="px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] bg-red-100 text-red-700 font-bold font-mono border border-red-200" id="tr4290-float">-4.2d</span>
+</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-red-900 font-bold font-mono">33%</div>
+</div>
+<!-- Row 5: ACT-CT-3900 -->
+<div class="activity-row grid grid-cols-12 py-2 px-3 items-center hover:bg-slate-50 transition-all cursor-pointer" data-act-id="ACT-CT-3900" data-row-idx="4">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-slate-600 font-mono">ACT-CT-3900</div>
+<div class="col-span-5 text-slate-800 truncate">Joint Coating &amp; Holiday Testing</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-amber-700 font-semibold font-mono">-1.0d</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-slate-600 font-mono">41%</div>
+</div>
+<!-- Row 6: ACT-HT-1024 -->
+<div class="activity-row grid grid-cols-12 py-2 px-3 items-center bg-slate-50/50 hover:bg-slate-50 transition-all cursor-pointer" data-act-id="ACT-HT-1024" data-row-idx="5">
+<div class="col-span-3 font-label-mono-xs text-[11px] text-slate-600 font-mono">ACT-HT-1024</div>
+<div class="col-span-5 text-slate-800 truncate">Section 2 Hydrostatic Test (Spread 2)</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-red-600 font-semibold font-mono">-3.8d</div>
+<div class="col-span-2 text-right font-label-mono-xs text-[10px] text-slate-400 font-mono">0%</div>
+</div>
+</div>
+</div>
+<!-- Right Gantt Canvas (7 Columns Span on XL) -->
+<div class="xl:col-span-7 flex flex-col bg-slate-50/60 overflow-x-auto relative min-w-[500px]">
+<!-- Timeline Calendar Header: Weeks 38 to 52 -->
+<div class="flex w-full bg-slate-100/90 py-2 font-label-mono-xs text-[10px] text-slate-500 border-b border-slate-200 font-mono select-none" id="timeline-calendar-header">
+<div class="flex-1 text-center font-bold">W38<span class="block text-[8px] text-slate-400 font-normal">16 SEP</span></div>
+<div class="flex-1 text-center font-bold">W39<span class="block text-[8px] text-slate-400 font-normal">23 SEP</span></div>
+<div class="flex-1 text-center font-bold">W40<span class="block text-[8px] text-slate-400 font-normal">30 SEP</span></div>
+<div class="flex-1 text-center font-bold">W41<span class="block text-[8px] text-slate-400 font-normal">07 OCT</span></div>
+<div class="flex-1 text-center font-bold">W42<span class="block text-[8px] text-slate-400 font-normal">14 OCT</span></div>
+<div class="flex-1 text-center font-bold text-blue-700 bg-blue-100/70 rounded" id="col-w43">W43<span class="block text-[8px] text-blue-700 font-bold">21 OCT [NOW]</span></div>
+<div class="flex-1 text-center font-bold">W44<span class="block text-[8px] text-slate-400 font-normal">28 OCT</span></div>
+<div class="flex-1 text-center font-bold">W45<span class="block text-[8px] text-slate-400 font-normal">04 NOV</span></div>
+<div class="flex-1 text-center font-bold">W46<span class="block text-[8px] text-slate-400 font-normal">11 NOV</span></div>
+<div class="flex-1 text-center font-bold">W47<span class="block text-[8px] text-slate-400 font-normal">18 NOV</span></div>
+<div class="flex-1 text-center font-bold">W48<span class="block text-[8px] text-slate-400 font-normal">25 NOV</span></div>
+<div class="flex-1 text-center font-bold">W49<span class="block text-[8px] text-slate-400 font-normal">02 DEC</span></div>
+<div class="flex-1 text-center font-bold">W50<span class="block text-[8px] text-slate-400 font-normal">09 DEC</span></div>
+<div class="flex-1 text-center font-bold">W51<span class="block text-[8px] text-slate-400 font-normal">16 DEC</span></div>
+<div class="flex-1 text-center font-bold">W52<span class="block text-[8px] text-slate-400 font-normal">23 DEC</span></div>
+</div>
+<!-- Gantt Grid Rows & SVG Overlay for Dependency Ties and Data Date Line -->
+<div class="relative flex flex-col w-full flex-1 divide-y divide-slate-100">
+<!-- Cobalt / Amber Data Date Line: Positioned at Week 43 (approx 36.6% from left) -->
+<div class="absolute top-0 bottom-0 left-[36.6%] w-0.5 bg-blue-600 z-20 pointer-events-none flex flex-col items-center transition-all duration-150" id="gantt-playhead-line">
+<div class="px-1.5 py-0.5 -mt-2 bg-blue-700 text-white font-label-mono-xs text-[8px] font-bold rounded shadow-xs uppercase whitespace-nowrap font-mono tracking-tight" id="gantt-playhead-badge">
+DATA DATE: 24 OCT
+</div>
+<div class="h-full w-full bg-blue-600 shadow-sm"></div>
+</div>
+<!-- SVG Dependency Connectors Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" id="gantt-svg-layer" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow-red" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"></path>
+</marker>
+<marker id="arrow-blue" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+</marker>
+</defs>
+<!-- Dependency: ACT-WD-3105 to ACT-TR-4290 (Row 3 to Row 4) -->
+<path class="gis-layer-transition" d="M 230 76 L 255 76 L 255 108 L 270 108" fill="none" id="critical-dep-arrow" marker-end="url(#arrow-red)" stroke="#dc2626" stroke-dasharray="3 3" stroke-width="1.8"></path>
+<!-- Dependency: ACT-TR-4290 to ACT-CT-3900 (Row 4 to Row 5) -->
+<path d="M 360 108 L 380 108 L 380 140 L 395 140" fill="none" marker-end="url(#arrow-blue)" stroke="#2563eb" stroke-width="1.5"></path>
+</svg>
+<!-- Row 1: ACT-RC-0120 Bar -->
+<div class="h-10 w-full flex items-center relative px-2 hover:bg-slate-100/50 transition-colors" data-bar-row="0">
+<!-- Baseline bar -->
+<div class="absolute left-[3%] w-[26%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- Actual Completed Bar -->
+<div class="gantt-bar-item absolute left-[3%] w-[25%] h-5 bg-emerald-600 rounded shadow-xs flex items-center px-2 cursor-pointer" data-tooltip="ACT-RC-0120: 100% physically verified via Orthomosaic UAV scan">
+<span class="font-label-mono-xs text-[9px] text-white font-bold truncate font-mono">100% COMPLETE • UAV VERIFIED</span>
+</div>
+</div>
+<!-- Row 2: ACT-SB-2210 Bar -->
+<div class="h-10 w-full flex items-center relative px-2 hover:bg-slate-100/50 transition-colors" data-bar-row="1">
+<!-- Baseline bar -->
+<div class="absolute left-[15%] w-[32%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- In progress composite bar -->
+<div class="gantt-bar-item absolute left-[15%] w-[22%] h-5 bg-emerald-600 rounded-l flex items-center px-2 shadow-xs cursor-pointer" data-tooltip="ACT-SB-2210: 84% Completed Stringing / 65km total">
+<span class="font-label-mono-xs text-[9px] text-white font-bold font-mono">84% DONE</span>
+</div>
+<div class="gantt-bar-item absolute left-[37%] w-[7%] h-5 bg-blue-600 rounded-r flex items-center px-1 cursor-pointer" data-tooltip="AI Forecast: Remaining 16% to finish by W44">
+<span class="font-label-mono-xs text-[8px] text-white font-bold font-mono">AI EST</span>
+</div>
+</div>
+<!-- Row 3: ACT-WD-3105 Bar -->
+<div class="h-10 w-full flex items-center relative px-2 hover:bg-slate-100/50 transition-colors" data-bar-row="2">
+<!-- Baseline bar -->
+<div class="absolute left-[24%] w-[22%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- Actual -->
+<div class="gantt-bar-item absolute left-[24%] w-[13%] h-5 bg-blue-600 rounded-l flex items-center px-2 shadow-xs cursor-pointer" data-tooltip="ACT-WD-3105: 62% Welds tested with zero ultrasonic defect findings">
+<span class="font-label-mono-xs text-[9px] text-white font-bold font-mono">WELD 62%</span>
+</div>
+<!-- Forecast Slipping -->
+<div class="gantt-bar-item absolute left-[37%] w-[8%] h-5 bg-red-500 rounded-r flex items-center px-1 cursor-pointer" data-tooltip="NDT Crew shift shortage causing -1.5 days slippage">
+<span class="font-label-mono-xs text-[8px] text-white font-bold font-mono">-1.5d SLIP</span>
+</div>
+</div>
+<!-- Row 4: ACT-TR-4290 (CRITICAL BOTTLENECK BAR) -->
+<div class="h-11 w-full flex items-center relative px-2 bg-red-50/40 transition-colors" data-bar-row="3" id="critical-row-gantt">
+<!-- Baseline bar -->
+<div class="absolute left-[28%] w-[24%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- Progress -->
+<div class="gantt-bar-item absolute left-[28%] w-[8.6%] h-6 bg-blue-700 rounded-l flex items-center px-2 shadow-xs cursor-pointer" data-tooltip="Actual Trenching: 33% depth achieved @ Km 42+650">
+<span class="font-label-mono-xs text-[9px] text-white font-bold font-mono">33%</span>
+</div>
+<!-- High-visibility Critical Path Delay Extension -->
+<div class="gantt-bar-item absolute left-[36.6%] w-[16%] h-6 rounded-r flex items-center justify-between px-2 shadow-xs cursor-pointer critical-bar-active transition-all" data-tooltip="CRITICAL DELAY: Hard granitic bench encountered, 4.2d negative float" id="tr4290-bar-slip">
+<span class="font-label-mono-xs text-[9px] text-white font-bold uppercase truncate font-mono">4.2d CRITICAL SLIPPAGE</span>
+<span class="material-symbols-outlined text-[14px] text-white animate-bounce">warning</span>
+</div>
+</div>
+<!-- Row 5: ACT-CT-3900 Bar -->
+<div class="h-10 w-full flex items-center relative px-2 hover:bg-slate-100/50 transition-colors" data-bar-row="4">
+<!-- Baseline bar -->
+<div class="absolute left-[44%] w-[20%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- Forecast displaced bar -->
+<div class="gantt-bar-item absolute left-[47%] w-[15%] h-5 bg-amber-500 rounded flex items-center px-2 shadow-xs cursor-pointer" data-tooltip="Joint Coating pushed back due to predecessor trench delays">
+<span class="font-label-mono-xs text-[8px] text-white font-bold font-mono">DELAYED START: 06 NOV</span>
+</div>
+</div>
+<!-- Row 6: ACT-HT-1024 Bar -->
+<div class="h-10 w-full flex items-center relative px-2 hover:bg-slate-100/50 transition-colors" data-bar-row="5">
+<!-- Baseline bar -->
+<div class="absolute left-[62%] w-[22%] h-1.5 bg-slate-300 rounded-full -top-0.5"></div>
+<!-- Pushed Milestones -->
+<div class="gantt-bar-item absolute left-[66%] w-[20%] h-5 bg-slate-200 border border-slate-300 rounded flex items-center px-2 cursor-pointer" data-tooltip="Hydro-Testing final sign-off window: Dec 2024">
+<span class="font-label-mono-xs text-[8px] text-slate-600 truncate font-mono">PRE-COMMISSIONING HYDROTEST 14.5 BAR</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- BOTTOM FLOATING TELEMETRY & RE-SEQUENCING MITIGATION PANEL -->
+<div class="w-full bg-white rounded-xl p-space-md border border-slate-200 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-space-md panel-stagger-4">
+<!-- Left: Activity Diagnostic & Multi-Source Ground Truth Evidence -->
+<div class="flex items-start gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-red-50 border border-red-200 text-red-600 flex items-center justify-center shrink-0 shadow-xs pulse-red-ring">
+<span class="material-symbols-outlined text-[24px]">troubleshoot</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-mono-md text-label-mono-md text-red-700 font-bold tracking-wide font-mono">SELECTED BOTTLENECK: ACT-TR-4290</span>
+<span class="px-2 py-0.5 rounded font-label-mono-xs text-[10px] bg-slate-100 text-slate-800 font-semibold font-mono border border-slate-200">Trenching &amp; Lowering — Zone B Km 42+650</span>
+<span class="px-2 py-0.5 rounded font-label-mono-xs text-[10px] bg-red-100 text-red-800 font-bold font-mono border border-red-200">IMPACT: +$42,800/d LIQUIDATED DAMAGES</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-600 mt-1 leading-relaxed">
+<span class="text-slate-900 font-semibold">Corroborated Telemetry Source:</span> Dual Komatsu PC300 CAN-bus hydraulics (34.8 MPa sustained) + Audio Voice DPR #8820-03 (Shift Eng. B. Gogoi: "Hard granitic bench encountered") + Sentinel-2 SAR coherence backscatter shift.
+</p>
+</div>
+</div>
+<!-- Right: AI P6 Recommendation & 1-Click Action -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md shrink-0 w-full lg:w-auto">
+<div class="flex flex-col bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-left sm:text-right w-full sm:w-auto transition-colors hover:bg-slate-100/70" id="mitigation-recommendation-box">
+<span class="font-label-mono-xs text-[10px] text-blue-700 font-bold uppercase flex items-center gap-1 sm:justify-end font-mono">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>AI MITIGATION READY
+</span>
+<span class="font-body-sm text-body-sm text-slate-800 font-medium" id="mitigation-action-desc">Re-sequence padding to absorb 2.5d + deploy Spread 3 Ripper</span>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-body-sm text-body-sm font-bold shadow-xs transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-98 select-none" id="apply-simulation-btn">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span id="apply-btn-label">Apply AI Re-sequencing Simulation</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline Micro-interactions and Dynamic Simulation Script -->
+<script>
+  (function() {
+    // 1. Play / Pause simulation toggle & Scrubber
+    const playBtn = document.getElementById('play-pause-btn');
+    const playIcon = document.getElementById('play-icon');
+    const simStatusDot = document.getElementById('sim-status-dot');
+    let isPlaying = false;
+    let simInterval = null;
+    let playSpeed = 2; // Default multiplier
+
+    const timelineSlider = document.getElementById('timeline-slider');
+    const timelineProgressFill = document.getElementById('timeline-progress-fill');
+    const scrubberDataMarker = document.getElementById('scrubber-data-marker');
+    const epochLabel = document.getElementById('current-epoch-label');
+    const ganttPlayheadLine = document.getElementById('gantt-playhead-line');
+    const ganttPlayheadBadge = document.getElementById('gantt-playhead-badge');
+    const actualScurveVal = document.getElementById('actual-scurve-val');
+    const physCompletionLabel = document.getElementById('physical-completion-label');
+    const telemetryLoad = document.getElementById('telemetry-load');
+    const telemetryFuel = document.getElementById('telemetry-fuel');
+    const telemetryPressure = document.getElementById('telemetry-pressure');
+
+    const epochDates = [
+      { date: "16 SEP 2024 [W38]", phys: "32.1% ACTUAL", km: "42.4 KM", load: "71.0%", fuel: "18.2 L/hr", press: "28.4 MPa [Soft Clay]" },
+      { date: "23 SEP 2024 [W39]", phys: "34.5% ACTUAL", km: "45.5 KM", load: "74.8%", fuel: "19.5 L/hr", press: "29.8 MPa [Alluvium]" },
+      { date: "30 SEP 2024 [W40]", phys: "36.8% ACTUAL", km: "48.6 KM", load: "79.2%", fuel: "20.1 L/hr", press: "31.0 MPa [Sandstone]" },
+      { date: "07 OCT 2024 [W41]", phys: "38.2% ACTUAL", km: "50.4 KM", load: "81.5%", fuel: "21.0 L/hr", press: "32.6 MPa [Shale Entry]" },
+      { date: "14 OCT 2024 [W42]", phys: "39.9% ACTUAL", km: "52.7 KM", load: "83.1%", fuel: "21.8 L/hr", press: "33.9 MPa [Hard Bench]" },
+      { date: "24 OCT 2024 [W43]", phys: "41.8% ACTUAL", km: "54.2 KM", load: "84.2% [PEAK]", fuel: "22.4 L/hr", press: "34.8 MPa [Ripper Active]" },
+      { date: "28 OCT 2024 [W44]", phys: "43.1% ACTUAL", km: "56.9 KM", load: "82.0%", fuel: "21.6 L/hr", press: "33.5 MPa [Trench B]" },
+      { date: "04 NOV 2024 [W45]", phys: "45.0% ACTUAL", km: "59.4 KM", load: "80.4%", fuel: "20.8 L/hr", press: "31.9 MPa [Transition]" },
+      { date: "11 NOV 2024 [W46]", phys: "47.2% ACTUAL", km: "62.3 KM", load: "77.5%", fuel: "19.9 L/hr", press: "30.1 MPa [Alluvium Cut]" },
+      { date: "18 NOV 2024 [W47]", phys: "49.6% ACTUAL", km: "65.5 KM", load: "75.2%", fuel: "19.1 L/hr", press: "28.9 MPa [Nominal]" },
+      { date: "25 NOV 2024 [W48]", phys: "52.4% ACTUAL", km: "69.2 KM", load: "73.0%", fuel: "18.5 L/hr", press: "27.8 MPa [River Bank]" },
+      { date: "02 DEC 2024 [W49]", phys: "55.8% ACTUAL", km: "73.7 KM", load: "71.2%", fuel: "17.9 L/hr", press: "26.5 MPa [Level Grade]" }
+    ];
+
+    function updateSimulationVisuals(val) {
+      const numericVal = parseFloat(val);
+      const ratio = numericVal / 100;
+      const idx = Math.min(Math.floor(ratio * epochDates.length), epochDates.length - 1);
+      const epoch = epochDates[idx];
+
+      // Update Header Text & Timeline Progress Fill
+      if (epochLabel) epochLabel.textContent = epoch.date;
+      if (timelineProgressFill) timelineProgressFill.style.width = `${Math.max(15, numericVal)}%`;
+      if (scrubberDataMarker) scrubberDataMarker.style.left = `${Math.max(6, Math.min(88, numericVal))}%`;
+
+      // Update S-Curve & Telemetry readout metrics
+      if (actualScurveVal) actualScurveVal.textContent = epoch.phys;
+      if (physCompletionLabel) physCompletionLabel.textContent = `${epoch.km} / 132.0 KM (${(numericVal * 0.8 + 12).toFixed(1)}%)`;
+      if (telemetryLoad) telemetryLoad.textContent = epoch.load;
+      if (telemetryFuel) telemetryFuel.textContent = epoch.fuel;
+      if (telemetryPressure) telemetryPressure.textContent = epoch.press;
+
+      // Update Gantt Data-Date Playhead line across timeline
+      if (ganttPlayheadLine) {
+        const clampedPos = Math.max(2, Math.min(98, numericVal));
+        ganttPlayheadLine.style.left = `${clampedPos}%`;
+      }
+      if (ganttPlayheadBadge) {
+        ganttPlayheadBadge.textContent = epoch.date.split('[')[0].trim();
+      }
+
+      // Highlight corresponding activity rows dynamically
+      const rows = document.querySelectorAll('.activity-row');
+      const activeRowIndex = Math.min(Math.floor(ratio * rows.length), rows.length - 1);
+      rows.forEach((r, i) => {
+        if (i === activeRowIndex && !r.classList.contains('border-l-red-600')) {
+          r.classList.add('bg-blue-50/40');
+        } else if (!r.classList.contains('border-l-red-600')) {
+          r.classList.remove('bg-blue-50/40');
+        }
+      });
+    }
+
+    timelineSlider.addEventListener('input', (e) => {
+      updateSimulationVisuals(e.target.value);
+    });
+
+    function startSimulationTimer() {
+      if (simInterval) clearInterval(simInterval);
+      const intervalMs = Math.max(40, Math.floor(400 / playSpeed));
+      simInterval = setInterval(() => {
+        let curr = parseFloat(timelineSlider.value);
+        if (curr >= 100) {
+          curr = 0;
+        } else {
+          curr += 0.8;
+        }
+        timelineSlider.value = curr;
+        updateSimulationVisuals(curr);
+      }, intervalMs);
+    }
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playIcon.textContent = 'pause';
+        playBtn.classList.replace('bg-blue-700', 'bg-slate-900');
+        simStatusDot.classList.add('animate-ping');
+        startSimulationTimer();
+      } else {
+        playIcon.textContent = 'play_arrow';
+        playBtn.classList.replace('bg-slate-900', 'bg-blue-700');
+        simStatusDot.classList.remove('animate-ping');
+        clearInterval(simInterval);
+      }
+    });
+
+    // 2. Step forward button
+    document.getElementById('step-fwd-btn').addEventListener('click', () => {
+      let curr = parseFloat(timelineSlider.value);
+      curr = Math.min(curr + 8.33, 100);
+      timelineSlider.value = curr;
+      updateSimulationVisuals(curr);
+    });
+
+    // 3. Speed Multipliers with active states
+    const speedButtons = document.querySelectorAll('.speed-toggle');
+    speedButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        speedButtons.forEach(b => {
+          b.className = "speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all duration-150 font-mono";
+        });
+        btn.className = "speed-toggle px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] text-white bg-blue-700 font-bold font-mono shadow-xs transition-all duration-150";
+        playSpeed = parseFloat(btn.getAttribute('data-speed')) || 1;
+        if (isPlaying) {
+          startSimulationTimer();
+        }
+      });
+    });
+
+    // 4. View Mode Switchers
+    const viewButtons = document.querySelectorAll('.view-btn');
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewButtons.forEach(b => {
+          b.className = "view-btn px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 hover:bg-white/60 font-body-sm text-body-sm flex items-center gap-1.5 transition-all";
+          const icon = b.querySelector('.material-symbols-outlined');
+          if (icon) icon.className = "material-symbols-outlined text-[15px] text-slate-500";
+        });
+        btn.className = "view-btn px-2.5 py-1 rounded bg-white text-slate-900 font-body-sm text-body-sm font-semibold flex items-center gap-1.5 shadow-xs border border-slate-200 transition-all";
+        const activeIcon = btn.querySelector('.material-symbols-outlined');
+        if (activeIcon) activeIcon.className = "material-symbols-outlined text-[15px] text-blue-700";
+      });
+    });
+
+    // 5. Layer Toggle Micro-interactions
+    const uavCheck = document.getElementById('layer-uav');
+    const uavOverlay = document.getElementById('uav-photo-overlay');
+    if (uavCheck && uavOverlay) {
+      uavCheck.addEventListener('change', () => {
+        if (uavCheck.checked) {
+          uavOverlay.style.opacity = '1';
+          uavOverlay.style.transform = 'scale(1)';
+          uavOverlay.style.pointerEvents = 'auto';
+        } else {
+          uavOverlay.style.opacity = '0.15';
+          uavOverlay.style.transform = 'scale(0.96)';
+          uavOverlay.style.pointerEvents = 'none';
+        }
+      });
+    }
+
+    const rtkCheck = document.getElementById('layer-rtk');
+    const rtkCard = document.getElementById('card-rtk-gnss');
+    if (rtkCheck && rtkCard) {
+      rtkCheck.addEventListener('change', () => {
+        rtkCard.style.opacity = rtkCheck.checked ? '1' : '0.4';
+      });
+    }
+
+    const geoCheck = document.getElementById('layer-geo');
+    const geoCard = document.getElementById('card-geo-profile');
+    if (geoCheck && geoCard) {
+      geoCheck.addEventListener('change', () => {
+        geoCard.style.opacity = geoCheck.checked ? '1' : '0.4';
+      });
+    }
+
+    const critCheck = document.getElementById('layer-critical');
+    const critSlipBar = document.getElementById('tr4290-bar-slip');
+    const critDepArrow = document.getElementById('critical-dep-arrow');
+    if (critCheck) {
+      critCheck.addEventListener('change', () => {
+        if (critCheck.checked) {
+          if (critSlipBar) {
+            critSlipBar.classList.add('critical-bar-active');
+            critSlipBar.style.opacity = '1';
+          }
+          if (critDepArrow) critDepArrow.style.opacity = '1';
+        } else {
+          if (critSlipBar) {
+            critSlipBar.classList.remove('critical-bar-active');
+            critSlipBar.style.opacity = '0.35';
+          }
+          if (critDepArrow) critDepArrow.style.opacity = '0.2';
+        }
+      });
+    }
+
+    // 6. Gantt Bar Tooltip Handling
+    const tooltip = document.getElementById('gantt-tooltip');
+    const barItems = document.querySelectorAll('.gantt-bar-item');
+    barItems.forEach(bar => {
+      bar.addEventListener('mouseenter', (e) => {
+        const text = bar.getAttribute('data-tooltip');
+        if (!text || !tooltip) return;
+        tooltip.textContent = text;
+        tooltip.classList.remove('hidden');
+      });
+      bar.addEventListener('mousemove', (e) => {
+        if (!tooltip) return;
+        tooltip.style.left = `${e.clientX + 14}px`;
+        tooltip.style.top = `${e.clientY + 14}px`;
+      });
+      bar.addEventListener('mouseleave', () => {
+        if (tooltip) tooltip.classList.add('hidden');
+      });
+    });
+
+    // 7. Activity Row Selection Diagnostics
+    const actRows = document.querySelectorAll('.activity-row');
+    actRows.forEach(row => {
+      row.addEventListener('click', () => {
+        actRows.forEach(r => {
+          if (!r.classList.contains('border-l-red-600')) {
+            r.classList.remove('bg-blue-50/70', 'border-l-4', 'border-l-blue-600');
+          }
+        });
+        if (!row.classList.contains('border-l-red-600')) {
+          row.classList.add('bg-blue-50/70', 'border-l-4', 'border-l-blue-600');
+        }
+      });
+    });
+
+    // 8. AI Re-sequencing Simulation action button with interactive patch simulation
+    const applyBtn = document.getElementById('apply-simulation-btn');
+    const applyBtnLabel = document.getElementById('apply-btn-label');
+    const trFloatBadge = document.getElementById('tr4290-float');
+    const slipBar = document.getElementById('tr4290-bar-slip');
+    const scurveSlippage = document.getElementById('slippage-scurve-val');
+    const mitDesc = document.getElementById('mitigation-action-desc');
+
+    if (applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        const origHTML = applyBtn.innerHTML;
+        applyBtn.disabled = true;
+        applyBtn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing Schedule Monte Carlo...</span>`;
+
+        setTimeout(() => {
+          // Update visual states to simulated optimal patch
+          applyBtn.innerHTML = `<span class="material-symbols-outlined text-[18px]">verified</span><span>P6 Schedule Patched (+2.5d Restored)</span>`;
+          applyBtn.classList.replace('bg-blue-700', 'bg-emerald-600');
+          
+          if (trFloatBadge) {
+            trFloatBadge.textContent = "-1.7d [RECOVERED]";
+            trFloatBadge.className = "px-1.5 py-0.5 rounded font-label-mono-xs text-[10px] bg-emerald-100 text-emerald-800 font-bold font-mono border border-emerald-300";
+          }
+          if (slipBar) {
+            slipBar.style.width = "7%";
+            slipBar.innerHTML = `<span class="font-label-mono-xs text-[8px] text-white font-bold font-mono">1.7d SLIP</span>`;
+          }
+          if (scurveSlippage) {
+            scurveSlippage.textContent = "-1.9% SLIPPAGE (RECOVERING)";
+            scurveSlippage.className = "text-amber-600 font-bold";
+          }
+          if (mitDesc) {
+            mitDesc.textContent = "Schedule patch applied: Spread 3 Ripper deployed to Km 42+650";
+          }
+
+          setTimeout(() => {
+            applyBtn.innerHTML = origHTML;
+            applyBtn.classList.replace('bg-emerald-600', 'bg-blue-700');
+            applyBtn.disabled = false;
+          }, 4000);
+        }, 1100);
+      });
+    }
+
+  })();
+</script></main><footer class="h-10 bg-white border-t border-slate-200 text-slate-500 px-gutter flex items-center justify-between font-label-mono-xs text-[10px] font-mono"><div class="flex items-center gap-space-xs truncate"><span class="material-symbols-outlined text-blue-700 text-[14px]">verified</span><span class="truncate">OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</span></div><div class="flex items-center gap-space-md shrink-0"><span class="hidden md:inline text-slate-600">VERIFICATION PUBKEY: 0x9AF...D312</span><span class="hidden lg:inline text-slate-400">SYSTEM PROTOCOL: AIR-GAP/V2</span><div class="flex items-center gap-1 text-emerald-700 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse"></span><span>NODE TELEMETRY NOMINAL</span></div></div></footer></div></body></html>

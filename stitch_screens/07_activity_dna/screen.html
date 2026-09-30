@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* Micro-interactions & Orchestrated Entrance */
+    @keyframes subtleFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes drawPath {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.15); }
+    }
+
+    @keyframes beaconGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(33, 81, 218, 0.4); }
+      50% { box-shadow: 0 0 0 5px rgba(33, 81, 218, 0); }
+    }
+
+    .animate-cascade-1 { animation: subtleFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-cascade-2 { animation: subtleFadeUp 0.45s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .animate-cascade-3 { animation: subtleFadeUp 0.45s 0.16s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .animate-cascade-4 { animation: subtleFadeUp 0.45s 0.24s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+    .chart-path-current {
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: drawPath 1.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .chart-path-predictive {
+      stroke-dasharray: 850;
+      stroke-dashoffset: 850;
+      animation: drawPath 1.4s 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .telemetry-beacon {
+      animation: pulseSoft 2.2s infinite ease-in-out;
+    }
+
+    .telemetry-beacon-glow {
+      animation: beaconGlow 2.5s infinite ease-in-out;
+    }
+
+    /* Subtle interactive card lift and border highlight */
+    .tech-card {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    }
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px -4px rgba(11, 28, 48, 0.07);
+    }
+
+    /* Accessible focus states & Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-cascade-1,
+      .animate-cascade-2,
+      .animate-cascade-3,
+      .animate-cascade-4 {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .chart-path-current,
+      .chart-path-predictive {
+        animation: none !important;
+        stroke-dashoffset: 0 !important;
+      }
+      .telemetry-beacon,
+      .telemetry-beacon-glow {
+        animation: none !important;
+      }
+      .tech-card {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-background": "#0b1c30",
+            "tertiary": "#8f000b",
+            "surface-tint": "#2151da",
+            "secondary": "#565e74",
+            "surface-container-highest": "#d3e4fe",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#b7c4ff",
+            "on-tertiary-container": "#ffc7c1",
+            "secondary-container": "#dae2fd",
+            "on-primary-fixed": "#001551",
+            "on-tertiary-fixed-variant": "#93000b",
+            "surface": "#f8f9ff",
+            "on-secondary-container": "#5c647a",
+            "tertiary-container": "#bb0112",
+            "on-surface-variant": "#434655",
+            "tertiary-fixed": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#0039b5",
+            "secondary-fixed": "#dae2fd",
+            "primary-fixed-dim": "#b7c4ff",
+            "outline": "#747686",
+            "surface-container-lowest": "#ffffff",
+            "inverse-surface": "#213145",
+            "on-secondary-fixed": "#131b2e",
+            "on-primary-container": "#cad3ff",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "secondary-fixed-dim": "#bec6e0",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "on-error-container": "#93000a",
+            "primary-container": "#1d4ed8",
+            "outline-variant": "#c4c5d7",
+            "surface-container": "#e5eeff",
+            "surface-variant": "#d3e4fe",
+            "on-secondary-fixed-variant": "#3f465c",
+            "primary": "#0037b0",
+            "surface-dim": "#cbdbf5",
+            "surface-container-high": "#dce9ff",
+            "primary-fixed": "#dce1ff",
+            "on-tertiary-fixed": "#410002",
+            "tertiary-fixed-dim": "#ffb4ab",
+            brand: {
+              primary: "#0037b0",
+              cobalt: "#1d4ed8",
+              tint: "#2151da",
+              light: "#eff4ff"
+            },
+            slate: {
+              50: "#f8fafc",
+              100: "#f1f5f9",
+              200: "#e2e8f0",
+              300: "#cbd5e1",
+              400: "#94a3b8",
+              500: "#64748b",
+              600: "#475569",
+              700: "#334155",
+              800: "#1e293b",
+              900: "#0f172a"
+            }
+          },
+          fontFamily: {
+            "label-xs": ["JetBrains Mono", "monospace"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "label-md": ["JetBrains Mono", "monospace"],
+            "body-sm": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
+            sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "label-xs": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "body-md": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+            "body-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "headline-sm": ["15px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "headline-xl": ["32px", { lineHeight: "38px", letterSpacing: "-0.025em", fontWeight: "700" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-800 antialiased min-h-screen">
+<!-- Left Sidebar (Clean Industrial / Foundry Technical Light) -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between overflow-y-auto">
+<div class="flex flex-col">
+<!-- Workspace Brand Badge -->
+<div class="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-sm transition-transform hover:scale-105 duration-150">
+<span class="material-symbols-outlined text-[19px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 text-sm tracking-tight leading-snug uppercase">OIL / SiteSync</span>
+<span class="font-mono text-[10px] text-slate-500 font-semibold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+            P6 LIVE
+          </div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-200/80 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-slate-400">hub</span>NODE-AS04 // SECURE</span>
+<span class="text-blue-700 font-semibold">ORACLE EPPM SYNCED</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col px-3 py-4 gap-5">
+<!-- Group 1 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Execution Intelligence</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">grid_view</span>
+<span class="text-[13px]">Executive Health</span>
+</div>
+<span class="font-mono text-[10px] text-slate-500">KPI</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">mic</span>
+<span class="text-[13px]">Field Input Center</span>
+</div>
+<span class="font-mono text-[10px] text-slate-500">TELEMETRY</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">check_circle</span>
+<span class="text-[13px]">AI Review Center</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">DESK 1</span>
+</a>
+</div>
+<!-- Group 2 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Schedule &amp; Controls</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">account_tree</span>
+<span class="text-[13px]">WBS &amp; Schedule Tree</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">waterfall_chart</span>
+<span class="text-[13px]">4D Gantt Digital Twin</span>
+</div>
+<span class="font-mono text-[10px] text-slate-400 font-medium">4D-V</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-red-500">warning</span>
+<span class="text-[13px]">Conflicts &amp; Chronology</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-red-100 text-red-700 font-mono text-[10px] font-bold">2</span>
+</a>
+</div>
+<!-- Group 3 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analytics &amp; Memory</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded border border-blue-200 bg-blue-50/80 text-blue-900 font-semibold shadow-xs" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-blue-700">vital_signs</span>
+<span class="text-[13px]">Activity DNA &amp; Memory</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600 telemetry-beacon"></span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">tune</span>
+<span class="text-[13px]">What-If Simulator</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified_user</span>
+<span class="text-[13px]">Audit &amp; Provenance</span>
+</div>
+<span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1 rounded">SHA-256</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-amber-500">play_circle</span>
+<span class="text-[13px]">5-Min Judge Demo</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[10px] font-bold">11</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Security Tier Badge -->
+<div class="p-3 border-t border-slate-200 bg-slate-50 flex flex-col gap-1">
+<div class="flex items-center justify-between font-mono text-[10px] text-slate-500">
+<span>SECURITY LEVEL</span>
+<span class="text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200 telemetry-beacon-glow">IL-5 RESTRICTED</span>
+</div>
+<div class="font-mono text-[10px] text-slate-600 truncate mt-0.5">SEAL: OIL-EXP-994821</div>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="pl-72 flex flex-col min-h-screen bg-[#f8fafc]">
+<!-- Header Bar (Crisp White / Technical Header) -->
+<header class="fixed top-0 left-72 right-0 h-16 bg-white border-b border-slate-200 z-40 px-6 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-base tracking-tight">Digboi–Duliajan 132km Crude Trunkline</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[11px] font-bold text-slate-700">WBS-REV-4.8</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px] text-slate-500">
+<span>PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+<span class="text-slate-300">•</span>
+<span class="text-slate-600">LAT: 27.3805° N, 95.3182° E</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-3 pl-4 border-l border-slate-200 font-mono text-[11px]">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+            18ms LATENCY
+          </div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold">
+<span class="material-symbols-outlined text-[13px] animate-pulse">lock</span>
+            LEDGER VALIDATED
+          </div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<!-- Operator Pill -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-left transition-colors hover:bg-slate-100 cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">switch_account</span>
+<div class="flex flex-col">
+<span class="font-mono text-[11px] font-bold text-slate-800 leading-tight">Pranjal Saikia</span>
+<span class="font-mono text-[10px] text-slate-500 leading-tight">Chief Eng / Shift A</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[16px] ml-1">expand_more</span>
+</div>
+<!-- Action Buttons -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 active:bg-slate-100 font-mono text-xs font-semibold shadow-xs transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
+          Export Audit PKG
+        </button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-mono text-xs font-semibold shadow-xs transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+          Commit to P6
+        </button>
+<div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs transition-transform hover:scale-105">
+          PS
+        </div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 pt-20 pb-12 w-full px-8"><div class="flex flex-col w-full gap-5">
+<!-- Top Command & Header Zone -->
+<div class="flex flex-col gap-3 animate-cascade-1">
+<!-- Breadcrumb & System State -->
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-label-xs text-label-xs text-secondary uppercase">Analytics &amp; Memory</span>
+<span class="text-outline-variant font-label-xs text-label-xs">/</span>
+<span class="font-label-xs text-label-xs text-primary font-semibold uppercase">Activity DNA &amp; Historical Ground Truth</span>
+<span class="ml-2 px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-primary telemetry-beacon"></span>
+              SHA-256 VERIFIED
+            </span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-xs text-label-xs text-secondary">CORPUS INGEST LATENCY: 22ms</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary telemetry-beacon"></span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold">EPOCH 2025.04_v2</span>
+</div>
+</div>
+<!-- Title and Action Filters Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-surface-container-lowest p-3 rounded-lg shadow-sm border border-slate-200/60">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-primary flex items-center justify-center text-on-primary transition-transform hover:rotate-6 duration-200">
+<span class="material-symbols-outlined text-[20px]">biotech</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Digboi–Duliajan 132km Trunkline Engine</h1>
+<p class="font-label-xs text-label-xs text-secondary">CALIBRATED ON-THE-FLY AGAINST 11 MAJOR UPSTREAM PIPELINE SECTORS</p>
+</div>
+</div>
+<!-- Controls & Dropdowns (Tactile press states and hover highlights) -->
+<div class="flex flex-wrap items-center gap-2">
+<button class="flex items-center bg-surface-container-low hover:bg-surface-container active:scale-[0.97] transition-all px-2.5 py-1 rounded gap-1.5 border border-transparent hover:border-slate-300 focus:outline-none focus:ring-1 focus:ring-primary/40" type="button">
+<span class="material-symbols-outlined text-[15px] text-secondary">tune</span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold">Trenching &amp; Rock Blasting</span>
+<span class="material-symbols-outlined text-[14px] text-outline">expand_more</span>
+</button>
+<button class="flex items-center bg-surface-container-low hover:bg-surface-container active:scale-[0.97] transition-all px-2.5 py-1 rounded gap-1.5 border border-transparent hover:border-slate-300 focus:outline-none focus:ring-1 focus:ring-primary/40" type="button">
+<span class="material-symbols-outlined text-[15px] text-secondary">date_range</span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold">2014–2025 ALL CYCLES</span>
+<span class="material-symbols-outlined text-[14px] text-outline">expand_more</span>
+</button>
+<div class="flex items-center bg-surface-container px-2 py-1 rounded gap-1 transition-colors hover:bg-surface-container-high cursor-default">
+<span class="font-label-xs text-label-xs text-primary font-bold">.ONNX WEIGHTS</span>
+<span class="font-label-xs text-label-xs text-secondary">(v14.9)</span>
+</div>
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-primary text-on-primary font-label-xs text-label-xs hover:bg-on-primary-fixed-variant active:scale-[0.97] transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/30" type="button">
+<span class="material-symbols-outlined text-[14px]">download</span>
+<span>EXPORT CSV</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Corpus Intelligence Vitals (4 Metric Cards - Orchestrated Entrance Cascade 2) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 animate-cascade-2">
+<!-- Metric 1 -->
+<div class="tech-card bg-surface-container-lowest p-3.5 rounded-lg shadow-sm border border-slate-200/60 flex flex-col justify-between cursor-default">
+<div class="flex items-start justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase">Corpus Depth</span>
+<span class="material-symbols-outlined text-[18px] text-primary transition-transform group-hover:scale-110">database</span>
+</div>
+<div class="mt-2">
+<div class="font-headline-lg text-headline-lg text-on-surface">48,240 <span class="font-label-sm text-label-sm text-secondary">SHIFTS</span></div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Brahmaputra Floodplain &amp; Naga Hill Footwall empirical records.</p>
+</div>
+<div class="mt-3 pt-2 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between group-hover:bg-surface-container transition-colors">
+<span class="font-label-xs text-label-xs text-secondary">SIG HASH</span>
+<span class="font-label-xs text-label-xs text-on-surface font-mono flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+              0x4d7A...E891
+            </span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="tech-card bg-surface-container-lowest p-3.5 rounded-lg shadow-sm border border-slate-200/60 flex flex-col justify-between cursor-default">
+<div class="flex items-start justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase">Prediction Confidence</span>
+<span class="material-symbols-outlined text-[18px] text-primary">speed</span>
+</div>
+<div class="mt-2">
+<div class="font-headline-lg text-headline-lg text-on-surface">±18m/d <span class="font-label-sm text-label-sm text-secondary">MAE</span></div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">97.4% NOMINAL across alluvial sectors; Naga hills under recalibration.</p>
+</div>
+<div class="mt-3 pt-2 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary">DRIFT INDEX</span>
+<span class="font-label-xs text-label-xs text-on-surface font-mono font-semibold text-emerald-700">0.021 (HEALTHY)</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="tech-card bg-surface-container-lowest p-3.5 rounded-lg shadow-sm border border-slate-200/60 flex flex-col justify-between cursor-default">
+<div class="flex items-start justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase">Strata Resistance</span>
+<span class="material-symbols-outlined text-[18px] text-error">terrain</span>
+</div>
+<div class="mt-2">
+<div class="font-headline-lg text-headline-lg text-error">-46.2% <span class="font-label-sm text-label-sm text-secondary">vs ALLUVIUM</span></div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">1.84x DRAG: Granitic Gneiss at Duliajan Formation KM 38–54.</p>
+</div>
+<div class="mt-3 pt-2 bg-error-container/40 px-2 py-1 rounded flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-on-error-container">UCS STRENGTH</span>
+<span class="font-label-xs text-label-xs text-on-error-container font-mono font-bold">142.6 MPa (HARD)</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="tech-card bg-surface-container-lowest p-3.5 rounded-lg shadow-sm border border-slate-200/60 flex flex-col justify-between cursor-default">
+<div class="flex items-start justify-between">
+<span class="font-label-xs text-label-xs text-secondary uppercase">Anomaly Patterns</span>
+<span class="material-symbols-outlined text-[18px] text-primary">auto_fix_high</span>
+</div>
+<div class="mt-2">
+<div class="font-headline-lg text-headline-lg text-on-surface">14 <span class="font-label-sm text-label-sm text-secondary">PREVENTION MODES</span></div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Monsoon slurry influx &amp; Crawler track drift patterns cataloged.</p>
+</div>
+<div class="mt-3 pt-2 bg-surface-container px-2 py-1 rounded flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-primary font-semibold">PRECEDENT RETRIEVAL</span>
+<span class="font-label-xs text-label-xs text-primary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600 telemetry-beacon"></span>
+              AUTO-LINKED
+            </span>
+</div>
+</div>
+</div>
+<!-- Main Content Split Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- Left Column (8 cols on 12-col grid - Orchestrated Entrance Cascade 3) -->
+<div class="lg:col-span-8 flex flex-col gap-4 animate-cascade-3">
+<!-- Activity Productivity DNA Velocity Curves -->
+<div class="tech-card bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/60 flex flex-col gap-4">
+<div class="flex items-center justify-between pb-2 bg-surface-container-low -mx-4 -mt-4 px-4 py-2.5 rounded-t-lg border-b border-slate-200/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">timeline</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Activity Productivity DNA Velocity Curves</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 font-label-xs text-label-xs text-secondary">
+<span class="w-2.5 h-1 bg-secondary rounded"></span> P50 HISTORICAL
+            </span>
+<span class="flex items-center gap-1 font-label-xs text-label-xs text-primary">
+<span class="w-2.5 h-1 bg-primary rounded"></span> PREDICTED
+            </span>
+<span class="flex items-center gap-1 font-label-xs text-label-xs text-on-surface font-bold">
+<span class="w-2.5 h-1 bg-on-surface rounded"></span> CURRENT RUN
+            </span>
+</div>
+</div>
+<!-- Velocity Benchmarking Cards Grid with Interactive Subtle Elevation & Bar Transitions -->
+<div class="flex flex-col gap-2.5">
+<!-- Activity Row 1: Alluvial Loam -->
+<div class="group p-3 bg-surface-container-low hover:bg-blue-50/50 rounded flex flex-col gap-2 border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">Trenching in Alluvial Loam (Sector 1 to 3)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs">1,420 PRECEDENT SHIFTS</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-primary font-bold">+3.6% VELOCITY BOOST</span>
+<span class="font-label-xs text-label-xs text-secondary">425m/d vs 410m/d P50</span>
+</div>
+</div>
+<!-- Progress / Velocity visual bar with smooth load reveal -->
+<div class="w-full bg-surface-dim h-2 rounded overflow-hidden flex">
+<div class="bg-secondary h-full transition-all duration-500 ease-out group-hover:opacity-90" style="width: 78%"></div>
+<div class="bg-primary h-full transition-all duration-500 ease-out group-hover:brightness-110" style="width: 8%"></div>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary">
+<span>Ground condition: Soft-sandy alluvial matrix</span>
+<span class="group-hover:text-primary transition-colors">Observed Variance: ±12m/d (Nominal envelope)</span>
+</div>
+</div>
+<!-- Activity Row 2: Hard Granitic Strata (The Anomaly) -->
+<div class="group p-3 bg-error-container/20 hover:bg-error-container/30 rounded flex flex-col gap-2 border border-red-200/50 hover:border-red-300 transition-all duration-150 cursor-pointer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-error animate-pulse">report_problem</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-error transition-colors">Trenching in Hard Granitic Strata (REFUSAL KM 42+650)</span>
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-xs text-label-xs font-bold">ANOMALY SLIP</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-error font-bold">-38.8% CRITICAL DRAG</span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold">110m/d vs 180m/d EXPECTED</span>
+</div>
+</div>
+<!-- Progress bar indicating severe drag -->
+<div class="w-full bg-surface-dim h-2 rounded overflow-hidden flex">
+<div class="bg-error h-full transition-all duration-500 ease-out" style="width: 32%"></div>
+<div class="bg-outline-variant h-full transition-all duration-500 ease-out opacity-80" style="width: 68%"></div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-secondary">
+<span class="text-on-surface">Drill teeth refusal detected: Compressive strength &gt;140 MPa. Flagged: Unpredicted hard basement rock layer.</span>
+<span class="font-label-xs text-label-xs text-error font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">build</span>
+                  REC: Ripper Shank Swap (99.2% Conf.)
+                </span>
+</div>
+</div>
+<!-- Activity Row 3: CRC-Evans M-300 -->
+<div class="group p-3 bg-surface-container-low hover:bg-blue-50/50 rounded flex flex-col gap-2 border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">CRC-Evans M-300 Auto Orbital Welding (24" Trunk)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-secondary font-label-xs text-label-xs">GIRTH WELDING AUTO</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">29.4 joints/d (Var ±3.2)</span>
+<span class="font-label-xs text-label-xs text-secondary">Target 35 j/d</span>
+</div>
+</div>
+<div class="w-full bg-surface-dim h-2 rounded overflow-hidden flex">
+<div class="bg-primary h-full transition-all duration-500 ease-out group-hover:brightness-110" style="width: 84%"></div>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary">
+<span>Root pass cycle time: 11m 42s avg</span>
+<span class="text-primary font-semibold">Ultrasonic Defect Rate: 0.38% (Institutional Baseline: 0.85%)</span>
+</div>
+</div>
+<!-- Activity Row 4: 24" Stringing & Bending -->
+<div class="group p-3 bg-surface-container-low hover:bg-blue-50/50 rounded flex flex-col gap-2 border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">24" Pipe Stringing &amp; Cold Field Bending</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-secondary font-label-xs text-label-xs">LOGISTICS &amp; ALIGNMENT</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-secondary font-bold">545m/d (-12.1% seasonal dip)</span>
+<span class="font-label-xs text-label-xs text-secondary">Benchmark 620m/d</span>
+</div>
+</div>
+<div class="w-full bg-surface-dim h-2 rounded overflow-hidden flex">
+<div class="bg-secondary h-full transition-all duration-500 ease-out" style="width: 71%"></div>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary">
+<span>Right-of-Way access constrained by heavy pre-monsoon muddy access roads</span>
+<span class="font-label-xs text-label-xs text-on-surface">Bog mats deployed: 180 panels</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 30-Day Linear Progression Velocity Chart (SVG Graphic with Interactive Hoverable Points & Animated Paths) -->
+<div class="tech-card bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/60 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">30-Day Linear Progression Velocity (Km Advancement vs Shifts)</div>
+<span class="font-label-xs text-label-xs text-secondary">STATION KM 30+000 TO KM 60+000 CHRONOLOGY TELEMETRY</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-label-xs text-label-xs font-semibold rounded flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-error telemetry-beacon"></span>
+              ANOMALY PINPOINTED KM 42+650
+            </span>
+</div>
+<!-- Inline Visual Chart Graphic with interactive nodes and animations -->
+<div class="w-full bg-surface-container-low p-3 rounded relative">
+<svg class="w-full h-44 overflow-visible" preserveaspectratio="none" viewbox="0 0 760 160">
+<!-- Grid lines -->
+<line stroke="#cbd5e1" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="760" y1="30" y2="30"></line>
+<line stroke="#cbd5e1" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="760" y1="70" y2="70"></line>
+<line stroke="#cbd5e1" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="760" y1="110" y2="110"></line>
+<line stroke="#94a3b8" stroke-width="1" x1="0" x2="760" y1="150" y2="150"></line>
+<!-- Historical Expected Baseline Curve (Gray dotted) -->
+<path d="M 10 145 Q 200 120 380 80 T 750 20" fill="none" opacity="0.85" stroke="#747686" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Predictive AI Model Velocity Curve (Cobalt Animated) -->
+<path class="chart-path-predictive" d="M 10 145 Q 180 115 360 85 T 750 32" fill="none" stroke="#2151da" stroke-width="2"></path>
+<!-- Real Telemetry Ground Truth Curve (Showing the drop at KM 42+650) Animated -->
+<path class="chart-path-current" d="M 10 145 L 120 130 L 220 112 L 310 95 L 390 88 L 440 92 L 490 94 L 540 85 L 620 70 L 710 52" fill="none" stroke="#0b1c30" stroke-width="3"></path>
+<!-- Interactive Telemetry Data Points with subtle hover pulses -->
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="120" cy="130" fill="#0b1c30" r="2.5"></circle>
+<circle cx="120" cy="130" fill="transparent" r="10"><title>Day 10 (KM 36.8): 380m/d</title></circle>
+</g>
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="220" cy="112" fill="#0b1c30" r="2.5"></circle>
+<circle cx="220" cy="112" fill="transparent" r="10"><title>Day 14 (KM 39.5): 395m/d</title></circle>
+</g>
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="310" cy="95" fill="#0b1c30" r="2.5"></circle>
+<circle cx="310" cy="95" fill="transparent" r="10"><title>Day 17 (KM 41.8): 320m/d</title></circle>
+</g>
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="490" cy="94" fill="#0b1c30" r="2.5"></circle>
+<circle cx="490" cy="94" fill="transparent" r="10"><title>Day 22 (KM 44.1): 140m/d (Shank Replace)</title></circle>
+</g>
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="620" cy="70" fill="#0b1c30" r="2.5"></circle>
+<circle cx="620" cy="70" fill="transparent" r="10"><title>Day 26 (KM 48.0): 285m/d (Restored)</title></circle>
+</g>
+<g class="cursor-pointer group/pt">
+<circle class="transition-all duration-150 group-hover/pt:r-4" cx="710" cy="52" fill="#0b1c30" r="2.5"></circle>
+<circle cx="710" cy="52" fill="transparent" r="10"><title>Day 30 (KM 52.4): 310m/d</title></circle>
+</g>
+<!-- Anomaly Marker at KM 42+650 -->
+<circle class="telemetry-beacon" cx="440" cy="92" fill="#ba1a1a" r="5"></circle>
+<circle class="telemetry-beacon" cx="440" cy="92" fill="none" opacity="0.6" r="9" stroke="#ba1a1a" stroke-width="1.5"></circle>
+<line stroke="#ba1a1a" stroke-dasharray="2 2" stroke-width="1.5" x1="440" x2="440" y1="20" y2="150"></line>
+<!-- Anomaly Badge -->
+<rect class="transition-transform duration-200 hover:scale-[1.02] cursor-pointer" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))" height="38" rx="4" stroke="#ba1a1a" stroke-width="1" width="165" x="445" y="24"></rect>
+<text fill="#ba1a1a" font-family="JetBrains Mono" font-size="10" font-weight="700" x="452" y="38">KM 42+650 ANOMALY</text>
+<text fill="#434655" font-family="Inter" font-size="9" x="452" y="52">Basement Rock Refusal (110m/d)</text>
+</svg>
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary mt-2 px-1">
+<span class="hover:text-primary transition-colors cursor-pointer">DAY 1 (KM 31.2)</span>
+<span class="hover:text-primary transition-colors cursor-pointer">DAY 10 (KM 36.8)</span>
+<span class="text-error font-semibold flex items-center gap-1 cursor-pointer">
+<span class="w-1 h-1 rounded-full bg-error"></span> DAY 18: REFUSAL HIT (KM 42.6)
+              </span>
+<span class="hover:text-primary transition-colors cursor-pointer">DAY 24: RECOVERY</span>
+<span class="hover:text-primary transition-colors cursor-pointer">DAY 30 (KM 52.4)</span>
+</div>
+</div>
+</div>
+<!-- Terrain & Soil Geological Learning Matrix (Table) -->
+<div class="tech-card bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/60 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">layers</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Terrain &amp; Soil Geological Learning Matrix</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-primary telemetry-beacon"></span>
+              NAGA THRUST FAULT LINE CORRELATION
+            </span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-label-xs text-label-xs border-b border-slate-200">
+<th class="p-2">SECTOR CORRIDOR</th>
+<th class="p-2">PRIMARY STRATA</th>
+<th class="p-2 text-right">ROCK RQD%</th>
+<th class="p-2 text-right">MOISTURE SAT%</th>
+<th class="p-2 text-right">EXCAVATOR WEAR</th>
+<th class="p-2">CONFIRMED MITIGATION</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-slate-100">
+<tr class="hover:bg-surface-container-low transition-colors duration-150 cursor-pointer">
+<td class="p-2 font-mono font-semibold text-primary">Numaligarh–Siliguri</td>
+<td class="p-2">Silty Alluvial Clay</td>
+<td class="p-2 text-right font-mono text-secondary">12%</td>
+<td class="p-2 text-right font-mono text-secondary">42.4%</td>
+<td class="p-2 text-right font-mono">1.1x</td>
+<td class="p-2 font-label-xs text-label-xs text-secondary">Standard Tiger Teeth Bucket</td>
+</tr>
+<tr class="bg-surface-container/30 hover:bg-surface-container/60 transition-colors duration-150 cursor-pointer">
+<td class="p-2 font-mono font-semibold text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Duliajan–Guwahati (Sec 4)
+                  </td>
+<td class="p-2 font-semibold text-error">Granitic Gneiss / Sandstone</td>
+<td class="p-2 text-right font-mono font-bold text-error">88%</td>
+<td class="p-2 text-right font-mono text-secondary">18.2%</td>
+<td class="p-2 text-right font-mono font-bold text-error">3.4x</td>
+<td class="p-2 font-label-xs text-label-xs text-primary font-bold">Hydraulic Breaker + Ripper Shank</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors duration-150 cursor-pointer">
+<td class="p-2 font-mono font-semibold text-primary">Barauni–Guwahati Spur</td>
+<td class="p-2">Compact River Boulder Alluvium</td>
+<td class="p-2 text-right font-mono text-secondary">45%</td>
+<td class="p-2 text-right font-mono text-secondary">31.0%</td>
+<td class="p-2 text-right font-mono">1.9x</td>
+<td class="p-2 font-label-xs text-label-xs text-secondary">Heavy-Duty V-Bottom Ditcher</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Field Operational Recommendation Callout -->
+<div class="bg-surface-container-low p-3 rounded flex items-start gap-3 border border-blue-200/50 hover:border-blue-300 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-primary mt-0.5 animate-pulse">lightbulb</span>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface font-bold uppercase">Empirical Synthesis for KM 42+650:</span>
+<p class="font-body-sm text-body-sm text-secondary">
+              Neural corpus detects a 98.4% match with 2018 Duliajan Spur Sector 2 hard boulder ledge. Deploying heavy single-point ripper shanks before trenching restores velocity from 110m/d to 260m/d within 36 hours.
+            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (4 cols on 12-col grid - Orchestrated Entrance Cascade 4) -->
+<div class="lg:col-span-4 flex flex-col gap-4 animate-cascade-4">
+<!-- Institutional Memory Engine Search & Retrieval -->
+<div class="tech-card bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/60 flex flex-col gap-3">
+<div class="flex items-center justify-between pb-2 bg-surface-container-low -mx-4 -mt-4 px-4 py-2.5 rounded-t-lg border-b border-slate-200/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">history_edu</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Institutional Memory Engine</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+              SHA-256 LEDGER
+            </span>
+</div>
+<!-- Search Bar with Query Match Badge & tactile focus state -->
+<div class="flex flex-col gap-1.5">
+<div class="relative">
+<input class="w-full bg-surface-container-low hover:bg-slate-100 text-on-surface font-body-sm text-body-sm rounded px-3 py-1.5 pr-16 border border-transparent focus:border-primary/40 focus:ring-1 focus:ring-primary/40 focus:outline-none transition-all cursor-text font-mono" readonly="" type="text" value="Monsoon mud influx &amp; Granitic Refusal"/>
+<span class="absolute right-2 top-1.5 px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs font-bold transition-transform hover:scale-105">MATCH: 3</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary">Neural Semantic Retrieval Across 11 Historic OIL Pipelines</span>
+</div>
+<!-- Historical Case Cards with Smooth Interactive Expansion & Details Hover -->
+<div class="flex flex-col gap-3 mt-1">
+<!-- Card 1 (Expandable via details tag with zero JS) -->
+<details class="group bg-surface-container-low p-3 rounded flex flex-col gap-2 hover:bg-surface-container/60 border border-transparent hover:border-blue-200/80 transition-all duration-200 cursor-pointer" open="">
+<summary class="list-none outline-none">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-primary font-bold font-mono">#HIST-2019-BR04</span>
+<div class="flex items-center gap-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-xs text-label-xs font-bold">+4.5d SAVED</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</div>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface font-semibold mt-1">Burhi Dihing HDD Riverbed Cobble Collapse</div>
+</summary>
+<p class="font-body-sm text-body-sm text-secondary mt-2">
+              Drill string stuck in gravel bed at 34m depth. Retrieved countermeasure: Sodium Bentonite slurry dosage increased by 22% with high-vis polymer plug. Bore freed in 14 hours.
+            </p>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200/50 mt-2 font-label-xs text-label-xs text-secondary">
+<span>LOCATION: Burhi Dihing Crossing</span>
+<span class="text-primary font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">verified</span> VALIDATED: OIL-TECH-88
+              </span>
+</div>
+</details>
+<!-- Card 2 (Legal Defense Card) -->
+<details class="group bg-surface-container-low p-3 rounded flex flex-col gap-2 hover:bg-surface-container/60 border border-transparent hover:border-red-200/80 transition-all duration-200 cursor-pointer">
+<summary class="list-none outline-none">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-primary font-bold font-mono">#HIST-2022-NG18</span>
+<div class="flex items-center gap-1">
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-xs text-label-xs font-bold">₹4.2 Cr CLAIM NEGATED</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</div>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface font-semibold mt-1">Monsoon Idle Claim Disallowance via Telemetry Cross-Audit</div>
+</summary>
+<p class="font-body-sm text-body-sm text-secondary mt-2">
+              Contractor claimed 18 days idle rain stoppage. Telematics cross-audited IMD Doppler radar and excavator engine runtimes: dry shifts demonstrated, saving dispute arbitration cost.
+            </p>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200/50 mt-2 font-label-xs text-label-xs text-secondary">
+<span>LEGAL AUDIT: DISALLOWED</span>
+<span class="text-on-surface font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-emerald-600">gavel</span> EVIDENTIAL GRADE
+              </span>
+</div>
+</details>
+<!-- Card 3 (Porosity Card) -->
+<details class="group bg-surface-container-low p-3 rounded flex flex-col gap-2 hover:bg-surface-container/60 border border-transparent hover:border-blue-200/80 transition-all duration-200 cursor-pointer">
+<summary class="list-none outline-none">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-primary font-bold font-mono">#HIST-2023-DJ09</span>
+<div class="flex items-center gap-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-secondary font-label-xs text-label-xs font-semibold">QUALITY CONTROL</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</div>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface font-semibold mt-1">Orbital Weld Heat-Affected Zone Porosity Spike</div>
+</summary>
+<p class="font-body-sm text-body-sm text-secondary mt-2">
+              Humidity at 96% caused hydrogen cracking risk in API 5L X70 pipe ends. Enclosed pre-heating bands sustained at 160°C eliminated all weld rejection anomalies.
+            </p>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200/50 mt-2 font-label-xs text-label-xs text-secondary">
+<span>METALLURGY REPORT</span>
+<span class="text-primary font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-emerald-600">check_circle</span> 100% UT PASS
+              </span>
+</div>
+</details>
+</div>
+</div>
+<!-- Equipment & Operator Ground Truth Benchmarks -->
+<div class="tech-card bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-slate-200/60 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">engineering</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Equipment &amp; Operator Benchmarks</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+              TELEMATICS FEED
+            </span>
+</div>
+<div class="flex flex-col gap-2.5">
+<!-- Machine 1 -->
+<div class="bg-surface-container-low hover:bg-blue-50/50 p-2.5 rounded flex items-center justify-between border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary font-bold font-mono text-label-xs transition-transform group-hover:scale-105">
+                PC30
+              </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-semibold">Komatsu PC300-8MO (Unit #EX-442)</span>
+<span class="font-label-xs text-label-xs text-secondary">Operator: Debashis Gogoi (14 yrs exp)</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-primary font-bold">108% EFF</span>
+<span class="font-label-xs text-label-xs text-secondary">22.4 L/hr burn</span>
+</div>
+</div>
+<!-- Machine 2 -->
+<div class="bg-surface-container-low hover:bg-blue-50/50 p-2.5 rounded flex items-center justify-between border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary font-bold font-mono text-label-xs transition-transform group-hover:scale-105">
+                M300
+              </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-semibold">CRC-Evans Dual-Head Internal Welder</span>
+<span class="font-label-xs text-label-xs text-secondary">Crew: Lead Tech Sunil Barua</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">94% UPTIME</span>
+<span class="font-label-xs text-label-xs text-primary font-semibold">0.4% defect rate</span>
+</div>
+</div>
+<!-- Machine 3 -->
+<div class="bg-surface-container-low hover:bg-blue-50/50 p-2.5 rounded flex items-center justify-between border border-transparent hover:border-blue-200/60 transition-all duration-150 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-secondary font-bold font-mono text-label-xs transition-transform group-hover:scale-105">
+                C336
+              </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-semibold">Caterpillar 336D Excavator</span>
+<span class="font-label-xs text-label-xs text-secondary">Crew: Sub-Contractor Squad 2</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-secondary font-bold">92% EFF</span>
+<span class="font-label-xs text-label-xs text-secondary">26.8 L/hr burn</span>
+</div>
+</div>
+</div>
+<div class="mt-1 pt-2 bg-surface-container-low p-2 rounded flex items-center justify-between font-label-xs text-label-xs border border-slate-200/50">
+<span class="text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+              ACTIVE SENSORS: 48 UNITS
+            </span>
+<span class="text-primary font-semibold">DATA SYNCED WITH OIL P6 RUNTIME</span>
+</div>
+</div>
+</div>
+</div>
+</div></main>
+<!-- Footer -->
+<footer class="w-full bg-white border-t border-slate-200 py-3.5 px-8 mt-auto">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2 text-slate-500 font-mono text-[11px]">
+<div>OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-emerald-600 telemetry-beacon"></span>
+            VERIFICATION PUBKEY: 0x9AF...D312
+          </span>
+<span>•</span>
+<span>SYSTEM PROTOCOL: AIR-GAP/V2</span>
+<span>•</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 telemetry-beacon"></span>
+            NODE TELEMETRY NOMINAL
+          </span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

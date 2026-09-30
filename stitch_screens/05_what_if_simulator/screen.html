@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* Micro-interactions & animations */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.4); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+    .beacon-pulse {
+      position: relative;
+    }
+    .beacon-pulse::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      background-color: #059669;
+      animation: pulse-ring 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      z-index: 0;
+    }
+
+    /* Staggered card entrance cascade */
+    @keyframes cascadeEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-cascade {
+      animation: cascadeEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .delay-1 { animation-delay: 0.05s; }
+    .delay-2 { animation-delay: 0.1s; }
+    .delay-3 { animation-delay: 0.15s; }
+    .delay-4 { animation-delay: 0.2s; }
+    .delay-5 { animation-delay: 0.25s; }
+
+    /* Tactile button press active states */
+    .tactile-btn {
+      transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+    .tactile-btn:active {
+      transform: scale(0.978) translateY(1px);
+    }
+
+    /* Tornado bar animation on load */
+    @keyframes barGrowLeft {
+      from { width: 0 !important; }
+    }
+    @keyframes barGrowRight {
+      from { width: 0 !important; }
+    }
+    .tornado-bar-left {
+      animation: barGrowLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: right;
+    }
+    .tornado-bar-right {
+      animation: barGrowRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: left;
+    }
+
+    /* Monte Carlo breathing pulse and pin bob */
+    @keyframes curveGlow {
+      0%, 100% { stroke: #1d4ed8; filter: drop-shadow(0 0 1px rgba(29, 78, 216, 0.2)); }
+      50% { stroke: #2563eb; filter: drop-shadow(0 0 4px rgba(37, 99, 235, 0.55)); }
+    }
+    .gaussian-curve-path {
+      animation: curveGlow 3.5s ease-in-out infinite;
+    }
+    @keyframes pinBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .pin-bounce {
+      animation: pinBob 2.4s ease-in-out infinite;
+    }
+
+    /* Smooth spring toggle transition */
+    .toggle-knob {
+      transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+    }
+
+    /* Tooltip styles */
+    .has-tooltip {
+      position: relative;
+    }
+    .tooltip-content {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      transform: translateY(4px);
+      pointer-events: none;
+    }
+    .has-tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Interactive hover highlight on parameter cards */
+    .param-card-interactive {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .param-card-interactive:hover {
+      box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.07);
+      transform: translateY(-1px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-cascade,
+      .tornado-bar-left,
+      .tornado-bar-right,
+      .gaussian-curve-path,
+      .pin-bounce,
+      .beacon-pulse::after {
+        animation: none !important;
+        transform: none !important;
+      }
+      .param-card-interactive:hover {
+        transform: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary-container": "#bb0112",
+            "tertiary": "#8f000b",
+            "on-primary-container": "#cad3ff",
+            "primary": "#0037b0",
+            "inverse-primary": "#b7c4ff",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-primary-fixed": "#001551",
+            "on-primary-fixed-variant": "#0039b5",
+            "on-surface-variant": "#434655",
+            "on-error": "#ffffff",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "surface": "#f8f9ff",
+            "outline-variant": "#c4c5d7",
+            "primary-container": "#1d4ed8",
+            "background": "#f8f9ff",
+            "on-tertiary-fixed": "#410002",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed-dim": "#bec6e0",
+            "surface-dim": "#cbdbf5",
+            "error-container": "#ffdad6",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-container": "#ffc7c1",
+            "on-secondary-fixed": "#131b2e",
+            "tertiary-fixed": "#ffdad6",
+            "tertiary-fixed-dim": "#ffb4ab",
+            "secondary": "#565e74",
+            "outline": "#747686",
+            "inverse-surface": "#213145",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#e5eeff",
+            "surface-variant": "#d3e4fe",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#2151da",
+            "secondary-container": "#dae2fd",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed-dim": "#b7c4ff",
+            "on-tertiary-fixed-variant": "#93000b",
+            "on-secondary-container": "#5c647a",
+            "on-background": "#0b1c30",
+            "secondary-fixed": "#dae2fd",
+            "error": "#ba1a1a",
+            "primary-fixed": "#dce1ff",
+            "surface-container-high": "#dce9ff",
+            "on-primary": "#ffffff"
+          },
+          fontFamily: {
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "label-xs": ["JetBrains Mono", "monospace"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "label-md": ["JetBrains Mono", "monospace"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "label-xs": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "body-md": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+            "body-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "headline-sm": ["15px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-800 antialiased min-h-screen">
+<!-- Left Sidebar (Clean Industrial / Foundry Technical Light) -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between overflow-y-auto">
+<div class="flex flex-col">
+<!-- Workspace Brand Badge -->
+<div class="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[19px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 text-sm tracking-tight leading-snug uppercase">OIL / SiteSync</span>
+<span class="font-mono text-[10px] text-slate-500 font-semibold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-semibold">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+</span>
+            P6 LIVE
+          </div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-200/80 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-slate-400">hub</span>NODE-AS04 // SECURE</span>
+<span class="text-blue-700 font-semibold">ORACLE EPPM SYNCED</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col px-3 py-4 gap-5">
+<!-- Group 1 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Execution Intelligence</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded border border-blue-200 bg-blue-50/80 text-blue-900 font-semibold shadow-xs" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-blue-700">grid_view</span>
+<span class="text-[13px]">Executive Health</span>
+</div>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">KPI</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">mic</span>
+<span class="text-[13px]">Field Input Center</span>
+</div>
+<span class="font-mono text-[10px] text-slate-500">TELEMETRY</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">check_circle</span>
+<span class="text-[13px]">AI Review Center</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">DESK 1</span>
+</a>
+</div>
+<!-- Group 2 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Schedule &amp; Controls</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">account_tree</span>
+<span class="text-[13px]">WBS &amp; Schedule Tree</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">waterfall_chart</span>
+<span class="text-[13px]">4D Gantt Digital Twin</span>
+</div>
+<span class="font-mono text-[10px] text-slate-400 font-medium">4D-V</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-red-500">warning</span>
+<span class="text-[13px]">Conflicts &amp; Chronology</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-red-100 text-red-700 font-mono text-[10px] font-bold">2</span>
+</a>
+</div>
+<!-- Group 3 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analytics &amp; Memory</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">vital_signs</span>
+<span class="text-[13px]">Activity DNA &amp; Memory</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">tune</span>
+<span class="text-[13px]">What-If Simulator</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified_user</span>
+<span class="text-[13px]">Audit &amp; Provenance</span>
+</div>
+<span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1 rounded">SHA-256</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-amber-500">play_circle</span>
+<span class="text-[13px]">5-Min Judge Demo</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[10px] font-bold">11</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Security Tier Badge -->
+<div class="p-3 border-t border-slate-200 bg-slate-50 flex flex-col gap-1">
+<div class="flex items-center justify-between font-mono text-[10px] text-slate-500">
+<span>SECURITY LEVEL</span>
+<span class="text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">IL-5 RESTRICTED</span>
+</div>
+<div class="font-mono text-[10px] text-slate-600 truncate mt-0.5">SEAL: OIL-EXP-994821</div>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="pl-72 flex flex-col min-h-screen bg-[#f8fafc]">
+<!-- Header Bar (Crisp White / Technical Header) -->
+<header class="fixed top-0 left-72 right-0 h-16 bg-white border-b border-slate-200 z-40 px-6 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-base tracking-tight">Digboi–Duliajan 132km Crude Trunkline</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[11px] font-bold text-slate-700">WBS-REV-4.8</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px] text-slate-500">
+<span>PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+<span class="text-slate-300">•</span>
+<span class="text-slate-600">LAT: 27.3805° N, 95.3182° E</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-3 pl-4 border-l border-slate-200 font-mono text-[11px]">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            18ms LATENCY
+          </div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+            LEDGER VALIDATED
+          </div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<!-- Operator Pill -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-left">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">switch_account</span>
+<div class="flex flex-col">
+<span class="font-mono text-[11px] font-bold text-slate-800 leading-tight">Pranjal Saikia</span>
+<span class="font-mono text-[10px] text-slate-500 leading-tight">Chief Eng / Shift A</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[16px] ml-1">expand_more</span>
+</div>
+<!-- Action Buttons -->
+<button class="tactile-btn flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-mono text-xs font-semibold shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
+          Export Audit PKG
+        </button>
+<button class="tactile-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+          Commit to P6
+        </button>
+<div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs">
+          PS
+        </div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 pt-20 pb-12 w-full px-8"><div class="flex flex-col w-full gap-4">
+<!-- TOP BAR: BREADCRUMB, STATUS & SCENARIO ACTION HEADER -->
+<section class="animate-cascade delay-1 bg-surface-container-lowest p-4 rounded shadow-sm border border-slate-200/80 flex flex-col gap-3">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-label-xs text-label-xs text-secondary uppercase tracking-wider">ANALYTICS &amp; MEMORY</span>
+<span class="text-outline-variant font-label-xs text-label-xs">/</span>
+<span class="font-label-xs text-label-xs text-primary font-semibold tracking-wider">WHAT-IF SCHEDULE &amp; COST PERTURBATION SANDBOX</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-label-xs text-label-xs font-semibold shadow-xs border border-emerald-200/80">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+</span>
+          CONVERGED (10,000 MONTE CARLO)
+        </span>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-primary font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">memory</span>
+          DIGBOI-STOCHASTIC-CORE // REV-4.8
+        </span>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">
+            SCENARIO C-03: Deploy Auxiliary Ripper at KM 42+650 + Re-sequence Trenching Padding
+          </h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-label-sm text-label-sm font-bold shadow-xs">
+            +6.2d FLOAT RECOVERED
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          Simulating hard rock excavation acceleration vs monsoon front trajectory with orbital welding dual-shift mitigation.
+        </p>
+</div>
+<div class="flex items-center flex-wrap gap-2 shrink-0">
+<button class="tactile-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-semibold shadow-sm border border-slate-200 hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">compare_arrows</span>
+          Compare vs P6 Baseline
+        </button>
+<button class="tactile-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-semibold shadow-sm border border-slate-200 hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">tornado</span>
+          Tornado Sensitivity
+        </button>
+<button class="tactile-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-md hover:bg-primary transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+          Save as Rev 4.9 Candidate
+        </button>
+</div>
+</div>
+</section>
+<!-- PARAMETER COCKPIT: 4 CLEAN TECHNICAL CONTROL CARDS -->
+<section class="animate-cascade delay-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+<!-- Parameter 01: Critical Path -->
+<div class="param-card-interactive bg-surface-container-lowest p-3.5 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary font-bold tracking-wider">PARAM 01 // CRITICAL PATH</span>
+<span class="font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold transition-all duration-300" id="param01FloatBadge">+2.8d FLOAT</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">Auxiliary Ripper Allocation</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Komatsu PC300 Hydraulic with rock chisel for KM 42+650 hard shale segment.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded border border-blue-100 flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary font-semibold">FLEET ASSETS:</span>
+<span class="text-on-surface font-bold font-mono text-[13px] text-primary transition-all duration-200" id="ripperCountDisplay">+2 UNITS ACTIVE</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Decrease ripper units" class="tactile-btn w-7 h-7 rounded bg-surface-container-lowest border border-slate-200 shadow-xs text-on-surface font-mono font-bold flex items-center justify-center hover:bg-surface-container transition-colors" onclick="adjustRipper(-1)" type="button">-</button>
+<input aria-label="Fleet ripper units slider" class="w-full accent-blue-700 cursor-pointer h-2 bg-surface-variant rounded-lg transition-all" id="ripperSlider" max="4" min="0" oninput="updateRipper(this.value)" type="range" value="2"/>
+<button aria-label="Increase ripper units" class="tactile-btn w-7 h-7 rounded bg-surface-container-lowest border border-slate-200 shadow-xs text-on-surface font-mono font-bold flex items-center justify-center hover:bg-surface-container transition-colors" onclick="adjustRipper(1)" type="button">+</button>
+</div>
+<div class="flex items-center justify-between pt-1 font-label-xs text-label-xs text-secondary">
+<span>MOBILIZATION COST:</span>
+<span class="font-bold text-on-surface font-mono transition-all duration-200" id="ripperCostDisplay">+₹38.5 Lakhs</span>
+</div>
+</div>
+</div>
+<!-- Parameter 02: Manpower Dual-Shift -->
+<div class="param-card-interactive bg-surface-container-lowest p-3.5 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary font-bold tracking-wider">PARAM 02 // MANPOWER</span>
+<span class="font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold transition-all duration-200" id="param02GainBadge">+1.9d GAIN</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">Orbital Welding Dual-Shift</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Night shift activation: 19:00 - 04:00 with specialized LED lighting towers.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded border border-blue-100 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary font-semibold">DUAL-SHIFT WELDING:</span>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="shiftToggle" onchange="toggleDualShift(this)" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:bg-primary-container transition-colors duration-200"></div>
+<div class="toggle-knob absolute top-[2px] left-[2px] bg-white rounded-full h-4 w-4 shadow-sm border border-slate-200 peer-checked:translate-x-5"></div>
+</label>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary">
+<span>NDT DEFECT RISK:</span>
+<span class="text-amber-700 font-bold font-mono transition-colors duration-200" id="defectRiskDisplay">+1.2% (NDT Acceptable)</span>
+</div>
+<div class="flex items-center justify-between pt-1 font-label-xs text-label-xs text-secondary">
+<span>OVERTIME SURCHARGE:</span>
+<span class="font-bold text-on-surface font-mono transition-colors duration-200" id="shiftCostDisplay">+₹24.0 Lakhs / Mo</span>
+</div>
+</div>
+</div>
+<!-- Parameter 03: Meteorology -->
+<div class="param-card-interactive group bg-surface-container-lowest p-3.5 rounded shadow-sm border border-slate-200/80 hover:border-amber-300 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary font-bold tracking-wider">PARAM 03 // METEOROLOGY</span>
+<span class="font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-error-container text-tertiary-container font-bold transition-all duration-200" id="meteoDelayBadge">-3.5d DELAY</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-tertiary transition-colors">Monsoon Saturation Event</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Simulated extreme precipitation window across Brahmaputra valley basin.</p>
+</div>
+<div class="bg-surface-container-low group-hover:bg-amber-50/40 transition-colors p-2.5 rounded border border-blue-100 flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary font-semibold">RAINFALL DENSITY:</span>
+<span class="text-tertiary-container font-bold font-mono transition-all duration-200" id="rainDisplay">75mm / 24HR</span>
+</div>
+<input aria-label="Rainfall Density Slider" class="w-full accent-tertiary-container cursor-pointer h-2 bg-surface-variant rounded-lg transition-all" id="rainSlider" max="150" min="20" oninput="updateRain(this.value)" type="range" value="75"/>
+<div class="flex items-center justify-between pt-1 font-label-xs text-label-xs text-secondary">
+<span>SOIL BEARING LOAD:</span>
+<span class="font-bold text-amber-800 font-mono transition-colors duration-200" id="soilBearingDisplay">120 kPa (Degraded)</span>
+</div>
+</div>
+</div>
+<!-- Parameter 04: River Crossing Milestone -->
+<div class="param-card-interactive bg-surface-container-lowest p-3.5 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-secondary font-bold tracking-wider">PARAM 04 // MILESTONE LOCK</span>
+<span class="font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-bold flex items-center gap-1 shadow-xs">
+<span class="material-symbols-outlined text-[11px]">lock</span> LOCKED
+          </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">River HDD Pullback Window</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Burhi Dihing flood discharge threshold requires pullback completion prior to crest.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded border border-blue-100 flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary">ORIGINAL BASELINE:</span>
+<span class="text-secondary line-through font-mono font-medium">12 Nov 2024</span>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary font-semibold">COMPRESSED TARGET:</span>
+<span class="text-primary font-bold font-mono">08 Nov 2024</span>
+</div>
+<div class="flex items-center justify-between pt-1 font-label-xs text-label-xs text-secondary">
+<span>HYDROLOGIC BUFFER:</span>
+<span class="font-bold text-emerald-700 font-mono">+4 Calendar Days</span>
+</div>
+</div>
+</div>
+</section>
+<!-- MID SECTION SPLIT: 65% DUAL-GANTT TIMELINE vs 35% TORNADO DRIVERS -->
+<section class="animate-cascade delay-3 grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- LEFT CARD: DUAL-GANTT TIMELINE PERTURBATION MODEL (8 Cols = ~66%) -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-4 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
+<div class="flex flex-col gap-2">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">waterfall_chart</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Dual-Gantt Timeline Perturbation Model</span>
+<span class="font-label-xs text-label-xs text-secondary">P6 BASELINE REV 4.8 vs STOCHASTIC SCENARIO C-03 RUN</span>
+</div>
+</div>
+<div class="flex items-center gap-3 font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-1.5 rounded-sm bg-secondary-fixed"></span>
+<span class="text-secondary">Baseline Path</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-2 rounded-sm bg-primary-container"></span>
+<span class="text-primary font-bold">Scenario C-03</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rotate-45 bg-emerald-600"></span>
+<span class="text-emerald-700 font-bold">Milestone Win</span>
+</div>
+</div>
+</div>
+<!-- Banner: Safe critical path bypass -->
+<div class="bg-surface-container-high px-3 py-2 rounded flex items-center justify-between text-on-surface font-label-xs text-label-xs border border-blue-200/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span>Deterministic Critical Path safely bypassed at KM 42+650. Schedule float regained across 3 downstream chains.</span>
+</div>
+<span class="font-bold text-primary font-mono shrink-0">94.2% CONFIDENCE</span>
+</div>
+</div>
+<!-- Gantt Canvas / Detailed Activity Comparison -->
+<div class="flex flex-col gap-3.5 pt-1">
+<!-- Gantt Time Axis Header -->
+<div class="grid grid-cols-12 gap-1 text-center font-label-xs text-label-xs text-secondary bg-surface-container-low py-1.5 px-2 rounded border border-blue-100">
+<div class="col-span-4 text-left font-semibold">ACTIVITY / WBS NODE</div>
+<div class="col-span-2">OCT W3</div>
+<div class="col-span-2">OCT W4</div>
+<div class="col-span-2">NOV W1</div>
+<div class="col-span-2 font-bold text-primary">NOV W2 [CRITICAL]</div>
+</div>
+<!-- Activity 1 -->
+<div class="flex flex-col gap-1.5 bg-surface-bright p-2.5 rounded shadow-xs border border-slate-100 hover:border-blue-200 transition-colors">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-primary">ACT-TR-4290</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Trenching &amp; Lowering (KM 42-48 Hard Rock)</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 font-mono font-bold border border-emerald-200" id="act1BufferBadge">+1.8d Buffer Secured</span>
+</div>
+<!-- Bar 1: Baseline -->
+<div class="relative w-full h-5 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[8%] w-[68%] h-3 bg-secondary/30 rounded-xs flex items-center px-2">
+<span class="text-[9px] font-mono text-secondary font-semibold">Rev 4.8: -4.2d Critical Slip (Baseline)</span>
+</div>
+</div>
+<!-- Bar 2: What-If -->
+<div class="relative w-full h-6 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[8%] w-[52%] h-4 bg-primary-container rounded-xs flex items-center justify-between px-2 text-on-primary transition-all duration-300" id="ganttBarScenario1">
+<span class="text-[10px] font-mono font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">speed</span>
+<span id="ganttBarText1">C-03: Expedited Float +1.8d</span>
+</span>
+<span class="text-[9px] font-mono opacity-80" id="ganttSubText1">Ripper + Dual Shift</span>
+</div>
+<div class="absolute left-[60%] w-[16%] h-4 bg-emerald-500/20 rounded-xs flex items-center px-1">
+<span class="text-[9px] font-mono text-emerald-800 font-bold">Saved 6.0d</span>
+</div>
+</div>
+</div>
+<!-- Activity 2 -->
+<div class="flex flex-col gap-1.5 bg-surface-bright p-2.5 rounded shadow-xs border border-slate-100 hover:border-blue-200 transition-colors">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-primary">ACT-HD-1024</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Burhi Dihing River HDD Crossing (1,240m Section)</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-mono font-bold border border-blue-200">Compressed to 08-Nov</span>
+</div>
+<!-- Bar 1: Baseline -->
+<div class="relative w-full h-5 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[38%] w-[50%] h-3 bg-secondary/30 rounded-xs flex items-center px-2">
+<span class="text-[9px] font-mono text-secondary font-semibold">12-Nov Pullback Window End</span>
+</div>
+</div>
+<!-- Bar 2: What-If -->
+<div class="relative w-full h-6 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[34%] w-[42%] h-4 bg-primary-container rounded-xs flex items-center justify-between px-2 text-on-primary">
+<span class="text-[10px] font-mono font-bold">Pilot Rig Dual Crew Ready</span>
+<span class="text-[9px] font-mono font-bold text-emerald-200">08-Nov Target</span>
+</div>
+<div class="absolute left-[76%] w-2.5 h-2.5 rotate-45 bg-emerald-600 shadow-xs" title="Milestone Met"></div>
+</div>
+</div>
+<!-- Activity 3 -->
+<div class="flex flex-col gap-1.5 bg-surface-bright p-2.5 rounded shadow-xs border border-slate-100 hover:border-blue-200 transition-colors">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-primary">MLS-TI-04</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Golden Tie-In &amp; Hydrotest Hydrostatic Pack</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 font-mono font-bold border border-emerald-200">LD Risk Eliminated</span>
+</div>
+<!-- Bar 1: Baseline -->
+<div class="relative w-full h-5 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[70%] w-[28%] h-3 bg-tertiary-container/30 rounded-xs flex items-center px-2">
+<span class="text-[9px] font-mono text-tertiary-container font-semibold">Contract Breach Risk (28-Nov)</span>
+</div>
+</div>
+<!-- Bar 2: What-If -->
+<div class="relative w-full h-6 bg-surface-container rounded overflow-hidden flex items-center">
+<div class="absolute left-[64%] w-[20%] h-4 bg-emerald-600 rounded-xs flex items-center px-2 text-on-primary">
+<span class="text-[10px] font-mono font-bold">24-Nov P85 Completion</span>
+</div>
+<div class="absolute left-[84%] -top-1 bottom-0 flex items-center">
+<span class="material-symbols-outlined text-emerald-600 text-[18px]">verified</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-secondary font-label-xs text-label-xs">
+<span class="font-mono">P6 EPPM NETWORK ENGINE // CPM METHODOLOGY: FORWARD PASS / BACKWARD PASS DETERMINISTIC</span>
+<span class="text-primary font-bold">P6 ACTIVITY RE-CALCULATION DURATION: 18ms</span>
+</div>
+</div>
+<!-- RIGHT CARD: SENSITIVITY TORNADO DRIVERS (4 Cols = ~34%) -->
+<div class="lg:col-span-4 bg-surface-container-lowest p-4 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tornado</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Sensitivity Tornado Drivers</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary font-mono">RANKED BY VARIANCE</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">Primary schedule perturbation coefficients affecting overall commissioning milestone.</p>
+</div>
+<!-- Tornado Horizontal Bars Visualization -->
+<div class="flex flex-col gap-3 py-1">
+<!-- Tornado Axis Header -->
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary px-2">
+<span>-5d (OPTIMISTIC)</span>
+<span class="font-bold text-on-surface">BASELINE (0d)</span>
+<span>+5d (PESSIMISTIC)</span>
+</div>
+<!-- Factor 1 -->
+<div class="has-tooltip flex flex-col gap-1 bg-surface-container-low p-2 rounded border border-blue-100/60 hover:border-blue-300 transition-all cursor-pointer">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-semibold text-on-surface">1. Hard Rock Ripper Penetration</span>
+<span class="font-mono font-bold text-primary">±4.6 Days</span>
+</div>
+<div class="relative w-full h-4 bg-surface-variant rounded flex items-center">
+<div class="w-1/2 flex justify-end">
+<div class="tornado-bar-left h-3 bg-emerald-600 rounded-l transition-all duration-300" style="width: 92%;"></div>
+</div>
+<div class="w-0.5 h-4 bg-on-surface-variant z-10"></div>
+<div class="w-1/2 flex justify-start">
+<div class="tornado-bar-right h-3 bg-tertiary-container rounded-r transition-all duration-300" style="width: 92%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-secondary">
+<span>Komatsu Ripping Rate</span>
+<span>Unconfined Compressive Str.</span>
+</div>
+<!-- Hover Tooltip -->
+<div class="tooltip-content absolute -top-9 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white text-[10px] font-mono px-2.5 py-1 rounded shadow-md whitespace-nowrap">
+            Impact: -4.6d accelerated / +4.6d delayed (Elasticity: 0.92)
+          </div>
+</div>
+<!-- Factor 2 -->
+<div class="has-tooltip flex flex-col gap-1 bg-surface-container-low p-2 rounded border border-blue-100/60 hover:border-blue-300 transition-all cursor-pointer">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-semibold text-on-surface">2. Burhi Dihing HDD Reaming Stability</span>
+<span class="font-mono font-bold text-primary">±3.8 Days</span>
+</div>
+<div class="relative w-full h-4 bg-surface-variant rounded flex items-center">
+<div class="w-1/2 flex justify-end">
+<div class="tornado-bar-left h-3 bg-emerald-600 rounded-l transition-all duration-300" style="width: 76%;"></div>
+</div>
+<div class="w-0.5 h-4 bg-on-surface-variant z-10"></div>
+<div class="w-1/2 flex justify-start">
+<div class="tornado-bar-right h-3 bg-tertiary-container rounded-r transition-all duration-300" style="width: 76%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-secondary">
+<span>Bentonite Gel Pressure</span>
+<span>Fracture Zone Ingress</span>
+</div>
+<!-- Hover Tooltip -->
+<div class="tooltip-content absolute -top-9 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white text-[10px] font-mono px-2.5 py-1 rounded shadow-md whitespace-nowrap">
+            Impact: -3.8d fast pullback / +3.8d mud-loss bore collapse
+          </div>
+</div>
+<!-- Factor 3 -->
+<div class="has-tooltip flex flex-col gap-1 bg-surface-container-low p-2 rounded border border-blue-100/60 hover:border-blue-300 transition-all cursor-pointer">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-semibold text-on-surface">3. API 5L X70 Pipe String Freight</span>
+<span class="font-mono font-bold text-primary">±2.4 Days</span>
+</div>
+<div class="relative w-full h-4 bg-surface-variant rounded flex items-center">
+<div class="w-1/2 flex justify-end">
+<div class="tornado-bar-left h-3 bg-emerald-600 rounded-l transition-all duration-300" style="width: 48%;"></div>
+</div>
+<div class="w-0.5 h-4 bg-on-surface-variant z-10"></div>
+<div class="w-1/2 flex justify-start">
+<div class="tornado-bar-right h-3 bg-tertiary-container rounded-r transition-all duration-300" style="width: 48%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-secondary">
+<span>Kolkata Port Clearance</span>
+<span>Rail Siding Congestion</span>
+</div>
+<!-- Hover Tooltip -->
+<div class="tooltip-content absolute -top-9 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white text-[10px] font-mono px-2.5 py-1 rounded shadow-md whitespace-nowrap">
+            Impact: ±2.4d siding express transfer vs logistics rake delay
+          </div>
+</div>
+<!-- Factor 4 -->
+<div class="has-tooltip flex flex-col gap-1 bg-surface-container-low p-2 rounded border border-blue-100/60 hover:border-blue-300 transition-all cursor-pointer">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-semibold text-on-surface">4. NDT Radiography Clearance Speed</span>
+<span class="font-mono font-bold text-primary">±1.5 Days</span>
+</div>
+<div class="relative w-full h-4 bg-surface-variant rounded flex items-center">
+<div class="w-1/2 flex justify-end">
+<div class="tornado-bar-left h-3 bg-emerald-600 rounded-l transition-all duration-300" style="width: 30%;"></div>
+</div>
+<div class="w-0.5 h-4 bg-on-surface-variant z-10"></div>
+<div class="w-1/2 flex justify-start">
+<div class="tornado-bar-right h-3 bg-tertiary-container rounded-r transition-all duration-300" style="width: 30%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-secondary">
+<span>Level III Inspector Turn</span>
+<span>Film Digitization Lead</span>
+</div>
+<!-- Hover Tooltip -->
+<div class="tooltip-content absolute -top-9 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white text-[10px] font-mono px-2.5 py-1 rounded shadow-md whitespace-nowrap">
+            Impact: ±1.5d crawler automation vs double-wall isotope inspection
+          </div>
+</div>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded border border-blue-100 flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary font-semibold">TORNADO SENSITIVITY COEFFICIENT (R²):</span>
+<span class="font-bold text-on-surface font-mono">0.891 (STRONG)</span>
+</div>
+</div>
+</section>
+<!-- LOWER SECTION SPLIT: 60% MONTE CARLO PDF vs 40% VALUE PRESERVATION ARBITRAGE -->
+<section class="animate-cascade delay-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- LEFT CARD: MONTE CARLO PROBABILITY DENSITY FUNCTION (7 Cols = ~58%) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-4 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">analytics</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Monte Carlo Probability Density Function</span>
+<span class="font-label-xs text-label-xs text-secondary">10,000 ITERATIONS RUN ON DIGBOI P6 LIVE NETWORK</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-mono text-label-xs font-bold border border-blue-200">NORMAL-LOG LOGISTIC</span>
+</div>
+</div>
+<!-- Gaussian Distribution SVG Curve -->
+<div class="relative w-full h-48 bg-surface-bright rounded p-3 flex flex-col justify-end overflow-hidden shadow-xs border border-slate-100">
+<!-- SVG Graphic -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 500 160">
+<defs>
+<lineargradient id="curveShimmer" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#eff4ff" stop-opacity="0.3"></stop>
+<stop offset="50%" stop-color="#dbeafe" stop-opacity="0.75"></stop>
+<stop offset="100%" stop-color="#eff4ff" stop-opacity="0.3"></stop>
+</lineargradient>
+</defs>
+<!-- Background Grid Lines -->
+<line stroke="#e2e8f0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="500" y1="40" y2="40"></line>
+<line stroke="#e2e8f0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="500" y1="80" y2="80"></line>
+<line stroke="#e2e8f0" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="500" y1="120" y2="120"></line>
+<!-- Filled Probability Area under curve up to P85 -->
+<path d="M 40,150 Q 150,150 200,90 T 260,25 T 320,80 T 360,110 L 360,150 Z" fill="url(#curveShimmer)"></path>
+<!-- Main Probability Bell Curve Line with Animated Subtle Breathing Stroke -->
+<path class="gaussian-curve-path" d="M 40,150 Q 150,150 200,90 T 260,25 T 320,80 T 420,145 L 480,150" fill="none" stroke="#1d4ed8" stroke-width="2.5"></path>
+<!-- P50 Line (Mean / Most Likely) -->
+<line stroke="#1d4ed8" stroke-dasharray="4,2" stroke-width="1.5" x1="260" x2="260" y1="20" y2="150"></line>
+<circle cx="260" cy="25" fill="#1d4ed8" r="4"></circle>
+<!-- P85 Line (Target Commitment) -->
+<line stroke="#059669" stroke-width="2" x1="360" x2="360" y1="80" y2="150"></line>
+<circle class="pin-bounce" cx="360" cy="110" fill="#059669" r="4.5" stroke="#ffffff" stroke-width="1.5"></circle>
+<!-- P99 Line (Tail Risk) -->
+<line stroke="#b91c1c" stroke-dasharray="2,2" stroke-width="1.5" x1="450" x2="450" y1="130" y2="150"></line>
+<circle cx="450" cy="148" fill="#b91c1c" r="3"></circle>
+</svg>
+<!-- Dynamic Labels Overlay -->
+<div class="absolute top-4 left-[46%] -translate-x-1/2 flex flex-col items-center">
+<span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary font-mono text-[10px] font-bold shadow-xs">P50: 12 NOV</span>
+<span class="text-[9px] font-mono text-secondary">Most Likely</span>
+</div>
+<!-- Animated pointer pin on P85 window -->
+<div class="pin-bounce absolute top-12 left-[68%] -translate-x-1/2 flex flex-col items-center cursor-default group">
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-600 text-on-primary font-mono text-[10px] font-bold shadow-md">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+<span>P85: 24 NOV</span>
+</div>
+<span class="text-[9px] font-mono text-emerald-800 font-bold bg-white/90 px-1 rounded shadow-2xs mt-0.5">Contract Goal (94.2%)</span>
+</div>
+<div class="absolute top-24 left-[86%] -translate-x-1/2 flex flex-col items-center">
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container text-on-primary font-mono text-[10px] font-bold shadow-xs">P99: 15 JAN</span>
+<span class="text-[9px] font-mono text-tertiary-container">Tail-Risk</span>
+</div>
+</div>
+<!-- Probability Milestone Summary Grid -->
+<div class="grid grid-cols-3 gap-2 text-center pt-1 font-label-xs text-label-xs">
+<div class="bg-surface-container-low p-2 rounded border border-blue-100 flex flex-col gap-0.5">
+<span class="text-secondary">P50 BASELINE ESTIMATE</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface font-mono">12 NOV 2025</span>
+<span class="text-primary font-semibold">Kurtosis: 3.12 (Normal)</span>
+</div>
+<div class="bg-emerald-50 p-2 rounded border border-emerald-200 flex flex-col gap-0.5 shadow-2xs">
+<span class="text-emerald-800 font-semibold">P85 COMMODITY WINDOW</span>
+<span class="font-headline-sm text-headline-sm font-bold text-emerald-900 font-mono">24 NOV 2025</span>
+<span class="text-emerald-700 font-bold">94.2% In-Budget Target</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded border border-blue-100 flex flex-col gap-0.5">
+<span class="text-secondary">P99 EXTREME TAIL</span>
+<span class="font-headline-sm text-headline-sm font-bold text-tertiary-container font-mono">15 JAN 2026</span>
+<span class="text-tertiary-container font-semibold">Risk Exposure: 4.8%</span>
+</div>
+</div>
+</div>
+<!-- RIGHT CARD: EXECUTIVE VALUE PRESERVATION (5 Cols = ~42%) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-4 rounded shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Executive Value Preservation</span>
+<span class="font-label-xs text-label-xs text-secondary">CONTRACT ARBITRAGE CALCULATOR</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-label-xs font-bold shadow-xs border border-emerald-200" id="roiBadgeDisplay">
+          ROI 3.36x
+        </span>
+</div>
+<!-- Financial Metrics Stack -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-container-low border border-blue-100/60 font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px]">add_circle</span>
+<span class="text-secondary">Surge Execution Cost (Aux Ripper + W12)</span>
+</div>
+<span class="font-bold font-mono text-on-surface text-[13px]" id="surgeCostDisplay">₹62.5 Lakhs</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-container-low border border-blue-100/60 font-label-xs text-label-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-700 text-[16px]">shield_with_heart</span>
+<span class="text-secondary">Avoided LD Penalties (Clause 48.2)</span>
+</div>
+<span class="font-bold font-mono text-emerald-700 text-[13px]">₹2.10 Crore</span>
+</div>
+<!-- Net Calculation Pill -->
+<div class="flex items-center justify-between p-3 rounded bg-surface-container-high border border-blue-200 text-primary font-label-xs text-label-xs">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">NET ECONOMIC VALUE PRESERVED</span>
+<span class="text-[10px] text-secondary">Float recovery ratio +4.8x investment</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-primary font-mono" id="netPreservedDisplay">+₹1.475 Crore</span>
+</div>
+</div>
+<!-- Recommendation Callout -->
+<div class="bg-surface-container-low p-2.5 rounded border border-blue-100 flex items-start gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">lightbulb</span>
+<div>
+<span class="font-semibold text-on-surface">Engineering Intelligence:</span> Proceed with Scenario C-03 mobilization immediately. Re-deployment eliminates ₹35K/hr equipment standby burn at golden tie-in base.
+        </div>
+</div>
+<!-- Actions with tactile press states -->
+<div class="flex items-center gap-2 pt-1">
+<button class="tactile-btn flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-md hover:bg-primary transition-all" id="btnDirective" onclick="triggerP6Directive(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">draw</span>
+<span id="btnDirectiveText">Generate P6 Change Directive (Form 14-B)</span>
+</button>
+<button class="tactile-btn inline-flex items-center justify-center px-3 py-2 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-semibold shadow-sm border border-slate-300 hover:bg-surface-container-low transition-colors" id="btnExportXer" onclick="triggerExportXER(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span id="btnExportXerText">Export Raw XER</span>
+</button>
+</div>
+</div>
+</section>
+<!-- BOTTOM BAR: TELEMETRY RUNTIME METADATA & REPRODUCIBILITY -->
+<section class="animate-cascade delay-5 bg-surface-container-lowest px-4 py-2.5 rounded shadow-sm border border-slate-200/80 flex flex-wrap items-center justify-between gap-3 text-secondary font-label-xs text-label-xs">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-2 text-on-surface font-semibold">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+</span>
+        SANDBOX AIR-GAP ISOLATED
+      </span>
+<span class="text-outline-variant">•</span>
+<span>RUNTIME SEED: <span class="font-mono text-on-surface font-bold">0xDEADBEEF4829</span></span>
+<span class="text-outline-variant">•</span>
+<span>GPU ACCELERATED EXECUTION: <span class="font-mono text-on-surface font-bold">1.42s</span></span>
+</div>
+<div class="flex items-center gap-3">
+<span>DIGBOI COMPLIANCE HASH: <span class="font-mono text-primary font-bold">e7c1...89b4 (SHA-256 VALIDATED)</span></span>
+<span class="text-outline-variant">•</span>
+<span class="text-emerald-700 font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+        READY TO COMMIT
+      </span>
+</div>
+</section>
+<!-- INLINE INTERACTION SCRIPT -->
+<script>
+    // State management for Parameter Cockpit & arbitrage calculation
+    const state = {
+      ripperUnits: 2,
+      dualShift: true,
+      rainfall: 75
+    };
+
+    function recalculateFinancials() {
+      // Base ripper cost: 19.25L per unit; shift cost: 24.0L if on
+      const ripperCost = state.ripperUnits * 19.25;
+      const shiftCost = state.dualShift ? 24.0 : 0.0;
+      const totalSurge = ripperCost + shiftCost;
+      
+      const avoidedLD = 210.0; // 2.10 Cr = 210 Lakhs
+      const netValPreserved = (avoidedLD - totalSurge) / 100.0;
+      const roi = totalSurge > 0 ? (avoidedLD / totalSurge).toFixed(2) : '∞';
+
+      document.getElementById('surgeCostDisplay').innerText = '₹' + totalSurge.toFixed(1) + ' Lakhs';
+      document.getElementById('netPreservedDisplay').innerText = '+₹' + netValPreserved.toFixed(3) + ' Crore';
+      document.getElementById('roiBadgeDisplay').innerText = 'ROI ' + roi + 'x';
+    }
+
+    function updateRipper(val) {
+      val = parseInt(val, 10);
+      state.ripperUnits = val;
+      document.getElementById('ripperSlider').value = val;
+      document.getElementById('ripperCountDisplay').innerText = '+' + val + ' UNITS ACTIVE';
+      
+      const unitCosts = ['₹0.0 Lakhs', '+₹19.25 Lakhs', '+₹38.5 Lakhs', '+₹57.75 Lakhs', '+₹77.0 Lakhs'];
+      const floatBadges = ['0.0d FLOAT', '+1.4d FLOAT', '+2.8d FLOAT', '+4.1d FLOAT', '+5.3d FLOAT'];
+      
+      document.getElementById('ripperCostDisplay').innerText = unitCosts[val];
+      document.getElementById('param01FloatBadge').innerText = floatBadges[val];
+
+      // Update Gantt Activity 1 dynamically
+      const bar = document.getElementById('ganttBarScenario1');
+      const barText = document.getElementById('ganttBarText1');
+      const badgeBuffer = document.getElementById('act1BufferBadge');
+      
+      if (val === 0) {
+        bar.style.width = '64%';
+        barText.innerText = 'C-03: Baseline Speed -0.4d';
+        badgeBuffer.innerText = '-0.4d Critical Float';
+        badgeBuffer.className = 'px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 font-mono font-bold border border-amber-200';
+      } else {
+        const widths = ['64%', '58%', '52%', '47%', '42%'];
+        const buffers = ['-0.4d Buffer', '+0.9d Buffer Secured', '+1.8d Buffer Secured', '+2.6d Buffer Secured', '+3.4d Buffer Secured'];
+        bar.style.width = widths[val];
+        barText.innerText = 'C-03: Expedited Float +' + (val * 0.9).toFixed(1) + 'd';
+        badgeBuffer.innerText = buffers[val];
+        badgeBuffer.className = 'px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 font-mono font-bold border border-emerald-200';
+      }
+
+      recalculateFinancials();
+    }
+
+    function adjustRipper(delta) {
+      const slider = document.getElementById('ripperSlider');
+      let val = parseInt(slider.value, 10) + delta;
+      if (val < 0) val = 0;
+      if (val > 4) val = 4;
+      updateRipper(val);
+    }
+
+    function updateRain(val) {
+      val = parseInt(val, 10);
+      state.rainfall = val;
+      document.getElementById('rainDisplay').innerText = val + 'mm / 24HR';
+      
+      const soilSpan = document.getElementById('soilBearingDisplay');
+      const badge = document.getElementById('meteoDelayBadge');
+      
+      if (val < 45) {
+        soilSpan.innerText = '165 kPa (Nominal)';
+        soilSpan.className = 'font-bold text-emerald-700 font-mono';
+        badge.innerText = '-1.2d DELAY';
+      } else if (val < 90) {
+        soilSpan.innerText = '120 kPa (Degraded)';
+        soilSpan.className = 'font-bold text-amber-800 font-mono';
+        badge.innerText = '-3.5d DELAY';
+      } else {
+        soilSpan.innerText = '85 kPa (Severe Washout)';
+        soilSpan.className = 'font-bold text-red-700 font-mono';
+        badge.innerText = '-5.8d DELAY';
+      }
+    }
+
+    function toggleDualShift(checkbox) {
+      state.dualShift = checkbox.checked;
+      const defectSpan = document.getElementById('defectRiskDisplay');
+      const costSpan = document.getElementById('shiftCostDisplay');
+      const badge = document.getElementById('param02GainBadge');
+      const ganttSub = document.getElementById('ganttSubText1');
+
+      if (checkbox.checked) {
+        defectSpan.innerText = '+1.2% (NDT Acceptable)';
+        defectSpan.className = 'text-amber-700 font-bold font-mono';
+        costSpan.innerText = '+₹24.0 Lakhs / Mo';
+        badge.innerText = '+1.9d GAIN';
+        badge.className = 'font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold';
+        ganttSub.innerText = 'Ripper + Dual Shift';
+      } else {
+        defectSpan.innerText = '0.0% (Single Day Shift)';
+        defectSpan.className = 'text-emerald-700 font-bold font-mono';
+        costSpan.innerText = '₹0.0 Lakhs / Mo';
+        badge.innerText = '0.0d GAIN';
+        badge.className = 'font-label-xs text-label-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold';
+        ganttSub.innerText = 'Ripper Only (Day Shift)';
+      }
+      recalculateFinancials();
+    }
+
+    function triggerP6Directive(btn) {
+      const label = document.getElementById('btnDirectiveText');
+      const original = label.innerText;
+      label.innerText = 'Compiling Form 14-B Cryptographic Seal...';
+      btn.classList.add('opacity-90', 'scale-[0.98]');
+      setTimeout(() => {
+        label.innerText = '✓ Form 14-B Generated & Queued';
+        btn.classList.remove('opacity-90', 'scale-[0.98]');
+        setTimeout(() => {
+          label.innerText = original;
+        }, 2200);
+      }, 700);
+    }
+
+    function triggerExportXER(btn) {
+      const label = document.getElementById('btnExportXerText');
+      const original = label.innerText;
+      label.innerText = 'Exporting XER...';
+      btn.classList.add('bg-slate-100');
+      setTimeout(() => {
+        label.innerText = '✓ XER Ready (Rev 4.8.xer)';
+        btn.classList.remove('bg-slate-100');
+        setTimeout(() => {
+          label.innerText = original;
+        }, 2000);
+      }, 600);
+    }
+  </script>
+</div></main>
+<!-- Footer -->
+<footer class="w-full bg-white border-t border-slate-200 py-3.5 px-8 mt-auto">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2 text-slate-500 font-mono text-[11px]">
+<div>OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</div>
+<div class="flex items-center gap-3">
+<span>VERIFICATION PUBKEY: 0x9AF...D312</span>
+<span>•</span>
+<span>SYSTEM PROTOCOL: AIR-GAP/V2</span>
+<span>•</span>
+<span class="text-emerald-700 font-semibold">NODE TELEMETRY NOMINAL</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

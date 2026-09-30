@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+
+/* Micro-interaction Keyframes & Effects */
+@keyframes cascadeFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes beaconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.75; box-shadow: 0 0 16px rgba(220, 38, 38, 0.45); }
+}
+
+@keyframes beaconRing {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes radarScan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  30% { opacity: 0.6; }
+  70% { opacity: 0.6; }
+  100% { transform: translateY(300%); opacity: 0; }
+}
+
+.anim-cascade {
+  animation: cascadeFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-beacon {
+  animation: beaconPulse 2s ease-in-out infinite;
+}
+
+.anim-beacon-ring::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 2px solid rgba(220, 38, 38, 0.6);
+  animation: beaconRing 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.radar-sweep-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.radar-sweep-effect::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(30, 78, 216, 0.45), rgba(16, 185, 129, 0.6), transparent);
+  box-shadow: 0 0 12px rgba(30, 78, 216, 0.4);
+  animation: radarScan 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-cascade,
+  .anim-beacon,
+  .anim-beacon-ring::after,
+  .radar-sweep-effect::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error-container": "#fee2e2",
+          "inverse-primary": "#b7c4ff",
+          "primary-fixed-dim": "#b7c4ff",
+          "tertiary-fixed-dim": "#ffb4ab",
+          "on-background": "#0b1c30",
+          "surface-variant": "#f1f5f9",
+          "surface-dim": "#e2e8f0",
+          "tertiary-container": "#fee2e2",
+          "surface-tint": "#1d4ed8",
+          "on-tertiary-container": "#991b1b",
+          "surface-container-low": "#f8f9ff",
+          "inverse-surface": "#1e293b",
+          "on-primary-container": "#ffffff",
+          "on-surface-variant": "#475569",
+          "on-secondary-fixed-variant": "#334155",
+          "secondary-fixed": "#e2e8f0",
+          "on-secondary-fixed": "#0f172a",
+          "on-primary": "#ffffff",
+          "on-tertiary": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "on-secondary": "#ffffff",
+          "primary-container": "#1d4ed8",
+          "on-tertiary-fixed": "#410002",
+          "background": "#f8f9ff",
+          "primary-fixed": "#dbeafe",
+          "surface-container-highest": "#e2e8f0",
+          "error": "#dc2626",
+          "on-tertiary-fixed-variant": "#991b1b",
+          "on-primary-fixed": "#1e3a8a",
+          "on-error": "#ffffff",
+          "inverse-on-surface": "#f8fafc",
+          "tertiary-fixed": "#fee2e2",
+          "outline-variant": "#e2e8f0",
+          "surface": "#f8f9ff",
+          "surface-container-high": "#f1f5f9",
+          "secondary-fixed-dim": "#cbd5e1",
+          "primary": "#1d4ed8",
+          "tertiary": "#b91c1c",
+          "on-surface": "#0f172a",
+          "secondary": "#059669",
+          "on-error-container": "#7f1d1d",
+          "on-secondary-container": "#065f46",
+          "secondary-container": "#d1fae5",
+          "outline": "#cbd5e1",
+          "on-primary-fixed-variant": "#1e40af",
+          "surface-container": "#ffffff",
+          "surface-bright": "#ffffff",
+          "border-subtle": "#e2e8f0",
+          "border-medium": "#cbd5e1"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.375rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "space-xl": "1.5rem",
+          "margin": "1rem",
+          "space-xs": "0.25rem",
+          "gutter": "1rem",
+          "space-sm": "0.5rem",
+          "space-md": "0.875rem",
+          "space-lg": "1.25rem"
+        },
+        "fontFamily": {
+          "headline-xl": ["Plus Jakarta Sans"],
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "body-md": ["Inter"],
+          "body-lg": ["Inter"],
+          "label-sm": ["JetBrains Mono"],
+          "label-md": ["JetBrains Mono"],
+          "label-mono-xs": ["JetBrains Mono"],
+          "label-mono-md": ["JetBrains Mono"],
+          "label-mono-lg": ["JetBrains Mono"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "label-xs": ["JetBrains Mono"],
+          "body-sm": ["Inter"]
+        },
+        "fontSize": {
+          "headline-xl": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+          "headline-xl-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+          "body-lg": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+          "label-mono-xs": ["10px", { "lineHeight": "13px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+          "label-mono-md": ["11px", { "lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500" }],
+          "label-mono-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+          "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "headline-sm": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+        }
+      }
+    }
+  };
+</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest border-r border-border-subtle z-50 flex flex-col justify-between select-none shadow-sm"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-border-subtle bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><div class="w-7 h-7 rounded bg-primary-container flex items-center justify-center text-white"><span class="material-symbols-outlined font-bold text-[18px]">precision_manufacturing</span></div><div class="flex flex-col"><span class="font-headline-sm text-[13px] uppercase font-bold tracking-wider text-on-surface">OIL / SITESYNC</span><span class="font-label-mono-xs text-label-mono-xs text-on-surface-variant tracking-wider">ENTERPRISE RUNTIME v4.8</span></div></div><div class="flex items-center px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5 animate-pulse"></span><span class="font-label-mono-xs text-label-mono-xs text-emerald-700 font-semibold uppercase">P6 LIVE</span></div></div><nav class="flex flex-col px-3 py-3 gap-y-4" data-active-classes="bg-blue-50/80 text-primary border-r-2 border-primary"><div class="flex flex-col"><div class="px-2 py-1 font-label-mono-xs text-label-mono-xs text-slate-400 uppercase tracking-wider font-semibold">EXECUTION INTELLIGENCE</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="executive-health" href="#"><span class="font-body-md text-body-md">Executive Health</span><span class="material-symbols-outlined text-[16px] text-slate-400">monitoring</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="field-input-center" href="#"><span class="font-body-md text-body-md">Field Input Center</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-slate-100 text-slate-500 font-semibold">TELEMETRY</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="ai-review-center" href="#"><span class="font-body-md text-body-md">AI Review Center</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-blue-50 text-blue-700 font-semibold">DESK 1</span></a></div></div><div class="flex flex-col"><div class="px-2 py-1 font-label-mono-xs text-label-mono-xs text-slate-400 uppercase tracking-wider font-semibold">SCHEDULE &amp; CONTROLS</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="wbs-schedule-tree" href="#"><span class="font-body-md text-body-md">WBS &amp; Schedule Tree</span><span class="material-symbols-outlined text-[16px] text-slate-400">account_tree</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="4d-gantt-digital-twin" href="#"><span class="font-body-md text-body-md">4D Gantt Digital Twin</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-slate-100 text-slate-600">4D-V</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded bg-blue-50 text-primary border-l-2 border-primary font-medium" data-path="conflicts-chronology" href="#"><span class="font-body-md text-body-md">Conflicts &amp; Chronology</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-red-100 text-red-700 font-bold">2</span></a></div></div><div class="flex flex-col"><div class="px-2 py-1 font-label-mono-xs text-label-mono-xs text-slate-400 uppercase tracking-wider font-semibold">ANALYTICS &amp; MEMORY</div><div class="flex flex-col mt-1 gap-0.5"><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="activity-dna-memory" href="#"><span class="font-body-md text-body-md">Activity DNA &amp; Memory</span><span class="material-symbols-outlined text-[16px] text-slate-400">fingerprint</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="what-if-simulator" href="#"><span class="font-body-md text-body-md">What-If Simulator</span><span class="material-symbols-outlined text-[16px] text-slate-400">tune</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="audit-provenance" href="#"><span class="font-body-md text-body-md">Audit &amp; Provenance</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-slate-100 text-slate-500 font-mono">SHA-256</span></a><a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="5-min-judge-demo" href="#"><span class="font-body-md text-body-md">5-Min Judge Demo</span><span class="px-1.5 py-0.5 rounded font-label-mono-xs text-label-mono-xs bg-blue-100 text-primary font-bold">11</span></a></div></div></nav></div><div class="p-3 bg-slate-50 m-2 rounded border border-border-subtle flex flex-col gap-1"><div class="flex items-center justify-between"><span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase">SECURITY LEVEL</span><span class="font-label-mono-xs text-label-mono-xs text-red-700 font-bold">IL-5 RESTRICTED</span></div><div class="flex items-center justify-between"><span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase">SEAL CODE</span><span class="font-label-mono-xs text-label-mono-xs text-slate-700 font-mono font-medium">OIL-EXP-994821</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md z-40 px-gutter border-b border-border-subtle flex items-center justify-between shadow-xs"><div class="flex items-center gap-space-md overflow-hidden"><div class="flex items-center gap-2"><span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold border border-blue-200 tracking-wide">NODE-AS04</span><span class="font-label-mono-xs text-label-mono-xs text-emerald-700 uppercase tracking-wider font-semibold hidden lg:inline flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> SECURE ORACLE EPPM SYNCED</span></div><div class="h-4 w-px bg-slate-200 hidden sm:block"></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-2"><span class="font-body-md text-body-md text-slate-900 font-bold truncate">Digboi–Duliajan 132km Crude Trunkline</span><span class="font-label-mono-xs text-label-mono-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold">WBS-REV-4.8</span></div><div class="flex items-center gap-space-sm font-label-mono-xs text-label-mono-xs text-slate-500"><span class="truncate">PIPELINE REINFORCEMENT SEGMENT 04-A</span><span class="hidden xl:inline">• LAT: 27.3805° N, 95.3182° E</span><span class="hidden xl:inline">• 18ms LATENCY</span><span class="hidden xl:inline text-emerald-700 font-semibold">• LEDGER VALIDATED</span></div></div></div><div class="flex items-center gap-space-md shrink-0"><div class="hidden md:flex items-center gap-2 px-2.5 py-1 rounded bg-slate-50 border border-slate-200"><div class="flex flex-col text-right"><span class="font-body-sm text-body-sm font-semibold text-slate-900">Pranjal Saikia</span><span class="font-label-mono-xs text-label-mono-xs text-slate-500">Chief Eng / Shift A</span></div><div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white"><span class="material-symbols-outlined text-[16px]">person</span></div><span class="material-symbols-outlined text-slate-400 text-[16px]">arrow_drop_down</span></div><button class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-body-sm text-body-sm font-medium transition-all duration-200 hover:shadow-sm active:scale-95 shadow-xs" type="button"><span class="material-symbols-outlined text-[16px] text-slate-500">file_download</span><span>Export Audit PKG</span></button><button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-primary hover:bg-blue-700 text-white font-body-sm text-body-sm font-semibold transition-all duration-200 hover:shadow-md active:scale-95 shadow-sm" type="button"><span class="material-symbols-outlined text-[16px]">cloud_upload</span><span>Commit to P6</span></button></div></header><main class="flex-1 pt-16 bg-background px-gutter py-space-lg w-full min-h-[calc(100vh-4rem-2.5rem)]"><div class="flex flex-col w-full gap-y-space-lg">
+<!-- Top Urgent Alert Protocol Bar: Clean Light Alert Banner -->
+<div class="anim-cascade relative overflow-hidden rounded-lg bg-rose-50 border border-rose-200 p-space-md shadow-xs transition-all duration-300 hover:shadow-sm" style="animation-delay: 50ms;">
+<div class="absolute inset-y-0 left-0 w-1.5 bg-red-600"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm pl-space-xs">
+<div class="flex items-start sm:items-center gap-3">
+<div class="relative w-9 h-9 rounded bg-red-600 text-white flex items-center justify-center shrink-0 shadow-xs anim-beacon-ring">
+<span class="material-symbols-outlined text-[20px] anim-beacon">warning</span>
+</div>
+<div class="flex flex-col">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-mono-xs text-label-mono-xs uppercase px-2 py-0.5 rounded bg-red-600 text-white font-bold tracking-wider inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+  CRITICAL BREACH SEV-1
+</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-600 font-medium">PROTOCOL: <span class="text-slate-800 font-mono font-semibold">CONF-2024-OIL-091</span></span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-white text-slate-700 border border-rose-200 font-medium inline-flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+  MILESTONE THREAT: TIE-IN #4
+</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-slate-900 mt-1 font-bold tracking-tight">2 Unresolved Critical Path Schedule Conflicts Requiring Controls Intervention</span>
+</div>
+</div>
+<div class="flex items-center gap-4 shrink-0 self-end lg:self-center">
+<div class="text-right hidden sm:block">
+<div class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold">P6 EXPOSURE WINDOW</div>
+<div class="font-label-mono-md text-label-mono-md text-red-600 font-bold font-mono tracking-wider">-100.8 HRS (CRITICAL SLIP)</div>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-red-600 text-white hover:bg-red-700 active:scale-95 font-body-sm text-body-sm font-semibold transition-all duration-200 shadow-xs hover:shadow" id="escalateBtn" type="button">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:rotate-12">gavel</span>
+<span>Emergency Arbitration Panel</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Top Metric Vitals Bento Grid: Clean White Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="anim-cascade rounded-lg bg-surface-container p-space-md border border-border-subtle shadow-xs flex flex-col justify-between hover:border-blue-300 hover:shadow-sm transition-all duration-200 group" style="animation-delay: 100ms;">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">CONFLICT INVENTORY</span>
+<span class="font-headline-lg text-headline-lg text-slate-900 font-mono mt-1 font-bold group-hover:text-primary transition-colors">02 <span class="font-body-md text-body-md text-slate-400 font-normal">/ 11 Resolved</span></span>
+</div>
+<div class="w-8 h-8 rounded bg-blue-50 border border-blue-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined text-[18px]">difference</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-slate-100 flex items-center justify-between font-label-mono-xs text-label-mono-xs">
+<span class="text-emerald-700 font-semibold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> 84.6% Closed &lt;72h
+        </span>
+<span class="text-slate-400">90-Day Audit Cycle</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="anim-cascade rounded-lg bg-surface-container p-space-md border border-border-subtle shadow-xs flex flex-col justify-between hover:border-red-300 hover:shadow-sm transition-all duration-200 group" style="animation-delay: 150ms;">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">CRITICAL PATH DELAY EXPOSURE</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-red-600 font-mono font-bold group-hover:translate-x-0.5 transition-transform">-4.2</span>
+<span class="font-body-sm text-body-sm text-slate-500 font-medium">DAYS</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded bg-red-50 border border-red-100 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-slate-100 flex items-center justify-between font-label-mono-xs text-label-mono-xs">
+<span class="text-red-700 font-mono font-bold">₹2.10 Cr LD At Stake</span>
+<span class="text-slate-400">Liquidated Damages</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="anim-cascade rounded-lg bg-surface-container p-space-md border border-border-subtle shadow-xs flex flex-col justify-between hover:border-sky-300 hover:shadow-sm transition-all duration-200 group" style="animation-delay: 200ms;">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">DOMINANT DELAY VECTOR</span>
+<span class="font-body-lg text-body-lg text-slate-900 font-bold mt-1 truncate group-hover:text-sky-700 transition-colors">Geotech &amp; Hydro-Met</span>
+</div>
+<div class="w-8 h-8 rounded bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-700 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined text-[18px]">storm</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-slate-100 flex items-center justify-between font-label-mono-xs text-label-mono-xs">
+<span class="text-sky-800 font-medium">Monsoon Runoff (Digboi)</span>
+<span class="text-slate-400">64% Total Variance</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="anim-cascade rounded-lg bg-surface-container p-space-md border border-border-subtle shadow-xs flex flex-col justify-between hover:border-emerald-300 hover:shadow-sm transition-all duration-200 group" style="animation-delay: 250ms;">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">AI ARBITRATION BENCHMARK</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-emerald-700 font-mono font-bold group-hover:scale-105 transition-transform origin-left">84.6%</span>
+<span class="font-body-sm text-body-sm text-emerald-700 font-semibold">TRIBUNAL-FREE</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-slate-100 flex items-center justify-between font-label-mono-xs text-label-mono-xs">
+<span class="text-emerald-700 font-semibold">Zero Litigation Escalations</span>
+<span class="text-slate-400">CVC Clause Comp.</span>
+</div>
+</div>
+</div>
+<!-- Primary Detail Section: The 2 Active Critical Disputes -->
+<div class="flex flex-col gap-space-lg">
+<div class="anim-cascade flex items-center justify-between" style="animation-delay: 300ms;">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded bg-primary"></span>
+<span class="font-headline-sm text-headline-sm text-slate-900 font-bold tracking-tight">Active Discrepancy Forensic Desks</span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold ml-1">2 IN QUEUE</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-mono-xs text-label-mono-xs text-slate-500">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">memory</span>
+<span>SYNCHRONIZED WITH ORACLE P6 R19.12 RUNTIME</span>
+</div>
+</div>
+<!-- Conflict Card #1 -->
+<div class="anim-cascade rounded-lg bg-surface-container border border-border-subtle shadow-xs overflow-hidden flex flex-col transition-all duration-200 hover:border-slate-300 hover:shadow-sm" style="animation-delay: 350ms;">
+<!-- Card Header -->
+<div class="p-space-md bg-slate-50 border-b border-border-subtle flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-start sm:items-center gap-3">
+<span class="px-2 py-1 rounded bg-red-600 text-white font-label-mono-xs text-label-mono-xs font-bold shrink-0">CRIT-01</span>
+<div>
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-mono-xs text-label-mono-xs text-primary font-mono font-semibold">WBS: OIL.TRUNK.04.B (Spread 2)</span>
+<span class="text-slate-300 text-xs">•</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-600 font-mono">ACT-WD-3105 ⇄ ACT-TR-4290</span>
+<span class="text-slate-300 text-xs">•</span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-red-700 font-semibold">SPATIAL &amp; RESOURCE COLLISION</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-slate-900 font-bold mt-1">Milepost 62 Tie-in vs Automatic Orbital Welding Rig Misalignment</h3>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end md:self-center shrink-0">
+<div class="px-2.5 py-1 rounded bg-white border border-slate-200 text-right">
+<div class="font-label-mono-xs text-label-mono-xs text-slate-400">CP IMPACT</div>
+<div class="font-label-mono-md text-label-mono-md text-red-600 font-bold font-mono">-1.5 DAYS SLIP</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-slate-700 transition-colors">more_vert</span>
+</div>
+</div>
+<!-- Card Body: Split Grid -->
+<div class="p-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Left: Diagnostic & Photographic/Telemetry Evidence (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Root Cause Box -->
+<div class="rounded-lg bg-blue-50/50 border border-blue-100 p-space-md flex flex-col gap-1.5 transition-colors hover:border-blue-200 hover:bg-blue-50/70">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-xs text-label-mono-xs text-primary uppercase font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">psychology</span> Forensic Root Cause Analysis
+              </span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">CONFIDENCE: 98.4%</span>
+</div>
+<p class="font-body-md text-body-md text-slate-700 leading-relaxed">
+              Trench excavated 1.8m ahead of schedule in Sector A while CRC-Evans M-300 welding head suffered calibration drift (0.4mm root-pass weld defect). Mechanical gang and trenching spread are now physically occupying the same 45-meter corridor without valid safety separation.
+            </p>
+</div>
+<!-- Field Evidence Strip -->
+<div class="flex flex-col gap-2">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">FIELD EVIDENCE DOSSIER (NDT RADIOGRAPHY + RTK GNSS)</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<!-- Evidence 1: NDT Film -->
+<div class="rounded-lg border border-border-subtle bg-slate-50 p-1.5 flex flex-col gap-1 overflow-hidden group hover:border-slate-400 transition-all duration-200 hover:shadow-xs cursor-pointer">
+<div class="relative w-full h-24 rounded overflow-hidden bg-slate-200">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High contrast industrial radiographic NDT film analysis displaying weld joint pipe seam with highlighted planar root defects, neon green measurement overlay vectors, and dark engineering aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCJR3DKEblt1N3Mr6V2o2Np5weCR04PteoQfbfpRmXrmgc7tvKkyMvdWvVVEn6GpGtw3C5yBOgI0zGZ7zFHN2cpf06KegF1ab9SYNTQfuBeV8SA8Xyo3H8g1chJsjVzEAlrWfYieHO3PDa89iPwIeK8oj1R4R6gVQJ_6cjDZBAh-2HSjWVXXc47NY-zGuw2vcSy9BBZR61Ws7RIqCK4ZG8M4CMkhSSJiR_BKi1gI5SMEHmM2Yy55E"/>
+<span class="absolute bottom-1 right-1 font-label-mono-xs text-label-mono-xs bg-white/95 px-1.5 py-0.5 rounded text-red-600 font-mono font-bold shadow-xs">DEFECT: 0.4mm</span>
+</div>
+<div class="flex items-center justify-between px-1 mt-0.5">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-700 font-medium truncate">NDT Film #RT-391</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500">JOINT J-118</span>
+</div>
+</div>
+<!-- Evidence 2: Drone Corridor -->
+<div class="rounded-lg border border-border-subtle bg-slate-50 p-1.5 flex flex-col gap-1 overflow-hidden group hover:border-slate-400 transition-all duration-200 hover:shadow-xs cursor-pointer">
+<div class="relative w-full h-24 rounded overflow-hidden bg-slate-200">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Aerial drone photogrammetry ortho-view of muddy pipeline right of way corridor showing trench line and stationary yellow pipe laying machine in lush Assam oil fields, top-down tactical survey view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh0vmeEx57v8OQFxRANRZfqXOAI0Ezb7egw49aoLUKMh2cnclsyUrxG0TwwjAwOhI6LcpJeSSV8tp3FJ80Y26kFlxrUcfnKvDHol-mQ_RmD3sJZl6RFFaatnup1ltsjanNDZPIMD9w8YXlQ3X54PjSu0s3S3kGQIH0svVZzCFxqYCy8AxFLi60u6AfnYtVcpXEfrtppB1ijvw15COFHnD4P1nfJ3nPydW4lda5vpCx9nCFqN9EVto"/>
+<span class="absolute bottom-1 right-1 font-label-mono-xs text-label-mono-xs bg-white/95 px-1.5 py-0.5 rounded text-primary font-mono font-bold shadow-xs">CORRIDOR 42+480</span>
+</div>
+<div class="flex items-center justify-between px-1 mt-0.5">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-700 font-medium truncate">UAV Orthomosaic</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500">ALT 45M</span>
+</div>
+</div>
+<!-- Evidence 3: GNSS Vector Telemetry -->
+<div class="rounded-lg border border-border-subtle bg-slate-50 p-2.5 flex flex-col justify-between hover:border-slate-400 transition-all duration-200 hover:shadow-xs">
+<div class="flex flex-col gap-1">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-700 uppercase font-bold">GNSS Deviation Readout</span>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-600 font-mono mt-1">LAT: 27.38091° N</div>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-600 font-mono">LON: 95.31904° E</div>
+<div class="font-label-mono-xs text-label-mono-xs text-red-600 font-mono font-bold mt-1">Δ LATERAL: +0.42m DRIFT</div>
+</div>
+<div class="bg-white border border-slate-200 px-2 py-0.5 rounded text-center">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 font-semibold uppercase">TRIMBLE RTK VERIFIED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Reconstructed Chronology Mini-Flow -->
+<div class="flex flex-col gap-2">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">AI RECONSTRUCTED INCIDENT CHRONOLOGY</span>
+<div class="flex flex-col gap-1.5 font-label-mono-xs text-label-mono-xs">
+<div class="flex items-start gap-2 p-2 rounded bg-slate-50 border border-slate-100 hover:bg-slate-100/70 transition-colors">
+<span class="text-blue-700 font-mono font-bold shrink-0">21 OCT 08:30 IST</span>
+<span class="text-slate-400">→</span>
+<span class="text-slate-800">Trench opened by Komatsu PC300 at KM 42+480 (Ahead by 26 hours vs baseline).</span>
+</div>
+<div class="flex items-start gap-2 p-2 rounded bg-slate-50 border border-slate-100 hover:bg-slate-100/70 transition-colors">
+<span class="text-amber-700 font-mono font-bold shrink-0">22 OCT 14:15 IST</span>
+<span class="text-slate-400">→</span>
+<span class="text-slate-800">CRC-Evans M-300 welding crew flagged joint #J-118 refusal due to thermal pipe warp.</span>
+</div>
+<div class="flex items-start gap-2 p-2 rounded bg-rose-50 border border-rose-100 hover:bg-rose-100/60 transition-colors">
+<span class="text-red-700 font-mono font-bold shrink-0">23 OCT 09:00 IST</span>
+<span class="text-slate-400">→</span>
+<span class="text-red-900 font-medium">P6 baseline slip confirmed: Negative total float (-36h). Resource blockage declared.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: AI Arbitration Vector & Action Panel (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between rounded-lg bg-emerald-50/40 border border-emerald-200/80 p-space-md">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-emerald-100">
+<span class="font-label-mono-xs text-label-mono-xs text-emerald-800 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified</span> SiteSync Recommended Arbitrament
+              </span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 font-mono font-bold">+2.1 DAYS RECOVERY</span>
+</div>
+<div class="rounded-lg bg-white border border-emerald-100 p-space-md flex flex-col gap-2 shadow-xs hover:border-emerald-300 transition-colors">
+<span class="font-body-md text-body-md text-slate-900 font-bold">Immediate Spread Bypass Maneuver</span>
+<p class="font-body-sm text-body-sm text-slate-600 leading-relaxed">
+                Re-route heavy orbital welding spread directly to KM 43+100 dry-pad corridor. Deploy manual shielded-metal arc backup crew (Team Assam-B) for tie-in joint rectification at KM 42+480.
+              </p>
+<div class="flex flex-wrap gap-2 mt-1">
+<div class="px-2 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 font-label-mono-xs text-label-mono-xs font-semibold">Cost delta: ₹2.4 Lakh</div>
+<div class="px-2 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-label-mono-xs text-label-mono-xs font-semibold">Zero Milestone Pen.</div>
+</div>
+</div>
+<!-- Arbitration Impact Gauge -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-mono-xs text-label-mono-xs">
+<span class="text-slate-600 font-medium">Schedule Float Recovery Probability</span>
+<span class="text-emerald-700 font-bold font-mono">94.2%</span>
+</div>
+<div class="w-full h-2 rounded bg-slate-200 overflow-hidden flex">
+<div class="bg-emerald-600 h-full rounded transition-all duration-1000 ease-out" style="width: 94%"></div>
+</div>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500">Validated against 14 prior Northeast India pipeline monsoonal lay records.</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-2 pt-space-md mt-space-sm border-t border-emerald-100">
+<button class="w-full py-2.5 px-space-md rounded bg-primary hover:bg-blue-700 active:scale-[0.98] text-white font-body-sm text-body-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-xs hover:shadow focus:ring-2 focus:ring-blue-400 focus:outline-none" id="endorseBtn1" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Endorse Arbitration Resolution</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-space-sm rounded bg-white hover:bg-rose-50 text-slate-700 hover:text-red-700 hover:border-red-300 active:scale-95 border border-slate-200 font-body-sm text-body-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs" id="disputeClaimBtn1" type="button">
+<span class="material-symbols-outlined text-[16px] text-red-600">gavel</span>
+<span>Dispute Claim</span>
+</button>
+<button class="py-2 px-space-sm rounded bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-800 hover:border-blue-300 active:scale-95 border border-slate-200 font-body-sm text-body-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs" id="simulateWhatIfBtn" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+<span>Simulate What-If</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Conflict Card #2 -->
+<div class="anim-cascade rounded-lg bg-surface-container border border-border-subtle shadow-xs overflow-hidden flex flex-col transition-all duration-200 hover:border-slate-300 hover:shadow-sm" style="animation-delay: 400ms;">
+<!-- Card Header -->
+<div class="p-space-md bg-slate-50 border-b border-border-subtle flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-start sm:items-center gap-3">
+<span class="px-2 py-1 rounded bg-amber-500 text-white font-label-mono-xs text-label-mono-xs font-bold shrink-0">CRIT-02</span>
+<div>
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-800 font-semibold font-mono">CONTRACTOR: L&amp;T HYDROCARBON ENGINEERING</span>
+<span class="text-slate-300 text-xs">•</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 font-mono">CONTRACT PKG: OIL/TR/2023/C-08</span>
+<span class="text-slate-300 text-xs">•</span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-red-700 font-semibold">FORCE MAJEURE COMMERCIAL CLAIM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-slate-900 font-bold mt-1">Monsoon Rain Extension &amp; Idling Charges Claim (14 Calendar Days)</h3>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end md:self-center shrink-0">
+<div class="px-2.5 py-1 rounded bg-white border border-slate-200 text-right">
+<div class="font-label-mono-xs text-label-mono-xs text-slate-400">CLAIM QUANTUM</div>
+<div class="font-label-mono-md text-label-mono-md text-slate-900 font-bold font-mono">14 DAYS / ₹1.85 CR</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-slate-700 transition-colors">more_vert</span>
+</div>
+</div>
+<!-- Card Body: Split Grid -->
+<div class="p-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Left: Forensic Cross-Audit & Radar Comparison (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="radar-sweep-effect rounded-lg bg-slate-50 border border-slate-200 p-space-md flex flex-col gap-2 transition-colors hover:border-slate-300">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-xs text-label-mono-xs text-primary uppercase font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] animate-spin text-blue-600" style="animation-duration: 9s;">satellite_alt</span> Satellite SAR (Sentinel-1) &amp; Digboi Weather Station Cross-Audit
+              </span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-rose-100 text-red-800 font-bold font-mono">11 DAYS DISPROVED</span>
+</div>
+<p class="font-body-md text-body-md text-slate-700 leading-relaxed">
+              Contractor submitted a 14-day schedule relief petition citing unworkable monsoonal inundation between 04 Oct and 17 Oct. Cryptographic telemetry cross-reference against Indian Meteorological Department (IMD) Digboi station radar and European Space Agency SAR soil backscatter data confirms only <span class="text-emerald-700 font-bold font-mono">3 legitimate torrential rain days (&gt;65mm/day)</span>.
+            </p>
+</div>
+<!-- Radar vs Ground Truth Breakdown Table -->
+<div class="flex flex-col gap-1.5">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 uppercase font-semibold tracking-wider">FORENSIC RAINFALL &amp; RIG UTILIZATION MATRIX</span>
+<div class="radar-sweep-effect overflow-x-auto rounded-lg border border-slate-200">
+<table class="w-full text-left font-label-mono-xs text-label-mono-xs">
+<thead class="bg-slate-100 text-slate-600 font-semibold uppercase border-b border-slate-200">
+<tr>
+<th class="py-2.5 px-3">Date Window</th>
+<th class="py-2.5 px-3">Claimed Condition</th>
+<th class="py-2.5 px-3">IMD / SAR Telemetry</th>
+<th class="py-2.5 px-3">UAV Flyover Evidence</th>
+<th class="py-2.5 px-3 text-right">Audit Determination</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700 bg-white">
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3 font-mono font-bold text-slate-900">04–06 Oct</td>
+<td class="py-2.5 px-3 text-red-600 font-medium">Heavy Cloudburst (&gt;80mm)</td>
+<td class="py-2.5 px-3 text-emerald-700 font-mono font-semibold">72.4mm / Sat Saturation</td>
+<td class="py-2.5 px-3 text-slate-500">Standing floodwater 0.6m</td>
+<td class="py-2.5 px-3 text-right text-emerald-700 font-bold font-mono">LEGITIMATE (3.0d)</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3 font-mono font-bold text-slate-900">07–12 Oct</td>
+<td class="py-2.5 px-3 text-red-600 font-medium">Saturated Ground Runoff</td>
+<td class="py-2.5 px-3 text-primary font-mono font-semibold">4.2mm / Dry SAR Scatter</td>
+<td class="py-2.5 px-3 text-slate-700">Haul road accessible to 40T</td>
+<td class="py-2.5 px-3 text-right text-red-600 font-bold font-mono">DISALLOWED (6.0d)</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3 font-mono font-bold text-slate-900">13–17 Oct</td>
+<td class="py-2.5 px-3 text-red-600 font-medium">Inaccessible RoW Corridor</td>
+<td class="py-2.5 px-3 text-primary font-mono font-semibold">0.0mm / Clear sky</td>
+<td class="py-2.5 px-3 text-slate-700">Contractor excavators demobilized</td>
+<td class="py-2.5 px-3 text-right text-red-600 font-bold font-mono">DISALLOWED (5.0d)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Photographic Proof of dry haul road -->
+<div class="flex items-center gap-space-md p-space-sm rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors group cursor-pointer">
+<div class="w-20 h-16 rounded overflow-hidden shrink-0 border border-slate-200">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High angle drone aerial shot of a dry packed dirt haul road on pipeline construction site with tire tracks and sunlight, clear operational conditions during claimed bad weather" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkixoXdYRLDV0G61npn00f_eLTj-4q2mX5c4RnOIM1vIOcZDgMlDghE97QroU-Eq3a8f127_I0ujudo34q8yhE506CYq6rkHBYqqqN1s3exI1Cjl1bu7zgXEv1gC38nXnbooLbHtoG0l8b2Fpp9-P4sbGSA4qAua9MMjG5ejfogrezLJF4HMCarIdPFDSsfgDRuPDCH787g125GYC0JABWszLFsBkMNpd99j_1uaNQHhKiCn7FgXE"/>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-slate-900 font-bold group-hover:text-primary transition-colors">UAV Photogrammetry Flight OIL-SRV-882 (11 Oct, 11:42 IST)</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 mt-0.5">Soil compaction index: 96% CBR. Dump trucks operating without track slips. Clear evidence against Force Majeure conditions.</span>
+</div>
+</div>
+</div>
+<!-- Right: AI Arbitrated Ruling & Signoff (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between rounded-lg bg-slate-50 border border-slate-200 p-space-md">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-slate-200">
+<span class="font-label-mono-xs text-label-mono-xs text-red-700 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">balance</span> Automated Legal-Engineering Finding
+              </span>
+<span class="font-label-mono-xs text-label-mono-xs px-2 py-0.5 rounded bg-rose-100 text-red-800 font-mono font-bold">PARTIALLY DISPUTED</span>
+</div>
+<div class="rounded-lg bg-white border border-slate-200 p-space-md flex flex-col gap-space-sm shadow-xs hover:border-slate-300 transition-colors">
+<div class="flex justify-between items-center">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 font-medium">LEGITIMATE RELIEF:</span>
+<span class="font-label-mono-md text-label-mono-md text-emerald-700 font-bold font-mono">3.0 CALENDAR DAYS</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500 font-medium">DISALLOWED DEFICIT:</span>
+<span class="font-label-mono-md text-label-mono-md text-red-600 font-bold font-mono">11.0 CALENDAR DAYS</span>
+</div>
+<div class="flex justify-between items-center pt-space-xs bg-blue-50 border border-blue-100 p-2 rounded">
+<span class="font-label-mono-xs text-label-mono-xs text-primary font-bold">LIQUIDATED DAMAGES SAFEGUARDED:</span>
+<span class="font-label-mono-md text-label-mono-md text-primary font-bold font-mono">₹2.10 CRORE</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 font-label-mono-xs text-label-mono-xs mt-1">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">verified</span>
+<span>Awaiting Chief Planning Engineer Authorization (Pranjal Saikia)</span>
+</div>
+</div>
+<div class="rounded-lg bg-white border border-slate-200 p-space-sm flex items-center gap-space-sm shadow-xs hover:border-slate-300 transition-colors">
+<span class="material-symbols-outlined text-primary text-[22px]">policy</span>
+<div class="flex flex-col">
+<span class="font-label-mono-xs text-label-mono-xs text-slate-900 font-bold">CVC / CAG Vigilance Compliance</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-500">Forensic chain of custody sealed under SHA-256 for public sector audit defense.</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-2 pt-space-md mt-space-sm border-t border-slate-200">
+<button class="w-full py-2.5 px-space-md rounded bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-body-sm text-body-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-xs hover:shadow focus:ring-2 focus:ring-emerald-400 focus:outline-none" id="authorizeExtensionBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Authorize 3-Day Extension Only</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-space-sm rounded bg-white hover:bg-red-50 text-red-700 hover:border-red-300 active:scale-95 border border-slate-200 font-body-sm text-body-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs" id="rejectForm8Btn" type="button">
+<span class="material-symbols-outlined text-[16px] text-red-600">block</span>
+<span>Form 8-B Rejection</span>
+</button>
+<button class="py-2 px-space-sm rounded bg-white hover:bg-slate-50 text-slate-700 hover:border-slate-300 active:scale-95 border border-slate-200 font-body-sm text-body-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs" id="cvcDossierBtn" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>CVC Audit Dossier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Chronological Event Timeline Ribbon: Clean Light Strip -->
+<div class="anim-cascade rounded-lg bg-surface-container border border-border-subtle p-space-md shadow-xs flex flex-col gap-space-md" style="animation-delay: 450ms;">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-xs border-b border-slate-100">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">timeline</span>
+<span class="font-headline-sm text-headline-sm text-slate-900 font-bold tracking-tight">Telemetry Delay Chronology Strip</span>
+<span class="font-label-mono-xs text-label-mono-xs text-slate-400 font-mono ml-2">OCTOBER 2024 FIELD TRAJECTORY</span>
+</div>
+<!-- Filter Chips with interactive toggle states -->
+<div class="flex flex-wrap items-center gap-1.5 font-label-mono-xs text-label-mono-xs" id="chronoFilters">
+<button class="px-2.5 py-1 rounded bg-primary text-white font-semibold transition-all duration-200 shadow-xs chrono-filter-btn active-filter" data-filter="all" type="button">All Events (18)</button>
+<button class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all duration-200 chrono-filter-btn" data-filter="critical" type="button">Critical Path Only</button>
+<button class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all duration-200 chrono-filter-btn" data-filter="claims" type="button">Contractor Claims</button>
+<button class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all duration-200 chrono-filter-btn" data-filter="equipment" type="button">Equipment Telemetry</button>
+<button class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all duration-200 chrono-filter-btn" data-filter="weather" type="button">Weather Influx</button>
+</div>
+</div>
+<!-- Timeline Horizon View -->
+<div class="relative overflow-x-auto pb-space-sm">
+<div class="min-w-[900px] flex flex-col gap-4">
+<!-- Day Scale -->
+<div class="grid grid-cols-7 gap-2 text-center font-label-mono-xs text-label-mono-xs text-slate-600">
+<div class="p-2 rounded bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">01–04 OCT <br/><span class="text-slate-500 font-mono">W1-TRENCH</span></div>
+<div class="p-2 rounded bg-rose-50 border border-rose-200 hover:border-rose-300 transition-colors">05–08 OCT <br/><span class="text-red-700 font-mono font-bold">RAIN-PEAK</span></div>
+<div class="p-2 rounded bg-sky-50 border border-sky-200 hover:border-sky-300 transition-colors">09–12 OCT <br/><span class="text-sky-700 font-mono font-bold">SAR-DRY</span></div>
+<div class="p-2 rounded bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">13–16 OCT <br/><span class="text-slate-500 font-mono">HAUL-CLEAR</span></div>
+<div class="p-2 rounded bg-emerald-50 border border-emerald-200 hover:border-emerald-300 transition-colors">17–20 OCT <br/><span class="text-emerald-700 font-mono font-bold">WELD-PREP</span></div>
+<div class="p-2 rounded bg-rose-50 border border-rose-200 hover:border-rose-300 transition-colors">21–24 OCT <br/><span class="text-red-700 font-mono font-bold">J-118 DRIFT</span></div>
+<div class="p-2 rounded bg-blue-50 border border-blue-200 hover:border-blue-300 transition-colors">25–28 OCT <br/><span class="text-primary font-mono font-bold">ARBITRATE</span></div>
+</div>
+<!-- Horizontal Event Track Ribbon -->
+<div class="relative h-28 rounded-lg bg-slate-50 border border-slate-200 flex items-center px-4 overflow-visible">
+<!-- Central Baseline Datum Line -->
+<div class="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-200 -translate-y-1/2"></div>
+<!-- Event Node 1: Weather Cloudburst -->
+<div class="absolute left-[16%] flex flex-col items-center group cursor-pointer chrono-node transition-all duration-200" data-cat="weather">
+<div class="relative w-8 h-8 rounded-full bg-sky-100 text-sky-700 border-2 border-white flex items-center justify-center shadow-sm group-hover:scale-125 group-hover:shadow-md transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+</div>
+<div class="absolute top-9 w-40 -left-16 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm opacity-90 group-hover:opacity-100 group-hover:shadow-md group-hover:-translate-y-0.5 transition-all duration-200 z-20">
+<div class="font-label-mono-xs text-label-mono-xs text-sky-800 font-bold">05 OCT: 72mm Rain</div>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-500 truncate">Flooding Spread 1</div>
+</div>
+</div>
+<!-- Event Node 2: L&T Claim Lodged -->
+<div class="absolute left-[38%] flex flex-col items-center group cursor-pointer chrono-node transition-all duration-200" data-cat="claims">
+<div class="relative w-8 h-8 rounded-full bg-red-100 text-red-700 border-2 border-white flex items-center justify-center shadow-sm group-hover:scale-125 group-hover:shadow-md transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">description</span>
+</div>
+<div class="absolute -top-14 w-40 -left-16 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm opacity-90 group-hover:opacity-100 group-hover:shadow-md group-hover:translate-y-0.5 transition-all duration-200 z-20">
+<div class="font-label-mono-xs text-label-mono-xs text-red-600 font-bold">14 OCT: 14D Claim</div>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-500 truncate">L&amp;T Force Majeure</div>
+</div>
+</div>
+<!-- Event Node 3: Trench Advancing -->
+<div class="absolute left-[62%] flex flex-col items-center group cursor-pointer chrono-node transition-all duration-200" data-cat="equipment">
+<div class="relative w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 border-2 border-white flex items-center justify-center shadow-sm group-hover:scale-125 group-hover:shadow-md transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">engineering</span>
+</div>
+<div class="absolute top-9 w-40 -left-16 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm opacity-90 group-hover:opacity-100 group-hover:shadow-md group-hover:-translate-y-0.5 transition-all duration-200 z-20">
+<div class="font-label-mono-xs text-label-mono-xs text-emerald-800 font-bold">21 OCT: Trench Rush</div>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-500 truncate">+1.8m Lead over Weld</div>
+</div>
+</div>
+<!-- Event Node 4: Rig Failure & Critical Slip -->
+<div class="absolute left-[78%] flex flex-col items-center group cursor-pointer chrono-node transition-all duration-200" data-cat="critical">
+<div class="relative w-8 h-8 rounded-full bg-red-600 text-white border-2 border-white flex items-center justify-center shadow-md group-hover:scale-125 group-hover:shadow-lg transition-all duration-200 anim-beacon-ring">
+<span class="material-symbols-outlined text-[16px]">error</span>
+</div>
+<div class="absolute -top-14 w-44 -left-18 text-center rounded bg-white border border-rose-200 p-1.5 shadow-sm opacity-90 group-hover:opacity-100 group-hover:shadow-md group-hover:translate-y-0.5 transition-all duration-200 z-20">
+<div class="font-label-mono-xs text-label-mono-xs text-red-600 font-bold">22 OCT: M-300 Rig Drift</div>
+<div class="font-label-mono-xs text-label-mono-xs text-slate-500 truncate">0.4mm NDT Root Refusal</div>
+</div>
+</div>
+<!-- Event Node 5: Current Arbitration Marker -->
+<div class="absolute left-[92%] flex flex-col items-center chrono-node" data-cat="critical">
+<div class="w-3 h-12 bg-primary rounded shadow-xs hover:bg-blue-700 transition-colors"></div>
+<div class="absolute top-14 w-32 -left-14 text-center rounded bg-primary text-white p-1 shadow-sm transition-transform duration-200 hover:scale-105">
+<div class="font-label-mono-xs text-label-mono-xs font-bold uppercase tracking-wider">TODAY: ARBITRATION</div>
+</div>
+</div>
+</div>
+<!-- Legend Ribbon -->
+<div class="flex flex-wrap items-center justify-between text-slate-500 font-label-mono-xs text-label-mono-xs pt-space-xs">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-600"></span>Sev-1 Unresolved</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span>Pending Endorsement</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Telemetry Validated</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-600"></span>Atmospheric Sensor</span>
+</div>
+<span class="font-mono text-slate-500">CHRONO-ENGINE: SITESYNC-VERITAS-4.8 // 128 SENSOR CHANNELS ACTIVE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container (Interactive Feedback) -->
+<div class="fixed bottom-12 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toastContainer"></div>
+</div>
+<script>
+  // Simple micro-interactions for arbitration decisions & timeline filtering
+  function showToast(title, message, isSuccess) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `p-3 rounded-lg shadow-lg border flex items-center gap-3 pointer-events-auto transition-all transform duration-300 translate-y-2 opacity-0 ${
+      isSuccess ? 'bg-emerald-50 border-emerald-200 text-emerald-900 font-medium' : 'bg-white border-slate-200 text-slate-900'
+    }`;
+    toast.innerHTML = `
+      <span class="material-symbols-outlined text-[20px] ${isSuccess ? 'text-emerald-600' : 'text-primary'}">${isSuccess ? 'check_circle' : 'gavel'}</span>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold leading-tight">${title}</span>
+        <span class="text-[11px] text-slate-500 leading-tight">${message}</span>
+      </div>
+    `;
+    container.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-2', 'opacity-0');
+    });
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      setTimeout(() => toast.remove(), 300);
+    }, 4000);
+  }
+
+  const endorseBtn1 = document.getElementById('endorseBtn1');
+  if (endorseBtn1) {
+    endorseBtn1.addEventListener('click', () => {
+      endorseBtn1.disabled = true;
+      endorseBtn1.classList.replace('bg-primary', 'bg-emerald-600');
+      endorseBtn1.classList.replace('hover:bg-blue-700', 'hover:bg-emerald-700');
+      endorseBtn1.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Endorsed & Logged to P6</span>';
+      showToast('Arbitration Order Enacted', 'WBS OIL.TRUNK.04.B recovery window (+2.1d) synced with EPPM', true);
+    });
+  }
+
+  const disputeClaimBtn1 = document.getElementById('disputeClaimBtn1');
+  if (disputeClaimBtn1) {
+    disputeClaimBtn1.addEventListener('click', () => {
+      showToast('Dispute Dossier Queued', 'Notice of formal contest filed under Contract Clause 67.2', false);
+    });
+  }
+
+  const simulateWhatIfBtn = document.getElementById('simulateWhatIfBtn');
+  if (simulateWhatIfBtn) {
+    simulateWhatIfBtn.addEventListener('click', () => {
+      showToast('Simulating Bypass Corridor', 'Calculating CPM impact for Team Assam-B manual SMAW tie-in...', false);
+    });
+  }
+
+  const authorizeExtensionBtn = document.getElementById('authorizeExtensionBtn');
+  if (authorizeExtensionBtn) {
+    authorizeExtensionBtn.addEventListener('click', () => {
+      authorizeExtensionBtn.disabled = true;
+      authorizeExtensionBtn.classList.add('opacity-75');
+      authorizeExtensionBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">lock</span><span>Form 8-B Signed (3-Day Limit)</span>';
+      showToast('Extension Capped at 3 Days', 'Liquidated damages of ₹2.10 Cr legally safeguarded under CVC rules', true);
+    });
+  }
+
+  const rejectForm8Btn = document.getElementById('rejectForm8Btn');
+  if (rejectForm8Btn) {
+    rejectForm8Btn.addEventListener('click', () => {
+      showToast('Form 8-B Rejection Issued', 'Formal rejection dispatch logged to L&T Hydrocarbon Project Director', false);
+    });
+  }
+
+  const cvcDossierBtn = document.getElementById('cvcDossierBtn');
+  if (cvcDossierBtn) {
+    cvcDossierBtn.addEventListener('click', () => {
+      showToast('CVC Cryptographic Dossier', 'Compiled SHA-256 telemetry ledger exported for public vigilance', true);
+    });
+  }
+
+  const escalateBtn = document.getElementById('escalateBtn');
+  if (escalateBtn) {
+    escalateBtn.addEventListener('click', () => {
+      showToast('Tribunal Quorum Summoned', 'Notice transmitted to Chief Eng & L&T Hydrocarbon Project Director', false);
+    });
+  }
+
+  // Interactive filtering on Chronology timeline strip
+  const filterBtns = document.querySelectorAll('.chrono-filter-btn');
+  const chronoNodes = document.querySelectorAll('.chrono-node');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      filterBtns.forEach(b => {
+        b.className = 'px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all duration-200 chrono-filter-btn';
+      });
+      btn.className = 'px-2.5 py-1 rounded bg-primary text-white font-semibold transition-all duration-200 shadow-xs chrono-filter-btn';
+
+      chronoNodes.forEach(node => {
+        const cat = node.getAttribute('data-cat');
+        if (filter === 'all' || cat === filter) {
+          node.style.opacity = '1';
+          node.style.filter = 'none';
+          node.style.pointerEvents = 'auto';
+        } else {
+          node.style.opacity = '0.2';
+          node.style.filter = 'grayscale(100%)';
+          node.style.pointerEvents = 'none';
+        }
+      });
+    });
+  });
+</script></main><footer class="h-10 bg-white border-t border-border-subtle text-slate-500 px-gutter flex items-center justify-between font-label-mono-xs text-label-mono-xs"><div class="flex items-center gap-space-xs truncate"><span class="material-symbols-outlined text-emerald-600 text-[14px]">verified</span><span class="truncate">OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</span></div><div class="flex items-center gap-space-md shrink-0"><span class="hidden md:inline text-slate-600">VERIFICATION PUBKEY: 0x9AF...D312</span><span class="hidden lg:inline text-slate-400">SYSTEM PROTOCOL: AIR-GAP/V2</span><div class="flex items-center gap-1.5 text-emerald-700 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span><span>NODE TELEMETRY NOMINAL</span></div></div></footer></div></body></html>

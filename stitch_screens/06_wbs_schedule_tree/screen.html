@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* Micro-interactions & Orchestrated Cascade */
+    @keyframes subtleFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-cascade-1 { animation: subtleFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.05s; }
+    .animate-cascade-2 { animation: subtleFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.12s; }
+    .animate-cascade-3 { animation: subtleFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.18s; }
+    .animate-cascade-4 { animation: subtleFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.25s; }
+    .animate-cascade-5 { animation: subtleFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.32s; }
+
+    /* Custom Pulse Beacon */
+    @keyframes radarPulse {
+      0% { transform: scale(0.95); opacity: 0.9; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+      70% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+      100% { transform: scale(0.95); opacity: 0.9; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+    .beacon-pulse-red {
+      animation: radarPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes livePing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.5); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(5, 150, 105, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+    }
+    .beacon-pulse-green {
+      animation: livePing 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Donut Segment Hover Effects */
+    .donut-slice {
+      transition: stroke-width 0.25s ease, opacity 0.2s ease, filter 0.25s ease;
+      cursor: pointer;
+    }
+    .donut-slice:hover {
+      stroke-width: 6.2;
+      opacity: 0.95;
+      filter: drop-shadow(0 2px 4px rgba(0, 55, 176, 0.2));
+    }
+
+    /* Tactile Buttons */
+    .tactile-btn {
+      transition: all 0.18s cubic-bezier(0.2, 0.8, 0.4, 1);
+    }
+    .tactile-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Tree interactive row styling */
+    .tree-row {
+      transition: background-color 0.15s ease, border-left 0.15s ease;
+      cursor: pointer;
+    }
+    .tree-row.selected-node {
+      border-left: 3px solid #1d4ed8;
+    }
+
+    /* Chevron rotation */
+    .toggle-icon {
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .collapsed-icon {
+      transform: rotate(-90deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-cascade-1,
+      .animate-cascade-2,
+      .animate-cascade-3,
+      .animate-cascade-4,
+      .animate-cascade-5,
+      .beacon-pulse-red,
+      .beacon-pulse-green {
+        animation: none !important;
+      }
+      .tactile-btn:active {
+        transform: none !important;
+      }
+      .donut-slice {
+        transition: none !important;
+      }
+      .toggle-icon {
+        transition: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-background": "#0b1c30",
+            "tertiary": "#8f000b",
+            "surface-tint": "#2151da",
+            "secondary": "#565e74",
+            "surface-container-highest": "#d3e4fe",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#b7c4ff",
+            "on-tertiary-container": "#ffc7c1",
+            "secondary-container": "#dae2fd",
+            "on-primary-fixed": "#001551",
+            "on-tertiary-fixed-variant": "#93000b",
+            "surface": "#f8f9ff",
+            "on-secondary-container": "#5c647a",
+            "tertiary-container": "#bb0112",
+            "on-surface-variant": "#434655",
+            "tertiary-fixed": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#0039b5",
+            "secondary-fixed": "#dae2fd",
+            "primary-fixed-dim": "#b7c4ff",
+            "outline": "#747686",
+            "surface-container-lowest": "#ffffff",
+            "inverse-surface": "#213145",
+            "on-secondary-fixed": "#131b2e",
+            "on-primary-container": "#cad3ff",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "secondary-fixed-dim": "#bec6e0",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "on-error-container": "#93000a",
+            "primary-container": "#1d4ed8",
+            "outline-variant": "#c4c5d7",
+            "surface-container": "#e5eeff",
+            "surface-variant": "#d3e4fe",
+            "on-secondary-fixed-variant": "#3f465c",
+            "primary": "#0037b0",
+            "surface-dim": "#cbdbf5",
+            "surface-container-high": "#dce9ff",
+            "primary-fixed": "#dce1ff",
+            "on-tertiary-fixed": "#410002",
+            "tertiary-fixed-dim": "#ffb4ab",
+            brand: {
+              primary: "#0037b0",
+              cobalt: "#1d4ed8",
+              tint: "#2151da",
+              light: "#eff4ff"
+            },
+            slate: {
+              50: "#f8fafc",
+              100: "#f1f5f9",
+              200: "#e2e8f0",
+              300: "#cbd5e1",
+              400: "#94a3b8",
+              500: "#64748b",
+              600: "#475569",
+              700: "#334155",
+              800: "#1e293b",
+              900: "#0f172a"
+            }
+          },
+          fontFamily: {
+            "label-xs": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "label-xs": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }],
+            "headline-xl-mobile": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "body-md": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "headline-sm": ["15px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-xl": ["32px", { lineHeight: "38px", letterSpacing: "-0.025em", fontWeight: "700" }],
+            "body-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-800 antialiased min-h-screen">
+<!-- Left Sidebar (Clean Industrial / Foundry Technical Light) -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between overflow-y-auto">
+<div class="flex flex-col">
+<!-- Workspace Brand Badge -->
+<div class="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-sm transition-transform duration-200 hover:scale-105">
+<span class="material-symbols-outlined text-[19px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 text-sm tracking-tight leading-snug uppercase">OIL / SiteSync</span>
+<span class="font-mono text-[10px] text-slate-500 font-semibold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-semibold cursor-default">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse-green"></span>
+            P6 LIVE
+          </div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-200/80 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-slate-400">hub</span>NODE-AS04 // SECURE</span>
+<span class="text-blue-700 font-semibold">ORACLE EPPM SYNCED</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col px-3 py-4 gap-5">
+<!-- Group 1 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Execution Intelligence</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded border border-blue-200 bg-blue-50/80 text-blue-900 font-semibold shadow-xs transition-all duration-150 hover:shadow-sm" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-blue-700">grid_view</span>
+<span class="text-[13px]">Executive Health</span>
+</div>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">KPI</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">mic</span>
+<span class="text-[13px]">Field Input Center</span>
+</div>
+<span class="font-mono text-[10px] text-slate-500">TELEMETRY</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">check_circle</span>
+<span class="text-[13px]">AI Review Center</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">DESK 1</span>
+</a>
+</div>
+<!-- Group 2 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Schedule &amp; Controls</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">account_tree</span>
+<span class="text-[13px]">WBS &amp; Schedule Tree</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">waterfall_chart</span>
+<span class="text-[13px]">4D Gantt Digital Twin</span>
+</div>
+<span class="font-mono text-[10px] text-slate-400 font-medium">4D-V</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-red-500">warning</span>
+<span class="text-[13px]">Conflicts &amp; Chronology</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-red-100 text-red-700 font-mono text-[10px] font-bold">2</span>
+</a>
+</div>
+<!-- Group 3 -->
+<div class="flex flex-col gap-1">
+<div class="px-2.5 py-1 font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analytics &amp; Memory</div>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">vital_signs</span>
+<span class="text-[13px]">Activity DNA &amp; Memory</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-slate-400">tune</span>
+<span class="text-[13px]">What-If Simulator</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified_user</span>
+<span class="text-[13px]">Audit &amp; Provenance</span>
+</div>
+<span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1 rounded">SHA-256</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-amber-500">play_circle</span>
+<span class="text-[13px]">5-Min Judge Demo</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[10px] font-bold">11</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Security Tier Badge -->
+<div class="p-3 border-t border-slate-200 bg-slate-50 flex flex-col gap-1">
+<div class="flex items-center justify-between font-mono text-[10px] text-slate-500">
+<span>SECURITY LEVEL</span>
+<span class="text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">IL-5 RESTRICTED</span>
+</div>
+<div class="font-mono text-[10px] text-slate-600 truncate mt-0.5">SEAL: OIL-EXP-994821</div>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="pl-72 flex flex-col min-h-screen bg-[#f8fafc]">
+<!-- Header Bar (Crisp White / Technical Header) -->
+<header class="fixed top-0 left-72 right-0 h-16 bg-white border-b border-slate-200 z-40 px-6 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-5">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-base tracking-tight">Digboi–Duliajan 132km Crude Trunkline</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[11px] font-bold text-slate-700 transition-colors hover:bg-slate-200 cursor-default">WBS-REV-4.8</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px] text-slate-500">
+<span>PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+<span class="text-slate-300">•</span>
+<span class="text-slate-600">LAT: 27.3805° N, 95.3182° E</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-3 pl-4 border-l border-slate-200 font-mono text-[11px]">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold cursor-default">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse-green"></span>
+            18ms LATENCY
+          </div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold cursor-default">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+            LEDGER VALIDATED
+          </div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<!-- Operator Pill -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-left hover:bg-slate-100 transition-colors cursor-pointer tactile-btn">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">switch_account</span>
+<div class="flex flex-col">
+<span class="font-mono text-[11px] font-bold text-slate-800 leading-tight">Pranjal Saikia</span>
+<span class="font-mono text-[10px] text-slate-500 leading-tight">Chief Eng / Shift A</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[16px] ml-1">expand_more</span>
+</div>
+<!-- Action Buttons -->
+<button class="tactile-btn flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-mono text-xs font-semibold shadow-xs transition-colors hover:border-slate-400" type="button">
+<span class="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
+          Export Audit PKG
+        </button>
+<button class="tactile-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+          Commit to P6
+        </button>
+<div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs hover:bg-slate-300 cursor-pointer transition-colors">
+          PS
+        </div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 pt-20 pb-12 w-full px-8"><div class="flex flex-col w-full gap-4 pb-6">
+<!-- TOP CONSOLE / KPI HEADER -->
+<section class="flex flex-col gap-3">
+<!-- Breadcrumb & P6 Sync Bar (Cascade Step 1) -->
+<div class="animate-cascade-1 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest p-3 rounded-lg shadow-sm border border-slate-100">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded bg-primary-container flex items-center justify-center text-on-primary transition-transform duration-200 hover:rotate-6">
+<span class="material-symbols-outlined text-[17px]">account_tree</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">WBS DICTIONARY &amp; SCHEDULE BREAKDOWN</h1>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-primary font-label-xs text-label-xs">P6 EPPM R23.12</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary font-label-xs text-label-xs">LOCK: 0x8b32...9ff1</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary">PROJECT WORK BREAKDOWN STRUCTURE // DETERMINISTIC CRITICAL PATH ALIGNED</span>
+</div>
+</div>
+<!-- Quick Action Controls with tactile feedback -->
+<div class="flex items-center gap-1.5" id="wbsFilterActions">
+<button class="tactile-btn px-2.5 py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs flex items-center gap-1 transition-all duration-150 border border-transparent hover:border-slate-300" id="btnExpandAll" onclick="toggleExpandAll(this)" type="button">
+<span class="material-symbols-outlined text-[14px] toggle-icon">unfold_more</span>
+<span class="btn-text">Expand All</span>
+</button>
+<button class="tactile-btn px-2.5 py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs flex items-center gap-1 transition-all duration-150 border border-transparent hover:border-slate-300" id="btnTier2" onclick="toggleTier2Filter(this)" type="button">
+<span class="material-symbols-outlined text-[14px]">filter_alt</span>
+<span>Tier 2 Only</span>
+</button>
+<button class="tactile-btn px-2.5 py-1.5 rounded bg-error-container hover:bg-error-container/80 text-on-error-container font-label-xs text-label-xs flex items-center gap-1 transition-all duration-150 border border-transparent hover:border-tertiary/30" id="btnCriticalPath" onclick="toggleCriticalPath(this)" type="button">
+<span class="material-symbols-outlined text-[14px] text-tertiary">crisis_alert</span>
+<span>Filter Critical Path</span>
+</button>
+<button class="tactile-btn px-2.5 py-1.5 rounded bg-primary text-on-primary hover:bg-primary-container font-label-xs text-label-xs flex items-center gap-1 shadow-sm transition-all duration-150" onclick="triggerExportNotice(this)" type="button">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+<span>Export XER/CSV</span>
+</button>
+</div>
+</div>
+<!-- 4 High-Density Metric Strip Cards (Cascade Step 2) -->
+<div class="animate-cascade-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+<!-- Total WBS Elements -->
+<div class="bg-surface-container-lowest p-3 rounded-lg shadow-sm flex flex-col justify-between border border-slate-100/80 hover:border-blue-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-default">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-xs text-label-xs uppercase">Total WBS Elements</span>
+<span class="material-symbols-outlined text-[16px] text-primary transition-transform duration-200 group-hover:scale-110">lan</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">142</span>
+<span class="font-label-xs text-label-xs text-secondary">4 Tiers Deep</span>
+</div>
+<div class="mt-2 pt-1.5 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between text-secondary font-label-xs text-label-xs">
+<span>Terminal Leaf Nodes</span>
+<span class="font-bold text-on-surface">118 Work Pkgs</span>
+</div>
+</div>
+<!-- Scope Lock -->
+<div class="bg-surface-container-lowest p-3 rounded-lg shadow-sm flex flex-col justify-between border border-slate-100/80 hover:border-blue-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-default">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-xs text-label-xs uppercase">Baseline Scope Lock</span>
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">REV 4.8</span>
+<span class="font-label-xs text-label-xs text-secondary">12 Oct 2024</span>
+</div>
+<div class="mt-2 pt-1.5 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary">Variance Slippage</span>
+<span class="text-primary font-bold">0 Uncontrolled</span>
+</div>
+</div>
+<!-- Critical Path Load -->
+<div class="bg-surface-container-lowest p-3 rounded-lg shadow-sm flex flex-col justify-between border border-red-100 hover:border-red-300 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-default">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-xs text-label-xs uppercase">Critical Path Load</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">warning</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-tertiary font-bold">18</span>
+<span class="font-label-xs text-label-xs text-on-surface">Nodes (12.7%)</span>
+</div>
+<div class="mt-2 pt-1.5 bg-error-container/40 px-2 py-1 rounded flex items-center justify-between text-tertiary font-label-xs text-label-xs">
+<span>Active Roadblocks</span>
+<span class="font-bold text-tertiary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary beacon-pulse-red"></span>
+  2 Spread 2 Latencies
+</span>
+</div>
+</div>
+<!-- BAC / Earned Value -->
+<div class="bg-surface-container-lowest p-3 rounded-lg shadow-sm flex flex-col justify-between border border-slate-100/80 hover:border-blue-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-default">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-xs text-label-xs uppercase">BAC / Earned Value</span>
+<span class="material-symbols-outlined text-[16px] text-primary">price_check</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5 truncate">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">₹296.25</span>
+<span class="font-label-sm text-label-sm text-secondary">/ ₹482.50 Cr</span>
+</div>
+<div class="mt-2 pt-1.5 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between font-label-xs text-label-xs">
+<span class="text-secondary">Earned BCWP: 61.4%</span>
+<span class="text-tertiary font-bold">SV: -₹14.2 Cr</span>
+</div>
+</div>
+</div>
+</section>
+<!-- MAIN DUAL-COLUMN WORKSPACE: 65% TABLE / 35% INSPECTOR -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-3 items-start">
+<!-- LEFT COLUMN: HIERARCHICAL WBS TREE (8 of 12 cols = ~66.6%) (Cascade Step 3) -->
+<div class="animate-cascade-3 xl:col-span-8 flex flex-col bg-surface-container-lowest rounded-lg shadow-sm overflow-hidden border border-slate-100">
+<!-- Table Filter Bar -->
+<div class="p-3 bg-surface-container-low flex flex-wrap items-center justify-between gap-2.5 border-b border-surface-container">
+<div class="flex items-center gap-2 flex-1 min-w-[240px]">
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary text-[16px]">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 bg-surface-container-lowest text-on-surface font-label-xs text-label-xs rounded placeholder-secondary focus:outline-none focus:ring-1 focus:ring-primary shadow-inner transition-shadow" id="wbsSearchInput" onkeyup="filterWbsNodes(this.value)" placeholder="Search WBS code, milestone, or task..." type="text"/>
+</div>
+<span class="font-label-xs text-label-xs text-secondary px-2 py-1 bg-surface-container rounded transition-colors" id="filteredCountBadge">142 ITEMS</span>
+</div>
+<!-- Status Legend Indicators -->
+<div class="flex items-center gap-3 font-label-xs text-label-xs text-secondary">
+<span class="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 transition-colors" title="Filtered to Optimal status">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span> Optimal
+          </span>
+<span class="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 transition-colors" title="Filtered to Watch status">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span> Watch
+          </span>
+<span class="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 transition-colors" title="Filtered to Critical status">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Critical
+          </span>
+</div>
+</div>
+<!-- High-Density WBS Table Header -->
+<div class="grid grid-cols-12 bg-surface-container px-3 py-2 text-secondary font-label-xs text-label-xs uppercase tracking-wider select-none">
+<div class="col-span-6 flex items-center gap-1.5">
+<span>WBS Code &amp; Scope Hierarchy</span>
+</div>
+<div class="col-span-2 text-left">OBS Resp</div>
+<div class="col-span-2 text-left">Schedule Span</div>
+<div class="col-span-2 text-right">Actual / Plan</div>
+</div>
+<!-- Tree Rows Container -->
+<div class="flex flex-col text-on-surface divide-y divide-surface-container-low" id="wbsTreeRows">
+<!-- ROOT NODE: OIL.TRUNK.132 -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 bg-surface-container-high/40 hover:bg-surface-container-high transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="1" onclick="selectWbsRow(this, 'OIL.TRUNK.132', 'Digboi–Duliajan 132km Crude Trunkline', 'OIL Exec Board', 'OIL-PRJ-ROOT', '142 Activities', '₹296.25 Cr / ₹482.50 Cr', '0.95', 'NOMINAL')">
+<div class="col-span-6 flex items-center gap-2 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-primary" onclick="toggleRowBranch(event, 'trunk-all')" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">expand_more</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-bold text-primary font-mono">OIL.TRUNK.132</span>
+<span class="font-headline-sm text-body-md font-semibold truncate text-on-surface">Digboi–Duliajan 132km Crude Trunkline</span>
+</div>
+<div class="col-span-2 truncate text-secondary">OIL Exec Board</div>
+<div class="col-span-2 font-mono text-secondary">01/24 - 11/25</div>
+<div class="col-span-2 text-right font-mono font-bold text-primary">61.4% <span class="text-secondary font-normal">/ 64.3%</span></div>
+</div>
+<!-- TIER 2: 01 Project Management -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="2" onclick="selectWbsRow(this, 'OIL.TRUNK.01', 'Project Mgmt &amp; Statutory Approvals', 'P. Saikia', 'CC-7701-MGMT', '12 Activities', '₹18.4 Cr / ₹18.4 Cr', '1.00', 'COMPLETE')">
+<div class="col-span-6 flex items-center gap-2 pl-4 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.01</span>
+<span class="font-body-md text-body-md truncate">Project Mgmt &amp; Statutory Approvals</span>
+</div>
+<div class="col-span-2 truncate text-secondary">P. Saikia</div>
+<div class="col-span-2 font-mono text-secondary">01/24 - 04/24</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">100.0% <span class="text-secondary font-normal">/ 100%</span></div>
+</div>
+<!-- TIER 2: 02 Right-of-Way -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="2" onclick="selectWbsRow(this, 'OIL.TRUNK.02', 'Right-of-Way (RoW) &amp; Cadastral Acquisition', 'Assam Rev Auth', 'CC-7702-LAND', '14 Activities', '₹34.8 Cr / ₹35.0 Cr', '0.98', 'NOMINAL')">
+<div class="col-span-6 flex items-center gap-2 pl-4 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.02</span>
+<span class="font-body-md text-body-md truncate">Right-of-Way (RoW) &amp; Cadastral Acquisition</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Assam Rev Auth</div>
+<div class="col-span-2 font-mono text-secondary">02/24 - 07/24</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">98.5% <span class="text-secondary font-normal">/ 100%</span></div>
+</div>
+<!-- TIER 2: 03 Procurement -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="2" onclick="selectWbsRow(this, 'OIL.TRUNK.03', 'Procurement &amp; API 5L X70 Pipe Logistics', 'Jindal / L&amp;T', 'CC-7703-PROC', '22 Activities', '₹142.1 Cr / ₹145.0 Cr', '0.97', 'NOMINAL')">
+<div class="col-span-6 flex items-center gap-2 pl-4 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.03</span>
+<span class="font-body-md text-body-md truncate">Procurement &amp; API 5L X70 Pipe Logistics</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Jindal / L&amp;T</div>
+<div class="col-span-2 font-mono text-secondary">03/24 - 10/24</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">92.0% <span class="text-secondary font-normal">/ 94.0%</span></div>
+</div>
+<!-- TIER 2: 04 Pipeline Construction (EXPANDED CONTAINER) -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 bg-surface-container-low/60 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs font-semibold" data-crit="false" data-tier="2" id="rowTrunk04" onclick="selectWbsRow(this, 'OIL.TRUNK.04', 'Pipeline Construction &amp; Field Spreads', 'Consortium PM', 'CC-7704-PIPE', '68 Activities', '₹188.5 Cr / ₹210.0 Cr', '0.91', 'WATCH')">
+<div class="col-span-6 flex items-center gap-2 pl-4 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-primary" onclick="toggleSpreadGroup(event)" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon" id="chevron04">expand_more</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span class="font-mono text-primary">OIL.TRUNK.04</span>
+<span class="font-body-md text-body-md font-bold truncate">Pipeline Construction &amp; Field Spreads</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Consortium PM</div>
+<div class="col-span-2 font-mono text-secondary">04/24 - 08/25</div>
+<div class="col-span-2 text-right font-mono font-bold text-tertiary">54.8% <span class="text-secondary font-normal">/ 60.1%</span></div>
+</div>
+<!-- GROUP WRAPPER FOR SPREADS -->
+<div class="flex flex-col divide-y divide-surface-container-low transition-all duration-200" id="spreadChildContainer">
+<!-- TIER 3: Spread 1 -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="3" onclick="selectWbsRow(this, 'OIL.TRUNK.04.A', 'Spread 1 (Km 0+000 to Km 30+000)', 'Punj Lloyd', 'CC-7710-SP1', '14 Activities', '₹85.0 Cr / ₹86.8 Cr', '1.03', 'OPTIMAL')">
+<div class="col-span-6 flex items-center gap-2 pl-8 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.04.A</span>
+<span class="font-body-md text-body-md truncate">Spread 1 (Km 0+000 to Km 30+000)</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Punj Lloyd</div>
+<div class="col-span-2 font-mono text-secondary">04/24 - 12/24</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">98.0% <span class="text-secondary font-normal">/ 95.0%</span></div>
+</div>
+<!-- TIER 3: Spread 2 (SELECTED ACTIVE NODE) -->
+<div class="tree-row selected-node grid grid-cols-12 px-3 py-2.5 bg-surface-container-high hover:bg-surface-container-highest transition-all items-center font-label-xs text-label-xs shadow-xs" data-crit="true" data-tier="3" id="rowSpread02" onclick="selectSpread02(this)">
+<div class="col-span-6 flex items-center gap-2 pl-8 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-primary font-bold" onclick="toggleSubActivities(event)" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon" id="chevronSub02">expand_more</span>
+</button>
+<span class="w-2 h-2 rounded-full bg-tertiary beacon-pulse-red"></span>
+<span class="font-mono font-bold text-primary">OIL.TRUNK.04.B</span>
+<span class="font-body-md text-body-md font-bold text-on-surface truncate">Spread 2 (Km 30+000 to Km 65+000)</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs uppercase">CRIT PATH</span>
+</div>
+<div class="col-span-2 truncate font-bold text-primary">L&amp;T Hydrocarbon</div>
+<div class="col-span-2 font-mono font-semibold text-tertiary">05/24 - 03/25</div>
+<div class="col-span-2 text-right font-mono font-bold text-tertiary">48.2% <span class="text-secondary font-normal">/ 59.4%</span></div>
+</div>
+<!-- TIER 4 (Sub-Activities of Spread 2) CONTAINER -->
+<div class="flex flex-col divide-y divide-surface-container-low transition-all duration-200" id="subActivitiesContainer">
+<!-- Activity 1: Slip Node -->
+<div class="tree-row grid grid-cols-12 px-3 py-1.5 bg-error-container/30 hover:bg-error-container/50 transition-all items-center font-label-xs text-label-xs" data-crit="true" data-tier="4" onclick="selectWbsRow(this, 'ACT-TR-4290', 'Trenching &amp; Lowering (Hard Rock Km 42+650)', 'Gang 04-B1', 'CC-7710-ACT1', 'Terminal Task', '₹12.4 Cr / ₹18.0 Cr', '0.68', 'CRITICAL')">
+<div class="col-span-6 flex items-center gap-2 pl-12 truncate">
+<span class="material-symbols-outlined text-[14px] text-tertiary">subdirectory_arrow_right</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary beacon-pulse-red"></span>
+<span class="font-mono text-tertiary font-bold">ACT-TR-4290</span>
+<span class="font-body-sm text-body-sm truncate text-on-surface">Trenching &amp; Lowering (Hard Rock Km 42+650)</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Gang 04-B1</div>
+<div class="col-span-2 font-mono text-tertiary font-semibold">18d Delay (Hard Rock)</div>
+<div class="col-span-2 text-right font-mono text-tertiary font-bold">34.0% <span class="text-secondary font-normal">/ 58.0%</span></div>
+</div>
+<!-- Activity 2: Welding NDT -->
+<div class="tree-row grid grid-cols-12 px-3 py-1.5 bg-surface-container-low/40 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="4" onclick="selectWbsRow(this, 'ACT-WD-3105', 'Automatic Orbital Welding &amp; Ultrasonic NDT', 'Caterpillar / Serimax', 'CC-7710-ACT2', 'Terminal Task', '₹26.2 Cr / ₹28.0 Cr', '0.93', 'WATCH')">
+<div class="col-span-6 flex items-center gap-2 pl-12 truncate">
+<span class="material-symbols-outlined text-[14px] text-secondary">subdirectory_arrow_right</span>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span class="font-mono text-secondary">ACT-WD-3105</span>
+<span class="font-body-sm text-body-sm truncate text-on-surface">Automatic Orbital Welding &amp; Ultrasonic NDT</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Caterpillar / Serimax</div>
+<div class="col-span-2 font-mono text-secondary">06/24 - 01/25</div>
+<div class="col-span-2 text-right font-mono text-secondary font-bold">52.4% <span class="text-secondary font-normal">/ 56.0%</span></div>
+</div>
+<!-- Activity 3: HDD Crossing -->
+<div class="tree-row grid grid-cols-12 px-3 py-1.5 bg-surface-container-low/40 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="4" onclick="selectWbsRow(this, 'ACT-HD-1024', 'Burhi Dihing River HDD Crossing (1,480m)', 'DrillTech Asia', 'CC-7710-ACT3', 'Terminal Task', '₹30.0 Cr / ₹29.2 Cr', '1.04', 'OPTIMAL')">
+<div class="col-span-6 flex items-center gap-2 pl-12 truncate">
+<span class="material-symbols-outlined text-[14px] text-secondary">subdirectory_arrow_right</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">ACT-HD-1024</span>
+<span class="font-body-sm text-body-sm truncate text-on-surface">Burhi Dihing River HDD Crossing (1,480m)</span>
+</div>
+<div class="col-span-2 truncate text-secondary">DrillTech Asia</div>
+<div class="col-span-2 font-mono text-secondary">07/24 - 12/24</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">68.0% <span class="text-secondary font-normal">/ 65.0%</span></div>
+</div>
+</div>
+<!-- TIER 3: Spread 3 -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="3" onclick="selectWbsRow(this, 'OIL.TRUNK.04.C', 'Spread 3 (Km 65+000 to Km 100+000)', 'Kalpataru Power', 'CC-7710-SP3', '16 Activities', '₹62.7 Cr / ₹65.0 Cr', '0.96', 'WATCH')">
+<div class="col-span-6 flex items-center gap-2 pl-8 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.04.C</span>
+<span class="font-body-md text-body-md truncate">Spread 3 (Km 65+000 to Km 100+000)</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Kalpataru Power</div>
+<div class="col-span-2 font-mono text-secondary">06/24 - 05/25</div>
+<div class="col-span-2 text-right font-mono text-secondary font-bold">65.0% <span class="text-secondary font-normal">/ 68.0%</span></div>
+</div>
+<!-- TIER 3: Spread 4 -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="3" onclick="selectWbsRow(this, 'OIL.TRUNK.04.D', 'Spread 4 (Km 100+000 to Km 132+000)', 'L&amp;T Hydrocarbon', 'CC-7710-SP4', '18 Activities', '₹68.5 Cr / ₹64.6 Cr', '1.06', 'OPTIMAL')">
+<div class="col-span-6 flex items-center gap-2 pl-8 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.04.D</span>
+<span class="font-body-md text-body-md truncate">Spread 4 (Km 100+000 to Km 132+000)</span>
+</div>
+<div class="col-span-2 truncate text-secondary">L&amp;T Hydrocarbon</div>
+<div class="col-span-2 font-mono text-secondary">07/24 - 06/25</div>
+<div class="col-span-2 text-right font-mono text-emerald-700 font-bold">79.0% <span class="text-secondary font-normal">/ 74.5%</span></div>
+</div>
+</div>
+<!-- TIER 2: 05 Pre-Commissioning -->
+<div class="tree-row grid grid-cols-12 px-3 py-2 hover:bg-surface-container-low transition-all items-center font-label-xs text-label-xs" data-crit="false" data-tier="2" onclick="selectWbsRow(this, 'OIL.TRUNK.05', 'Pre-Commissioning, Caliper Pigging &amp; Hydrotest', 'Baker Hughes', 'CC-7705-TEST', '14 Activities', '₹0.0 Cr / ₹0.0 Cr', '1.00', 'PENDING')">
+<div class="col-span-6 flex items-center gap-2 pl-4 truncate">
+<button class="w-4 h-4 flex items-center justify-center text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] toggle-icon">chevron_right</span>
+</button>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-variant"></span>
+<span class="font-mono text-secondary">OIL.TRUNK.05</span>
+<span class="font-body-md text-body-md truncate">Pre-Commissioning, Caliper Pigging &amp; Hydrotest</span>
+</div>
+<div class="col-span-2 truncate text-secondary">Baker Hughes</div>
+<div class="col-span-2 font-mono text-secondary">08/25 - 11/25</div>
+<div class="col-span-2 text-right font-mono text-secondary">0.0% <span class="text-secondary font-normal">/ 0.0%</span></div>
+</div>
+</div>
+<!-- Footnote Context Bar -->
+<div class="p-2.5 bg-surface-container-low flex items-center justify-between text-secondary font-label-xs text-label-xs border-t border-surface-container">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary">info</span>
+          Nodes tagged with Critical Path propagate earned value variances to master milestone gate MS-09 (Hydrotest Ready).
+        </span>
+<span class="font-mono">LAST RUN: 14m AGO // ENGINE: ORACLE CPM-64</span>
+</div>
+</div>
+<!-- RIGHT COLUMN: WBS DICTIONARY INSPECTOR CARD (4 of 12 cols = ~33.3%) (Cascade Step 4) -->
+<div class="animate-cascade-4 xl:col-span-4 flex flex-col gap-3">
+<!-- Primary Node Inspector -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm overflow-hidden flex flex-col border border-slate-100 transition-all duration-200 hover:shadow-md">
+<!-- Inspector Title Bar -->
+<div class="p-3 bg-surface-container-low flex items-center justify-between border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">developer_board</span>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-secondary uppercase tracking-wider">WBS Dictionary Inspector</span>
+<span class="font-headline-sm text-headline-sm text-on-surface" id="inspCode">OIL.TRUNK.04.B</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-bold transition-all" id="inspBadge">
+            SLIP WARN
+          </span>
+</div>
+<div class="p-3.5 flex flex-col gap-3.5">
+<!-- Quick Scope Title -->
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface" id="inspTitle">Spread 2 (Km 30+000 to Km 65+000)</span>
+<span class="font-body-sm text-body-sm text-secondary" id="inspSubtitle">Digboi Foothills Segment, Upper Dihing Basin Crossing</span>
+</div>
+<!-- Technical Metadata Key-Value Grid -->
+<div class="grid grid-cols-2 gap-2 bg-surface-container-low p-2.5 rounded text-left font-label-xs text-label-xs">
+<div class="flex flex-col">
+<span class="text-secondary">OBS RESPONSIBLE</span>
+<span class="font-bold text-on-surface truncate" id="inspObs">Pranjal Saikia / Shift A</span>
+</div>
+<div class="flex flex-col">
+<span class="text-secondary">CONTRACTOR</span>
+<span class="font-bold text-primary truncate" id="inspContractor">L&amp;T Hydrocarbon Eng.</span>
+</div>
+<div class="flex flex-col">
+<span class="text-secondary">COST CODE</span>
+<span class="font-mono text-on-surface" id="inspCostCode">CC-7710-CIVIL</span>
+</div>
+<div class="flex flex-col">
+<span class="text-secondary">ASSET TAG</span>
+<span class="font-mono text-on-surface" id="inspAssetTag">OIL-AS-DIG-094</span>
+</div>
+<div class="flex flex-col">
+<span class="text-secondary">P6 EPPM ACTIVITIES</span>
+<span class="font-bold text-on-surface" id="inspActivities">28 Activities</span>
+</div>
+<div class="flex flex-col">
+<span class="text-secondary">EV EARNED RULE</span>
+<span class="font-bold text-on-surface">0/100 Milestone Gate</span>
+</div>
+</div>
+<!-- Earned Value Specs Box -->
+<div class="flex flex-col gap-2 p-3 bg-surface-container rounded border border-blue-100/50">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-bold text-on-surface uppercase">Earned Value Metrics (Spread 2)</span>
+<span class="font-mono text-primary font-bold" id="inspCritBadge">CRITICAL NODE</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center pt-1">
+<div class="p-1.5 bg-surface-container-lowest rounded flex flex-col shadow-2xs hover:shadow-xs transition-shadow">
+<span class="font-label-xs text-label-xs text-secondary">BCWS (Plan)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface" id="inspBcws">₹84.2 Cr</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest rounded flex flex-col shadow-2xs hover:shadow-xs transition-shadow">
+<span class="font-label-xs text-label-xs text-secondary">BCWP (Earned)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-tertiary" id="inspBcwp">₹68.5 Cr</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest rounded flex flex-col shadow-2xs hover:shadow-xs transition-shadow">
+<span class="font-label-xs text-label-xs text-secondary">ACWP (Actual)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface" id="inspAcwp">₹71.2 Cr</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs pt-1 px-1">
+<span class="text-secondary">Schedule Perf Index (SPI): <strong class="text-tertiary" id="inspSpi">0.81</strong></span>
+<span class="text-secondary">Cost Perf Index (CPI): <strong class="text-on-surface" id="inspCpi">0.96</strong></span>
+</div>
+</div>
+<!-- Field Ground Truth & Confidence Telemetry -->
+<div class="flex items-center justify-between p-2.5 bg-surface-container-low rounded border border-slate-200/50 hover:border-blue-200 transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">visibility</span>
+<div class="flex flex-col font-label-xs text-label-xs">
+<span class="font-bold text-on-surface">AI Field Confidence</span>
+<span class="text-secondary">42 UAV LiDAR ortho-scans &amp; 128 field DPRs</span>
+</div>
+</div>
+<span class="font-mono font-bold text-headline-sm text-primary">97.4%</span>
+</div>
+<!-- Interactive Action Triggers -->
+<div class="flex flex-col gap-1.5 pt-1">
+<button class="tactile-btn w-full py-2 px-3 rounded bg-primary text-on-primary hover:bg-primary-container font-label-xs text-label-xs flex items-center justify-center gap-2 transition-all shadow-sm" onclick="showSimulationNotice(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">timeline</span>
+              Simulate Float Impact on Completion Date
+            </button>
+<div class="grid grid-cols-2 gap-2">
+<button class="tactile-btn py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs flex items-center justify-center gap-1 transition-all border border-transparent hover:border-slate-300" onclick="flashActionNotice(this, 'Re-baselined')" type="button">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                Re-baseline Node
+              </button>
+<button class="tactile-btn py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs flex items-center justify-center gap-1 transition-all border border-transparent hover:border-slate-300" onclick="flashActionNotice(this, 'Ledger Verified')" type="button">
+<span class="material-symbols-outlined text-[14px]">history_edu</span>
+                Audit Ledger Proof
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Scope Capex Distribution Card with SVG Donut (Cascade Step 5) -->
+<div class="animate-cascade-5 bg-surface-container-lowest p-3.5 rounded-lg shadow-sm flex flex-col gap-3 border border-slate-100 transition-all duration-200 hover:shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">pie_chart</span>
+<span class="font-label-xs text-label-xs uppercase font-bold text-on-surface">Capex BAC Scope Weight</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary font-mono">TOTAL: ₹482.5 Cr</span>
+</div>
+<div class="flex items-center gap-4">
+<!-- Inline Clean Vector Donut Chart with Interactive Segments -->
+<div class="relative w-24 h-24 shrink-0 flex items-center justify-center group" id="capexDonutWrapper">
+<svg class="w-24 h-24 -rotate-90 overflow-visible" viewbox="0 0 36 36">
+<!-- Background circle -->
+<path class="text-surface-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5"></path>
+<!-- Spread 1: 18% -->
+<path class="donut-slice text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" onmouseenter="updateDonutCenter('18%', 'SP-01', 'Spread 1 (₹86.8 Cr)', '#565e74')" onmouseleave="resetDonutCenter()" stroke="currentColor" stroke-dasharray="18, 100" stroke-dashoffset="0" stroke-width="4.5"></path>
+<!-- Spread 2: 24% (Critical) -->
+<path class="donut-slice text-tertiary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" onmouseenter="updateDonutCenter('24%', 'SP-02', 'Spread 2 Critical (₹115.8 Cr)', '#8f000b')" onmouseleave="resetDonutCenter()" stroke="currentColor" stroke-dasharray="24, 100" stroke-dashoffset="-18" stroke-width="4.5"></path>
+<!-- Spread 3: 20% -->
+<path class="donut-slice text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" onmouseenter="updateDonutCenter('20%', 'SP-03', 'Spread 3 (₹96.5 Cr)', '#0037b0')" onmouseleave="resetDonutCenter()" stroke="currentColor" stroke-dasharray="20, 100" stroke-dashoffset="-42" stroke-width="4.5"></path>
+<!-- Spread 4: 18% -->
+<path class="donut-slice text-surface-tint" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" onmouseenter="updateDonutCenter('18%', 'SP-04', 'Spread 4 (₹86.8 Cr)', '#2151da')" onmouseleave="resetDonutCenter()" stroke="currentColor" stroke-dasharray="18, 100" stroke-dashoffset="-62" stroke-width="4.5"></path>
+<!-- PM & Hydrotest: 20% -->
+<path class="donut-slice text-outline-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" onmouseenter="updateDonutCenter('20%', 'PM/HT', 'PM &amp; Hydrotest (₹96.6 Cr)', '#747686')" onmouseleave="resetDonutCenter()" stroke="currentColor" stroke-dasharray="20, 100" stroke-dashoffset="-80" stroke-width="4.5"></path>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center pointer-events-none transition-all duration-200">
+<span class="font-headline-sm text-body-md font-bold text-on-surface" id="donutPercent">24%</span>
+<span class="font-label-xs text-[9px] text-tertiary uppercase leading-none font-bold" id="donutLabel">SP-02</span>
+</div>
+</div>
+<!-- Legend details -->
+<div class="flex flex-col gap-1 w-full font-label-xs text-label-xs">
+<div class="flex items-center justify-between p-0.5 rounded hover:bg-surface-container-low transition-colors cursor-pointer" onmouseenter="highlightDonutHover('24%', 'SP-02', '#8f000b')" onmouseleave="resetDonutCenter()">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-tertiary"></span> Spread 2 (Critical)</span>
+<span class="font-mono font-bold text-tertiary">₹115.8 Cr</span>
+</div>
+<div class="flex items-center justify-between p-0.5 rounded hover:bg-surface-container-low transition-colors cursor-pointer" onmouseenter="highlightDonutHover('20%', 'SP-03', '#0037b0')" onmouseleave="resetDonutCenter()">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-primary"></span> Spread 3</span>
+<span class="font-mono text-on-surface">₹96.5 Cr</span>
+</div>
+<div class="flex items-center justify-between p-0.5 rounded hover:bg-surface-container-low transition-colors cursor-pointer" onmouseenter="highlightDonutHover('18%', 'SP-01', '#565e74')" onmouseleave="resetDonutCenter()">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-secondary"></span> Spread 1</span>
+<span class="font-mono text-on-surface">₹86.8 Cr</span>
+</div>
+<div class="flex items-center justify-between p-0.5 rounded hover:bg-surface-container-low transition-colors cursor-pointer" onmouseenter="highlightDonutHover('18%', 'SP-04', '#2151da')" onmouseleave="resetDonutCenter()">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-surface-tint"></span> Spread 4</span>
+<span class="font-mono text-on-surface">₹86.8 Cr</span>
+</div>
+<div class="flex items-center justify-between p-0.5 rounded hover:bg-surface-container-low transition-colors cursor-pointer" onmouseenter="highlightDonutHover('20%', 'PM/HT', '#747686')" onmouseleave="resetDonutCenter()">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-outline-variant"></span> PM &amp; Hydrotest</span>
+<span class="font-mono text-on-surface">₹96.6 Cr</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM BAR: SPREAD LINEAR PROGRESSION PROFILE (KM 0 TO KM 132) (Cascade Step 5) -->
+<section class="animate-cascade-5 bg-surface-container-lowest p-3.5 rounded-lg shadow-sm flex flex-col gap-3 border border-slate-100 transition-all duration-200 hover:shadow-md">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">linear_scale</span>
+<span class="font-label-xs text-label-xs font-bold uppercase text-on-surface tracking-wider">Spread Linear Progression Profile (Km 0+000 to Km 132+000)</span>
+</div>
+<div class="flex items-center gap-4 font-label-xs text-label-xs text-secondary font-mono">
+<span>CURRENT PIPELINE WELD LENGTH: 86.4 KM</span>
+<span>•</span>
+<span class="text-tertiary font-bold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary beacon-pulse-red"></span>
+  1 ACTIVE IMPEDIMENT IN SPREAD 2
+</span>
+</div>
+</div>
+<!-- Segmented Linear Bar Representation -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+<!-- Spread 1 -->
+<div class="flex flex-col gap-1 p-2 bg-surface-container-low rounded transition-all duration-200 hover:bg-blue-50/70 hover:shadow-xs cursor-pointer" onclick="selectSpreadFromBar('OIL.TRUNK.04.A', 'Spread 1 (Km 0 - 30)', 'Punj Lloyd')">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-bold text-on-surface">SP1 (Km 0 - 30)</span>
+<span class="text-emerald-700 font-mono font-bold">98% COMPLETED</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-emerald-600 rounded transition-all duration-500" style="width: 98%;"></div>
+</div>
+<span class="text-[10px] text-secondary font-mono">Digboi Terminal to Margherita</span>
+</div>
+<!-- Spread 2 (Focus / Critical Alert) -->
+<div class="flex flex-col gap-1 p-2 bg-error-container/20 rounded shadow-xs border border-red-200/60 hover:border-red-300 transition-all duration-200 cursor-pointer" onclick="selectSpread02()">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-bold text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary beacon-pulse-red"></span>
+  SP2 (Km 30 - 65)
+</span>
+<span class="text-tertiary font-mono font-bold">48% [WARNING]</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-tertiary rounded transition-all duration-500" style="width: 48%;"></div>
+</div>
+<span class="text-[10px] text-tertiary font-mono font-semibold">Trench Blasting Km 42.6</span>
+</div>
+<!-- Spread 3 -->
+<div class="flex flex-col gap-1 p-2 bg-surface-container-low rounded transition-all duration-200 hover:bg-blue-50/70 hover:shadow-xs cursor-pointer" onclick="selectSpreadFromBar('OIL.TRUNK.04.C', 'Spread 3 (Km 65 - 100)', 'Kalpataru Power')">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-bold text-on-surface">SP3 (Km 65 - 100)</span>
+<span class="text-primary font-mono font-bold">65% ACTIVE</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-primary rounded transition-all duration-500" style="width: 65%;"></div>
+</div>
+<span class="text-[10px] text-secondary font-mono">Tinkhong Crossing Spreads</span>
+</div>
+<!-- Spread 4 -->
+<div class="flex flex-col gap-1 p-2 bg-surface-container-low rounded transition-all duration-200 hover:bg-blue-50/70 hover:shadow-xs cursor-pointer" onclick="selectSpreadFromBar('OIL.TRUNK.04.D', 'Spread 4 (Km 100 - 132)', 'L&amp;T Hydrocarbon')">
+<div class="flex items-center justify-between font-label-xs text-label-xs">
+<span class="font-bold text-on-surface">SP4 (Km 100 - 132)</span>
+<span class="text-primary font-mono font-bold">79% ACTIVE</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-primary rounded transition-all duration-500" style="width: 79%;"></div>
+</div>
+<span class="text-[10px] text-secondary font-mono">Approaching Duliajan Refinery</span>
+</div>
+</div>
+<!-- Quick Callout Row -->
+<div class="p-2 bg-surface-container rounded flex flex-wrap items-center justify-between text-secondary font-label-xs text-label-xs gap-2 border border-blue-100/40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-tertiary">fmd_bad</span>
+<span><strong>Active Critical Path Bottleneck:</strong> Trench Blasting &amp; Hydraulic Rock Splitting in hard rock ridge segment (Km 42+650 to Km 44+100).</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
+<span>River HDD drill head resumed 100% torque nominal.</span>
+</div>
+</div>
+</section>
+</div></main>
+<!-- Footer -->
+<footer class="w-full bg-white border-t border-slate-200 py-3.5 px-8 mt-auto">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2 text-slate-500 font-mono text-[11px]">
+<div>OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</div>
+<div class="flex items-center gap-3">
+<span>VERIFICATION PUBKEY: 0x9AF...D312</span>
+<span>•</span>
+<span>SYSTEM PROTOCOL: AIR-GAP/V2</span>
+<span>•</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 beacon-pulse-green"></span>
+  NODE TELEMETRY NOMINAL
+</span>
+</div>
+</div>
+</footer>
+</div>
+<!-- Engineered Micro-interaction Script (Vanilla JS, self-contained) -->
+<script>
+  // State variables for filter toggles
+  let isAllExpanded = true;
+  let isTier2Only = false;
+  let isCriticalPathOnly = false;
+
+  // Toggle Collapse / Expand All
+  function toggleExpandAll(btn) {
+    isAllExpanded = !isAllExpanded;
+    const spreads = document.getElementById('spreadChildContainer');
+    const subActs = document.getElementById('subActivitiesContainer');
+    const icon = btn.querySelector('.toggle-icon');
+    const textSpan = btn.querySelector('.btn-text');
+
+    if (!isAllExpanded) {
+      if (spreads) spreads.style.display = 'none';
+      if (subActs) subActs.style.display = 'none';
+      if (icon) icon.textContent = 'unfold_less';
+      if (textSpan) textSpan.textContent = 'Collapse All';
+      btn.classList.add('bg-blue-100', 'text-primary', 'font-bold');
+    } else {
+      if (spreads) spreads.style.display = 'flex';
+      if (subActs) subActs.style.display = 'flex';
+      if (icon) icon.textContent = 'unfold_more';
+      if (textSpan) textSpan.textContent = 'Expand All';
+      btn.classList.remove('bg-blue-100', 'text-primary', 'font-bold');
+    }
+  }
+
+  // Toggle Tier 2 Filter
+  function toggleTier2Filter(btn) {
+    isTier2Only = !isTier2Only;
+    const rows = document.querySelectorAll('#wbsTreeRows .tree-row');
+    const spreads = document.getElementById('spreadChildContainer');
+    const subActs = document.getElementById('subActivitiesContainer');
+
+    if (isTier2Only) {
+      btn.classList.add('bg-blue-600', 'text-white', 'shadow-xs');
+      btn.classList.remove('bg-surface-container', 'text-on-surface');
+      if (spreads) spreads.style.display = 'none';
+      if (subActs) subActs.style.display = 'none';
+      rows.forEach(r => {
+        if (r.getAttribute('data-tier') === '1') {
+          r.style.display = 'none';
+        } else if (r.getAttribute('data-tier') === '2') {
+          r.style.display = 'grid';
+        }
+      });
+      updateCounterBadge('5 TIER-2 NODES');
+    } else {
+      btn.classList.remove('bg-blue-600', 'text-white', 'shadow-xs');
+      btn.classList.add('bg-surface-container', 'text-on-surface');
+      if (spreads) spreads.style.display = 'flex';
+      if (subActs) subActs.style.display = 'flex';
+      rows.forEach(r => r.style.display = 'grid');
+      updateCounterBadge('142 ITEMS');
+    }
+  }
+
+  // Toggle Critical Path Filter
+  function toggleCriticalPath(btn) {
+    isCriticalPathOnly = !isCriticalPathOnly;
+    const rows = document.querySelectorAll('#wbsTreeRows .tree-row');
+
+    if (isCriticalPathOnly) {
+      btn.classList.add('bg-tertiary', 'text-white', 'font-bold');
+      btn.classList.remove('bg-error-container', 'text-on-error-container');
+      btn.querySelector('.material-symbols-outlined').classList.add('text-white');
+      btn.querySelector('.material-symbols-outlined').classList.remove('text-tertiary');
+
+      rows.forEach(r => {
+        const isCrit = r.getAttribute('data-crit') === 'true';
+        r.style.display = isCrit ? 'grid' : 'none';
+      });
+      updateCounterBadge('18 CRITICAL NODES');
+    } else {
+      btn.classList.remove('bg-tertiary', 'text-white', 'font-bold');
+      btn.classList.add('bg-error-container', 'text-on-error-container');
+      btn.querySelector('.material-symbols-outlined').classList.remove('text-white');
+      btn.querySelector('.material-symbols-outlined').classList.add('text-tertiary');
+
+      rows.forEach(r => r.style.display = 'grid');
+      updateCounterBadge('142 ITEMS');
+    }
+  }
+
+  // Search filter
+  function filterWbsNodes(query) {
+    const term = (query || '').toLowerCase().trim();
+    const rows = document.querySelectorAll('#wbsTreeRows .tree-row');
+    let matchCount = 0;
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      if (!term || text.includes(term)) {
+        row.style.display = 'grid';
+        matchCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    updateCounterBadge(term ? `${matchCount} MATCHES` : '142 ITEMS');
+  }
+
+  function updateCounterBadge(text) {
+    const badge = document.getElementById('filteredCountBadge');
+    if (badge) badge.textContent = text;
+  }
+
+  // Chevron Toggles
+  function toggleSpreadGroup(e) {
+    e.stopPropagation();
+    const container = document.getElementById('spreadChildContainer');
+    const chevron = document.getElementById('chevron04');
+    if (!container) return;
+
+    if (container.style.display === 'none') {
+      container.style.display = 'flex';
+      chevron.classList.remove('collapsed-icon');
+    } else {
+      container.style.display = 'none';
+      chevron.classList.add('collapsed-icon');
+    }
+  }
+
+  function toggleSubActivities(e) {
+    e.stopPropagation();
+    const container = document.getElementById('subActivitiesContainer');
+    const chevron = document.getElementById('chevronSub02');
+    if (!container) return;
+
+    if (container.style.display === 'none') {
+      container.style.display = 'flex';
+      chevron.classList.remove('collapsed-icon');
+    } else {
+      container.style.display = 'none';
+      chevron.classList.add('collapsed-icon');
+    }
+  }
+
+  function toggleRowBranch(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const icon = btn.querySelector('.toggle-icon');
+    if (icon) {
+      icon.classList.toggle('collapsed-icon');
+    }
+  }
+
+  // Row selection handler
+  function selectWbsRow(rowElem, code, title, obs, costCode, activities, evSpan, spi, statusType) {
+    // Clear previous selection
+    document.querySelectorAll('#wbsTreeRows .tree-row').forEach(r => {
+      r.classList.remove('selected-node', 'bg-surface-container-high');
+    });
+
+    // Highlight current
+    rowElem.classList.add('selected-node', 'bg-surface-container-high');
+
+    // Update inspector view
+    const inspCode = document.getElementById('inspCode');
+    const inspTitle = document.getElementById('inspTitle');
+    const inspObs = document.getElementById('inspObs');
+    const inspCostCode = document.getElementById('inspCostCode');
+    const inspActivities = document.getElementById('inspActivities');
+    const inspSpi = document.getElementById('inspSpi');
+    const inspBadge = document.getElementById('inspBadge');
+
+    if (inspCode) inspCode.textContent = code;
+    if (inspTitle) inspTitle.textContent = title;
+    if (inspObs) inspObs.textContent = obs;
+    if (inspCostCode) inspCostCode.textContent = costCode;
+    if (inspActivities) inspActivities.textContent = activities;
+    if (inspSpi) inspSpi.textContent = spi;
+
+    if (inspBadge) {
+      if (statusType === 'CRITICAL' || statusType === 'SLIP WARN') {
+        inspBadge.className = 'px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-bold';
+        inspBadge.textContent = 'SLIP WARN';
+      } else if (statusType === 'OPTIMAL' || statusType === 'COMPLETE') {
+        inspBadge.className = 'px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-label-xs text-label-xs font-bold';
+        inspBadge.textContent = 'ON TRACK';
+      } else {
+        inspBadge.className = 'px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-label-xs text-label-xs font-bold';
+        inspBadge.textContent = 'MONITOR';
+      }
+    }
+  }
+
+  function selectSpread02() {
+    const row = document.getElementById('rowSpread02');
+    if (row) {
+      selectWbsRow(
+        row,
+        'OIL.TRUNK.04.B',
+        'Spread 2 (Km 30+000 to Km 65+000)',
+        'Pranjal Saikia / Shift A',
+        'CC-7710-CIVIL',
+        '28 Activities',
+        '₹68.5 Cr / ₹84.2 Cr',
+        '0.81',
+        'CRITICAL'
+      );
+    }
+  }
+
+  function selectSpreadFromBar(code, name, obs) {
+    const rows = document.querySelectorAll('#wbsTreeRows .tree-row');
+    rows.forEach(r => {
+      if (r.innerText.includes(code)) {
+        r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        r.click();
+      }
+    });
+  }
+
+  // Interactive Donut Center updates
+  function updateDonutCenter(pct, code, desc, color) {
+    const pctElem = document.getElementById('donutPercent');
+    const labelElem = document.getElementById('donutLabel');
+    if (pctElem) {
+      pctElem.textContent = pct;
+      pctElem.style.color = color;
+    }
+    if (labelElem) {
+      labelElem.textContent = code;
+      labelElem.style.color = color;
+    }
+  }
+
+  function highlightDonutHover(pct, code, color) {
+    updateDonutCenter(pct, code, '', color);
+  }
+
+  function resetDonutCenter() {
+    const pctElem = document.getElementById('donutPercent');
+    const labelElem = document.getElementById('donutLabel');
+    if (pctElem) {
+      pctElem.textContent = '24%';
+      pctElem.style.color = '#0b1c30';
+    }
+    if (labelElem) {
+      labelElem.textContent = 'SP-02';
+      labelElem.style.color = '#8f000b';
+    }
+  }
+
+  // Action notices
+  function triggerExportNotice(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[14px] animate-spin">refresh</span> Generating XER...`;
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[14px]">check</span> Package Ready`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 1800);
+    }, 900);
+  }
+
+  function showSimulationNotice(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span> Calculating Float & Perturbation...`;
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">check_circle</span> Float Impact: +18d Variance`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 2400);
+    }, 1000);
+  }
+
+  function flashActionNotice(btn, label) {
+    const original = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[14px] text-emerald-600">check</span> ${label}`;
+    setTimeout(() => {
+      btn.innerHTML = original;
+    }, 1600);
+  }
+</script>
+</body></html>

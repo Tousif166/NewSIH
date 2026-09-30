@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base{
+  html,body{margin:0;padding:0;}
+  body{overscroll-behavior:none;}
+  main>:first-child{margin-top:0!important;}
+  main>:last-child{margin-bottom:0!important;}
+}
+::-webkit-scrollbar{display:none;}
+
+/* Keyframes & Animation Utilities */
+@keyframes audio-eq {
+  0%, 100% { transform: scaleY(0.28); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes hud-scanline {
+  0% { transform: translateY(-100%); opacity: 0.15; }
+  50% { opacity: 0.35; }
+  100% { transform: translateY(300px); opacity: 0.1; }
+}
+
+@keyframes reticle-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 6px rgba(147, 197, 253, 0.7)); }
+}
+
+@keyframes beacon-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); }
+}
+
+@keyframes card-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flash-active {
+  0% { background-color: rgba(0, 55, 176, 0.15); }
+  100% { background-color: transparent; }
+}
+
+.animate-scanline {
+  animation: hud-scanline 4s linear infinite;
+}
+
+.animate-reticle {
+  animation: reticle-pulse 3.5s ease-in-out infinite;
+}
+
+.animate-beacon {
+  animation: beacon-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* EQ Bar Classes with Variable Delays */
+.eq-bar {
+  transform-origin: bottom;
+  animation: audio-eq 1.2s ease-in-out infinite;
+}
+.eq-d1 { animation-duration: 0.9s; animation-delay: 0.1s; }
+.eq-d2 { animation-duration: 1.4s; animation-delay: 0.35s; }
+.eq-d3 { animation-duration: 0.75s; animation-delay: 0.05s; }
+.eq-d4 { animation-duration: 1.1s; animation-delay: 0.5s; }
+.eq-d5 { animation-duration: 1.3s; animation-delay: 0.2s; }
+.eq-d6 { animation-duration: 0.85s; animation-delay: 0.4s; }
+
+/* Micro-interaction Lift */
+.macro-btn {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.macro-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+.macro-btn:active {
+  transform: translateY(0);
+  background-color: #f1f5f9;
+}
+
+/* Staggered entrance */
+.stagger-1 { animation: card-fade-up 0.4s ease-out 0.05s both; }
+.stagger-2 { animation: card-fade-up 0.4s ease-out 0.12s both; }
+.stagger-3 { animation: card-fade-up 0.4s ease-out 0.2s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  theme: {
+    extend: {
+      "colors": {
+        "error-container": "#ffdad6",
+        "inverse-primary": "#b7c4ff",
+        "primary-fixed-dim": "#b7c4ff",
+        "tertiary-fixed-dim": "#ffb4ab",
+        "on-background": "#0b1c30",
+        "surface-variant": "#d3e4fe",
+        "surface-dim": "#cbdbf5",
+        "tertiary-container": "#bb0112",
+        "surface-tint": "#2151da",
+        "on-tertiary-container": "#ffc7c1",
+        "surface-container-low": "#eff4ff",
+        "inverse-surface": "#213145",
+        "on-primary-container": "#cad3ff",
+        "on-surface-variant": "#434655",
+        "on-secondary-fixed-variant": "#3f465c",
+        "secondary-fixed": "#dae2fd",
+        "on-secondary-fixed": "#131b2e",
+        "on-primary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary": "#ffffff",
+        "primary-container": "#1d4ed8",
+        "on-tertiary-fixed": "#410002",
+        "background": "#f8f9ff",
+        "primary-fixed": "#dce1ff",
+        "surface-container-highest": "#d3e4fe",
+        "error": "#ba1a1a",
+        "on-tertiary-fixed-variant": "#93000b",
+        "on-primary-fixed": "#001551",
+        "on-error": "#ffffff",
+        "inverse-on-surface": "#eaf1ff",
+        "tertiary-fixed": "#ffdad6",
+        "outline-variant": "#c4c5d7",
+        "surface": "#f8f9ff",
+        "surface-container-high": "#dce9ff",
+        "secondary-fixed-dim": "#bec6e0",
+        "primary": "#0037b0",
+        "tertiary": "#8f000b",
+        "on-surface": "#0b1c30",
+        "secondary": "#565e74",
+        "on-error-container": "#93000a",
+        "on-secondary-container": "#5c647a",
+        "secondary-container": "#dae2fd",
+        "outline": "#747686",
+        "on-primary-fixed-variant": "#0039b5",
+        "surface-container": "#e5eeff",
+        "surface-bright": "#f8f9ff"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "space-xl": "1.5rem",
+        "margin": "1rem",
+        "space-xs": "0.25rem",
+        "gutter": "0.75rem",
+        "space-sm": "0.375rem",
+        "space-md": "0.75rem",
+        "space-lg": "1rem"
+      },
+      "fontFamily": {
+        "headline-xl": ["Plus Jakarta Sans"],
+        "headline-xl-mobile": ["Plus Jakarta Sans"],
+        "body-md": ["Inter"],
+        "body-lg": ["Inter"],
+        "label-sm": ["JetBrains Mono"],
+        "label-md": ["JetBrains Mono"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "headline-sm": ["Plus Jakarta Sans"],
+        "label-xs": ["JetBrains Mono"],
+        "body-sm": ["Inter"]
+      }
+    }
+  }
+};</script></head><body class="bg-[#f8f9ff] font-body-md text-[#0b1c30] antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-white border-r border-[#e2e8f0] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="p-space-lg flex flex-col gap-space-xs bg-[#f8faff] border-b border-[#e2e8f0]"><div class="flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-[#0037b0] flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-white text-[18px]">precision_manufacturing</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-[#0f172a] font-bold uppercase tracking-tight">OIL / SiteSync</span><span class="font-label-xs text-label-xs text-[#64748b] tracking-wider">ENTERPRISE RUNTIME v4.8</span></div></div><div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-label-xs text-label-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>P6 LIVE</div></div><div class="mt-space-sm pt-space-xs flex items-center justify-between text-[#64748b] font-label-xs text-label-xs border-t border-[#edf2f7]"><span class="flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-[13px] text-[#0037b0]">hub</span>NODE-AS04 // SECURE</span><span class="font-label-xs text-label-xs text-[#0037b0] font-semibold">ORACLE EPPM SYNCED</span></div></div><nav class="flex flex-col px-3 py-4 gap-4"><div class="flex flex-col gap-1"><div class="px-3 py-1 font-label-xs text-label-xs text-[#64748b] uppercase tracking-wider font-semibold">Execution Intelligence</div><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="executive-health" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">grid_view</span><span class="font-body-md text-body-md font-medium">Executive Health</span></div><span class="font-label-xs text-label-xs text-[#94a3b8] font-semibold">KPI</span></a><a aria-current="page" class="flex items-center justify-between px-3 py-2 rounded-lg transition-all bg-[#eff4ff] text-[#0037b0] font-semibold border border-[#dce1ff] shadow-sm" data-path="field-input-center" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#0037b0]">mic</span><span class="font-body-md text-body-md">Field Input Center</span></div><span class="px-1.5 py-0.5 rounded bg-[#dce1ff] text-[#0037b0] font-label-xs text-label-xs font-bold">TELEMETRY</span></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="ai-review-center" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">check_circle</span><span class="font-body-md text-body-md font-medium">AI Review Center</span></div><span class="px-1.5 py-0.5 rounded bg-[#e0e7ff] text-[#3730a3] font-label-xs text-label-xs font-semibold">DESK 1</span></a></div><div class="flex flex-col gap-1"><div class="px-3 py-1 font-label-xs text-label-xs text-[#64748b] uppercase tracking-wider font-semibold">Schedule &amp; Controls</div><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="wbs-schedule-tree" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">account_tree</span><span class="font-body-md text-body-md font-medium">WBS &amp; Schedule Tree</span></div></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="4d-gantt-digital-twin" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">waterfall_chart</span><span class="font-body-md text-body-md font-medium">4D Gantt Digital Twin</span></div><span class="font-label-xs text-label-xs text-[#94a3b8] font-semibold">4D-V</span></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="conflicts-chronology" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">warning</span><span class="font-body-md text-body-md font-medium">Conflicts &amp; Chronology</span></div><span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-label-xs text-label-xs font-bold">2</span></a></div><div class="flex flex-col gap-1"><div class="px-3 py-1 font-label-xs text-label-xs text-[#64748b] uppercase tracking-wider font-semibold">Analytics &amp; Memory</div><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="activity-dna-memory" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">vital_signs</span><span class="font-body-md text-body-md font-medium">Activity DNA &amp; Memory</span></div></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="what-if-simulator" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">tune</span><span class="font-body-md text-body-md font-medium">What-If Simulator</span></div></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="audit-provenance" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">verified_user</span><span class="font-body-md text-body-md font-medium">Audit &amp; Provenance</span></div><span class="font-label-xs text-label-xs text-slate-500 font-medium">SHA-256</span></a><a class="flex items-center justify-between px-3 py-2 rounded-lg text-[#475569] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-all" data-path="5-min-judge-demo" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[18px] text-[#64748b]">play_circle</span><span class="font-body-md text-body-md font-medium">5-Min Judge Demo</span></div><span class="px-1.5 py-0.5 rounded bg-[#e0e7ff] text-[#1e1b4b] font-label-xs text-label-xs font-bold">11</span></a></div></nav></div><div class="p-4 bg-[#f8faff] border-t border-[#e2e8f0] flex flex-col gap-1"><div class="flex items-center justify-between font-label-xs text-label-xs text-[#64748b]"><span>SECURITY LEVEL</span><span class="text-emerald-700 font-semibold">IL-5 RESTRICTED</span></div><div class="font-label-xs text-label-xs text-[#475569] truncate font-medium">SEAL: OIL-EXP-994821</div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-white/95 backdrop-blur-md z-40 px-space-lg flex items-center justify-between border-b border-[#e2e8f0] shadow-sm"><div class="flex items-center gap-space-lg"><div class="flex flex-col"><div class="flex items-center gap-2"><span class="font-headline-sm text-headline-sm text-[#0f172a] font-bold">Digboi–Duliajan 132km Crude Trunkline</span><span class="px-2 py-0.5 rounded bg-[#eff4ff] border border-[#dce1ff] font-label-xs text-label-xs font-semibold text-[#0037b0]">WBS-REV-4.8</span></div><div class="flex items-center gap-space-md font-label-xs text-label-xs text-[#64748b]"><span>PIPELINE REINFORCEMENT SEGMENT 04-A</span><span class="text-[#475569] font-medium">LAT: 27.3805° N, 95.3182° E</span></div></div><div class="hidden xl:flex items-center gap-space-md pl-space-md border-l border-[#e2e8f0]"><div class="flex items-center gap-1.5 text-emerald-700 font-label-xs text-label-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>18ms LATENCY</div><div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#eff4ff] border border-[#dce1ff] text-[#0037b0] font-label-xs text-label-xs font-semibold"><span class="material-symbols-outlined text-[13px]">lock</span>LEDGER VALIDATED</div></div></div><div class="flex items-center gap-3"><div class="flex items-center gap-2 bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg cursor-pointer hover:bg-[#f1f5f9] transition-all"><span class="material-symbols-outlined text-[#64748b] text-[16px]">switch_account</span><div class="flex flex-col text-left"><span class="font-label-xs text-label-xs text-[#0f172a] font-semibold leading-tight">Pranjal Saikia</span><span class="font-label-xs text-label-xs text-[#64748b] leading-tight">Chief Eng / Shift A</span></div><span class="material-symbols-outlined text-[#94a3b8] text-[14px]">expand_more</span></div><div class="flex items-center gap-2"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#cbd5e1] bg-white text-[#334155] hover:bg-[#f1f5f9] active:scale-95 transition-all font-label-md text-label-md font-medium" type="button"><span class="material-symbols-outlined text-[16px] text-[#64748b]">inventory_2</span>Export Audit PKG</button><button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0037b0] text-white font-label-md text-label-md hover:bg-[#002b8c] active:scale-95 transition-all font-semibold shadow-sm" type="button"><span class="material-symbols-outlined text-[16px]">cloud_upload</span>Commit to P6</button></div><div class="w-8 h-8 rounded-full bg-[#e2e8f0] text-[#0037b0] border border-[#cbd5e1] flex items-center justify-center font-bold hover:ring-2 hover:ring-[#0037b0]/20 transition-all cursor-pointer"><span class="material-symbols-outlined text-[18px]">person</span></div></div></header><main class="flex-1 pt-16 w-full px-8 bg-[#f8f9ff]"><div class="flex flex-col w-full pb-12 pt-6">
+<!-- Telemetry Sub-Navigation Ribbon -->
+<div class="w-full bg-white rounded-xl p-space-md border border-[#e2e8f0] shadow-sm flex flex-wrap items-center justify-between gap-space-md mb-6 stagger-1">
+<div class="flex flex-wrap items-center gap-6">
+<div class="flex items-center gap-2.5">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+</span>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">LOCAL STORAGE ENGINE</span>
+<span class="font-label-md text-label-md text-[#b45309] font-bold flex items-center gap-1.5" id="pending-counter-label">
+  SQLite: 3 Pending Sync
+  <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg hover:border-[#cbd5e1] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-[#0037b0]">satellite_alt</span>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">GNSS RTK LOCK</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">±1.2cm CEP [FIXED]</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg hover:border-[#cbd5e1] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">battery_charging_80</span>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">MIL-SPEC TOUGHBOOK</span>
+<span class="font-label-md text-label-md text-emerald-700 font-semibold">84% • 6.4h REMAINING</span>
+</div>
+</div>
+<div class="hidden lg:flex items-center gap-2 bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg hover:border-[#cbd5e1] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-[#475569]">alt_route</span>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">ACTIVE CORRIDOR SECTOR</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Digboi Sector A (KM 42+300 to 43+100)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-xs text-label-xs text-[#64748b] uppercase font-semibold">Supervisor ID:</span>
+<span class="px-2.5 py-1 rounded bg-[#f1f5f9] border border-[#cbd5e1] font-label-md text-label-md text-[#0f172a] font-medium">Debashis Gogoi (OIL-FLD-8820)</span>
+<button class="px-2.5 py-1 rounded bg-[#eff4ff] border border-[#dce1ff] text-[#0037b0] hover:bg-[#dce1ff] active:scale-95 transition-all font-label-xs text-label-xs font-semibold flex items-center gap-1" id="force-flush-btn" onclick="const icon = this.querySelector('span'); icon.classList.add('animate-spin'); setTimeout(()=&gt;icon.classList.remove('animate-spin'), 700);">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+        FORCE FLUSH
+      </button>
+</div>
+</div>
+<!-- Main Bento Operational Surface -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+<!-- Left 7 Cols: Live AI Speech-to-DPR Voice Agent Console -->
+<div class="xl:col-span-7 flex flex-col gap-6 stagger-2">
+<!-- Primary Recording Card -->
+<div class="relative bg-white border border-[#e2e8f0] rounded-xl p-space-lg shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-md border-b border-[#edf2f7]">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-[#eff4ff] border border-[#dce1ff] flex items-center justify-center text-[#0037b0] shadow-sm">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-[#0f172a] font-bold tracking-tight">AI Speech-to-DPR Voice Agent</h2>
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">ENERGYNLP v4.2 TELEMETRY RUNTIME // MULTILINGUAL ASSAMESE-HINDI-EN</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 font-label-xs text-label-xs font-semibold animate-beacon cursor-default select-none">
+<span class="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span>
+            RECORDING • <span id="rec-ticker">0:42s</span>
+</div>
+</div>
+<!-- Dynamic Audio Waveform Visualizer -->
+<div class="w-full bg-[#f8faff] border border-[#e2e8f0] rounded-xl p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between text-[#64748b] font-label-xs text-label-xs">
+<span class="flex items-center gap-1.5 text-[#0037b0] font-semibold">
+<span class="material-symbols-outlined text-[14px]">graphic_eq</span> 48kHz PCM ACOUSTIC STREAM
+            </span>
+<span class="font-label-xs text-label-xs text-[#334155] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> SNR: 34.2 dB (WIND-FILTER ON)
+</span>
+</div>
+<!-- Animated Waveform SVG Render -->
+<div class="w-full h-16 flex items-center justify-between gap-1 px-2 py-1 overflow-hidden bg-white rounded-lg border border-[#e2e8f0]">
+<svg class="w-full h-full text-[#1d4ed8]" fill="currentColor" id="dynamic-waveform" preserveaspectratio="none" viewbox="0 0 500 60">
+<rect class="opacity-40 eq-bar eq-d1" height="12" rx="2" width="4" x="0" y="24"></rect>
+<rect class="opacity-50 eq-bar eq-d2" height="20" rx="2" width="4" x="8" y="20"></rect>
+<rect class="opacity-70 eq-bar eq-d3" height="28" rx="2" width="4" x="16" y="16"></rect>
+<rect class="opacity-50 eq-bar eq-d4" height="16" rx="2" width="4" x="24" y="22"></rect>
+<rect class="opacity-80 eq-bar eq-d5" height="40" rx="2" width="4" x="32" y="10"></rect>
+<rect class="eq-bar eq-d6" height="52" rx="2" width="4" x="40" y="4"></rect>
+<rect class="opacity-70 eq-bar eq-d1" height="32" rx="2" width="4" x="48" y="14"></rect>
+<rect class="opacity-60 eq-bar eq-d2" height="24" rx="2" width="4" x="56" y="18"></rect>
+<rect class="opacity-90 eq-bar eq-d3" height="44" rx="2" width="4" x="64" y="8"></rect>
+<rect class="eq-bar eq-d4" height="56" rx="2" width="4" x="72" y="2"></rect>
+<rect class="opacity-80 eq-bar eq-d5" height="36" rx="2" width="4" x="80" y="12"></rect>
+<rect class="opacity-50 eq-bar eq-d6" height="16" rx="2" width="4" x="88" y="22"></rect>
+<rect class="opacity-95 eq-bar eq-d1" height="48" rx="2" width="4" x="96" y="6"></rect>
+<rect class="opacity-65 eq-bar eq-d2" height="28" rx="2" width="4" x="104" y="16"></rect>
+<rect class="opacity-50 eq-bar eq-d3" height="20" rx="2" width="4" x="112" y="20"></rect>
+<rect class="opacity-70 eq-bar eq-d4" height="32" rx="2" width="4" x="120" y="14"></rect>
+<rect class="eq-bar eq-d5" height="52" rx="2" width="4" x="128" y="4"></rect>
+<rect class="opacity-80 eq-bar eq-d6" height="40" rx="2" width="4" x="136" y="10"></rect>
+<rect class="eq-bar eq-d1" height="56" rx="2" width="4" x="144" y="2"></rect>
+<rect class="opacity-60 eq-bar eq-d2" height="24" rx="2" width="4" x="152" y="18"></rect>
+<rect class="opacity-75 eq-bar eq-d3" height="32" rx="2" width="4" x="160" y="14"></rect>
+<rect class="opacity-90 eq-bar eq-d4" height="44" rx="2" width="4" x="168" y="8"></rect>
+<rect class="opacity-50 eq-bar eq-d5" height="16" rx="2" width="4" x="176" y="22"></rect>
+<rect class="opacity-95 eq-bar eq-d6" height="48" rx="2" width="4" x="184" y="6"></rect>
+<rect class="opacity-80 eq-bar eq-d1" height="36" rx="2" width="4" x="192" y="12"></rect>
+<rect class="eq-bar eq-d2" height="52" rx="2" width="4" x="200" y="4"></rect>
+<rect class="opacity-60 eq-bar eq-d3" height="24" rx="2" width="4" x="208" y="18"></rect>
+<rect class="opacity-75 eq-bar eq-d4" height="32" rx="2" width="4" x="216" y="14"></rect>
+<rect class="opacity-85 eq-bar eq-d5" height="40" rx="2" width="4" x="224" y="10"></rect>
+<rect class="eq-bar eq-d6" height="56" rx="2" width="4" x="232" y="2"></rect>
+<rect class="opacity-70 eq-bar eq-d1" height="28" rx="2" width="4" x="240" y="16"></rect>
+<rect class="opacity-95 eq-bar eq-d2" height="48" rx="2" width="4" x="248" y="6"></rect>
+<rect class="opacity-50 eq-bar eq-d3" height="16" rx="2" width="4" x="256" y="22"></rect>
+<rect class="opacity-90 eq-bar eq-d4" height="44" rx="2" width="4" x="264" y="8"></rect>
+<rect class="opacity-75 eq-bar eq-d5" height="32" rx="2" width="4" x="272" y="14"></rect>
+<rect class="eq-bar eq-d6" height="52" rx="2" width="4" x="280" y="4"></rect>
+<rect class="opacity-80 eq-bar eq-d1" height="36" rx="2" width="4" x="288" y="12"></rect>
+<rect class="opacity-50 eq-bar eq-d2" height="20" rx="2" width="4" x="296" y="20"></rect>
+<rect class="opacity-70 eq-bar eq-d3" height="28" rx="2" width="4" x="304" y="16"></rect>
+<rect class="opacity-90 eq-bar eq-d4" height="44" rx="2" width="4" x="312" y="8"></rect>
+<rect class="eq-bar eq-d5" height="56" rx="2" width="4" x="320" y="2"></rect>
+<rect class="opacity-75 eq-bar eq-d6" height="32" rx="2" width="4" x="328" y="14"></rect>
+<rect class="opacity-95 eq-bar eq-d1" height="48" rx="2" width="4" x="336" y="6"></rect>
+<rect class="opacity-50 eq-bar eq-d2" height="16" rx="2" width="4" x="344" y="22"></rect>
+<rect class="opacity-80 eq-bar eq-d3" height="36" rx="2" width="4" x="352" y="12"></rect>
+<rect class="eq-bar eq-d4" height="52" rx="2" width="4" x="360" y="4"></rect>
+<rect class="opacity-60 eq-bar eq-d5" height="24" rx="2" width="4" x="368" y="18"></rect>
+<rect class="opacity-75 eq-bar eq-d6" height="32" rx="2" width="4" x="376" y="14"></rect>
+<rect class="opacity-85 eq-bar eq-d1" height="40" rx="2" width="4" x="384" y="10"></rect>
+<rect class="eq-bar eq-d2" height="56" rx="2" width="4" x="392" y="2"></rect>
+<rect class="opacity-70 eq-bar eq-d3" height="28" rx="2" width="4" x="400" y="16"></rect>
+<rect class="opacity-95 eq-bar eq-d4" height="48" rx="2" width="4" x="408" y="6"></rect>
+<rect class="opacity-50 eq-bar eq-d5" height="16" rx="2" width="4" x="416" y="22"></rect>
+<rect class="opacity-90 eq-bar eq-d6" height="44" rx="2" width="4" x="424" y="8"></rect>
+<rect class="opacity-75 eq-bar eq-d1" height="32" rx="2" width="4" x="432" y="14"></rect>
+<rect class="eq-bar eq-d2" height="52" rx="2" width="4" x="440" y="4"></rect>
+<rect class="opacity-80 eq-bar eq-d3" height="36" rx="2" width="4" x="448" y="12"></rect>
+<rect class="opacity-50 eq-bar eq-d4" height="20" rx="2" width="4" x="456" y="20"></rect>
+<rect class="opacity-70 eq-bar eq-d5" height="28" rx="2" width="4" x="464" y="16"></rect>
+<rect class="opacity-50 eq-bar eq-d6" height="16" rx="2" width="4" x="472" y="22"></rect>
+<rect class="opacity-40 eq-bar eq-d1" height="8" rx="2" width="4" x="480" y="26"></rect>
+<rect class="opacity-30 eq-bar eq-d2" height="4" rx="2" width="4" x="488" y="28"></rect>
+</svg>
+</div>
+<!-- Realtime Transcription Box -->
+<div class="relative bg-white border border-[#e2e8f0] rounded-lg p-3.5 transition-all shadow-xs hover:border-[#cbd5e1]">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#edf2f7]">
+<span class="font-label-xs text-label-xs text-[#0037b0] flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[13px] animate-spin">neurology</span> CONFIDENCE 99.4% • NLP STREAM
+              </span>
+<span class="font-label-xs text-label-xs text-[#64748b]">LATENCY 82ms</span>
+</div>
+<p class="font-body-lg text-body-lg text-[#0f172a] leading-relaxed select-text" id="live-transcription-text">
+              “Encountered subterranean hard rock strata at chainage <span class="bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded font-label-md text-label-md font-semibold transition-all hover:bg-amber-200">42+650</span>. Deployed two auxiliary Komatsu <span class="bg-blue-100 text-blue-900 border border-blue-300 px-1.5 py-0.5 rounded font-label-md text-label-md font-semibold transition-all hover:bg-blue-200">PC300 excavators</span>. Completed <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-1.5 py-0.5 rounded font-label-md text-label-md font-semibold transition-all hover:bg-emerald-200">420m laid today</span> without safety incident.”
+            </p>
+</div>
+</div>
+<!-- AI Extracted Entities Panel -->
+<div class="mt-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-xs text-label-xs text-[#64748b] uppercase tracking-wider font-semibold">P6 Primavera Extracted Entities • Auto Mapped</span>
+<span class="font-label-xs text-label-xs text-emerald-700 flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span> AUTONOMOUS PARSING MATCH
+            </span>
+</div>
+<div class="flex flex-wrap gap-2">
+<!-- Entity 1 -->
+<div class="bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 hover:border-[#cbd5e1] hover:bg-white transition-all cursor-default shadow-xs">
+<span class="font-label-xs text-label-xs text-[#64748b]">ACTION:</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Trenching &amp; Lowering</span>
+</div>
+<!-- Entity 2 -->
+<div class="bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 hover:border-[#cbd5e1] hover:bg-white transition-all cursor-default shadow-xs">
+<span class="font-label-xs text-label-xs text-[#64748b]">VOLUME:</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">420m / 375m Target</span>
+<span class="px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-800 font-label-xs text-label-xs font-bold">+12% PACE</span>
+</div>
+<!-- Entity 3 -->
+<div class="bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 hover:border-[#cbd5e1] hover:bg-white transition-all cursor-default shadow-xs">
+<span class="font-label-xs text-label-xs text-[#64748b]">EQUIPMENT:</span>
+<span class="font-label-md text-label-md text-[#0037b0] font-semibold">2x Komatsu PC300</span>
+</div>
+<!-- Entity 4 -->
+<div class="bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 hover:border-[#cbd5e1] hover:bg-white transition-all cursor-default shadow-xs">
+<span class="font-label-xs text-label-xs text-[#64748b]">SAFETY:</span>
+<span class="font-label-md text-label-md text-emerald-700 font-semibold">0 Incidents (LTI Clean)</span>
+</div>
+<!-- Entity 5 -->
+<div class="bg-[#f8faff] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 hover:border-[#cbd5e1] hover:bg-white transition-all cursor-default shadow-xs">
+<span class="font-label-xs text-label-xs text-[#64748b]">WBS TARGET:</span>
+<span class="font-label-md text-label-md text-[#0037b0] font-semibold">ACT-TR-4290</span>
+</div>
+</div>
+</div>
+<!-- Action Control Buttons -->
+<div class="mt-space-lg pt-space-md flex flex-wrap items-center justify-between gap-space-md border-t border-[#edf2f7]">
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-[#cbd5e1] hover:bg-[#f1f5f9] hover:border-[#94a3b8] active:scale-95 active:bg-[#e2e8f0] transition-all text-[#334155] hover:text-[#0f172a] font-label-md text-label-md font-medium" id="btn-retake" onclick="resetMemoFeedback(this)" type="button">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-300">replay</span> Retake Voice Memo
+            </button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-[#cbd5e1] hover:bg-[#eff4ff] hover:border-[#0037b0] hover:text-[#0037b0] active:scale-95 transition-all text-[#0037b0] font-label-md text-label-md font-medium group" id="btn-photo" onclick="triggerPhotoFlash(this)" type="button">
+<span class="material-symbols-outlined text-[16px] group-hover:rotate-12 transition-transform duration-200">add_a_photo</span> Attach Geotagged Photo
+            </button>
+</div>
+<button class="flex items-center gap-2 px-5 py-2 rounded-lg bg-[#0037b0] hover:bg-[#002b8c] active:scale-95 text-white font-label-md text-label-md font-semibold shadow-sm transition-all relative overflow-hidden" id="btn-submit-review" onclick="submitToReviewDesk(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span> <span id="submit-text">Direct Submit to AI Review Desk</span>
+</button>
+</div>
+</div>
+<!-- Quick Field Trigger Rails -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<span class="font-label-xs text-label-xs text-[#64748b] uppercase tracking-wider font-semibold">Fast-Action Macro Telemetry Keys</span>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+<button class="p-3 rounded-lg bg-[#f8faff] border border-[#e2e8f0] hover:border-[#0037b0] hover:bg-white transition-all flex flex-col items-start gap-1 group text-left macro-btn" onclick="macroClick(this, 'Rock Encounter')">
+<span class="material-symbols-outlined text-[#0037b0] text-[20px] group-hover:scale-110 transition-transform">landslide</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Rock Encounter</span>
+<span class="font-label-xs text-label-xs text-[#64748b]">Auto Log Strata Delta</span>
+</button>
+<button class="p-3 rounded-lg bg-[#f8faff] border border-[#e2e8f0] hover:border-[#0f766e] hover:bg-white transition-all flex flex-col items-start gap-1 group text-left macro-btn" onclick="macroClick(this, 'Pipe Stringing')">
+<span class="material-symbols-outlined text-teal-700 text-[20px] group-hover:scale-110 transition-transform">linear_scale</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Pipe Stringing</span>
+<span class="font-label-xs text-label-xs text-[#64748b]">Increment Joint Count</span>
+</button>
+<button class="p-3 rounded-lg bg-[#f8faff] border border-[#e2e8f0] hover:border-[#4338ca] hover:bg-white transition-all flex flex-col items-start gap-1 group text-left macro-btn" onclick="macroClick(this, 'Welding Pass Done')">
+<span class="material-symbols-outlined text-indigo-700 text-[20px] group-hover:scale-110 transition-transform">join_inner</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Welding Pass Done</span>
+<span class="font-label-xs text-label-xs text-[#64748b]">NDT Scan Ready</span>
+</button>
+<button class="p-3 rounded-lg bg-[#f8faff] border border-[#e2e8f0] hover:border-[#047857] hover:bg-white transition-all flex flex-col items-start gap-1 group text-left macro-btn" onclick="macroClick(this, 'Hydrotest Pressurized')">
+<span class="material-symbols-outlined text-emerald-700 text-[20px] group-hover:scale-110 transition-transform">speed</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-semibold">Hydrotest Pressurized</span>
+<span class="font-label-xs text-label-xs text-[#64748b]">Hold 24h Gauge Influx</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right 5 Cols: Geotagged Camera & Drone Telemetry HUD -->
+<div class="xl:col-span-5 flex flex-col gap-6 stagger-3">
+<!-- Geotagged Camera / Drone HUD Card -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-shadow">
+<div class="p-space-md flex items-center justify-between bg-[#f8faff] border-b border-[#e2e8f0]">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[#0037b0] text-[18px]">photo_camera_front</span>
+<span class="font-label-md text-label-md text-[#0f172a] font-bold uppercase tracking-wide">Optical Telemetry Feed</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-[#eff4ff] border border-[#dce1ff] text-[#0037b0] font-label-xs text-label-xs font-semibold">CAM-EX-04A // 4K RAW</span>
+</div>
+<!-- Camera Media Display with Inset HUD Overlay -->
+<div class="relative w-full h-64 bg-slate-900 overflow-hidden group select-none" id="camera-viewport">
+<img class="w-full h-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-105" data-alt="High-resolution industrial aerial drone photo capturing deep pipeline trenching operation across rural rocky terrain in Assam India, featuring Komatsu PC300 yellow excavators digging through exposed hard rock layers with pristine newly welded steel pipelines awaiting lowering, atmospheric morning sunlight with slight haze, crisp technical engineering clarity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxNryDBcaO5IxR1lsS8Tc7clE8FbkycJp3beHMp7uCWRnIqkgu1qiADjhSjNdrBNxCE2YA7pXAev_4mpid5c2cpg8j2tyWXkiv4nd8UVAI06XtJTDvQjn886s4c9uiuuhz12ico16HSpYnYmdaoivIb_-NA86eY41X615nfoNBJ2zGjPgF3VFKPro-HzosFWXQjhucZw_JXfbr7dS-2VvyVTnDUjzkvAgW99udruDRCVib68Yf_1w"/>
+<!-- Subtle scanning line effect -->
+<div class="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none animate-scanline"></div>
+<!-- Ground-truth Match Badge Top Right -->
+<div class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded shadow-lg flex items-center gap-1.5 border border-slate-700">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-label-xs text-label-xs text-emerald-400 font-medium">UAV Multispectral Pass #012 Correlated</span>
+</div>
+<!-- Crosshairs & HUD Elements -->
+<div class="absolute inset-0 pointer-events-none flex flex-col justify-between p-4">
+<div class="flex justify-between items-start">
+<div class="font-label-xs text-label-xs text-white bg-slate-900/85 backdrop-blur-xs px-2 py-0.5 rounded font-medium border border-slate-700 tracking-wider flex items-center gap-1.5 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+  CHAINAGE: <span class="font-bold text-cyan-300" id="hud-chainage">KM 42+650</span>
+</div>
+<div class="font-label-xs text-label-xs text-slate-300 bg-slate-900/85 backdrop-blur-xs px-2 py-0.5 rounded font-medium border border-slate-700 tracking-wider">
+  AZIMUTH: <span class="font-bold text-slate-100" id="hud-azimuth">184° S</span>
+</div>
+</div>
+<!-- Center Reticle with subtle breathing pulse -->
+<div class="self-center flex flex-col items-center animate-reticle">
+<svg class="text-blue-300/85" height="42" viewbox="0 0 40 40" width="42">
+<circle cx="20" cy="20" fill="none" r="12" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1"></circle>
+<line stroke="currentColor" stroke-width="1.5" x1="20" x2="20" y1="4" y2="14"></line>
+<line stroke="currentColor" stroke-width="1.5" x1="20" x2="20" y1="26" y2="36"></line>
+<line stroke="currentColor" stroke-width="1.5" x1="4" x2="14" y1="20" y2="20"></line>
+<line stroke="currentColor" stroke-width="1.5" x1="26" x2="36" y1="20" y2="20"></line>
+</svg>
+</div>
+<!-- Bottom Data Readout Ribbon -->
+<div class="bg-slate-900/90 backdrop-blur-md rounded p-2 flex items-center justify-between text-slate-100 font-label-xs text-label-xs shadow-md border border-slate-700">
+<span class="text-blue-300 font-mono tracking-tight" id="hud-latlon">LAT: 27.3892° N • LON: 95.6174° E</span>
+<span class="font-mono text-slate-200">ALT: +142.4m AMSL</span>
+<span class="text-amber-400 font-semibold" id="hud-clock">11:15 IST</span>
+</div>
+</div>
+</div>
+<!-- Ingestion Status Bar -->
+<div class="p-space-md bg-white border-t border-[#e2e8f0] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+<span class="font-label-md text-label-md text-[#334155] font-medium">Photogrammetry Orthomosaic Synced</span>
+</div>
+<button class="px-2.5 py-1 rounded bg-[#f1f5f9] hover:bg-[#e2e8f0] active:scale-95 border border-[#cbd5e1] font-label-xs text-label-xs text-[#0f172a] font-semibold transition-all flex items-center gap-1 group" id="btn-calibrate" onclick="calibrateHudFeedback(this)">
+<span class="material-symbols-outlined text-[14px] group-hover:rotate-90 transition-transform duration-300">tune</span> <span id="calib-label">CALIBRATE HUD</span>
+</button>
+</div>
+</div>
+<!-- Quick Geological Insight Matrix -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-space-md shadow-sm flex flex-col gap-3 hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-[#64748b] uppercase font-semibold">Subsurface Profile (Chainage 42+600 to 42+750)</span>
+<span class="font-label-xs text-label-xs text-[#0037b0] font-semibold">BOREHOLE REF: BH-DGB-09</span>
+</div>
+<div class="w-full bg-[#f8faff] border border-[#e2e8f0] rounded-lg p-3.5 flex flex-col gap-2.5">
+<div class="flex justify-between items-center font-label-xs text-label-xs">
+<span class="text-[#475569] font-medium">Strata Density (Granite-Sandstone Blend)</span>
+<span class="text-[#0f172a] font-bold">2,650 kg/m³</span>
+</div>
+<div class="w-full h-2 bg-[#e2e8f0] rounded-full overflow-hidden">
+<div class="h-full bg-[#0037b0] transition-all duration-1000 ease-out" style="width: 78%"></div>
+</div>
+<div class="flex justify-between items-center text-[#64748b] font-label-xs text-label-xs pt-1">
+<span class="font-medium text-amber-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span> Bucket Refusal Risk: High
+</span>
+<span class="font-medium">RQD: 68% (Fair)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Local Field Dispatch Log Queue -->
+<div class="w-full mt-8 bg-white border border-[#e2e8f0] rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs border-b border-[#edf2f7]">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-[#eff4ff] border border-[#dce1ff] flex items-center justify-center text-[#0037b0]">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-[#0f172a] font-bold tracking-tight">Today's Local Field Dispatch Log Queue</h3>
+<span class="font-label-xs text-label-xs text-[#64748b] font-medium">LOCAL DISPATCH TELEMETRY BUFFER • SHIFT A RECORD MATRIX</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-xs text-label-xs text-[#64748b]" id="table-log-counter">Showing 3 Cached Logs</span>
+<button class="px-3 py-1.5 rounded-lg bg-white border border-[#cbd5e1] hover:bg-[#f1f5f9] active:scale-95 transition-all text-[#334155] font-label-md text-label-md font-medium flex items-center gap-1.5" onclick="this.innerHTML='&lt;span class=\'material-symbols-outlined text-[16px] text-emerald-600\'&gt;check&lt;/span&gt; Exported'; setTimeout(()=&gt;{this.innerHTML='&lt;span class=\'material-symbols-outlined text-[16px] text-[#64748b]\'&gt;file_download&lt;/span&gt; CSV Export'}, 1800);">
+<span class="material-symbols-outlined text-[16px] text-[#64748b]">file_download</span> CSV Export
+        </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-md text-body-md border-collapse">
+<thead>
+<tr class="bg-[#f8faff] text-[#475569] font-label-xs text-label-xs uppercase border-b border-[#e2e8f0]">
+<th class="py-2.5 px-4 font-semibold">Dispatch ID</th>
+<th class="py-2.5 px-4 font-semibold">Chainage / Loc</th>
+<th class="py-2.5 px-4 font-semibold">Logged Work Activity</th>
+<th class="py-2.5 px-4 font-semibold">Mapped P6 Activity</th>
+<th class="py-2.5 px-4 font-semibold">Sync State</th>
+<th class="py-2.5 px-4 text-right font-semibold">Controls</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e2e8f0]" id="dispatch-table-body">
+<!-- Row 1 (Syncable) -->
+<tr class="hover:bg-[#f8faff] transition-colors" id="row-dpr-03">
+<td class="py-3 px-4 font-label-md text-label-md text-[#0f172a]">
+<span class="font-bold text-[#0037b0]">#DPR-8820-03</span>
+<div class="font-label-xs text-label-xs text-[#64748b]">11:15 IST • Audio NLP</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md text-[#334155]">
+              KM 42+650
+              <div class="font-label-xs text-label-xs text-[#64748b]">Digboi Sector A</div>
+</td>
+<td class="py-3 px-4 text-[#0f172a]">
+              Trenching hard rock strata; 2x Komatsu PC300 deployed. 420m laid.
+              <div class="font-label-xs text-label-xs text-emerald-700 font-semibold">Zero HSE Incidents</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md">
+<span class="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-[#0037b0] font-semibold">ACT-TR-4290</span>
+<div class="font-label-xs text-label-xs text-[#64748b] mt-0.5">Trenching Hard Layer</div>
+</td>
+<td class="py-3 px-4 font-label-xs text-label-xs" id="status-cell-03">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+                OFFLINE BUFFER
+              </span>
+</td>
+<td class="py-3 px-4 text-right" id="control-cell-03">
+<div class="inline-flex items-center gap-1.5">
+<button class="p-1 rounded bg-[#f1f5f9] border border-[#cbd5e1] hover:bg-[#e2e8f0] text-[#475569] hover:text-[#0f172a] active:scale-95 transition-all" title="Edit Parameters">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+<button class="p-1 rounded bg-[#0037b0] text-white hover:bg-[#002b8c] active:scale-95 transition-all font-label-xs text-label-xs font-semibold flex items-center gap-1 px-2.5 shadow-sm" id="btn-sync-03" onclick="triggerRowSync(this)" title="Synchronize with EPPM">
+<span class="material-symbols-outlined text-[14px]">cloud_upload</span> <span class="sync-text">SYNC</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#f8faff] transition-colors">
+<td class="py-3 px-4 font-label-md text-label-md text-[#0f172a]">
+<span class="font-bold text-[#0f172a]">#DPR-8820-02</span>
+<div class="font-label-xs text-label-xs text-[#64748b]">09:40 IST • Manual Telemetry</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md text-[#334155]">
+              KM 42+480
+              <div class="font-label-xs text-label-xs text-[#64748b]">Digboi Sector A</div>
+</td>
+<td class="py-3 px-4 text-[#0f172a]">
+              Welding Pass Root + Hot pass complete on Joint #J-118 and #J-119.
+              <div class="font-label-xs text-label-xs text-[#64748b]">Auto-ultrasonic test cleared</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md">
+<span class="px-2 py-0.5 rounded bg-[#f1f5f9] border border-[#cbd5e1] text-[#334155] font-medium">ACT-WLD-1102</span>
+<div class="font-label-xs text-label-xs text-[#64748b] mt-0.5">Pipeline Joint Welding</div>
+</td>
+<td class="py-3 px-4 font-label-xs text-label-xs">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                EPPM COMMITTED
+              </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="p-1.5 rounded bg-[#f1f5f9] border border-[#cbd5e1] hover:bg-[#e2e8f0] text-[#475569] hover:text-[#0f172a] active:scale-95 transition-all" title="View Audit Hash">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#f8faff] transition-colors">
+<td class="py-3 px-4 font-label-md text-label-md text-[#0f172a]">
+<span class="font-bold text-[#0f172a]">#DPR-8820-01</span>
+<div class="font-label-xs text-label-xs text-[#64748b]">07:15 IST • Tool-Box Talk Form</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md text-[#334155]">
+              KM 42+300
+              <div class="font-label-xs text-label-xs text-[#64748b]">Sector A Muster Hub</div>
+</td>
+<td class="py-3 px-4 text-[#0f172a]">
+              Shift A mobilization: 38 personnel logged in, gas monitors calibrated.
+              <div class="font-label-xs text-label-xs text-emerald-700 font-semibold">100% PPE Compliance verified</div>
+</td>
+<td class="py-3 px-4 font-label-md text-label-md">
+<span class="px-2 py-0.5 rounded bg-[#f1f5f9] border border-[#cbd5e1] text-[#334155] font-medium">ACT-HSE-008</span>
+<div class="font-label-xs text-label-xs text-[#64748b] mt-0.5">Pre-Execution Briefing</div>
+</td>
+<td class="py-3 px-4 font-label-xs text-label-xs">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                EPPM COMMITTED
+              </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="p-1.5 rounded bg-[#f1f5f9] border border-[#cbd5e1] hover:bg-[#e2e8f0] text-[#475569] hover:text-[#0f172a] active:scale-95 transition-all" title="View Audit Hash">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Footer Sync Protocol Indicator -->
+<div class="pt-space-sm flex flex-wrap items-center justify-between text-[#64748b] font-label-xs text-label-xs border-t border-[#edf2f7]">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#0037b0]">wifi_off</span>
+        SYSTEM OPERATING IN RESILIENT STORE-AND-FORWARD MODE (OIL-ISDN-EDGE-V2)
+      </span>
+<span class="font-medium text-[#475569]">AUTOMATIC PUSH TRIGGER ON LTE-M / SATELLITE HANDSHAKE</span>
+</div>
+</div>
+</div></main><footer class="w-full bg-white border-t border-[#e2e8f0] py-4 px-8 mt-auto"><div class="flex flex-col md:flex-row items-center justify-between gap-space-sm text-[#64748b] font-label-xs text-label-xs"><div>OIL INDIA LIMITED Upstream Technical Services &amp; Schedule Engineering • Cryptographically Signed</div><div class="flex items-center gap-space-md"><span>VERIFICATION PUBKEY: 0x9AF...D312</span><span>SYSTEM PROTOCOL: AIR-GAP/V2</span><span class="text-emerald-700 font-medium">NODE TELEMETRY NOMINAL</span></div></div></footer></div>
+<!-- Interactive Scripts for Simulation -->
+<script>
+  // 1. Live Audio Timer Increment
+  let seconds = 42;
+  const tickerEl = document.getElementById('rec-ticker');
+  if (tickerEl) {
+    setInterval(() => {
+      seconds++;
+      const mins = Math.floor(seconds / 60);
+      const remSecs = seconds % 60;
+      tickerEl.textContent = `${mins}:${remSecs < 10 ? '0' : ''}${remSecs}s`;
+    }, 1000);
+  }
+
+  // 2. Interactive Buttons Feedback
+  function resetMemoFeedback(btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (icon) icon.classList.add('rotate-180');
+    btn.classList.add('bg-slate-100');
+    setTimeout(() => {
+      if (icon) icon.classList.remove('rotate-180');
+      btn.classList.remove('bg-slate-100');
+    }, 350);
+  }
+
+  function triggerPhotoFlash(btn) {
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[16px] text-emerald-600 animate-bounce">check_circle</span> Geotag Attached`;
+    btn.classList.add('border-emerald-300', 'bg-emerald-50/50');
+    setTimeout(() => {
+      btn.innerHTML = origHtml;
+      btn.classList.remove('border-emerald-300', 'bg-emerald-50/50');
+    }, 2000);
+  }
+
+  function submitToReviewDesk(btn) {
+    const submitText = document.getElementById('submit-text');
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    
+    icon.textContent = 'progress_activity';
+    icon.classList.add('animate-spin');
+    submitText.textContent = 'Analyzing & Parsing...';
+
+    setTimeout(() => {
+      icon.textContent = 'done_all';
+      icon.classList.remove('animate-spin');
+      btn.classList.remove('bg-[#0037b0]', 'hover:bg-[#002b8c]');
+      btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+      submitText.textContent = 'Dispatched to AI Review Desk 1';
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        icon.textContent = 'send';
+        btn.classList.add('bg-[#0037b0]', 'hover:bg-[#002b8c]');
+        btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+        submitText.textContent = 'Direct Submit to AI Review Desk';
+      }, 2500);
+    }, 1200);
+  }
+
+  // 3. Macro Keys Click Interaction
+  function macroClick(btn, title) {
+    btn.classList.add('ring-2', 'ring-[#0037b0]/40', 'bg-blue-50/60');
+    const note = document.createElement('span');
+    note.className = 'text-[10px] font-mono text-[#0037b0] font-bold animate-pulse';
+    note.textContent = 'LOGGED';
+    btn.appendChild(note);
+
+    setTimeout(() => {
+      btn.classList.remove('ring-2', 'ring-[#0037b0]/40', 'bg-blue-50/60');
+      if (note.parentNode === btn) {
+        btn.removeChild(note);
+      }
+    }, 1000);
+  }
+
+  // 4. Optical HUD Calibration Feedback
+  function calibrateHudFeedback(btn) {
+    const label = document.getElementById('calib-label');
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const hudChainage = document.getElementById('hud-chainage');
+    const hudAzimuth = document.getElementById('hud-azimuth');
+
+    label.textContent = 'CALIBRATING...';
+    icon.classList.add('animate-spin');
+    btn.classList.add('bg-blue-50', 'text-[#0037b0]');
+
+    setTimeout(() => {
+      icon.classList.remove('animate-spin');
+      label.textContent = 'CALIBRATED';
+      hudChainage.textContent = 'KM 42+650.04';
+      hudAzimuth.textContent = '184.2° S';
+
+      setTimeout(() => {
+        label.textContent = 'CALIBRATE HUD';
+        btn.classList.remove('bg-blue-50', 'text-[#0037b0]');
+      }, 1800);
+    }, 900);
+  }
+
+  // 5. Local Field Dispatch Sync Trigger
+  function triggerRowSync(btn) {
+    const row = document.getElementById('row-dpr-03');
+    const statusCell = document.getElementById('status-cell-03');
+    const controlCell = document.getElementById('control-cell-03');
+    const counterLabel = document.getElementById('pending-counter-label');
+
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[14px] animate-spin">refresh</span> SYNCING...`;
+    btn.classList.replace('bg-[#0037b0]', 'bg-slate-700');
+
+    setTimeout(() => {
+      // Update sync badge
+      statusCell.innerHTML = `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold animate-fade-in">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+          EPPM COMMITTED
+        </span>
+      `;
+      // Update control button to view state
+      controlCell.innerHTML = `
+        <div class="inline-flex items-center gap-1.5">
+          <button class="p-1.5 rounded bg-[#f1f5f9] border border-[#cbd5e1] hover:bg-[#e2e8f0] text-[#475569] hover:text-[#0f172a] active:scale-95 transition-all" title="View Audit Hash">
+            <span class="material-symbols-outlined text-[16px]">visibility</span>
+          </button>
+        </div>
+      `;
+      // Decrement counter
+      if (counterLabel) {
+        counterLabel.innerHTML = `SQLite: 2 Pending Sync <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>`;
+      }
+    }, 1100);
+  }
+</script>
+</body></html>
