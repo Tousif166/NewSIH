@@ -631,8 +631,8 @@ export const FieldInputCenter: React.FC = () => {
         {/* Right 5 Cols: Geotagged Camera & Drone Telemetry HUD */}
         <div className="xl:col-span-5 flex flex-col gap-6">
           {/* Geotagged Camera / Drone HUD Card */}
-          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs flex flex-col hover:shadow-md transition-shadow">
-            <div className="p-3.5 flex items-center justify-between bg-[#f8faff] border-b border-slate-200">
+          <div className="bg-white border-2 border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-shadow">
+            <div className="p-3.5 flex items-center justify-between bg-[#f8faff] border-b-2 border-slate-200">
               <div className="flex items-center gap-2.5">
                 <span className="material-symbols-outlined text-blue-700 text-[20px]">photo_camera_front</span>
                 <div className="flex flex-col leading-tight">
@@ -644,7 +644,7 @@ export const FieldInputCenter: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <div className="px-3 py-1 rounded bg-[#eff4ff] border border-[#dce1ff] text-[#0037b0] font-mono text-[11px] font-bold flex flex-col items-end leading-tight">
+              <div className="px-3 py-1 rounded-md bg-[#eff4ff] border-2 border-blue-300 text-blue-900 font-mono text-[11px] font-bold flex flex-col items-end leading-tight shadow-2xs">
                 <span>CAM-EX-04A //</span>
                 <span>4K RAW</span>
               </div>
@@ -666,11 +666,11 @@ export const FieldInputCenter: React.FC = () => {
               {/* Crosshairs & HUD Elements */}
               <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-3.5">
                 {/* Top HUD Box */}
-                <div className="bg-[#0b1329]/85 backdrop-blur-xs rounded-lg p-2.5 border border-slate-700/60 shadow-lg flex items-center justify-between text-white font-mono">
+                <div className="bg-[#0b1329]/90 backdrop-blur-xs rounded-lg p-2.5 border-2 border-slate-500/80 shadow-xl flex items-center justify-between text-white font-mono">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
                     <div className="flex flex-col leading-tight">
-                      <span className="text-[10px] text-slate-300 font-bold tracking-wider">
+                      <span className="text-[10px] text-slate-200 font-bold tracking-wider">
                         CHAINAGE: <span className="text-white">KM</span>
                       </span>
                       <span className="text-xs font-bold text-white tracking-wider">
@@ -679,7 +679,7 @@ export const FieldInputCenter: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-start leading-tight pr-2">
-                    <span className="text-[10px] text-slate-300 font-bold tracking-wider">
+                    <span className="text-[10px] text-slate-200 font-bold tracking-wider">
                       AZIMUTH: <span className="text-white">184°</span>
                     </span>
                     <span className="text-xs font-bold text-white tracking-wider">
@@ -700,31 +700,31 @@ export const FieldInputCenter: React.FC = () => {
                 </div>
 
                 {/* Bottom HUD Box */}
-                <div className="bg-[#0b1329]/85 backdrop-blur-xs rounded-lg p-2.5 border border-slate-700/60 shadow-lg flex items-center justify-between text-slate-100 font-mono text-[10px]">
+                <div className="bg-[#0b1329]/90 backdrop-blur-xs rounded-lg p-2.5 border-2 border-slate-500/80 shadow-xl flex items-center justify-between text-slate-100 font-mono text-[10px]">
                   <div className="flex flex-col leading-tight">
-                    <span className="text-blue-300 tracking-tight font-medium">LAT: 27.3892° N •</span>
-                    <span className="text-blue-300 tracking-tight font-medium">LON: 95.6174° E</span>
+                    <span className="text-blue-300 tracking-tight font-bold">LAT: 27.3892° N •</span>
+                    <span className="text-blue-300 tracking-tight font-bold">LON: 95.6174° E</span>
                   </div>
                   <div className="flex flex-col items-start leading-tight">
-                    <span className="text-slate-300 font-medium">ALT:</span>
+                    <span className="text-slate-300 font-bold">ALT:</span>
                     <span className="text-white font-bold tracking-tight">+142.4m</span>
-                    <span className="text-slate-400 text-[9px]">AMSL</span>
+                    <span className="text-slate-300 text-[9px] font-bold">AMSL</span>
                   </div>
                   <div className="flex flex-col items-end leading-tight">
-                    <span className="text-[#facc15] font-bold text-xs tracking-wider">11:15</span>
-                    <span className="text-[#facc15] font-bold text-[10px] tracking-wider">IST</span>
+                    <span className="text-[#facc15] font-extrabold text-xs tracking-wider">11:15</span>
+                    <span className="text-[#facc15] font-extrabold text-[10px] tracking-wider">IST</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Ingestion Status Bar */}
-            <div className="p-3.5 bg-white border-t border-slate-200 flex items-center justify-between">
+            <div className="p-3.5 bg-white border-t-2 border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="material-symbols-outlined text-[20px] text-emerald-600">check_circle</span>
-                <div className="flex flex-col font-mono text-xs text-slate-800 leading-tight">
-                  <span className="font-semibold">Photogrammetry</span>
-                  <span className="font-semibold text-slate-700">Orthomosaic Synced</span>
+                <div className="flex flex-col font-mono text-xs text-slate-900 leading-tight">
+                  <span className="font-bold">Photogrammetry</span>
+                  <span className="font-semibold text-slate-800">Orthomosaic Synced</span>
                 </div>
               </div>
               <button
@@ -734,9 +734,9 @@ export const FieldInputCenter: React.FC = () => {
                   showToast('HUD optical sensors recalibrated to current GPS datum.');
                   setTimeout(() => setCalibrated(false), 2000);
                 }}
-                className="px-3.5 py-1.5 rounded bg-[#f8faff] hover:bg-slate-100 active:scale-95 border border-slate-300 font-mono text-[11px] text-slate-900 font-bold transition-all flex items-center gap-2 group cursor-pointer shadow-xs"
+                className="px-3.5 py-1.5 rounded-md bg-[#f8faff] hover:bg-slate-100 active:scale-95 border-2 border-slate-400 hover:border-slate-600 font-mono text-[11px] text-slate-950 font-bold transition-all flex items-center gap-2 group cursor-pointer shadow-xs"
               >
-                <span className="material-symbols-outlined text-[16px] text-slate-700 group-hover:rotate-90 transition-transform duration-300">
+                <span className="material-symbols-outlined text-[16px] text-slate-800 group-hover:rotate-90 transition-transform duration-300 font-bold">
                   tune
                 </span>
                 <div className="flex flex-col text-left leading-tight">

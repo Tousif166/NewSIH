@@ -30,10 +30,10 @@ export const ProjectDashboard: React.FC = () => {
   return (
     <div className="w-full flex flex-col gap-6">
       {/* 1. Operational Persona Header Bar (Stitch Screen 3) */}
-      <div className="animate-entrance delay-1 flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
+      <div className="animate-entrance delay-1 flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate">
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-12 h-12 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-xs transition-transform duration-300 hover:rotate-6">
+            <div className="w-12 h-12 rounded-lg bg-blue-50 border-2 border-blue-300 flex items-center justify-center text-blue-700 shadow-xs transition-transform duration-300 hover:rotate-6">
               <span className="material-symbols-outlined text-[26px]">shield_person</span>
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-white radar-beacon"></span>
@@ -42,41 +42,41 @@ export const ProjectDashboard: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-bold text-slate-900 text-base">Rajiv K. Sharma</span>
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[10px] font-semibold uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800 border-2 border-slate-300 font-mono text-[10px] font-bold uppercase tracking-wider">
                 CGM — Infrastructure Directorate
               </span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-bold flex items-center gap-1 shadow-xs">
+              <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-900 border-2 border-emerald-400 font-mono text-[10px] font-bold flex items-center gap-1.5 shadow-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 radar-beacon"></span>
                 ACTIVE CLEARANCE TIER-1
               </span>
             </div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 font-mono text-[11px] text-slate-500">
-              <span>CLEARANCE ID: <strong className="text-slate-800">OIL-EXEC-0042-KS</strong></span>
-              <span className="text-slate-300">|</span>
-              <span>REPORT CYCLE: <strong className="text-blue-800">WEEK {scrubberWeek} / OCT 2026</strong></span>
-              <span className="text-slate-300">|</span>
-              <span>BASIS: <strong className="text-slate-700 font-medium">ORACLE EPPM P6.24 LIVE MIRROR</strong></span>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 font-mono text-[11px] text-slate-600 font-medium">
+              <span>CLEARANCE ID: <strong className="text-slate-900 font-bold">OIL-EXEC-0042-KS</strong></span>
+              <span className="text-slate-300 font-bold">|</span>
+              <span>REPORT CYCLE: <strong className="text-blue-900 font-bold">WEEK {scrubberWeek} / OCT 2026</strong></span>
+              <span className="text-slate-300 font-bold">|</span>
+              <span>BASIS: <strong className="text-slate-800 font-bold">ORACLE EPPM P6.24 LIVE MIRROR</strong></span>
             </div>
           </div>
         </div>
 
         {/* Rapid Telemetry Counters */}
         <div className="flex items-center gap-2 overflow-x-auto py-0.5 no-scrollbar">
-          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[110px] transition-all hover:bg-white hover:border-slate-300">
-            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Corridor Length</span>
-            <span className="font-mono text-sm font-bold text-slate-900">132.0 <span className="text-[11px] font-normal text-slate-500">KM</span></span>
+          <div className="flex flex-col px-3 py-1.5 rounded-md bg-slate-50 border-2 border-slate-300 min-w-[110px] transition-all hover:bg-white hover:border-slate-400">
+            <span className="font-mono text-[10px] text-slate-600 uppercase font-bold">Corridor Length</span>
+            <span className="font-mono text-sm font-bold text-slate-900">132.0 <span className="text-[11px] font-semibold text-slate-500">KM</span></span>
           </div>
-          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[125px] transition-all hover:bg-white hover:border-slate-300">
-            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Spread Crews</span>
-            <span className="font-mono text-sm font-bold text-slate-900">4 Spreads / <span className="text-blue-700">680 FTE</span></span>
+          <div className="flex flex-col px-3 py-1.5 rounded-md bg-slate-50 border-2 border-slate-300 min-w-[125px] transition-all hover:bg-white hover:border-slate-400">
+            <span className="font-mono text-[10px] text-slate-600 uppercase font-bold">Spread Crews</span>
+            <span className="font-mono text-sm font-bold text-slate-900">4 Spreads / <span className="text-blue-800 font-bold">680 FTE</span></span>
           </div>
-          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[115px] transition-all hover:bg-white hover:border-slate-300">
-            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">P6 Baseline Rev</span>
-            <span className="font-mono text-sm font-bold text-blue-700">WBS-B4.8 (Q3)</span>
+          <div className="flex flex-col px-3 py-1.5 rounded-md bg-slate-50 border-2 border-slate-300 min-w-[115px] transition-all hover:bg-white hover:border-slate-400">
+            <span className="font-mono text-[10px] text-slate-600 uppercase font-bold">P6 Baseline Rev</span>
+            <span className="font-mono text-sm font-bold text-blue-800">WBS-B4.8 (Q3)</span>
           </div>
-          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[110px] transition-all hover:bg-white hover:border-slate-300">
-            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Block Valve Stns</span>
-            <span className="font-mono text-sm font-bold text-emerald-700">7 / 7 Active</span>
+          <div className="flex flex-col px-3 py-1.5 rounded-md bg-slate-50 border-2 border-slate-300 min-w-[110px] transition-all hover:bg-white hover:border-slate-400">
+            <span className="font-mono text-[10px] text-slate-600 uppercase font-bold">Block Valve Stns</span>
+            <span className="font-mono text-sm font-bold text-emerald-800">7 / 7 Active</span>
           </div>
         </div>
       </div>
@@ -84,87 +84,87 @@ export const ProjectDashboard: React.FC = () => {
       {/* 2. Executive KPI Summary Cards (Grid of 4) */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 animate-entrance delay-2">
         {/* SPI Card */}
-        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+        <div className="flex flex-col justify-between p-4 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate group">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+              <span className="font-mono text-[11px] font-bold text-slate-600 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
                 Schedule Index (SPI)
               </span>
-              <span className="px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
-                <span className="material-symbols-outlined text-[13px]">arrow_downward</span>-0.02 wk
+              <span className="px-2 py-0.5 rounded-md bg-rose-50 border-2 border-rose-300 text-rose-800 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
+                <span className="material-symbols-outlined text-[13px] font-bold">arrow_downward</span>-0.02 wk
               </span>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
               <span className="font-mono text-3xl font-extrabold text-slate-900 tracking-tight">0.94</span>
-              <span className="font-mono text-xs text-rose-600 font-semibold">Critical Path Lag: -4.2d</span>
+              <span className="font-mono text-xs text-rose-700 font-bold">Critical Path Lag: -4.2d</span>
             </div>
           </div>
-          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
-              <span className="material-symbols-outlined text-amber-500 text-[15px]">timer</span>
+          <div className="mt-4 pt-2.5 border-t-2 border-slate-200 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-700 font-mono text-[11px] font-semibold">
+              <span className="material-symbols-outlined text-amber-500 text-[15px] font-bold">timer</span>
               <span>Earned: 61.4% / Plan: 65.3%</span>
             </div>
-            <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold">
+            <span className="px-1.5 py-0.5 rounded bg-rose-100 border border-rose-300 text-rose-900 font-mono text-[10px] font-bold">
               TIE-IN HOLD
             </span>
           </div>
         </div>
 
         {/* CPI Card */}
-        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+        <div className="flex flex-col justify-between p-4 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate group">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+              <span className="font-mono text-[11px] font-bold text-slate-600 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
                 Cost Index (CPI)
               </span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
-                <span className="material-symbols-outlined text-[13px]">arrow_upward</span>+0.01 wk
+              <span className="px-2 py-0.5 rounded-md bg-emerald-50 border-2 border-emerald-300 text-emerald-800 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
+                <span className="material-symbols-outlined text-[13px] font-bold">arrow_upward</span>+0.01 wk
               </span>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
               <span className="font-mono text-3xl font-extrabold text-emerald-700 tracking-tight">1.02</span>
-              <span className="font-mono text-xs text-emerald-600 font-semibold">+$1.40M Favourable</span>
+              <span className="font-mono text-xs text-emerald-700 font-bold">+$1.40M Favourable</span>
             </div>
           </div>
-          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
-              <span className="material-symbols-outlined text-emerald-600 text-[15px]">account_balance_wallet</span>
+          <div className="mt-4 pt-2.5 border-t-2 border-slate-200 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-700 font-mono text-[11px] font-semibold">
+              <span className="material-symbols-outlined text-emerald-600 text-[15px] font-bold">account_balance_wallet</span>
               <span>ACWP: ₹412.8 Cr / BCWP: ₹421.1 Cr</span>
             </div>
-            <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">
+            <span className="px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-900 font-mono text-[10px] font-bold">
               EPC UNDER BUDGET
             </span>
           </div>
         </div>
 
         {/* Milestone Delivery Health */}
-        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+        <div className="flex flex-col justify-between p-4 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate group">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+              <span className="font-mono text-[11px] font-bold text-slate-600 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
                 Milestone Progress
               </span>
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[11px] font-semibold">
+              <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 border-2 border-slate-300 font-mono text-[11px] font-bold">
                 TOTAL: 28
               </span>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
               <span className="font-mono text-3xl font-extrabold text-slate-900 tracking-tight">
-                24<span className="text-slate-400 font-medium text-lg">/28</span>
+                24<span className="text-slate-500 font-medium text-lg">/28</span>
               </span>
-              <span className="font-mono text-xs text-emerald-600 font-semibold">On Track (85.7%)</span>
+              <span className="font-mono text-xs text-emerald-700 font-bold">On Track (85.7%)</span>
             </div>
           </div>
-          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+          <div className="mt-4 pt-2.5 border-t-2 border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="flex items-center gap-1 font-mono text-[11px] text-slate-600">
+              <span className="flex items-center gap-1 font-mono text-[11px] text-slate-700 font-semibold">
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span>24 Done
               </span>
-              <span className="flex items-center gap-1 font-mono text-[11px] text-amber-700">
+              <span className="flex items-center gap-1 font-mono text-[11px] text-amber-800 font-semibold">
                 <span className="w-2 h-2 rounded-full bg-amber-500"></span>3 Risk
               </span>
-              <span className="flex items-center gap-1 font-mono text-[11px] text-rose-700 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>1 Bottleneck
+              <span className="flex items-center gap-1 font-mono text-[11px] text-rose-800 font-bold">
+                <span className="w-2 h-2 rounded-full bg-rose-500"></span>1 Bottleneck
               </span>
             </div>
             <span className="material-symbols-outlined text-slate-400 text-[16px] group-hover:translate-x-1 transition-transform">chevron_right</span>
@@ -172,27 +172,27 @@ export const ProjectDashboard: React.FC = () => {
         </div>
 
         {/* AI Field Telemetry Confidence */}
-        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+        <div className="flex flex-col justify-between p-4 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate group">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+              <span className="font-mono text-[11px] font-bold text-slate-600 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
                 Telemetry Verification
               </span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[10px] font-bold flex items-center gap-1">
-                <span className="material-symbols-outlined text-[13px]">verified</span>TAMPER-PROOF
+              <span className="px-2 py-0.5 rounded-md bg-emerald-50 border-2 border-emerald-300 text-emerald-800 font-mono text-[10px] font-bold flex items-center gap-1">
+                <span className="material-symbols-outlined text-[13px] font-bold">verified</span>TAMPER-PROOF
               </span>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="font-mono text-3xl font-extrabold text-blue-700 tracking-tight">96.8%</span>
-              <span className="font-mono text-xs text-slate-600 font-medium">AI Confidence Score</span>
+              <span className="font-mono text-3xl font-extrabold text-blue-800 tracking-tight">96.8%</span>
+              <span className="font-mono text-xs text-slate-700 font-bold">AI Confidence Score</span>
             </div>
           </div>
-          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
-              <span className="material-symbols-outlined text-blue-600 text-[15px]">dataset</span>
-              <span>142 Field Logs • 0 Ledger Disputes</span>
+          <div className="mt-4 pt-2.5 border-t-2 border-slate-200 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-700 font-mono text-[11px] font-semibold">
+              <span className="material-symbols-outlined text-blue-700 text-[15px] font-bold">dataset</span>
+              <span>142 Field Logs • 0 Disputes</span>
             </div>
-            <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+            <span className="px-1.5 py-0.5 rounded bg-blue-100 border border-blue-300 text-blue-900 font-mono text-[10px] font-bold">
               SYNCD
             </span>
           </div>
@@ -200,50 +200,50 @@ export const ProjectDashboard: React.FC = () => {
       </div>
 
       {/* 3. High-Density Interactive S-Curves Section */}
-      <div className="animate-entrance delay-3 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+      <div className="animate-entrance delay-3 flex flex-col p-5 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b-2 border-slate-200">
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-blue-700 text-[22px]">ssid_chart</span>
               <span className="font-bold text-slate-900 text-base">Earned Value S-Curve Telemetry & P85 Monte Carlo Projection</span>
-              <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] font-bold text-slate-700">10,000 RUNS</span>
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 border-2 border-slate-300 font-mono text-[10px] font-bold text-slate-800">10,000 RUNS</span>
             </div>
-            <span className="text-xs text-slate-500 mt-0.5">Dual-envelope simulation measuring baseline variance against live daily drone surveys and certified weld joints.</span>
+            <span className="text-xs text-slate-600 font-medium mt-0.5">Dual-envelope simulation measuring baseline variance against live daily drone surveys and certified weld joints.</span>
           </div>
 
           {/* Legends & Filter Toggles */}
           <div className="flex flex-wrap items-center gap-3 font-mono text-[11px]">
             <div className="flex items-center gap-1.5">
               <span className="w-4 h-0.5 bg-slate-500 border-dashed border-t-2 border-slate-500"></span>
-              <span className="text-slate-600">P6 Baseline</span>
+              <span className="text-slate-700 font-semibold">P6 Baseline</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-1 rounded bg-blue-600"></span>
-              <span className="text-blue-700 font-bold">Earned Value (Actual: 61.4%)</span>
+              <span className="w-4 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="text-blue-800 font-bold">Earned Value (Actual: 61.4%)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-1 rounded bg-amber-500"></span>
-              <span className="text-amber-700 font-bold">AI {selectedFilter} Forecast (Nov 22, 2026)</span>
+              <span className="w-4 h-1.5 rounded-full bg-amber-500"></span>
+              <span className="text-amber-800 font-bold">AI {selectedFilter} Forecast (Nov 22, 2026)</span>
             </div>
             <div 
               onClick={() => setSelectedFilter(selectedFilter === 'P85' ? 'P95' : selectedFilter === 'P95' ? 'P50' : 'P85')}
-              className="flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer hover:bg-slate-200 active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 border-2 border-slate-300 text-slate-800 font-bold cursor-pointer hover:bg-slate-200 hover:border-slate-400 active:scale-95 transition-all shadow-xs"
             >
-              <span className="material-symbols-outlined text-[13px]">tune</span>
+              <span className="material-symbols-outlined text-[14px]">tune</span>
               <span>{selectedFilter} Active (Click to Cycle)</span>
             </div>
           </div>
         </div>
 
         {/* S-Curve SVG Chart Container */}
-        <div className="relative w-full h-80 bg-slate-50/70 border border-slate-200 rounded-lg p-4 mt-3 flex flex-col justify-between overflow-hidden">
+        <div className="relative w-full h-80 bg-slate-50/80 border-2 border-slate-300 rounded-xl p-4 mt-3 flex flex-col justify-between overflow-hidden shadow-xs">
           {/* Grid Lines */}
           <div className="absolute inset-0 flex flex-col justify-between p-6 pointer-events-none opacity-80">
-            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">100%</span></div>
-            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">75%</span></div>
-            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">50%</span></div>
-            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">25%</span></div>
-            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">0%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-500 font-bold -mt-3.5">100%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-500 font-bold -mt-3.5">75%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-500 font-bold -mt-3.5">50%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-500 font-bold -mt-3.5">25%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-500 font-bold -mt-3.5">0%</span></div>
           </div>
 
           {/* Live SVG Paths */}
@@ -261,7 +261,7 @@ export const ProjectDashboard: React.FC = () => {
               </defs>
 
               {/* P6 Baseline Curve (Dashed Slate) */}
-              <path d="M 40 220 C 200 215, 320 185, 480 120 C 640 55, 800 25, 960 20" fill="none" opacity="0.75" stroke="#64748b" strokeDasharray="6,6" strokeWidth="2.5"></path>
+              <path d="M 40 220 C 200 215, 320 185, 480 120 C 640 55, 800 25, 960 20" fill="none" opacity="0.85" stroke="#475569" strokeDasharray="6,6" strokeWidth="2.5"></path>
 
               {/* Actual Earned Value Area & Path */}
               <path d="M 40 220 C 180 216, 290 192, 420 152 C 455 142, 480 135, 480 135 L 480 220 L 40 220 Z" fill="url(#actualGradientLight)"></path>
@@ -273,10 +273,10 @@ export const ProjectDashboard: React.FC = () => {
 
               {/* Data-Date Vertical Marker */}
               <line 
-                opacity="0.85" 
+                opacity="0.95" 
                 stroke="#d97706" 
-                strokeDasharray="3,3" 
-                strokeWidth="1.75" 
+                strokeDasharray="4,4" 
+                strokeWidth="2" 
                 x1={currentDataX} 
                 x2={currentDataX} 
                 y1="10" 
@@ -285,77 +285,77 @@ export const ProjectDashboard: React.FC = () => {
               />
 
               {/* Milestone Markers */}
-              <circle cx="270" cy="196" fill="#10b981" r="5" stroke="#ffffff" strokeWidth="2" title="HDD River Crossing Cleared" />
-              <circle cx="430" cy="148" fill="#1d4ed8" r="5" stroke="#ffffff" strokeWidth="2" title="Stringing Complete (72km)" />
+              <circle cx="270" cy="196" fill="#10b981" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="HDD River Crossing Cleared" />
+              <circle cx="430" cy="148" fill="#1d4ed8" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="Stringing Complete (72km)" />
               
               {/* Milestone Marker 3: Orbital Tie-in MP 62 Bottleneck Indicator (In-place radial beacon, zero coordinate translation) */}
-              <circle cx="480" cy="135" fill="#ef4444" opacity="0.35" r="7">
+              <circle cx="480" cy="135" fill="#ef4444" opacity="0.4" r="7">
                 <animate attributeName="r" values="7;18;7" dur="2s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" />
               </circle>
-              <circle cx="480" cy="135" fill="#ef4444" r="6.5" stroke="#ffffff" strokeWidth="2.5" className="cursor-pointer" title="MP 62 Tie-in Lag Bottleneck (-4.2d)" />
+              <circle cx="480" cy="135" fill="#ef4444" r="7" stroke="#ffffff" strokeWidth="2.5" className="cursor-pointer" title="MP 62 Tie-in Lag Bottleneck (-4.2d)" />
 
-              <circle cx="710" cy="65" fill="#d97706" r="5" stroke="#ffffff" strokeWidth="2" title="Section 1 Hydrotest" />
+              <circle cx="710" cy="65" fill="#d97706" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="Section 1 Hydrotest" />
             </svg>
 
-            {/* Tooltip Pill */}
+            {/* Tooltip Pill - Bolder border to stand out */}
             <div 
-              className="absolute top-1 -translate-x-1/2 px-2.5 py-1 rounded bg-amber-50 border border-amber-300 text-amber-900 font-mono text-[10px] font-bold shadow-xs z-20 transition-all duration-100 ease-out pointer-events-none"
+              className="absolute top-1 -translate-x-1/2 px-3 py-1 rounded-md bg-amber-50 border-2 border-amber-500 text-amber-950 font-mono text-[11px] font-bold shadow-sm z-20 transition-all duration-100 ease-out pointer-events-none"
               style={{ left: `${Math.min(Math.max(currentBadgePct, 8), 92)}%` }}
             >
               DATA-DATE: 24 OCT 2026 (WEEK {scrubberWeek})
             </div>
 
-            {/* Floating Milestone Badges */}
-            <div className="absolute left-[24%] bottom-14 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-emerald-200 shadow-xs text-emerald-800 font-mono text-[10px] font-semibold hidden md:flex items-center gap-1">
-              <span className="material-symbols-outlined text-[13px] text-emerald-600">done_all</span>
+            {/* Floating Milestone Badges - Bolder borders for crisp text readability */}
+            <div className="absolute left-[24%] bottom-14 px-2.5 py-1 rounded-md bg-white border-2 border-emerald-500 shadow-sm text-emerald-900 font-mono text-[11px] font-bold hidden md:flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[15px] text-emerald-600 font-bold">done_all</span>
               HDD River Crossing Cleared
             </div>
-            <div className="absolute left-[39%] top-20 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-blue-200 shadow-xs text-blue-800 font-mono text-[10px] font-semibold hidden md:flex items-center gap-1">
-              <span className="material-symbols-outlined text-[13px] text-blue-600">check</span>
+            <div className="absolute left-[39%] top-20 px-2.5 py-1 rounded-md bg-white border-2 border-blue-500 shadow-sm text-blue-950 font-mono text-[11px] font-bold hidden md:flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[15px] text-blue-600 font-bold">check</span>
               Stringing Complete (72km)
             </div>
-            <div className="absolute left-[49%] top-14 px-2.5 py-1 rounded bg-rose-50 border border-rose-300 text-rose-800 font-mono text-[10px] font-bold shadow-sm flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer">
-              <span className="material-symbols-outlined text-[14px] text-rose-600">report_problem</span>
+            <div className="absolute left-[49%] top-14 px-3 py-1.5 rounded-md bg-rose-50 border-2 border-rose-500 text-rose-950 font-mono text-[11px] font-bold shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer">
+              <span className="material-symbols-outlined text-[16px] text-rose-600 font-bold">report_problem</span>
               MP 62 Tie-in Lag (-4.2d)
             </div>
-            <div className="absolute left-[70%] top-6 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-amber-200 shadow-xs text-amber-800 font-mono text-[10px] font-semibold hidden lg:flex items-center gap-1">
-              <span className="material-symbols-outlined text-[13px] text-amber-600">schedule</span>
+            <div className="absolute left-[70%] top-6 px-2.5 py-1 rounded-md bg-white border-2 border-amber-500 shadow-sm text-amber-950 font-mono text-[11px] font-bold hidden lg:flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[15px] text-amber-600 font-bold">schedule</span>
               Section 1 Hydrotest (P85: Mar 15)
             </div>
           </div>
 
           {/* Timeline Labels */}
-          <div className="w-full flex justify-between font-mono text-[11px] text-slate-500 pt-2 border-t border-slate-200">
+          <div className="w-full flex justify-between font-mono text-[11px] text-slate-600 font-semibold pt-2.5 border-t-2 border-slate-300">
             <span>OCT '26 (Start)</span>
             <span>DEC '26</span>
             <span>FEB '27</span>
-            <span className="text-blue-700 font-bold">APR '27 (P6 Target)</span>
+            <span className="text-blue-800 font-bold">APR '27 (P6 Target)</span>
             <span>JUN '27</span>
             <span>AUG '27</span>
-            <span className="text-amber-700 font-bold">NOV '27 (AI {selectedFilter} Forecast)</span>
+            <span className="text-amber-800 font-bold">NOV '27 (AI {selectedFilter} Forecast)</span>
           </div>
         </div>
 
         {/* Date Range Interactive Scrubber */}
-        <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+        <div className="mt-3.5 flex flex-col md:flex-row items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-xl border-2 border-slate-300 shadow-xs">
           <div className="flex items-center gap-3 w-full md:w-2/3">
-            <span className="font-mono text-[10px] text-slate-500 uppercase font-bold whitespace-nowrap">Time Scrubber</span>
+            <span className="font-mono text-[11px] text-slate-700 uppercase font-bold whitespace-nowrap">Time Scrubber</span>
             <input 
               type="range" 
               min={1} 
               max={60} 
               value={scrubberWeek}
               onChange={(e) => setScrubberWeek(Number(e.target.value))}
-              className="w-full accent-blue-600 bg-slate-200 rounded h-1.5 cursor-pointer"
+              className="w-full accent-blue-600 bg-slate-200 rounded h-2 cursor-pointer"
             />
-            <span className="font-mono text-xs text-blue-800 font-bold whitespace-nowrap px-2 py-0.5 bg-blue-50 border border-blue-200 rounded">
+            <span className="font-mono text-xs text-blue-900 font-bold whitespace-nowrap px-2.5 py-1 bg-blue-50 border-2 border-blue-400 rounded-md shadow-2xs">
               Week {scrubberWeek} / 60
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] text-slate-600">AI Delay Dampening:</span>
-            <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-bold">
+            <span className="font-mono text-[11px] text-slate-700 font-semibold">AI Delay Dampening:</span>
+            <span className="px-2.5 py-1 rounded-md bg-emerald-50 border-2 border-emerald-400 font-mono text-[11px] text-emerald-900 font-bold shadow-2xs">
               +1.8d Buffer Recovery
             </span>
           </div>
@@ -365,17 +365,17 @@ export const ProjectDashboard: React.FC = () => {
       {/* 4. Critical Path Corridor Risk Heatmap & Key Machinery Deployment */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 animate-entrance delay-4">
         {/* Pipeline Corridor Risk Heatmap (8 Cols) */}
-        <div className="xl:col-span-8 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+        <div className="xl:col-span-8 flex flex-col p-5 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate">
+          <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200 mb-3">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-blue-700 text-[20px]">linear_scale</span>
               <span className="font-bold text-slate-900 text-sm">Pipeline Corridor Risk Heatmap (132 KM)</span>
             </div>
-            <span className="font-mono text-[10px] text-slate-500 font-semibold uppercase">5 Technical Sectors</span>
+            <span className="font-mono text-[10px] text-slate-600 font-bold uppercase">5 Technical Sectors</span>
           </div>
 
           {/* Visual Heatmap Track */}
-          <div className="w-full grid grid-cols-12 h-3.5 rounded overflow-hidden mb-4 border border-slate-200 shadow-inner bg-slate-100">
+          <div className="w-full grid grid-cols-12 h-3.5 rounded overflow-hidden mb-4 border-2 border-slate-300 shadow-inner bg-slate-100">
             <div className="col-span-3 bg-emerald-500" title="MP 0-30: Nominal"></div>
             <div className="col-span-3 bg-rose-500 relative" title="MP 30-65: Critical Bottleneck">
               <span className="absolute inset-0 bg-white/20 animate-pulse"></span>
@@ -387,155 +387,155 @@ export const ProjectDashboard: React.FC = () => {
 
           {/* Segment Details with Corridor Pictures */}
           <div className="flex flex-col gap-2.5">
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-2 border-slate-300 bg-white hover:bg-slate-50 transition-colors gap-3 cursor-pointer shadow-xs">
               <div className="flex items-center gap-3">
                 <img
                   src="/images/uav-corridor-ortho.jpg"
                   alt="Milepost 0-30 Digboi Corridor"
-                  className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  className="w-14 h-12 rounded object-cover border-2 border-slate-300 shrink-0 shadow-2xs"
                 />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
                     <span className="font-mono text-xs font-bold text-slate-900">Milepost 00.0 → 30.0 (Digboi Terminal Origin)</span>
                   </div>
-                  <span className="text-xs text-slate-600 mt-0.5">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
+                  <span className="text-xs text-slate-700 font-medium mt-0.5">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
-                  <span className="text-emerald-700 font-bold">+2.0 Days Float</span>
-                  <span className="text-slate-500 text-[10px]">Progress: 98.4%</span>
+                  <span className="text-emerald-800 font-bold">+2.0 Days Float</span>
+                  <span className="text-slate-600 font-medium text-[10px]">Progress: 98.4%</span>
                 </div>
-                <span className="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold">OPTIMAL</span>
+                <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 border-2 border-emerald-400 text-emerald-900 font-bold">OPTIMAL</span>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-l-4 border-l-rose-500 border border-rose-200 bg-rose-50/40 hover:bg-rose-50 transition-colors gap-3 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-l-4 border-l-rose-600 border-2 border-rose-300 bg-rose-50/50 hover:bg-rose-50 transition-colors gap-3 cursor-pointer shadow-xs">
               <div className="flex items-center gap-3">
                 <img
                   src="/images/pipeline-drone-4k.jpg"
                   alt="Milepost 30-65 Burhi Dihing Basin"
-                  className="w-14 h-12 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
+                  className="w-14 h-12 rounded object-cover border-2 border-rose-300 shrink-0 shadow-2xs"
                 />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping shrink-0"></span>
+                    <span className="w-2 h-2 rounded-full bg-rose-600 shrink-0 animate-pulse"></span>
                     <span className="font-mono text-xs font-bold text-rose-950">Milepost 30.0 → 65.0 (Burhi Dihing Basin)</span>
-                    <span className="px-1.5 py-0.2 rounded bg-rose-600 text-white font-mono text-[9px] font-bold shadow-xs">CRITICAL PATH</span>
+                    <span className="px-2 py-0.5 rounded bg-rose-600 text-white font-mono text-[9px] font-bold shadow-xs">CRITICAL PATH</span>
                   </div>
-                  <span className="text-xs text-slate-700 mt-0.5">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
+                  <span className="text-xs text-slate-800 font-medium mt-0.5">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
-                  <span className="text-rose-700 font-bold">-4.2 Days Slip</span>
-                  <span className="text-slate-500 text-[10px]">Progress: 52.1%</span>
+                  <span className="text-rose-800 font-bold">-4.2 Days Slip</span>
+                  <span className="text-slate-600 font-medium text-[10px]">Progress: 52.1%</span>
                 </div>
-                <span className="px-2.5 py-0.5 rounded bg-rose-100 border border-rose-200 text-rose-800 font-bold">BOTTLENECK</span>
+                <span className="px-2.5 py-0.5 rounded-md bg-rose-100 border-2 border-rose-400 text-rose-900 font-bold">BOTTLENECK</span>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-2 border-slate-300 bg-white hover:bg-slate-50 transition-colors gap-3 cursor-pointer shadow-xs">
               <div className="flex items-center gap-3">
                 <img
                   src="/images/dry-haul-survey.jpg"
                   alt="Milepost 65-100 Tea Garden Corridor"
-                  className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  className="w-14 h-12 rounded object-cover border-2 border-slate-300 shrink-0 shadow-2xs"
                 />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
                     <span className="font-mono text-xs font-bold text-slate-900">Milepost 65.0 → 100.0 (Tea Garden Reserve Corridor)</span>
                   </div>
-                  <span className="text-xs text-slate-600 mt-0.5">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
+                  <span className="text-xs text-slate-700 font-medium mt-0.5">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
-                  <span className="text-amber-700 font-bold">0.0d Float (Amber)</span>
-                  <span className="text-slate-500 text-[10px]">Progress: 64.8%</span>
+                  <span className="text-amber-800 font-bold">0.0d Float (Amber)</span>
+                  <span className="text-slate-600 font-medium text-[10px]">Progress: 64.8%</span>
                 </div>
-                <span className="px-2.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 font-bold">WEATHER WATCH</span>
+                <span className="px-2.5 py-0.5 rounded-md bg-amber-50 border-2 border-amber-400 text-amber-900 font-bold">WEATHER WATCH</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Machinery Deployment Status with Pictures (4 Cols) */}
-        <div className="xl:col-span-4 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs justify-between hover-elevate">
+        <div className="xl:col-span-4 flex flex-col p-5 rounded-xl bg-white border-2 border-slate-300 shadow-sm justify-between hover-elevate">
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+            <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200 mb-3">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-blue-700 text-[20px]">precision_manufacturing</span>
                 <span className="font-bold text-slate-900 text-sm">Key Machinery Live Status</span>
               </div>
-              <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] font-bold text-slate-700">TELEMETRY</span>
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 border-2 border-slate-300 font-mono text-[10px] font-bold text-slate-800">TELEMETRY</span>
             </div>
 
             <div className="flex flex-col gap-2.5">
               {/* Machine 1: Komatsu PC300 with Photo */}
-              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col gap-2">
+              <div className="p-3 rounded-lg border-2 border-slate-300 bg-slate-50 flex flex-col gap-2 shadow-2xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
                       src="/images/pipeline-ortho-survey.jpg"
                       alt="Komatsu PC300 Excavator"
-                      className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                      className="w-10 h-9 rounded object-cover border-2 border-slate-300 shrink-0 shadow-2xs"
                     />
                     <div className="flex flex-col">
                       <span className="font-mono text-xs font-bold text-slate-900">Komatsu PC300-8M0</span>
-                      <span className="font-mono text-[10px] text-slate-500">HE-04 • SPREAD 2</span>
+                      <span className="font-mono text-[10px] text-slate-600 font-medium">HE-04 • SPREAD 2</span>
                     </div>
                   </div>
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">92% UTIL</span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-100 border border-emerald-300 text-emerald-900 font-mono text-[10px] font-bold">92% UTIL</span>
                 </div>
-                <span className="text-xs text-slate-600">Assigned: Rock Trenching KM 42+650. Ripper attachment engaged.</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
+                <span className="text-xs text-slate-700 font-medium">Assigned: Rock Trenching KM 42+650. Ripper attachment engaged.</span>
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mt-0.5 border border-slate-300">
                   <div className="bg-emerald-600 h-full rounded-full" style={{ width: '92%' }}></div>
                 </div>
               </div>
 
               {/* Machine 2: CRC-Evans M-300 with Photo */}
-              <div className="p-3 rounded-lg border border-rose-200 bg-rose-50/40 flex flex-col gap-2">
+              <div className="p-3 rounded-lg border-2 border-rose-300 bg-rose-50/50 flex flex-col gap-2 shadow-2xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
                       src="/images/ndt-film-scan.jpg"
                       alt="CRC-Evans Orbital Welding Rig"
-                      className="w-10 h-9 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
+                      className="w-10 h-9 rounded object-cover border-2 border-rose-300 shrink-0 shadow-2xs"
                     />
                     <div className="flex flex-col">
                       <span className="font-mono text-xs font-bold text-slate-900">CRC-Evans M-300 System</span>
-                      <span className="font-mono text-[10px] text-rose-800">AUTOMATIC ORBITAL WELD</span>
+                      <span className="font-mono text-[10px] text-rose-800 font-bold">AUTOMATIC ORBITAL WELD</span>
                     </div>
                   </div>
-                  <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold animate-pulse">CALIBRATION REQ</span>
+                  <span className="px-2 py-0.5 rounded-md bg-rose-100 border border-rose-400 text-rose-900 font-mono text-[10px] font-bold">CALIBRATION REQ</span>
                 </div>
-                <span className="text-xs text-slate-600">Assigned: MP 62 Mainline Tie-in. Root-pass weld drift detected (0.4mm).</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
+                <span className="text-xs text-slate-700 font-medium">Assigned: MP 62 Mainline Tie-in. Root-pass weld drift detected (0.4mm).</span>
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mt-0.5 border border-slate-300">
                   <div className="bg-rose-500 h-full rounded-full" style={{ width: '38%' }}></div>
                 </div>
               </div>
 
               {/* Machine 3: Herrenknecht HDD with Photo */}
-              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col gap-2">
+              <div className="p-3 rounded-lg border-2 border-slate-300 bg-slate-50 flex flex-col gap-2 shadow-2xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
                       src="/images/pipeline-drone-4k.jpg"
                       alt="Herrenknecht HK250 HDD Rig"
-                      className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                      className="w-10 h-9 rounded object-cover border-2 border-slate-300 shrink-0 shadow-2xs"
                     />
                     <div className="flex flex-col">
                       <span className="font-mono text-xs font-bold text-slate-900">Herrenknecht HK250 Rig</span>
-                      <span className="font-mono text-[10px] text-slate-500">HDD RIVER CROSSING</span>
+                      <span className="font-mono text-[10px] text-slate-600 font-medium">HDD RIVER CROSSING</span>
                     </div>
                   </div>
-                  <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">100% STANDBY</span>
+                  <span className="px-2 py-0.5 rounded-md bg-blue-100 border border-blue-300 text-blue-900 font-mono text-[10px] font-bold">100% STANDBY</span>
                 </div>
-                <span className="text-xs text-slate-600">Assigned: Burhi Dihing Crossing #2. Pilot bore completed successfully.</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
+                <span className="text-xs text-slate-700 font-medium">Assigned: Burhi Dihing Crossing #2. Pilot bore completed successfully.</span>
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mt-0.5 border border-slate-300">
                   <div className="bg-blue-600 h-full rounded-full" style={{ width: '100%' }}></div>
                 </div>
               </div>
@@ -545,18 +545,18 @@ export const ProjectDashboard: React.FC = () => {
       </div>
 
       {/* 5. Contractor Variance & Commercial Compliance Table */}
-      <div className="animate-entrance delay-4 p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+      <div className="animate-entrance delay-4 p-5 rounded-xl bg-white border-2 border-slate-300 shadow-sm hover-elevate">
+        <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200 mb-3">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-blue-700 text-[20px]">engineering</span>
             <span className="font-bold text-slate-900 text-sm">Contractor Schedule Variance & Commercial Compliance</span>
           </div>
-          <span className="font-mono text-[11px] text-slate-500">Oracle Contract Baseline v4.8</span>
+          <span className="font-mono text-[11px] text-slate-700 font-bold px-2 py-0.5 rounded bg-slate-100 border border-slate-300">Oracle Contract Baseline v4.8</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
-            <thead className="bg-slate-50 text-slate-500 uppercase border-b border-slate-200 text-[10px]">
+            <thead className="bg-slate-100 text-slate-700 uppercase border-b-2 border-slate-300 text-[10px] font-bold">
               <tr>
                 <th className="py-2.5 px-3">Contractor EPC Agency</th>
                 <th className="py-2.5 px-3">Scope Sector</th>
@@ -567,29 +567,29 @@ export const ProjectDashboard: React.FC = () => {
                 <th className="py-2.5 px-3">Compliance Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
+            <tbody className="divide-y-2 divide-slate-200 text-slate-700">
               <tr className="hover:bg-slate-50 transition-colors">
                 <td className="py-3 px-3 font-bold text-slate-900 font-sans">Larsen & Toubro Hydrocarbon</td>
                 <td className="py-3 px-3">Spread 1 (MP 0-30)</td>
-                <td className="py-3 px-3 text-emerald-700 font-bold">1.04</td>
-                <td className="py-3 px-3 text-emerald-700">+1.8d Float</td>
+                <td className="py-3 px-3 text-emerald-800 font-bold">1.04</td>
+                <td className="py-3 px-3 text-emerald-800 font-semibold">+1.8d Float</td>
                 <td className="py-3 px-3 font-bold">₹184.2 Cr</td>
-                <td className="py-3 px-3 text-emerald-700 font-bold">0 Active</td>
+                <td className="py-3 px-3 text-emerald-800 font-bold">0 Active</td>
                 <td className="py-3 px-3">
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-900 border-2 border-emerald-400 font-bold text-[10px]">
                     NOMINAL
                   </span>
                 </td>
               </tr>
-              <tr className="hover:bg-slate-50 transition-colors bg-rose-50/30">
+              <tr className="hover:bg-slate-50 transition-colors bg-rose-50/40">
                 <td className="py-3 px-3 font-bold text-rose-950 font-sans">Punj Lloyd Pipeline Div</td>
                 <td className="py-3 px-3">Spread 2 (MP 30-65)</td>
-                <td className="py-3 px-3 text-rose-700 font-bold">0.88</td>
-                <td className="py-3 px-3 text-rose-700 font-bold">-4.2d Slip</td>
+                <td className="py-3 px-3 text-rose-800 font-bold">0.88</td>
+                <td className="py-3 px-3 text-rose-800 font-bold">-4.2d Slip</td>
                 <td className="py-3 px-3 font-bold">₹142.6 Cr</td>
-                <td className="py-3 px-3 text-rose-700 font-bold">2 Claims</td>
+                <td className="py-3 px-3 text-rose-800 font-bold">2 Claims</td>
                 <td className="py-3 px-3">
-                  <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 font-bold text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-900 border-2 border-rose-400 font-bold text-[10px]">
                     ROOT PASS DRIFT
                   </span>
                 </td>
@@ -597,12 +597,12 @@ export const ProjectDashboard: React.FC = () => {
               <tr className="hover:bg-slate-50 transition-colors">
                 <td className="py-3 px-3 font-bold text-slate-900 font-sans">Kalpataru Projects Intl</td>
                 <td className="py-3 px-3">Spread 3 (MP 65-100)</td>
-                <td className="py-3 px-3 text-amber-700 font-bold">0.99</td>
-                <td className="py-3 px-3 text-amber-700">-0.4d Float</td>
+                <td className="py-3 px-3 text-amber-800 font-bold">0.99</td>
+                <td className="py-3 px-3 text-amber-800 font-semibold">-0.4d Float</td>
                 <td className="py-3 px-3 font-bold">₹94.0 Cr</td>
-                <td className="py-3 px-3 text-emerald-700 font-bold">0 Active</td>
+                <td className="py-3 px-3 text-emerald-800 font-bold">0 Active</td>
                 <td className="py-3 px-3">
-                  <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-md bg-amber-50 text-amber-900 border-2 border-amber-400 font-bold text-[10px]">
                     WEATHER CAUTION
                   </span>
                 </td>

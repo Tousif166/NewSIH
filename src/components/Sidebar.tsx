@@ -121,7 +121,7 @@ export const Sidebar: React.FC = () => {
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-col">
         {/* Workspace Brand Badge */}
-        <div className="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
+        <div className="p-4 flex flex-col gap-1 border-b-2 border-slate-200 bg-slate-50/70">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-sm transition-transform hover:scale-105 duration-200">
@@ -129,33 +129,33 @@ export const Sidebar: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-slate-900 text-sm tracking-tight leading-snug uppercase">OIL / SITESYNC</span>
-                <span className="font-mono text-[10px] text-slate-500 font-semibold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
+                <span className="font-mono text-[10px] text-slate-600 font-bold tracking-wide">ENTERPRISE RUNTIME v4.8</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-semibold transition-colors">
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-900 border-2 border-emerald-400 font-mono text-[10px] font-bold transition-colors shadow-2xs">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 radar-beacon"></span>
               P6 LIVE
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-slate-200/80 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+          <div className="mt-2 pt-2 border-t-2 border-slate-200 flex items-center justify-between text-slate-600 font-mono text-[10px] font-medium">
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px] text-slate-400">hub</span>
+              <span className="material-symbols-outlined text-[12px] text-slate-500 font-bold">hub</span>
               NODE-AS04 // SECURE
             </span>
-            <span className="text-blue-700 font-semibold">ORACLE EPPM SYNCED</span>
+            <span className="text-blue-800 font-bold">ORACLE EPPM SYNCED</span>
           </div>
         </div>
 
         {/* Active Persona Strip */}
-        <div className="px-3.5 py-2.5 bg-blue-50/40 border-b border-slate-200 flex items-center justify-between">
+        <div className="px-3.5 py-2.5 bg-blue-50/50 border-b-2 border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="material-symbols-outlined text-[16px] text-blue-700">shield_person</span>
+            <span className="material-symbols-outlined text-[16px] text-blue-700 font-bold">shield_person</span>
             <div className="flex flex-col min-w-0">
               <span className="text-[11px] font-bold text-slate-900 truncate">{roleMetadata.label}</span>
-              <span className="text-[10px] text-slate-500 font-mono truncate">{roleMetadata.shortLabel} Clearance</span>
+              <span className="text-[10px] text-slate-600 font-mono truncate font-medium">{roleMetadata.shortLabel} Clearance</span>
             </div>
           </div>
-          <span className="px-1.5 py-0.5 rounded bg-white text-blue-800 border border-blue-200 font-mono text-[9px] font-bold shrink-0">
+          <span className="px-2 py-0.5 rounded-md bg-white text-blue-900 border-2 border-blue-300 font-mono text-[9px] font-bold shrink-0 shadow-2xs">
             {roleMetadata.badge}
           </span>
         </div>
@@ -204,17 +204,17 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Footer Security Badge & User Info */}
-      <div className="flex flex-col border-t border-slate-200">
-        <div className="p-3 bg-slate-50 flex items-center justify-between border-b border-slate-200">
+      <div className="flex flex-col border-t-2 border-slate-300">
+        <div className="p-3 bg-slate-50 flex items-center justify-between border-b-2 border-slate-200">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-slate-200 border border-slate-300 text-slate-800 flex items-center justify-center font-bold text-[11px]">
+            <div className="w-7 h-7 rounded-full bg-slate-200 border-2 border-slate-400 text-slate-800 flex items-center justify-center font-bold text-[11px]">
               {currentUser?.name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'PS'}
             </div>
             <div className="flex flex-col">
-              <span className="font-mono text-[11px] font-bold text-slate-800 truncate max-w-[120px]">
+              <span className="font-mono text-[11px] font-bold text-slate-900 truncate max-w-[120px]">
                 {currentUser?.name || 'Pranjal Saikia'}
               </span>
-              <span className="font-mono text-[9px] text-slate-500">
+              <span className="font-mono text-[9px] text-slate-600 font-medium">
                 {currentUser?.employeeId || 'OIL-PLN-4421'}
               </span>
             </div>
@@ -229,12 +229,12 @@ export const Sidebar: React.FC = () => {
           </button>
         </div>
 
-        <div className="p-3 bg-slate-50/50 flex flex-col gap-0.5">
-          <div className="flex items-center justify-between font-mono text-[10px] text-slate-500">
+        <div className="p-3 bg-slate-50/70 flex flex-col gap-0.5">
+          <div className="flex items-center justify-between font-mono text-[10px] text-slate-600 font-medium">
             <span>SECURITY LEVEL</span>
-            <span className="text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">IL-5 RESTRICTED</span>
+            <span className="text-blue-900 font-bold bg-blue-50 px-2 py-0.5 rounded-md border-2 border-blue-300 shadow-2xs">IL-5 RESTRICTED</span>
           </div>
-          <div className="font-mono text-[10px] text-slate-600 truncate mt-0.5">
+          <div className="font-mono text-[10px] text-slate-700 font-semibold truncate mt-0.5">
             SEAL: OIL-EXP-994821
           </div>
         </div>
@@ -245,16 +245,16 @@ export const Sidebar: React.FC = () => {
   return (
     <>
       {/* Desktop Persistent Sidebar (matches Stitch layout) */}
-      <aside className="hidden md:flex md:w-72 bg-white border-r border-slate-200 fixed left-0 top-0 h-full z-50 flex-col justify-between overflow-y-auto shadow-xs">
+      <aside className="hidden md:flex md:w-72 bg-white border-r-2 border-slate-300 fixed left-0 top-0 h-full z-50 flex-col justify-between overflow-y-auto shadow-xs">
         {renderNavContent()}
       </aside>
 
       {/* Mobile Slide-Over Drawer */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden bg-slate-900/60 backdrop-blur-xs flex">
-          <div className="w-72 max-w-[85vw] bg-white border-r border-slate-200 h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
-            <div className="p-3 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-              <span className="font-bold text-slate-800 text-xs font-mono uppercase">NAVIGATION WORKSPACE</span>
+          <div className="w-72 max-w-[85vw] bg-white border-r-2 border-slate-300 h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
+            <div className="p-3 border-b-2 border-slate-200 flex items-center justify-between bg-slate-50">
+              <span className="font-bold text-slate-900 text-xs font-mono uppercase">NAVIGATION WORKSPACE</span>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-1 rounded text-slate-500 hover:text-slate-900"
