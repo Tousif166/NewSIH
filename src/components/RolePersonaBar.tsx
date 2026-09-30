@@ -66,21 +66,21 @@ export const RolePersonaBar: React.FC = () => {
   ];
 
   return (
-    <div className={`border-b-2 transition-all duration-300 ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
+    <div className={`border-b transition-all duration-300 ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
       <div className="max-w-[1700px] mx-auto px-3 sm:px-4 py-2">
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           {/* Left: Active Persona Identifier */}
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className={`p-1.5 rounded-lg border-2 ${roleMetadata.borderColor} bg-white shadow-2xs shrink-0 flex items-center justify-center`}>
+            <div className={`p-1.5 rounded-lg border ${roleMetadata.borderColor} bg-white shadow-2xs shrink-0 flex items-center justify-center`}>
               {getRoleIcon(currentRole)}
             </div>
 
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-bold text-slate-900 tracking-tight flex items-center gap-1.5 font-display">
+                <span className="text-xs font-semibold text-slate-900 tracking-tight flex items-center gap-1.5 font-display">
                   <span>{roleMetadata.label}</span>
                 </span>
-                <span className={`text-[10px] uppercase font-mono px-2 py-0.5 rounded-full font-bold border-2 ${roleMetadata.borderColor} ${roleMetadata.color} bg-white shadow-2xs`}>
+                <span className={`text-[10px] uppercase font-mono px-2 py-0.5 rounded-full font-semibold border ${roleMetadata.borderColor} ${roleMetadata.color} bg-white shadow-2xs`}>
                   {roleMetadata.badge}
                 </span>
                 <span className="text-[11px] text-slate-600 hidden md:inline truncate font-mono font-medium">
@@ -96,7 +96,7 @@ export const RolePersonaBar: React.FC = () => {
             {activeTab !== roleMetadata.defaultTab && (
               <button
                 onClick={() => setActiveTab(roleMetadata.defaultTab)}
-                className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border-2 ${roleMetadata.borderColor} bg-white hover:bg-slate-50 ${roleMetadata.color} flex items-center gap-1 transition-all active:scale-95 shadow-2xs cursor-pointer`}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border ${roleMetadata.borderColor} bg-white hover:bg-slate-50 ${roleMetadata.color} flex items-center gap-1 transition-all active:scale-95 shadow-2xs cursor-pointer`}
                 title={`Open primary workspace for ${roleMetadata.label}`}
               >
                 <span>Open {roleMetadata.shortLabel} Desk</span>
@@ -105,7 +105,7 @@ export const RolePersonaBar: React.FC = () => {
             )}
 
             {/* Quick Role Switch Pills */}
-            <div className="hidden sm:flex items-center gap-1 bg-white p-0.5 rounded-lg border-2 border-slate-300 shadow-2xs">
+            <div className="hidden sm:flex items-center gap-1 bg-white p-0.5 rounded-lg border border-slate-200 shadow-2xs">
               {rolesList.map(r => {
                 const isActive = currentRole === r.id;
                 return (
@@ -114,7 +114,7 @@ export const RolePersonaBar: React.FC = () => {
                     onClick={() => setCurrentRole(r.id)}
                     className={`px-2 py-1 rounded text-[11px] font-medium transition-all flex items-center gap-1 cursor-pointer ${
                       isActive
-                        ? `${r.bg} ${r.color} font-bold shadow-2xs ring-1 ${r.border}`
+                        ? `${r.bg} ${r.color} font-semibold shadow-2xs ring-1 ${r.border}`
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
@@ -128,7 +128,7 @@ export const RolePersonaBar: React.FC = () => {
             {/* Toggle Info Details */}
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded border-2 border-slate-300 transition-colors cursor-pointer"
+              className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded border border-slate-200 transition-colors cursor-pointer"
               title="View Role Persona Permissions & Responsibilities"
             >
               {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -138,26 +138,26 @@ export const RolePersonaBar: React.FC = () => {
 
         {/* Collapsible Details: Permissions & Authority Breakdown */}
         {isExpanded && (
-          <div className="mt-2.5 pt-2.5 border-t-2 border-slate-300 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs animate-fadeIn">
+          <div className="mt-2.5 pt-2.5 border-t border-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs animate-fadeIn">
             {rolesList.map(r => {
               const isSelected = currentRole === r.id;
               return (
                 <div
                   key={r.id}
                   onClick={() => setCurrentRole(r.id)}
-                  className={`p-2.5 rounded-lg border-2 transition-all cursor-pointer ${
+                  className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                     isSelected 
                       ? `${r.bg} ${r.border} ring-1 ring-blue-500/30 shadow-xs` 
-                      : 'bg-white border-slate-300 hover:border-slate-400 opacity-90 hover:opacity-100'
+                      : 'bg-white border-slate-200 hover:border-slate-300 opacity-90 hover:opacity-100'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-1 mb-1">
-                    <div className="flex items-center gap-1.5 font-bold text-slate-900 text-[11px]">
+                    <div className="flex items-center gap-1.5 font-semibold text-slate-900 text-[11px]">
                       {r.icon}
                       <span>{r.label}</span>
                     </div>
                     {isSelected && (
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-900 font-mono font-bold border-2 border-emerald-400">
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-900 font-mono font-semibold border border-emerald-300">
                         ACTIVE
                       </span>
                     )}
@@ -168,7 +168,7 @@ export const RolePersonaBar: React.FC = () => {
                     {r.id === 'project_manager' && 'Executive health S-curves, critical path delay attribution & What-If Monte Carlo simulation.'}
                     {r.id === 'admin' && 'Cryptographic SHA-256 hash provenance, anti-tamper vigilance audit & activity DNA.'}
                   </p>
-                  <div className="text-[10px] font-bold text-slate-800 flex items-center justify-between">
+                  <div className="text-[10px] font-semibold text-slate-800 flex items-center justify-between">
                     <span className={`flex items-center gap-1 ${r.color}`}>
                       {isSelected ? (
                         <>

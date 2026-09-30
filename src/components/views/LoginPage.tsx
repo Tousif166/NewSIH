@@ -195,7 +195,7 @@ export const LoginPage: React.FC = () => {
             <Radio className="w-3.5 h-3.5 text-blue-600 animate-pulse shrink-0" />
             <span>Oil India Enterprise Access & Ground-Truth Portal</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
             From Field Information to Trusted Schedule Progress —{' '}
             <span className="text-blue-700">Automatically.</span>
           </h1>

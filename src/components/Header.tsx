@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b-2 border-slate-300 z-40 px-4 sm:px-6 flex items-center justify-between shadow-xs">
+    <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-4 sm:px-6 flex items-center justify-between shadow-xs">
       <div className="flex items-center gap-3 sm:gap-5 min-w-0">
         {/* Mobile Hamburger Button */}
         <button
@@ -53,25 +53,25 @@ export const Header: React.FC = () => {
             <span className="font-bold text-slate-900 text-sm sm:text-base tracking-tight truncate">
               {activeProject.name || 'Digboi–Duliajan 132km Crude Trunkline'}
             </span>
-            <span className="px-2.5 py-0.5 rounded-md bg-slate-100 border-2 border-slate-300 font-mono text-[10px] sm:text-[11px] font-bold text-slate-800 hover:bg-slate-200 transition-colors shrink-0">
+            <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-300 font-mono text-[10px] sm:text-[11px] font-semibold text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
               WBS-REV-4.8
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-2 sm:gap-3 font-mono text-[11px] text-slate-500 truncate">
-            <span className="truncate font-semibold text-slate-600">PIPELINE REINFORCEMENT SEGMENT 04-A</span>
-            <span className="text-slate-300 font-bold">•</span>
-            <span className="text-slate-700 font-semibold shrink-0">LAT: 27.3805° N, 95.3182° E</span>
+            <span className="truncate font-medium text-slate-600">PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+            <span className="text-slate-300">•</span>
+            <span className="text-slate-600 font-medium shrink-0">LAT: 27.3805° N, 95.3182° E</span>
           </div>
         </div>
 
         {/* Live Network & Ledger Validation Telemetry */}
-        <div className="hidden xl:flex items-center gap-2.5 pl-4 border-l-2 border-slate-300 font-mono text-[11px] shrink-0">
-          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-900 border-2 border-emerald-300 font-bold shadow-2xs">
+        <div className="hidden xl:flex items-center gap-2.5 pl-4 border-l border-slate-200 font-mono text-[11px] shrink-0">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold shadow-2xs">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 radar-beacon"></span>
             18ms LATENCY
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-900 border-2 border-blue-300 font-bold shadow-2xs">
-            <span className="material-symbols-outlined text-[13px] font-bold">lock</span>
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-blue-50 text-blue-800 border border-blue-200 font-semibold shadow-2xs">
+            <span className="material-symbols-outlined text-[13px]">lock</span>
             LEDGER VALIDATED
           </div>
         </div>
@@ -86,10 +86,10 @@ export const Header: React.FC = () => {
             setIsOnline(nextOnline);
             if (nextOnline && offlineQueue.length > 0) syncOfflineQueue();
           }}
-          className={`hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono border-2 transition-all font-bold ${
+          className={`hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono border transition-all font-semibold ${
             isOnline 
-              ? 'bg-emerald-50 border-emerald-300 text-emerald-900' 
-              : 'bg-rose-50 border-rose-400 text-rose-900 animate-pulse'
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
+              : 'bg-rose-50 border-rose-300 text-rose-800 animate-pulse'
           }`}
           title="Simulate network connectivity & offline queue"
         >
@@ -107,28 +107,28 @@ export const Header: React.FC = () => {
         {/* AI Copilot Toggle */}
         <button
           onClick={() => setIsCopilotOpen(!isCopilotOpen)}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-mono text-xs font-bold border-2 transition-all ${
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border transition-all ${
             isCopilotOpen 
-              ? 'bg-blue-700 text-white border-blue-900 shadow-sm' 
-              : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50 shadow-2xs'
+              ? 'bg-blue-700 text-white border-blue-800 shadow-sm' 
+              : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 shadow-2xs'
           }`}
           title="Open AI Project Copilot"
         >
-          <span className="material-symbols-outlined text-[16px] text-blue-600 font-bold">psychology</span>
+          <span className="material-symbols-outlined text-[16px] text-blue-600">psychology</span>
           <span className="hidden lg:inline text-[11px]">Copilot</span>
         </button>
 
         {/* Operator Pill with Role Switcher Dropdown */}
-        <div className="relative flex items-center gap-1.5 sm:gap-2 bg-slate-50 border-2 border-slate-300 px-2.5 sm:px-3 py-1.5 rounded-md text-left hover:bg-slate-100/80 transition-colors shadow-2xs">
-          <span className="material-symbols-outlined text-slate-600 text-[18px]">switch_account</span>
+        <div className="relative flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-md text-left hover:bg-slate-100/80 transition-colors shadow-2xs">
+          <span className="material-symbols-outlined text-slate-500 text-[18px]">switch_account</span>
           <div className="flex flex-col">
-            <span className="font-mono text-[11px] font-bold text-slate-900 leading-tight">
+            <span className="font-mono text-[11px] font-bold text-slate-800 leading-tight">
               {currentUser?.name || 'Pranjal Saikia'}
             </span>
             <select
               value={currentRole}
               onChange={(e) => setCurrentRole(e.target.value as UserRole)}
-              className="font-mono text-[10px] text-slate-700 bg-transparent border-0 p-0 focus:outline-none cursor-pointer leading-tight font-bold"
+              className="font-mono text-[10px] text-slate-600 bg-transparent border-0 p-0 focus:outline-none cursor-pointer leading-tight font-semibold"
               aria-label="Select Active Persona"
             >
               <option value="planner">Chief Eng (Planner)</option>
@@ -142,17 +142,17 @@ export const Header: React.FC = () => {
         {/* Export Audit PKG Button */}
         <button
           onClick={handleExportAudit}
-          className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border-2 border-slate-300 text-slate-800 hover:bg-slate-50 font-mono text-xs font-bold shadow-2xs transition-all active:scale-95 cursor-pointer"
+          className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-mono text-xs font-semibold shadow-2xs transition-all active:scale-95 cursor-pointer"
           type="button"
         >
-          <span className="material-symbols-outlined text-[16px] text-slate-600">inventory_2</span>
+          <span className="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
           <span>Export Audit PKG</span>
         </button>
 
         {/* Commit to P6 Button */}
         <button
           onClick={handleCommitP6}
-          className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-bold shadow-xs btn-tactile cursor-pointer"
+          className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs btn-tactile cursor-pointer"
           type="button"
         >
           <span className="material-symbols-outlined text-[16px]">cloud_upload</span>
@@ -162,7 +162,7 @@ export const Header: React.FC = () => {
         {/* User Avatar Circle */}
         <div 
           onClick={logout}
-          className="w-8 h-8 rounded-full bg-slate-200 border-2 border-slate-400 text-slate-800 flex items-center justify-center font-bold text-xs hover:ring-2 hover:ring-blue-500/30 transition-all cursor-pointer shrink-0"
+          className="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-800 flex items-center justify-center font-bold text-xs hover:ring-2 hover:ring-blue-500/30 transition-all cursor-pointer shrink-0"
           title="Click to Sign Out"
         >
           {currentUser?.name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'PS'}
