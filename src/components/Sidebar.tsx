@@ -106,12 +106,12 @@ export const Sidebar: React.FC = () => {
           setActiveTab(item.tab);
           setIsMobileMenuOpen(false);
         }}
-        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
+        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
           isActive
-            ? 'bg-slate-800 text-white border-l-2 border-amber-400 shadow-sm'
+            ? 'bg-amber-500/15 text-amber-300 font-bold border-l-2 border-amber-500 shadow-xs'
             : isPrimaryDesk
-            ? 'text-slate-200 hover:text-white bg-slate-800/40 border border-amber-500/20'
-            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+            ? 'text-slate-200 hover:text-white bg-slate-900/60 border border-amber-500/20'
+            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/80'
         }`}
       >
         <div className="flex items-center gap-2.5 min-w-0">
@@ -145,12 +145,15 @@ export const Sidebar: React.FC = () => {
           </span>
         </div>
         <div className="flex items-center justify-between gap-1.5">
-          <div className="text-xs font-bold text-white flex items-center gap-1.5 truncate">
-            <span>{roleMetadata.emoji}</span>
+          <div className="text-xs font-bold text-white flex items-center gap-2 truncate">
+            {currentRole === 'planner' && <Compass className="w-4 h-4 text-emerald-400 shrink-0" />}
+            {currentRole === 'supervisor' && <HardHat className="w-4 h-4 text-amber-400 shrink-0" />}
+            {currentRole === 'project_manager' && <Briefcase className="w-4 h-4 text-sky-400 shrink-0" />}
+            {currentRole === 'admin' && <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />}
             <span className="truncate">{roleMetadata.label}</span>
           </div>
         </div>
-        <div className="text-[10px] text-slate-400 mt-1 line-clamp-1">
+        <div className="text-[10px] text-slate-400 mt-1 line-clamp-1 font-mono">
           {roleMetadata.authority}
         </div>
       </div>
@@ -215,14 +218,14 @@ export const Sidebar: React.FC = () => {
   return (
     <>
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex md:w-64 bg-slate-900 border-r border-slate-800 flex-col shrink-0 min-h-[calc(100vh-61px)]">
+      <aside className="hidden md:flex md:w-64 bg-[#0B0F19] border-r border-slate-800/90 flex-col shrink-0 min-h-[calc(100vh-61px)]">
         {renderNavContent()}
       </aside>
 
       {/* Mobile Slide-Over Drawer */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden bg-black/70 backdrop-blur-xs flex">
-          <div className="w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
+          <div className="w-72 max-w-[85vw] bg-[#0B0F19] border-r border-slate-800 h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
             <div className="p-3 border-b border-slate-800 flex items-center justify-between bg-slate-950">
               <span className="font-bold text-white text-xs font-mono">ALL MODULES</span>
               <button

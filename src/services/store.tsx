@@ -71,7 +71,7 @@ export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
     label: 'Project Planner',
     shortLabel: 'Planner',
     badge: 'Controls & Baseline',
-    emoji: '📐',
+    emoji: '',
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10',
     borderColor: 'border-emerald-500/40',
@@ -90,7 +90,7 @@ export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
     label: 'Site Supervisor',
     shortLabel: 'Supervisor',
     badge: 'Field Operations',
-    emoji: '👷',
+    emoji: '',
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/10',
     borderColor: 'border-amber-500/40',
@@ -109,7 +109,7 @@ export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
     label: 'Project Manager',
     shortLabel: 'Project Manager',
     badge: 'Executive Oversight',
-    emoji: '👔',
+    emoji: '',
     color: 'text-sky-400',
     bgColor: 'bg-sky-500/10',
     borderColor: 'border-sky-500/40',
@@ -128,7 +128,7 @@ export const ROLE_DEFINITIONS: Record<UserRole, RoleDefinition> = {
     label: 'System Admin',
     shortLabel: 'System Admin',
     badge: 'Vigilance & Security',
-    emoji: '🛡️',
+    emoji: '',
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/10',
     borderColor: 'border-purple-500/40',
@@ -436,7 +436,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setActiveTab(meta.defaultTab);
     }
     if (meta) {
-      showToast(`${meta.emoji} Switched to ${meta.label} mode — ${meta.description}`);
+      showToast(`Active Persona: ${meta.label} — ${meta.description}`);
     }
   };
 
@@ -489,7 +489,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const conflict = detectProgressConflict(targetAct, newEvent, fieldEvents);
         if (conflict) {
           setConflicts(prev => [conflict, ...prev]);
-          showToast(`⚠️ Conflict detected on ${targetAct.activityCode}: Discrepant progress reports flagged for review.`);
+          showToast(`Conflict detected on ${targetAct.activityCode}: Discrepant progress reports flagged for review.`);
         }
 
         // Temporal check

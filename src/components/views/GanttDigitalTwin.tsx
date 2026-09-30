@@ -136,7 +136,10 @@ export const GanttDigitalTwin: React.FC = () => {
       {/* Mobile Swipe Hint */}
       <div className="md:hidden flex items-center justify-between bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-mono">
         <span>Timeline Canvas</span>
-        <span className="text-amber-400 font-semibold">👉 Swipe horizontally to view full dates</span>
+        <span className="text-amber-400 font-semibold flex items-center gap-1">
+          <span>Scroll horizontally</span>
+          <ArrowRight className="w-3 h-3" />
+        </span>
       </div>
 
       {/* Gantt Timeline Canvas */}

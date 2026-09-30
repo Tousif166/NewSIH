@@ -60,9 +60,11 @@ export const AuditTrailView: React.FC = () => {
           : 'bg-slate-900 border-slate-800 text-slate-300'
       }`}>
         <div className="flex items-center gap-2.5">
-          <span className="text-xl">🛡️</span>
+          <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
           <div>
-            <span className="font-bold text-white">Vigilance & Provenance Console: </span>
+            <span className="font-bold text-white font-display">Vigilance & Provenance Console: </span>
             {currentRole === 'admin' ? (
               <span className="text-purple-300 font-semibold">System Admin (Full SHA-256 Hash Chain Verification & Anti-Tamper Audit Authority)</span>
             ) : (
@@ -72,7 +74,7 @@ export const AuditTrailView: React.FC = () => {
         </div>
         {currentRole === 'admin' ? (
           <button
-            onClick={() => showToast('🛡️ Cryptographic SHA-256 Check Passed: 100% data provenance verified across all Oil India schedule actuals.')}
+            onClick={() => showToast('Cryptographic SHA-256 Check Passed: 100% data provenance verified across all Oil India schedule actuals.')}
             className="text-[11px] px-3 py-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg hover:bg-emerald-500 hover:text-slate-950 font-bold transition-all shrink-0 self-start sm:self-auto flex items-center gap-1.5 cursor-pointer"
           >
             <CheckCircle2 className="w-3.5 h-3.5" />

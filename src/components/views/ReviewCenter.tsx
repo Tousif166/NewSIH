@@ -16,7 +16,9 @@ import {
   UserCheck,
   ChevronDown,
   ChevronUp,
-  Lock
+  Lock,
+  HardHat,
+  ShieldCheck
 } from 'lucide-react';
 
 export const ReviewCenter: React.FC = () => {
@@ -86,9 +88,11 @@ export const ReviewCenter: React.FC = () => {
       {currentRole === 'supervisor' ? (
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-200">
           <div className="flex items-start sm:items-center gap-2.5">
-            <span className="text-xl">👷</span>
+            <div className="p-2 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400">
+              <HardHat className="w-5 h-5" />
+            </div>
             <div>
-              <div className="font-bold text-white flex items-center gap-1.5">
+              <div className="font-bold text-white flex items-center gap-1.5 font-display">
                 <span>Site Supervisor Persona (Field Submissions View)</span>
                 <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">READ-ONLY AUDIT</span>
               </div>
@@ -108,7 +112,7 @@ export const ReviewCenter: React.FC = () => {
       ) : (
         <div className={`p-2.5 px-3.5 rounded-xl border flex items-center justify-between gap-2 text-xs ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
           <div className="flex items-center gap-2">
-            <span className="text-base">{roleMetadata.emoji}</span>
+            <ShieldCheck className={`w-4 h-4 ${roleMetadata.color}`} />
             <span className="font-semibold text-white">{roleMetadata.label}:</span>
             <span className={roleMetadata.color}>{roleMetadata.authority}</span>
           </div>

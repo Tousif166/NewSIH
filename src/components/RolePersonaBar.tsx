@@ -80,8 +80,7 @@ export const RolePersonaBar: React.FC = () => {
 
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-bold text-white tracking-tight flex items-center gap-1.5">
-                  <span>{roleMetadata.emoji}</span>
+                <span className="text-xs font-bold text-white tracking-tight flex items-center gap-1.5 font-display">
                   <span>{roleMetadata.label}</span>
                 </span>
                 <span className={`text-[10px] uppercase font-mono px-2 py-0.5 rounded-full font-bold border ${roleMetadata.borderColor} ${roleMetadata.color} bg-slate-950/80`}>
@@ -173,8 +172,15 @@ export const RolePersonaBar: React.FC = () => {
                     {r.id === 'admin' && 'Cryptographic SHA-256 hash provenance, anti-tamper vigilance audit & activity DNA.'}
                   </p>
                   <div className="text-[10px] font-semibold text-slate-300 flex items-center justify-between">
-                    <span className={r.color}>
-                      {isSelected ? '✓ Current Persona' : 'Click to Switch Persona'}
+                    <span className={`flex items-center gap-1 ${r.color}`}>
+                      {isSelected ? (
+                        <>
+                          <Check className="w-3 h-3" />
+                          <span>Active Persona</span>
+                        </>
+                      ) : (
+                        <span>Click to Switch Persona</span>
+                      )}
                     </span>
                     <ChevronRight className="w-3 h-3 text-slate-500" />
                   </div>

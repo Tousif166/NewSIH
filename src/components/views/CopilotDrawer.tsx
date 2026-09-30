@@ -9,7 +9,11 @@ import {
   ArrowRight, 
   CornerDownRight, 
   HelpCircle,
-  Clock
+  Clock,
+  Search,
+  AlertTriangle,
+  Calendar,
+  Users
 } from 'lucide-react';
 import { queryProjectCopilot } from '../../services/aiEngine';
 
@@ -110,27 +114,31 @@ export const CopilotDrawer: React.FC = () => {
       <div className="p-2.5 sm:p-3 bg-slate-950/60 border-b border-slate-800/80 overflow-x-auto no-scrollbar flex gap-2 shrink-0">
         <button
           onClick={() => handleSend('Which activities are delayed?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 whitespace-nowrap transition-colors"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
         >
-          🔍 Which activities are delayed?
+          <Search className="w-3 h-3 text-sky-400" />
+          <span>Which activities are delayed?</span>
         </button>
         <button
           onClick={() => handleSend('Show conflicting progress reports')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 whitespace-nowrap transition-colors"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
         >
-          ⚠️ Show conflicts
+          <AlertTriangle className="w-3 h-3 text-amber-400" />
+          <span>Show conflicts</span>
         </button>
         <button
           onClick={() => handleSend('What changed since yesterday?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 whitespace-nowrap transition-colors"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
         >
-          📅 What changed yesterday?
+          <Calendar className="w-3 h-3 text-emerald-400" />
+          <span>What changed yesterday?</span>
         </button>
         <button
           onClick={() => handleSend('Which contractor has the largest schedule variance?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 whitespace-nowrap transition-colors"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
         >
-          👷 Contractor variance
+          <Users className="w-3 h-3 text-purple-400" />
+          <span>Contractor variance</span>
         </button>
       </div>
 

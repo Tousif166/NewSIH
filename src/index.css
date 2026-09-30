@@ -2,20 +2,54 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    
+    --color-obsidian: #090D14;
+    --color-charcoal: #0E1422;
+    --color-panel: #121929;
+    --color-panel-hover: #172136;
+    --color-titanium: rgba(255, 255, 255, 0.08);
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #0b0f19;
-    color: #f1f5f9;
+    background-color: var(--color-obsidian);
+    color: #e2e8f0;
     -webkit-tap-highlight-color: transparent;
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 
   button, a, input, select, textarea {
     touch-action: manipulation;
   }
+}
+
+/* Obsidian Command Industrial Utilities */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.border-titanium {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.bg-obsidian {
+  background-color: #090D14;
+}
+
+.bg-charcoal {
+  background-color: #0E1422;
+}
+
+.bg-telemetry {
+  background-color: #121929;
 }
 
 /* Safe area utilities for modern mobile browsers (iOS notch & Android bar) */

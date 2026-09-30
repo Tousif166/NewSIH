@@ -75,11 +75,11 @@ export const JudgeDemoWalkthrough: React.FC = () => {
       actionLabel: 'Inspect in AI Review Center',
       targetTab: 'REVIEW_CENTER',
       explanation: [
-        '✓ 12-inch dimension exactly matches schedule specification.',
-        '✓ Spool / erection technical terminology matches L6 scope.',
-        '✓ Compressor area matches plant physical location (Area 04).',
-        '✓ Predecessor foundation F-102 verified complete in previous shift.',
-        '✓ High confidence (>=90%) generates strong auto-recommendation for planner sign-off.'
+        '12-inch dimension exactly matches schedule specification.',
+        'Spool / erection technical terminology matches L6 scope.',
+        'Compressor area matches plant physical location (Area 04).',
+        'Predecessor foundation F-102 verified complete in previous shift.',
+        'High confidence (>=90%) generates strong auto-recommendation for planner sign-off.'
       ]
     },
     {

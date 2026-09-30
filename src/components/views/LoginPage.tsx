@@ -104,11 +104,11 @@ export const LoginPage: React.FC = () => {
     }
   ];
 
-  const quickSelectLabels: Record<UserRole, { icon: string; name: string; tag: string }> = {
-    planner: { icon: '📐', name: 'Pranjal', tag: 'Controls' },
-    supervisor: { icon: '👷', name: 'Debashis', tag: 'Field Ops' },
-    project_manager: { icon: '👔', name: 'Rajiv', tag: 'Executive' },
-    admin: { icon: '🛡️', name: 'Dr. Ananya', tag: 'Vigilance' },
+  const quickSelectLabels: Record<UserRole, { icon: React.ReactNode; name: string; tag: string }> = {
+    planner: { icon: <Compass className="w-3.5 h-3.5 text-emerald-400" />, name: 'Pranjal', tag: 'Controls & Baseline' },
+    supervisor: { icon: <HardHat className="w-3.5 h-3.5 text-amber-400" />, name: 'Debashis', tag: 'Field Execution' },
+    project_manager: { icon: <Briefcase className="w-3.5 h-3.5 text-sky-400" />, name: 'Rajiv', tag: 'Executive Oversight' },
+    admin: { icon: <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />, name: 'Dr. Ananya', tag: 'Vigilance & Audit' },
   };
 
   // Quick switch role prefill

@@ -15,7 +15,9 @@ import {
   TrendingUp,
   FileSpreadsheet,
   Check,
-  Search
+  Search,
+  MapPin,
+  HardHat
 } from 'lucide-react';
 import { ActivityLevel, ScheduleActivity } from '../../types';
 
@@ -245,9 +247,9 @@ export const ScheduleExplorer: React.FC = () => {
                 <h2 className="text-base font-bold text-white">
                   {selectedActivity.name}
                 </h2>
-                <div className="text-xs text-slate-400 mt-1 flex items-center gap-3">
-                  <span>📍 {selectedActivity.location}</span>
-                  <span>👷 {selectedActivity.responsibleContractor}</span>
+                <div className="text-xs text-slate-400 mt-1.5 flex flex-wrap items-center gap-4 font-mono">
+                  <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {selectedActivity.location}</span>
+                  <span className="flex items-center gap-1.5"><HardHat className="w-3.5 h-3.5 text-amber-400" /> {selectedActivity.responsibleContractor}</span>
                 </div>
               </div>
 

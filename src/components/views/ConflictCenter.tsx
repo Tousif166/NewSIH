@@ -11,7 +11,8 @@ import {
   Scale, 
   Check, 
   X,
-  ChevronRight
+  ChevronRight,
+  Lock
 } from 'lucide-react';
 import { DataConflict } from '../../types';
 
@@ -70,9 +71,11 @@ export const ConflictCenter: React.FC = () => {
           : 'bg-amber-500/10 border-amber-500/30 text-amber-200'
       }`}>
         <div className="flex items-center gap-2.5">
-          <span className="text-xl">⚖️</span>
+          <div className="p-1.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/30">
+            <Scale className="w-4 h-4" />
+          </div>
           <div>
-            <span className="font-bold text-white">Dispute Adjudication Authority: </span>
+            <span className="font-bold text-white font-display">Dispute Adjudication Authority: </span>
             {currentRole === 'project_manager' ? (
               <span className="text-sky-300 font-semibold">Project Manager (Executive Binding Resolution Authority)</span>
             ) : currentRole === 'planner' ? (
@@ -252,25 +255,27 @@ export const ConflictCenter: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setResolutionChoice('SOURCE_1')}
-                        className={`p-2.5 rounded-lg border text-left transition-all ${
+                        className={`p-2.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
                           resolutionChoice === 'SOURCE_1'
                             ? 'bg-amber-500/10 border-amber-400 text-amber-300 font-semibold'
                             : 'bg-slate-900 border-slate-800 text-slate-400'
                         }`}
                       >
-                        ✓ Accept Source 1 ({activeConflict.sources[0]?.reportedValue})
+                        <Check className="w-3.5 h-3.5 shrink-0" />
+                        <span>Accept Source 1 ({activeConflict.sources[0]?.reportedValue})</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setResolutionChoice('SOURCE_2')}
-                        className={`p-2.5 rounded-lg border text-left transition-all ${
+                        className={`p-2.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
                           resolutionChoice === 'SOURCE_2'
                             ? 'bg-sky-500/10 border-sky-400 text-sky-300 font-semibold'
                             : 'bg-slate-900 border-slate-800 text-slate-400'
                         }`}
                       >
-                        ✓ Accept Source 2 ({activeConflict.sources[1]?.reportedValue || 'Alternative'})
+                        <Check className="w-3.5 h-3.5 shrink-0" />
+                        <span>Accept Source 2 ({activeConflict.sources[1]?.reportedValue || 'Alternative'})</span>
                       </button>
                     </div>
                   </div>
@@ -291,7 +296,8 @@ export const ConflictCenter: React.FC = () => {
                       onClick={() => setCurrentRole('project_manager')}
                       className="w-full py-2.5 rounded-lg bg-slate-800 border border-amber-500/50 text-amber-300 hover:bg-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98 cursor-pointer"
                     >
-                      <span>🔒 Requires PM Authority (Click to Switch to Project Manager & Adjudicate)</span>
+                      <Lock className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Requires PM Authority (Click to Switch to Project Manager & Adjudicate)</span>
                     </button>
                   ) : (
                     <button

@@ -16,7 +16,9 @@ import {
   RefreshCw,
   Eye,
   Image as ImageIcon,
-  CheckCircle2
+  CheckCircle2,
+  Radio,
+  FileSpreadsheet
 } from 'lucide-react';
 
 export const FieldInputCenter: React.FC = () => {
@@ -189,17 +191,19 @@ export const FieldInputCenter: React.FC = () => {
       </div>
 
       {/* Persona Mode Banner */}
-      <div className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
+      <div className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
         currentRole === 'supervisor'
           ? 'bg-amber-500/10 border-amber-500/30 text-amber-200'
-          : 'bg-slate-900 border-slate-800 text-slate-300'
+          : 'bg-[#0E1422] border-slate-800 text-slate-300'
       }`}>
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">👷</span>
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 shadow-sm shrink-0">
+            <HardHat className="w-5 h-5 text-amber-400" />
+          </div>
           <div>
-            <span className="font-bold text-white">Active Field Reporter: </span>
+            <span className="font-bold text-white font-display">Active Field Reporter: </span>
             {currentRole === 'supervisor' ? (
-              <span className="text-amber-300 font-semibold">Site Supervisor (Field Mobile App Active — Voice, Camera & Offline Queue Enabled)</span>
+              <span className="text-amber-300 font-semibold">Site Supervisor (Field Mobile Telemetry Active • Voice, Camera & Offline SQLite Queue)</span>
             ) : (
               <span>Testing Field Ingestion as <span className="font-semibold capitalize text-amber-400">{currentRole.replace('_', ' ')}</span></span>
             )}
@@ -208,7 +212,7 @@ export const FieldInputCenter: React.FC = () => {
         {currentRole !== 'supervisor' && (
           <button
             onClick={() => setCurrentRole('supervisor')}
-            className="text-[11px] px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500 hover:text-slate-950 font-semibold transition-all shrink-0 self-start sm:self-auto"
+            className="text-[11px] px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500 hover:text-slate-950 font-bold transition-all shrink-0 self-start sm:self-auto cursor-pointer"
           >
             Switch to Site Supervisor
           </button>
@@ -329,26 +333,29 @@ export const FieldInputCenter: React.FC = () => {
               {/* Quick Preset Samples for Hackathon Demo / Field Supervisor Presets */}
               <div className="mt-6 pt-4 border-t border-slate-800/80 px-3 sm:px-4">
                 <span className="text-[11px] font-mono uppercase text-slate-400 block mb-2 font-semibold text-center sm:text-left">
-                  Or 1-Tap Preset Supervisor Field Logs:
+                  Preset Field Dispatch Telemetry:
                 </span>
                 <div className="overflow-x-auto no-scrollbar flex items-center gap-2 pb-1 sm:flex-wrap sm:justify-start">
                   <button
                     onClick={() => handleStopVoice('12 inch spool erected near compressor section today. Around 18 meters completed between 9:00 AM and 4:30 PM.')}
-                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-300 transition-colors text-left shrink-0 active:scale-95"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900/90 hover:bg-slate-850 border border-slate-800 text-amber-300 transition-colors text-left shrink-0 active:scale-95 flex items-center gap-2"
                   >
-                    🎙️ Piping: "12-in spool erected near compressor (18m)..."
+                    <span className="px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] font-mono font-bold text-amber-400">PIPING</span>
+                    <span>12-in spool near compressor (18m)...</span>
                   </button>
                   <button
                     onClick={() => handleStopVoice('Electrical cable tray installation in unit two started this morning. 30 meters fixed before rain stoppage.')}
-                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sky-300 transition-colors text-left shrink-0 active:scale-95"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900/90 hover:bg-slate-850 border border-slate-800 text-sky-300 transition-colors text-left shrink-0 active:scale-95 flex items-center gap-2"
                   >
-                    🎙️ Electrical: "Unit 2 cable tray (30m fixed)..."
+                    <span className="px-1.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/30 text-[10px] font-mono font-bold text-sky-400">ELECTRICAL</span>
+                    <span>Unit 2 cable tray (30m fixed)...</span>
                   </button>
                   <button
                     onClick={() => handleStopVoice('Concrete pouring for foundation F-102 completed at 17:00. Batching plant delivered 75 m3 grade M35 concrete.')}
-                    className="text-xs px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-300 transition-colors text-left shrink-0 active:scale-95"
+                    className="text-xs px-3 py-2 rounded-lg bg-slate-900/90 hover:bg-slate-850 border border-slate-800 text-emerald-300 transition-colors text-left shrink-0 active:scale-95 flex items-center gap-2"
                   >
-                    🎙️ Civil: "Foundation F-102 poured (75 m3)..."
+                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-bold text-emerald-400">CIVIL</span>
+                    <span>Foundation F-102 poured (75 m3)...</span>
                   </button>
                 </div>
               </div>
@@ -359,17 +366,18 @@ export const FieldInputCenter: React.FC = () => {
         {/* DPR / FILE MODE */}
         {activeMode === 'DPR' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-5 sm:p-8 text-center bg-slate-950/60 transition-colors">
+            <div className="border border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-5 sm:p-8 text-center bg-slate-950/70 transition-colors">
               <UploadCloud className="w-10 h-10 text-emerald-400 mx-auto mb-2" />
-              <div className="text-sm font-semibold text-white">Upload Daily Progress Report (DPR) or Site Diary</div>
+              <div className="text-sm font-semibold text-white font-display">Upload Daily Progress Report (DPR) or Site Diary</div>
               <p className="text-xs text-slate-400 mt-1">Supports PDF, DOCX, TXT, Scanned TIFF, and Excel (.xlsx, .csv)</p>
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
                   onClick={() => setTextInput('DPR Ref OIL-DPR-2026-09-28:\n1. Area 04 GCU: Foundation F-102 concreting finished at 17:00 hrs. 75 m3 poured.\n2. Piping Area 04: 12-inch suction line spool erection ongoing. 18m erected today.\n3. Electrical: Trench cable tray mounting held due to afternoon monsoon precipitation.')}
-                  className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-mono border border-slate-700 active:scale-95"
+                  className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-emerald-300 text-xs font-mono border border-emerald-500/30 active:scale-95 flex items-center gap-2 transition-all shadow-sm"
                 >
-                  📄 Load Sample DPR (OIL-DPR-28Sep.pdf)
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Load Sample DPR: OIL-DPR-28Sep.pdf</span>
                 </button>
               </div>
             </div>
