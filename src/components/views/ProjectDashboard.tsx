@@ -361,17 +361,24 @@ export const ProjectDashboard: React.FC = () => {
             <div className="col-span-1 bg-slate-300" title="MP 120-132: Survey Staging"></div>
           </div>
 
-          {/* Segment Details */}
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-2 cursor-pointer">
+          {/* Segment Details with Corridor Pictures */}
+          <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+                <img
+                  src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=300"
+                  alt="Milepost 0-30 Digboi Corridor"
+                  className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                />
                 <div className="flex flex-col">
-                  <span className="font-mono text-xs font-bold text-slate-900">Milepost 00.0 → 30.0 (Digboi Terminal Origin)</span>
-                  <span className="text-xs text-slate-600">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                    <span className="font-mono text-xs font-bold text-slate-900">Milepost 00.0 → 30.0 (Digboi Terminal Origin)</span>
+                  </div>
+                  <span className="text-xs text-slate-600 mt-0.5">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
                   <span className="text-emerald-700 font-bold">+2.0 Days Float</span>
                   <span className="text-slate-500 text-[10px]">Progress: 98.4%</span>
@@ -380,18 +387,23 @@ export const ProjectDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border-l-4 border-l-rose-500 border border-rose-200 bg-rose-50/40 hover:bg-rose-50 transition-colors gap-2 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-l-4 border-l-rose-500 border border-rose-200 bg-rose-50/40 hover:bg-rose-50 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-600 animate-ping shrink-0"></span>
+                <img
+                  src="https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&q=80&w=300"
+                  alt="Milepost 30-65 Burhi Dihing Basin"
+                  className="w-14 h-12 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
+                />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping shrink-0"></span>
                     <span className="font-mono text-xs font-bold text-rose-950">Milepost 30.0 → 65.0 (Burhi Dihing Basin)</span>
                     <span className="px-1.5 py-0.2 rounded bg-rose-600 text-white font-mono text-[9px] font-bold shadow-xs">CRITICAL PATH</span>
                   </div>
-                  <span className="text-xs text-slate-700">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
+                  <span className="text-xs text-slate-700 mt-0.5">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
                   <span className="text-rose-700 font-bold">-4.2 Days Slip</span>
                   <span className="text-slate-500 text-[10px]">Progress: 52.1%</span>
@@ -400,15 +412,22 @@ export const ProjectDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-2 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+                <img
+                  src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&q=80&w=300"
+                  alt="Milepost 65-100 Tea Garden Corridor"
+                  className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                />
                 <div className="flex flex-col">
-                  <span className="font-mono text-xs font-bold text-slate-900">Milepost 65.0 → 100.0 (Tea Garden Reserve Corridor)</span>
-                  <span className="text-xs text-slate-600">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+                    <span className="font-mono text-xs font-bold text-slate-900">Milepost 65.0 → 100.0 (Tea Garden Reserve Corridor)</span>
+                  </div>
+                  <span className="text-xs text-slate-600 mt-0.5">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
                 <div className="flex flex-col items-end">
                   <span className="text-amber-700 font-bold">0.0d Float (Amber)</span>
                   <span className="text-slate-500 text-[10px]">Progress: 64.8%</span>
@@ -419,7 +438,7 @@ export const ProjectDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Machinery Deployment Status (4 Cols) */}
+        {/* Machinery Deployment Status with Pictures (4 Cols) */}
         <div className="xl:col-span-4 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs justify-between hover-elevate">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
@@ -431,35 +450,68 @@ export const ProjectDashboard: React.FC = () => {
             </div>
 
             <div className="flex flex-col gap-2.5">
-              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex flex-col gap-1.5">
+              {/* Machine 1: Komatsu PC300 with Photo */}
+              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-slate-900">Komatsu PC300-8M0 (HE-04)</span>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=200"
+                      alt="Komatsu PC300 Excavator"
+                      className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-mono text-xs font-bold text-slate-900">Komatsu PC300-8M0</span>
+                      <span className="font-mono text-[10px] text-slate-500">HE-04 • SPREAD 2</span>
+                    </div>
+                  </div>
                   <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">92% UTIL</span>
                 </div>
                 <span className="text-xs text-slate-600">Assigned: Rock Trenching KM 42+650. Ripper attachment engaged.</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
                   <div className="bg-emerald-600 h-full rounded-full" style={{ width: '92%' }}></div>
                 </div>
               </div>
 
-              <div className="p-3 rounded border border-rose-200 bg-rose-50/40 flex flex-col gap-1.5">
+              {/* Machine 2: CRC-Evans M-300 with Photo */}
+              <div className="p-3 rounded-lg border border-rose-200 bg-rose-50/40 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-slate-900">CRC-Evans M-300 Orbital System</span>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=200"
+                      alt="CRC-Evans Orbital Welding Rig"
+                      className="w-10 h-9 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-mono text-xs font-bold text-slate-900">CRC-Evans M-300 System</span>
+                      <span className="font-mono text-[10px] text-rose-800">AUTOMATIC ORBITAL WELD</span>
+                    </div>
+                  </div>
                   <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold animate-pulse">CALIBRATION REQ</span>
                 </div>
                 <span className="text-xs text-slate-600">Assigned: MP 62 Mainline Tie-in. Root-pass weld drift detected (0.4mm).</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
                   <div className="bg-rose-500 h-full rounded-full" style={{ width: '38%' }}></div>
                 </div>
               </div>
 
-              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex flex-col gap-1.5">
+              {/* Machine 3: Herrenknecht HDD with Photo */}
+              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-slate-900">Herrenknecht HK250 HDD Rig</span>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                      alt="Herrenknecht HK250 HDD Rig"
+                      className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-mono text-xs font-bold text-slate-900">Herrenknecht HK250 Rig</span>
+                      <span className="font-mono text-[10px] text-slate-500">HDD RIVER CROSSING</span>
+                    </div>
+                  </div>
                   <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">100% STANDBY</span>
                 </div>
                 <span className="text-xs text-slate-600">Assigned: Burhi Dihing Crossing #2. Pilot bore completed successfully.</span>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-0.5">
                   <div className="bg-blue-600 h-full rounded-full" style={{ width: '100%' }}></div>
                 </div>
               </div>

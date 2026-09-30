@@ -497,6 +497,7 @@ export const DEMO_FIELD_EVENTS: NormalizedExecutionEvent[] = [
     contractor: 'AIES',
     equipment: ['Hydraulic Mobile Crane 50T (OIL-EQ-104)', 'Scaffolding Unit #4'],
     manpowerCount: 8,
+    photoUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800',
     extractionConfidence: 96,
     createdAt: '2026-09-28T17:15:00Z',
   },
@@ -523,6 +524,7 @@ export const DEMO_FIELD_EVENTS: NormalizedExecutionEvent[] = [
     contractor: 'North-East Infrastructure',
     equipment: ['Transit Mixer TM-04', 'Concrete Pump CP-02'],
     manpowerCount: 14,
+    photoUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=800',
     extractionConfidence: 98,
     createdAt: '2026-09-28T19:30:00Z',
   },
@@ -548,6 +550,7 @@ export const DEMO_FIELD_EVENTS: NormalizedExecutionEvent[] = [
     statusReported: 'IN_PROGRESS',
     contractor: 'Eastern Power Grid Projects',
     delayReason: 'Precipitation/monsoon rain hold-up at 15:00',
+    photoUrl: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&q=80&w=800',
     extractionConfidence: 94,
     createdAt: '2026-09-28T15:45:00Z',
   },
@@ -568,6 +571,7 @@ export const DEMO_FIELD_EVENTS: NormalizedExecutionEvent[] = [
     percentComplete: 70, // Contradicts 78%
     statusReported: 'IN_PROGRESS',
     contractor: 'AIES',
+    photoUrl: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=800',
     extractionConfidence: 91,
     createdAt: '2026-09-28T18:00:00Z',
   }

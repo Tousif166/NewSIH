@@ -846,10 +846,14 @@ export const ScheduleExplorer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Field Ground Truth Telemetry */}
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded border border-slate-200">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-blue-700">visibility</span>
+              {/* Field Ground Truth Telemetry with Photo */}
+              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200 gap-3">
+                <div className="flex items-center gap-2.5">
+                  <img
+                    src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                    alt="Spread 2 Corridor Orthomosaic Scan"
+                    className="w-12 h-10 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  />
                   <div className="flex flex-col text-xs">
                     <span className="font-bold text-slate-900">AI Field Confidence</span>
                     <span className="text-slate-500 font-mono text-[10px]">
@@ -857,7 +861,7 @@ export const ScheduleExplorer: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <span className="font-mono font-bold text-sm text-blue-700">97.4%</span>
+                <span className="font-mono font-bold text-sm text-blue-700 shrink-0">97.4%</span>
               </div>
 
               {/* Action Buttons */}

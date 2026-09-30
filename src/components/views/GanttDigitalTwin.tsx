@@ -317,10 +317,10 @@ export const GanttDigitalTwin: React.FC = () => {
               </div>
             </div>
 
-            {/* High Clarity Technical GIS & Telematics Canvas */}
-            <div className="w-full h-72 bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200 rounded-xl relative overflow-hidden flex flex-col justify-between p-4 shadow-2xs">
+            {/* High Clarity Technical GIS & Telematics Canvas (Clean Non-Overlapping Layout) */}
+            <div className="w-full bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200 rounded-xl relative overflow-hidden flex flex-col gap-4 p-4 shadow-2xs">
               {/* Engineering Grid Overlay */}
-              <svg className="absolute inset-0 w-full h-full opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <pattern id="light-contour-grid" width="32" height="32" patternUnits="userSpaceOnUse">
                     <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-300"></path>
@@ -328,146 +328,196 @@ export const GanttDigitalTwin: React.FC = () => {
                 </defs>
                 <rect width="100%" height="100%" fill="url(#light-contour-grid)"></rect>
                 <path
-                  d="M 0 160 Q 250 140 450 190 T 800 170 T 1200 200"
+                  d="M 0 160 Q 250 140 450 190 T 800 170 T 1400 200"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="5"
+                  strokeWidth="3.5"
                   strokeDasharray="8 4"
-                  className="text-blue-700"
-                ></path>
-                <path
-                  d="M 0 180 Q 250 160 450 210 T 800 190 T 1200 220"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="text-slate-400"
+                  className="text-blue-600/50"
                 ></path>
               </svg>
 
-              {/* Aerial Segment Photo Context Layer (UAV Layer) */}
-              {layerUav && (
-                <div className="absolute right-4 top-4 w-60 h-28 rounded-lg overflow-hidden shadow-sm border border-slate-300 bg-white z-10 flex flex-col hover:shadow-md transition-shadow">
-                  <div
-                    className="w-full h-full bg-cover bg-center relative"
-                    style={{
-                      backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuALFEjrQ0PIpRUVA4oq8YFlaoJn17uKzLIjEAhmnehav5J5jv4N5bjn3x-gk1IT0_-BnakiT70jR2OPsZumm1vLB2PhG5llGzes4PyYM5EDC_7CanmMdJYl2vtFcDxfed9vxlo1a3Yf1B86A8kom_AU-S3xQPVOrpSKQ2T8ZiL3WMDF63O_6Ui1S0tcWnxQL2XkqxOhkp0mTjFNUSWC3kNbzpDO5A5r-o8HdWxH-lKdEfMtdi7XFaw')`
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
-                    <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-white/95 text-blue-800 font-mono text-[9px] font-bold flex items-center gap-1 shadow-2xs border border-slate-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>UAV ORTHO CAM-3
-                    </div>
-                    <div className="absolute bottom-1 left-1.5 right-1.5 flex justify-between font-mono text-[9px] text-white">
-                      <span className="truncate">SEC-04 ROU: 18M</span>
-                      <span className="text-emerald-400 font-semibold font-mono">GSD: 1.8cm</span>
-                    </div>
+              {/* Top Header Row: HDD Waterway Crossing Callout + Status Badges */}
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 bg-white/95 border border-slate-200 p-3 rounded-lg shadow-2xs backdrop-blur-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center shrink-0 shadow-2xs">
+                    <span className="material-symbols-outlined text-[19px]">water</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">MAJOR WATERWAY CROSSING:</span>
+                    <span className="font-mono text-xs text-slate-900 font-bold">
+                      BURHI DIHING RIVER HDD - 1,240M [PULLBACK COMPLETED]
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono text-[9px] font-bold">
+                      VERIFIED 100%
+                    </span>
                   </div>
                 </div>
-              )}
 
-              {/* Callout Banner: Burhi Dihing HDD Crossing */}
-              <div className="absolute left-6 top-4 z-10 flex items-center gap-2 bg-white/95 border border-slate-200 px-3 py-1.5 rounded-lg shadow-2xs backdrop-blur-xs">
-                <span className="material-symbols-outlined text-blue-700 text-[16px]">water</span>
-                <span className="font-mono text-[10px] text-slate-500 uppercase">MAJOR WATERWAY CROSSING:</span>
-                <span className="font-mono text-[10px] text-slate-800 font-bold">
-                  BURHI DIHING RIVER HDD - 1,240M [PULLBACK COMPLETED]
-                </span>
+                <div className="flex items-center gap-3 font-mono text-[10px] text-slate-600">
+                  <span className="flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    RTK FIX: ±1.2cm
+                  </span>
+                  <span className="text-slate-300">•</span>
+                  <span>CORRIDOR SPREAD 2</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-blue-700 font-bold">KM 42+650 DATUM</span>
+                </div>
               </div>
 
-              {/* 3D Pipe Trench & Telematics Center Stage */}
-              <div className="relative z-10 my-auto grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-                {/* Geotechnical Profile (Geo Layer) */}
+              {/* 4 Clean Separated Telemetry Cards (Grid of 4 on XL screens - ZERO OVERLAPS) */}
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 items-stretch">
+                {/* Card 1: Geotechnical Profile */}
                 {layerGeo && (
-                  <div className="lg:col-span-4 bg-white/95 border border-slate-200 p-3 rounded-lg shadow-2xs flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-slate-500 uppercase font-bold">
-                        GEOTECHNICAL PROFILE @ KM 42+650
-                      </span>
-                      <span className="px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[9px] font-bold">
-                        SLOPE INSTABILITY
-                      </span>
+                  <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="font-mono text-[10px] text-slate-500 uppercase font-bold">
+                          GEOTECHNICAL PROFILE @ KM 42+650
+                        </span>
+                        <span className="px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[9px] font-bold">
+                          SLOPE INSTABILITY
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs py-0.5">
+                        <span className="text-slate-500">Strata Classification:</span>
+                        <span className="text-slate-900 font-semibold font-mono text-[11px]">Granite-Sandstone Blend</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs py-0.5">
+                        <span className="text-slate-500">Rock Density / Hardness:</span>
+                        <span className="text-slate-800 font-mono text-[11px] font-medium">2,650 kg/m³ | RQD 68%</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs py-0.5">
+                        <span className="text-slate-500">Measured Trench Depth:</span>
+                        <span className="text-emerald-700 font-bold font-mono text-[11px]">2.42m (Req. 2.40m min)</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Strata Classification:</span>
-                      <span className="text-slate-900 font-semibold font-mono text-[11px]">Granite-Sandstone Blend</span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Rock Density / Hardness:</span>
-                      <span className="text-slate-800 font-mono text-[11px] font-medium">2,650 kg/m³ | RQD 68%</span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Measured Trench Depth:</span>
-                      <span className="text-emerald-700 font-bold font-mono text-[11px]">2.42m (Req. 2.40m min)</span>
-                    </div>
-                    <div className="w-full h-2 rounded bg-slate-100 border border-slate-200 overflow-hidden flex">
-                      <div className="w-[30%] bg-amber-200" title="Alluvium topsoil"></div>
-                      <div className="w-[45%] bg-amber-400" title="Weathered sandstone"></div>
-                      <div className="w-[25%] bg-slate-600" title="Granite bedrock layer"></div>
+
+                    <div>
+                      <div className="flex justify-between items-center text-[9px] font-mono text-slate-400 mb-1">
+                        <span>TOPSOIL (30%)</span>
+                        <span>SANDSTONE (45%)</span>
+                        <span>GRANITE (25%)</span>
+                      </div>
+                      <div className="w-full h-2 rounded bg-slate-100 border border-slate-200 overflow-hidden flex">
+                        <div className="w-[30%] bg-amber-200" title="Alluvium topsoil"></div>
+                        <div className="w-[45%] bg-amber-400" title="Weathered sandstone"></div>
+                        <div className="w-[25%] bg-slate-600" title="Granite bedrock layer"></div>
+                      </div>
                     </div>
                   </div>
                 )}
 
-                {/* Machine Telematics Node: Komatsu PC300 */}
-                <div className="lg:col-span-4 bg-white/95 border border-slate-200 p-3 rounded-lg shadow-2xs flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-blue-700 text-[16px]">precision_manufacturing</span>
-                      <span className="font-mono text-[10px] text-slate-900 font-bold">KOMATSU PC300-8M0 [SPREAD 2]</span>
+                {/* Card 2: Machine Telematics Node: Komatsu PC300 with Equipment Photo */}
+                <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-blue-700 text-[16px]">precision_manufacturing</span>
+                        <span className="font-mono text-[10px] text-slate-900 font-bold">KOMATSU PC300-8M0</span>
+                      </div>
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[9px] font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>CAN-BUS LIVE
+                      </span>
                     </div>
-                    <span className="px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[9px] font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>CAN-BUS LIVE
-                    </span>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                      <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
+                        <span className="text-slate-500 text-[10px] font-mono">ENGINE LOAD</span>
+                        <span className="text-rose-600 font-bold font-mono text-xs">84.2% [PEAK]</span>
+                      </div>
+                      <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
+                        <span className="text-slate-500 text-[10px] font-mono">DIESEL BURN RATE</span>
+                        <span className="text-slate-900 font-bold font-mono text-xs">22.4 L/hr</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500">Hydraulic Pressure:</span>
+                      <span className="text-slate-800 font-mono text-[11px] font-semibold">34.8 MPa [Ripper Active]</span>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
-                      <span className="text-slate-500 text-[10px] font-mono">ENGINE LOAD</span>
-                      <span className="text-rose-600 font-bold font-mono text-xs">84.2% [PEAK]</span>
+
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <img
+                      src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=300"
+                      alt="Komatsu PC300 Heavy Excavator"
+                      className="w-12 h-10 object-cover rounded border border-slate-200 shadow-2xs shrink-0"
+                    />
+                    <div className="flex flex-col min-w-0 font-mono text-[10px]">
+                      <span className="text-slate-800 font-bold truncate">HE-04 SPREAD 2</span>
+                      <span className="text-slate-500">Rock Trenching Assigned</span>
                     </div>
-                    <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
-                      <span className="text-slate-500 text-[10px] font-mono">DIESEL BURN RATE</span>
-                      <span className="text-slate-900 font-bold font-mono text-xs">22.4 L/hr</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Hydraulic Pressure:</span>
-                    <span className="text-slate-800 font-mono text-[11px] font-semibold">34.8 MPa [Ripper Active]</span>
                   </div>
                 </div>
 
-                {/* RTK Positioning Coordinates (RTK Layer) */}
+                {/* Card 3: RTK Positioning Coordinates (RTK Layer) */}
                 {layerRtk && (
-                  <div className="lg:col-span-4 bg-white/95 border border-slate-200 p-3 rounded-lg shadow-2xs flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-blue-700 font-bold flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[14px] animate-pulse">my_location</span>
-                        TRIMBLE R12i GNSS BASE
-                      </span>
-                      <span className="font-mono text-[9px] text-emerald-700 bg-emerald-50 px-1 rounded font-bold">
-                        DOP 0.7 (FIXED)
-                      </span>
+                  <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-1.5">
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="font-mono text-[10px] text-blue-700 font-bold flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[14px] animate-pulse">my_location</span>
+                          TRIMBLE R12i GNSS BASE
+                        </span>
+                        <span className="font-mono text-[9px] text-emerald-700 bg-emerald-50 px-1 rounded font-bold border border-emerald-200">
+                          DOP 0.7 (FIXED)
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
+                        <span className="text-slate-500">LATITUDE:</span>
+                        <span className="text-slate-900 font-bold">27° 23' 21.12" N (27.3892°)</span>
+                      </div>
+                      <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
+                        <span className="text-slate-500">LONGITUDE:</span>
+                        <span className="text-slate-900 font-bold">95° 37' 02.64" E (95.6174°)</span>
+                      </div>
+                      <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
+                        <span className="text-slate-500">ELEVATION (MSL):</span>
+                        <span className="text-blue-700 font-bold">+142.48 m AMSL</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between font-mono text-[10px]">
-                      <span className="text-slate-500">LATITUDE:</span>
-                      <span className="text-slate-900 font-bold">27° 23' 21.12" N (27.3892°)</span>
+
+                    <div className="w-full bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 flex items-center justify-between">
+                      <span className="text-[10px] text-slate-500 font-mono">CHAINAGE OFFSET</span>
+                      <span className="font-mono text-xs text-emerald-700 font-bold">CL + 0.12m TOLERANCE</span>
                     </div>
-                    <div className="flex items-center justify-between font-mono text-[10px]">
-                      <span className="text-slate-500">LONGITUDE:</span>
-                      <span className="text-slate-900 font-bold">95° 37' 02.64" E (95.6174°)</span>
+                  </div>
+                )}
+
+                {/* Card 4: Dedicated Live UAV Aerial Camera (UAV Layer) - COMPLETELY SEPARATE, ZERO OVERLAP */}
+                {layerUav && (
+                  <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-2xs flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div className="relative w-full h-32 bg-slate-900 overflow-hidden group">
+                      <img
+                        src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=800"
+                        alt="UAV Ortho Cam-3 Pipeline Corridor Aerial Drone Photograph"
+                        className="w-full h-full object-cover opacity-95 transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                      <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-white/95 text-blue-800 font-mono text-[9px] font-bold flex items-center gap-1 shadow-2xs border border-slate-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                        UAV ORTHO CAM-3
+                      </div>
+                      <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-slate-900/80 text-white font-mono text-[9px]">
+                        4K RAW
+                      </div>
+                      <div className="absolute bottom-1.5 left-2 right-2 flex justify-between font-mono text-[9px] text-white">
+                        <span className="truncate">SEC-04 ROU: 18M</span>
+                        <span className="text-emerald-400 font-semibold font-mono">GSD: 1.8cm • 45M</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between font-mono text-[10px]">
-                      <span className="text-slate-500">ELEVATION (MSL):</span>
-                      <span className="text-blue-700 font-bold">+142.48 m AMSL</span>
-                    </div>
-                    <div className="w-full bg-slate-50 border border-slate-200 rounded px-2 py-0.5 flex items-center justify-between">
-                      <span className="text-[9px] text-slate-500 font-mono">CHAINAGE OFFSET</span>
-                      <span className="font-mono text-[10px] text-emerald-700 font-bold">CL + 0.12m TOLERANCE</span>
+                    <div className="p-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between font-mono text-[10px] text-slate-600">
+                      <span className="truncate">Corridor Spread 2</span>
+                      <span className="text-blue-700 font-bold">11:15 IST</span>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Bottom Twin Status Strip */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between pt-2 bg-white/95 border-t border-slate-200 -mx-4 -mb-4 px-4 py-1.5 rounded-b-xl">
+              <div className="relative z-10 flex flex-wrap items-center justify-between pt-2.5 bg-white/95 border-t border-slate-200 px-3 py-2 rounded-lg shadow-2xs">
                 <div className="flex items-center gap-3 text-slate-600 font-mono text-[10px]">
                   <span>24" API 5L X70 PSL2 SUBMERGED ARC WELDED</span>
                   <span className="text-slate-300">•</span>

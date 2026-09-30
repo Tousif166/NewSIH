@@ -179,8 +179,21 @@ export const ReviewCenter: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="text-xs font-semibold text-slate-900 line-clamp-2">
-                      "{evt?.rawText || 'Field dispatch reported'}"
+                    <div className="flex gap-2.5 items-start">
+                      {evt?.photoUrl && (
+                        <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shrink-0 shadow-2xs mt-0.5">
+                          <img
+                            src={evt.photoUrl}
+                            alt="Field submission proof thumbnail"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-semibold text-slate-900 line-clamp-2">
+                          "{evt?.rawText || 'Field dispatch reported'}"
+                        </div>
+                      </div>
                     </div>
 
                     <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
@@ -247,6 +260,83 @@ export const ReviewCenter: React.FC = () => {
                   <div className="p-2 bg-white rounded border border-slate-200">
                     <span className="text-slate-400">Discipline:</span>{' '}
                     <span className="font-bold text-slate-900">{relatedEvent.discipline}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Geotagged Photographic Proof & Optical Telemetry Dossier */}
+              <div className="rounded-xl bg-white border border-slate-200 overflow-hidden shadow-xs flex flex-col">
+                <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[18px] text-blue-700">photo_camera</span>
+                    <span className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wide">
+                      Field Photographic Evidence & Optical Telemetry Dossier
+                    </span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono text-[10px] font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                    GEOTAG VERIFIED (EXIF OK)
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+                  {/* Photo Display */}
+                  <div className="md:col-span-7 relative h-56 md:h-64 bg-slate-900 overflow-hidden group">
+                    <img
+                      src={relatedEvent.photoUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=1200'}
+                      alt="Field inspection photograph proof"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                    <div className="absolute top-2 left-2 px-2 py-1 rounded bg-slate-900/80 text-white font-mono text-[10px] font-semibold flex items-center gap-1.5 border border-white/20">
+                      <span className="material-symbols-outlined text-[14px] text-blue-400">farsight_digital</span>
+                      <span>STATION KM 42+650 • SPREAD 2</span>
+                    </div>
+                    <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between font-mono text-[10px] text-white">
+                      <span className="bg-slate-900/80 px-2 py-0.5 rounded border border-white/10">
+                        LAT: 27° 23' 21.12" N • LON: 95° 37' 02.64" E
+                      </span>
+                      <span className="text-emerald-400 font-bold bg-slate-900/80 px-2 py-0.5 rounded border border-white/10">
+                        ELEV: +142.48m AMSL
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Optical Forensics & EXIF metadata */}
+                  <div className="md:col-span-5 p-4 flex flex-col justify-between bg-slate-50 border-t md:border-t-0 md:border-l border-slate-200 gap-3">
+                    <div className="flex flex-col gap-2">
+                      <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                        Hardware Sensor Telemetry
+                      </span>
+                      <div className="flex flex-col gap-1.5 font-mono text-[11px]">
+                        <div className="flex justify-between items-center py-1 border-b border-slate-200">
+                          <span className="text-slate-500">Capture Device:</span>
+                          <span className="text-slate-900 font-semibold">Trimble SX12 Scanning Base</span>
+                        </div>
+                        <div className="flex justify-between items-center py-1 border-b border-slate-200">
+                          <span className="text-slate-500">Lens / Aperture:</span>
+                          <span className="text-slate-800">24mm f/2.8 (1/1200s)</span>
+                        </div>
+                        <div className="flex justify-between items-center py-1 border-b border-slate-200">
+                          <span className="text-slate-500">Timestamp:</span>
+                          <span className="text-slate-900 font-semibold">{relatedEvent.reportedDate} 11:15 IST</span>
+                        </div>
+                        <div className="flex justify-between items-center py-1 border-b border-slate-200">
+                          <span className="text-slate-500">Cryptographic Hash:</span>
+                          <span className="text-blue-700 font-bold text-[10px] truncate max-w-[130px]" title="0x7f8841a2990c">
+                            0x7f8841a2...90c
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded bg-white border border-slate-200 flex items-center justify-between text-[11px] font-mono">
+                      <span className="text-slate-500">Supervisor Signature:</span>
+                      <span className="text-emerald-700 font-bold flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[15px]">verified</span>
+                        DIGITALLY SEALED
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

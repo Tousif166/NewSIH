@@ -627,6 +627,29 @@ export const AuditTrailView: React.FC = () => {
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Automated orbital welding telemetry logged a micro-hesitation during the root run. Radiography digitized film strip RT-391 securely hashed and coupled to P6 activity <code className="bg-slate-100 px-1 py-0.5 rounded text-blue-700 font-mono">ACT-WLD-118</code>. Immediate repair loop initiated before hydrostatic trench lowering.
                 </p>
+
+                {/* NDT Film Photographic Proof */}
+                <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 mt-1">
+                  <div className="relative w-20 h-14 rounded overflow-hidden bg-slate-900 shrink-0 border border-slate-200 shadow-2xs group">
+                    <img
+                      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=300"
+                      alt="NDT Radiography Film RT-391"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                    <div className="absolute inset-0 bg-slate-950/40"></div>
+                    <span className="absolute bottom-0.5 right-0.5 font-mono text-[7px] bg-red-600 text-white px-1 rounded font-bold">
+                      0.4mm
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-900 text-xs">
+                      Digitized Radiography Gamma-Ray Strip RT-391 (Joint J-118)
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-500 mt-0.5">
+                      Ir-192 isotope exposure. Root-pass weld drift confirmed at 3 o'clock quadrant.
+                    </span>
+                  </div>
+                </div>
               </div>
             </article>
 
@@ -701,6 +724,29 @@ export const AuditTrailView: React.FC = () => {
                     <span className="font-mono font-bold text-lg text-slate-900">1.28 GB LAS POINT DATA</span>
                     <span className="text-xs text-slate-600">
                       Embedded EXIF metadata sealed cryptographically into Merkle Leaf #1839.
+                    </span>
+                  </div>
+                </div>
+
+                {/* UAV Orthomosaic Aerial Photographic Proof */}
+                <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 mt-1">
+                  <div className="relative w-20 h-14 rounded overflow-hidden bg-slate-900 shrink-0 border border-slate-200 shadow-2xs group">
+                    <img
+                      src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=300"
+                      alt="UAV Orthomosaic Flyover D300-88"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 to-transparent"></div>
+                    <span className="absolute bottom-0.5 right-0.5 font-mono text-[7px] bg-blue-700 text-white px-1 rounded font-bold">
+                      1.8cm RTK
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-900 text-xs">
+                      Orthomosaic Photogrammetry Strip D300-88 (Chainage KM 42+480 to 42+900)
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-500 mt-0.5">
+                      Centimetric accuracy RTK geo-tagged surface model. Verified 420.5m linear trench advance.
                     </span>
                   </div>
                 </div>

@@ -492,13 +492,20 @@ export const ActivityDNAView: React.FC = () => {
               </table>
             </div>
 
-            {/* Field Operational Recommendation Callout */}
-            <div className="bg-blue-50/60 p-3 rounded-lg flex items-start gap-3 border border-blue-200/80">
-              <span className="material-symbols-outlined text-[20px] text-blue-700 mt-0.5 animate-pulse">lightbulb</span>
+            {/* Field Operational Recommendation Callout with Core Sample Photo */}
+            <div className="bg-blue-50/60 p-3 rounded-lg flex flex-col sm:flex-row items-start gap-3 border border-blue-200/80">
+              <img
+                src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=300"
+                alt="Granitic Rock Strata Trench Sample"
+                className="w-full sm:w-20 h-16 rounded object-cover border border-blue-200 shrink-0 shadow-2xs"
+              />
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[11px] text-slate-900 font-bold uppercase">
-                  Empirical Synthesis for KM 42+650:
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[18px] text-blue-700 animate-pulse">lightbulb</span>
+                  <span className="font-mono text-[11px] text-slate-900 font-bold uppercase">
+                    Empirical Synthesis for KM 42+650:
+                  </span>
+                </div>
                 <p className="text-xs text-slate-700 leading-relaxed">
                   Neural corpus detects a 98.4% match with 2018 Duliajan Spur Sector 2 hard boulder ledge. Deploying heavy single-point ripper shanks before trenching restores velocity from 110m/d to 260m/d within 36 hours.
                 </p>
@@ -665,9 +672,11 @@ export const ActivityDNAView: React.FC = () => {
               {/* Machine 1 */}
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded bg-blue-100 text-blue-800 flex items-center justify-center font-bold font-mono text-xs">
-                    PC30
-                  </div>
+                  <img
+                    src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=200"
+                    alt="Komatsu PC300 Excavator"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  />
                   <div className="flex flex-col">
                     <span className="font-bold text-slate-900 text-xs">Komatsu PC300-8MO (#EX-442)</span>
                     <span className="font-mono text-[10px] text-slate-500">Operator: Debashis Gogoi (14 yrs exp)</span>
@@ -682,9 +691,11 @@ export const ActivityDNAView: React.FC = () => {
               {/* Machine 2 */}
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded bg-blue-100 text-blue-800 flex items-center justify-center font-bold font-mono text-xs">
-                    M300
-                  </div>
+                  <img
+                    src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=200"
+                    alt="CRC-Evans Welder"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  />
                   <div className="flex flex-col">
                     <span className="font-bold text-slate-900 text-xs">CRC-Evans Dual-Head Internal Welder</span>
                     <span className="font-mono text-[10px] text-slate-500">Crew: Lead Tech Sunil Barua</span>
@@ -699,9 +710,11 @@ export const ActivityDNAView: React.FC = () => {
               {/* Machine 3 */}
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded bg-slate-200 text-slate-700 flex items-center justify-center font-bold font-mono text-xs">
-                    C336
-                  </div>
+                  <img
+                    src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                    alt="Caterpillar 336D Excavator"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                  />
                   <div className="flex flex-col">
                     <span className="font-bold text-slate-900 text-xs">Caterpillar 336D Excavator</span>
                     <span className="font-mono text-[10px] text-slate-500">Crew: Sub-Contractor Squad 2</span>
