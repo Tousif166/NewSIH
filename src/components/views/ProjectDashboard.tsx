@@ -1,402 +1,538 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../services/store';
-import { 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Clock, 
-  ShieldAlert, 
-  ArrowUpRight, 
-  Zap, 
-  Layers, 
-  ChevronRight,
-  Flame,
-  Activity,
-  MapPin,
-  Calendar,
-  Compass,
-  HardHat,
-  Briefcase,
-  ShieldCheck
-} from 'lucide-react';
 
 export const ProjectDashboard: React.FC = () => {
-  const { currentRole, roleMetadata, setCurrentRole, activeProject, activities, conflicts, riskScore, matches, setActiveTab } = useApp();
+  const { 
+    currentRole, 
+    roleMetadata, 
+    setCurrentRole, 
+    activeProject, 
+    activities, 
+    conflicts, 
+    riskScore, 
+    matches, 
+    setActiveTab,
+    commitScheduleActuals,
+    showToast 
+  } = useApp();
+
+  const [scrubberWeek, setScrubberWeek] = useState<number>(43);
+  const [selectedFilter, setSelectedFilter] = useState<'P50' | 'P85' | 'P95'>('P85');
 
   const delayedActivities = activities.filter(a => a.forecastVarianceDays > 0);
   const criticalActivities = activities.filter(a => a.isCriticalPath);
-  const completedCount = activities.filter(a => a.actualPercent === 100).length;
+  const completedCount = activities.filter(a => a.actualPercent === 100);
 
   return (
-    <div className="p-3.5 sm:p-6 space-y-4 sm:space-y-6 max-w-[1700px] mx-auto">
-      {/* Top Welcome & Health Banner */}
-      <div className="bg-[#0E1422] p-4 sm:p-5 rounded-xl border border-slate-800 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-              {activeProject.code}
-            </span>
-            <span className="text-xs text-slate-400 font-mono">• {activeProject.organization}</span>
+    <div className="w-full px-4 sm:px-8 py-5 flex flex-col gap-6">
+      {/* 1. Operational Persona Header Bar (Stitch Screen 3) */}
+      <div className="animate-entrance delay-1 flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="w-12 h-12 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-xs transition-transform duration-300 hover:rotate-6">
+              <span className="material-symbols-outlined text-[26px]">shield_person</span>
+            </div>
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-white radar-beacon"></span>
           </div>
-          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight font-display">
-            {activeProject.name}
-          </h1>
-          <p className="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono">
-            <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {activeProject.location}</span>
-            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-slate-400" /> Baseline: {activeProject.startDate} → {activeProject.baselineCompletionDate}</span>
-          </p>
+
+          <div className="flex flex-col">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-bold text-slate-900 text-base">Rajiv K. Sharma</span>
+              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[10px] font-semibold uppercase tracking-wider">
+                CGM — Infrastructure Directorate
+              </span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-bold flex items-center gap-1 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 radar-beacon"></span>
+                ACTIVE CLEARANCE TIER-1
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 font-mono text-[11px] text-slate-500">
+              <span>CLEARANCE ID: <strong className="text-slate-800">OIL-EXEC-0042-KS</strong></span>
+              <span className="text-slate-300">|</span>
+              <span>REPORT CYCLE: <strong className="text-blue-800">WEEK {scrubberWeek} / OCT 2026</strong></span>
+              <span className="text-slate-300">|</span>
+              <span>BASIS: <strong className="text-slate-700 font-medium">ORACLE EPPM P6.24 LIVE MIRROR</strong></span>
+            </div>
+          </div>
         </div>
 
-        {/* Big Health & Risk Summary Pills */}
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 w-full md:w-auto">
-          <div className="bg-[#090D14] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-slate-800 flex items-center justify-between sm:justify-start gap-2.5 sm:gap-3 flex-1 sm:flex-initial shrink-0">
-            <div>
-              <div className="text-[9px] sm:text-[10px] uppercase font-mono text-slate-400">Health Index</div>
-              <div className="text-lg sm:text-xl font-extrabold text-amber-400 flex items-baseline gap-1 font-mono">
-                {activeProject.healthScore}<span className="text-xs text-slate-500">/100</span>
-              </div>
-            </div>
-            <div className="h-7 w-px bg-slate-800" />
-            <div>
-              <div className="text-[9px] sm:text-[10px] uppercase font-mono text-slate-400">Execution Trust</div>
-              <div className="text-lg sm:text-xl font-extrabold text-emerald-400 font-mono">
-                {activeProject.executionConfidencePct}%
-              </div>
-            </div>
+        {/* Rapid Telemetry Counters */}
+        <div className="flex items-center gap-2 overflow-x-auto py-0.5 no-scrollbar">
+          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[110px] transition-all hover:bg-white hover:border-slate-300">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Corridor Length</span>
+            <span className="font-mono text-sm font-bold text-slate-900">132.0 <span className="text-[11px] font-normal text-slate-500">KM</span></span>
           </div>
-
-          <div className="bg-[#090D14] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-slate-800 flex items-center justify-between sm:justify-start gap-2.5 sm:gap-3 flex-1 sm:flex-initial shrink-0">
-            <div>
-              <div className="text-[9px] sm:text-[10px] uppercase font-mono text-slate-400">Project Risk</div>
-              <div className={`text-lg sm:text-xl font-extrabold flex items-center gap-1.5 font-mono ${
-                riskScore.tier === 'CRITICAL' ? 'text-rose-400' : 'text-amber-400'
-              }`}>
-                <Flame className="w-4 h-4" />
-                <span>{riskScore.overallScore}/100</span>
-              </div>
-            </div>
-            <span className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase font-mono ${
-              riskScore.tier === 'CRITICAL' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-            }`}>
-              {riskScore.tier}
-            </span>
+          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[125px] transition-all hover:bg-white hover:border-slate-300">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Spread Crews</span>
+            <span className="font-mono text-sm font-bold text-slate-900">4 Spreads / <span className="text-blue-700">680 FTE</span></span>
+          </div>
+          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[115px] transition-all hover:bg-white hover:border-slate-300">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">P6 Baseline Rev</span>
+            <span className="font-mono text-sm font-bold text-blue-700">WBS-B4.8 (Q3)</span>
+          </div>
+          <div className="flex flex-col px-3 py-1.5 rounded bg-slate-50 border border-slate-200 min-w-[110px] transition-all hover:bg-white hover:border-slate-300">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Block Valve Stns</span>
+            <span className="font-mono text-sm font-bold text-emerald-700">7 / 7 Active</span>
           </div>
         </div>
       </div>
 
-      {/* Dynamic Persona Operational Briefing (Zero Emojis, Refined Vector Icon) */}
-      <div className={`p-3.5 sm:p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
-        <div className="flex items-start sm:items-center gap-3">
-          <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 shadow-sm shrink-0">
-            {currentRole === 'planner' && <Compass className="w-5 h-5 text-emerald-400" />}
-            {currentRole === 'supervisor' && <HardHat className="w-5 h-5 text-amber-400" />}
-            {currentRole === 'project_manager' && <Briefcase className="w-5 h-5 text-sky-400" />}
-            {currentRole === 'admin' && <ShieldCheck className="w-5 h-5 text-purple-400" />}
-          </div>
+      {/* 2. Executive KPI Summary Cards (Grid of 4) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 animate-entrance delay-2">
+        {/* SPI Card */}
+        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
           <div>
-            <div className="font-bold text-white flex items-center gap-2">
-              <span className="font-display">{roleMetadata.label} Operational Perspective</span>
-              <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded border ${roleMetadata.borderColor} ${roleMetadata.color} bg-slate-950/80`}>
-                {roleMetadata.badge}
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+                Schedule Index (SPI)
+              </span>
+              <span className="px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
+                <span className="material-symbols-outlined text-[13px]">arrow_downward</span>-0.02 wk
               </span>
             </div>
-            <p className="text-slate-300 text-[11px] mt-0.5">
-              {currentRole === 'project_manager' && 'Critical path variance currently sits at +14 days due to Compressor Foundation soil stabilization. Monte Carlo scenario modeling indicates adding 15 workers eliminates liquidated damages.'}
-              {currentRole === 'supervisor' && 'Today\'s priority: Complete Section 4B welding & trenching. Use the mobile voice recorder or camera snapshot to upload proof for planner approval.'}
-              {currentRole === 'planner' && '3 candidate field matches are queued in the Review Center. Reconcile evidence and update schedule actuals before the Primavera P6 weekly baseline sync.'}
-              {currentRole === 'admin' && '100% cryptographic SHA-256 integrity verified across all historical field records. Zero tamper attempts detected in the Oil India immutable ledger.'}
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={() => setActiveTab(roleMetadata.defaultTab)}
-          className={`px-3 py-2 rounded-lg border ${roleMetadata.borderColor} bg-slate-950 hover:bg-slate-900 ${roleMetadata.color} font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shrink-0 self-start sm:self-auto cursor-pointer active:scale-[0.97]`}
-        >
-          <span>Open {roleMetadata.shortLabel} Desk</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
-      {/* 4-Dimension Project View (Baseline vs Actual vs Forecast vs Variance) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-        {/* Baseline */}
-        <div className="bg-slate-900/90 p-3 sm:p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="font-mono uppercase font-semibold text-sky-400 text-[11px] sm:text-xs">1. Baseline</span>
-            <span className="text-[9px] sm:text-[10px] bg-sky-950/60 text-sky-300 px-1.5 py-0.5 rounded border border-sky-800/40">Target</span>
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-white">{activeProject.plannedProgressPct}%</div>
-          <p className="text-[11px] text-slate-400 mt-1 line-clamp-1">Plan: <span className="text-slate-200 font-medium">{activeProject.baselineCompletionDate}</span></p>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
-            <div className="bg-sky-500 h-full rounded-full" style={{ width: `${activeProject.plannedProgressPct}%` }} />
-          </div>
-        </div>
-
-        {/* Actual */}
-        <div className="bg-slate-900/90 p-3 sm:p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="font-mono uppercase font-semibold text-emerald-400 text-[11px] sm:text-xs">2. Verified</span>
-            <span className="text-[9px] sm:text-[10px] bg-emerald-950/60 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800/40">Actual</span>
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-emerald-400">{activeProject.actualProgressPct}%</div>
-          <p className="text-[11px] text-slate-400 mt-1 line-clamp-1"><span className="text-slate-200 font-medium">{completedCount}</span> completed nodes</p>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
-            <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${activeProject.actualProgressPct}%` }} />
-          </div>
-        </div>
-
-        {/* Forecast */}
-        <div className="bg-slate-900/90 p-3 sm:p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="font-mono uppercase font-semibold text-amber-400 text-[11px] sm:text-xs">3. Forecast</span>
-            <span className="text-[9px] sm:text-[10px] bg-amber-950/60 text-amber-300 px-1.5 py-0.5 rounded border border-amber-800/40">CPM</span>
-          </div>
-          <div className="text-base sm:text-xl font-black text-amber-400 truncate">{activeProject.currentForecastCompletionDate}</div>
-          <p className="text-[11px] text-slate-400 mt-1 line-clamp-1">Delay: <span className="text-rose-400 font-semibold">+18 days</span></p>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
-            <div className="bg-amber-500 h-full rounded-full" style={{ width: `${activeProject.forecastProgressPct}%` }} />
-          </div>
-        </div>
-
-        {/* Variance */}
-        <div className="bg-slate-900/90 p-3 sm:p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="font-mono uppercase font-semibold text-rose-400 text-[11px] sm:text-xs">4. Variance</span>
-            <span className="text-[9px] sm:text-[10px] bg-rose-950/60 text-rose-300 px-1.5 py-0.5 rounded border border-rose-800/40">Slippage</span>
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-rose-400">{activeProject.variancePct}%</div>
-          <p className="text-[11px] text-slate-400 mt-1 line-clamp-1">Delayed: <span className="text-rose-300 font-semibold">{delayedActivities.length}</span> nodes</p>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
-            <div className="bg-rose-500 h-full rounded-full" style={{ width: `${Math.abs(activeProject.variancePct * 3)}%` }} />
-          </div>
-        </div>
-      </div>
-
-      {/* Main Grid: Today's Attention Queue & Risk Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Left 2 Cols: Today's Attention Queue & Daily Digest */}
-        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-          {/* Today's Attention Queue */}
-          <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 sm:p-5 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-              <div>
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-400" />
-                  Today's Attention Queue
-                </h2>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  AI prioritized issues requiring planner investigation before today's schedule freeze
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono">
-                <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">2 Critical</span>
-                <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">3 Attention</span>
-                <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40">7 Normal</span>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {/* Card 1: Critical Piping Delay */}
-              <div className="p-3.5 rounded-lg bg-slate-950/70 border border-rose-500/30 hover:border-rose-500/60 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-rose-500 mt-1.5 shrink-0 animate-ping" />
-                  <div>
-                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className="font-mono text-xs font-bold text-rose-400">PIPE-ERECT-L6-0142</span>
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-rose-950 text-rose-300 border border-rose-800">Critical Path</span>
-                      <span className="text-[10px] text-slate-400 font-mono">+7 Days Delay</span>
-                    </div>
-                    <div className="text-xs font-semibold text-slate-200 mt-0.5">
-                      Erection of 12-inch process line at compressor area
-                    </div>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      Drivers: Rigging crane constraint & spool delivery hold. Cascades into hydrotest and compressor shaft alignment.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setActiveTab('WHAT_IF')}
-                  className="w-full sm:w-auto px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-medium border border-slate-700 flex items-center justify-center gap-1 shrink-0 active:scale-95"
-                >
-                  <span>Simulate Fix</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Card 2: Unresolved Data Conflict */}
-              <div className="p-3.5 rounded-lg bg-slate-950/70 border border-amber-500/30 hover:border-amber-500/60 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                  <div>
-                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className="font-mono text-xs font-bold text-amber-400">CONFLICT #CNF-001</span>
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-800">Progress Contradiction</span>
-                    </div>
-                    <div className="text-xs font-semibold text-slate-200 mt-0.5">
-                      Voice update reports 78% vs Subcontractor Excel claims 70%
-                    </div>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      8% variance between reporting channels. SiteSync prevented automatic schedule overwrite pending planner sign-off.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setActiveTab('CONFLICT_CENTER')}
-                  className="w-full sm:w-auto px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-medium border border-slate-700 flex items-center justify-center gap-1 shrink-0 active:scale-95"
-                >
-                  <span>Adjudicate</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Card 3: Pending AI Proposal */}
-              <div className="p-3.5 rounded-lg bg-slate-950/70 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                  <div>
-                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className="font-mono text-xs font-bold text-emerald-400">ELEC-TRAY-L6-0102</span>
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">92% AI Confidence</span>
-                    </div>
-                    <div className="text-xs font-semibold text-slate-200 mt-0.5">
-                      Cable tray installation in Unit 2 (30 meters completed)
-                    </div>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      Extracted from supervisor text dispatch. Predecessor structural stanchions verified. Ready for 1-click confirmation.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setActiveTab('REVIEW_CENTER')}
-                  className="w-full sm:w-auto px-3 py-2 rounded-lg bg-emerald-900/40 hover:bg-emerald-800/40 text-emerald-300 text-xs font-medium border border-emerald-600/40 flex items-center justify-center gap-1 shrink-0 active:scale-95"
-                >
-                  <span>Review AI Match</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="font-mono text-3xl font-extrabold text-slate-900 tracking-tight">0.94</span>
+              <span className="font-mono text-xs text-rose-600 font-semibold">Critical Path Lag: -4.2d</span>
             </div>
           </div>
-
-          {/* Daily Project Digest ("What Changed Since Yesterday?") */}
-          <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-                <Clock className="w-4 h-4 text-sky-400" />
-                What Changed Since Yesterday (28-Sep)
-              </h2>
-              <span className="text-xs font-mono text-slate-400">Last Synced: 28-Sep 19:30</span>
+          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
+              <span className="material-symbols-outlined text-amber-500 text-[15px]">timer</span>
+              <span>Earned: 61.4% / Plan: 65.3%</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-              <div className="p-3 bg-slate-950 rounded-lg border border-slate-800/80 text-center">
-                <div className="text-lg font-bold text-white">+4</div>
-                <div className="text-[11px] text-slate-400">Activities Updated</div>
-              </div>
-              <div className="p-3 bg-slate-950 rounded-lg border border-slate-800/80 text-center">
-                <div className="text-lg font-bold text-emerald-400">1</div>
-                <div className="text-[11px] text-slate-400">Completed (F-102)</div>
-              </div>
-              <div className="p-3 bg-slate-950 rounded-lg border border-slate-800/80 text-center">
-                <div className="text-lg font-bold text-rose-400">+2d</div>
-                <div className="text-[11px] text-slate-400">Slippage Added</div>
-              </div>
-              <div className="p-3 bg-slate-950 rounded-lg border border-slate-800/80 text-center">
-                <div className="text-lg font-bold text-amber-400">1</div>
-                <div className="text-[11px] text-slate-400">Conflict Flagged</div>
-              </div>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-800/60">
-              <span className="font-semibold text-white">Daily Operational Brief:</span> Senior piping supervisor voice input advanced 12" compressor header erection from 58% to 78%. Civil foundation F-102 was verified 100% completed following DPR upload (75 m3 concrete). Inclement rainfall caused an early work-at-height stoppage on electrical tray runs. Subcontractor Excel progress mismatch flagged for review.
-            </p>
+            <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold">
+              TIE-IN HOLD
+            </span>
           </div>
         </div>
 
-        {/* Right Col: Explainable Risk Score & Discipline Breakdown */}
-        <div className="space-y-6">
-          {/* Explainable Risk Score Breakdown */}
-          <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center justify-between mb-2">
-              <span className="flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-rose-400" />
-                Explainable Risk Engine
+        {/* CPI Card */}
+        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+                Cost Index (CPI)
               </span>
-              <span className="text-rose-400 font-extrabold text-sm">{riskScore.overallScore}/100</span>
-            </h2>
-            <p className="text-xs text-slate-400 mb-4">
-              Additive score based on schedule variance, critical path slippage, and source conflicts. Not a black box.
-            </p>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[11px] font-bold flex items-center gap-1 transition-transform group-hover:scale-105">
+                <span className="material-symbols-outlined text-[13px]">arrow_upward</span>+0.01 wk
+              </span>
+            </div>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="font-mono text-3xl font-extrabold text-emerald-700 tracking-tight">1.02</span>
+              <span className="font-mono text-xs text-emerald-600 font-semibold">+$1.40M Favourable</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
+              <span className="material-symbols-outlined text-emerald-600 text-[15px]">account_balance_wallet</span>
+              <span>ACWP: ₹412.8 Cr / BCWP: ₹421.1 Cr</span>
+            </div>
+            <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">
+              EPC UNDER BUDGET
+            </span>
+          </div>
+        </div>
 
-            <div className="space-y-2.5">
-              {riskScore.breakdown.map((item, idx) => (
-                <div key={idx} className="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-slate-200">{item.name}</span>
-                    <span className="font-mono font-bold text-amber-400">+{item.points} pts</span>
+        {/* Milestone Delivery Health */}
+        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+                Milestone Progress
+              </span>
+              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[11px] font-semibold">
+                TOTAL: 28
+              </span>
+            </div>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="font-mono text-3xl font-extrabold text-slate-900 tracking-tight">
+                24<span className="text-slate-400 font-medium text-lg">/28</span>
+              </span>
+              <span className="font-mono text-xs text-emerald-600 font-semibold">On Track (85.7%)</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-1 font-mono text-[11px] text-slate-600">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>24 Done
+              </span>
+              <span className="flex items-center gap-1 font-mono text-[11px] text-amber-700">
+                <span className="w-2 h-2 rounded-full bg-amber-500"></span>3 Risk
+              </span>
+              <span className="flex items-center gap-1 font-mono text-[11px] text-rose-700 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>1 Bottleneck
+              </span>
+            </div>
+            <span className="material-symbols-outlined text-slate-400 text-[16px] group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </div>
+        </div>
+
+        {/* AI Field Telemetry Confidence */}
+        <div className="flex flex-col justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate group">
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-800 transition-colors">
+                Telemetry Verification
+              </span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[10px] font-bold flex items-center gap-1">
+                <span className="material-symbols-outlined text-[13px]">verified</span>TAMPER-PROOF
+              </span>
+            </div>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="font-mono text-3xl font-extrabold text-blue-700 tracking-tight">96.8%</span>
+              <span className="font-mono text-xs text-slate-600 font-medium">AI Confidence Score</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-slate-600 font-mono text-[11px]">
+              <span className="material-symbols-outlined text-blue-600 text-[15px]">dataset</span>
+              <span>142 Field Logs • 0 Ledger Disputes</span>
+            </div>
+            <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+              SYNCD
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. High-Density Interactive S-Curves Section */}
+      <div className="animate-entrance delay-3 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-blue-700 text-[22px]">ssid_chart</span>
+              <span className="font-bold text-slate-900 text-base">Earned Value S-Curve Telemetry & P85 Monte Carlo Projection</span>
+              <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] font-bold text-slate-700">10,000 RUNS</span>
+            </div>
+            <span className="text-xs text-slate-500 mt-0.5">Dual-envelope simulation measuring baseline variance against live daily drone surveys and certified weld joints.</span>
+          </div>
+
+          {/* Legends & Filter Toggles */}
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[11px]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-4 h-0.5 bg-slate-500 border-dashed border-t-2 border-slate-500"></span>
+              <span className="text-slate-600">P6 Baseline</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-4 h-1 rounded bg-blue-600"></span>
+              <span className="text-blue-700 font-bold">Earned Value (Actual: 61.4%)</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-4 h-1 rounded bg-amber-500"></span>
+              <span className="text-amber-700 font-bold">AI {selectedFilter} Forecast (Nov 22, 2026)</span>
+            </div>
+            <div 
+              onClick={() => setSelectedFilter(selectedFilter === 'P85' ? 'P95' : selectedFilter === 'P95' ? 'P50' : 'P85')}
+              className="flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer hover:bg-slate-200 active:scale-95 transition-all"
+            >
+              <span className="material-symbols-outlined text-[13px]">tune</span>
+              <span>{selectedFilter} Active (Click to Cycle)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* S-Curve SVG Chart Container */}
+        <div className="relative w-full h-80 bg-slate-50/70 border border-slate-200 rounded-lg p-4 mt-3 flex flex-col justify-between overflow-hidden">
+          {/* Grid Lines */}
+          <div className="absolute inset-0 flex flex-col justify-between p-6 pointer-events-none opacity-80">
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">100%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">75%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">50%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">25%</span></div>
+            <div className="w-full border-b border-slate-200 flex justify-end"><span className="font-mono text-[9px] text-slate-400 -mt-3.5">0%</span></div>
+          </div>
+
+          {/* Live SVG Paths */}
+          <div className="relative w-full h-full z-10">
+            <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 1000 240">
+              <defs>
+                <linearGradient id="actualGradientLight" x1="0%" x2="0%" y1="0%" y2="100%">
+                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.18"></stop>
+                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0.01"></stop>
+                </linearGradient>
+                <linearGradient id="p85GradientLight" x1="0%" x2="0%" y1="0%" y2="100%">
+                  <stop offset="0%" stopColor="#d97706" stopOpacity="0.15"></stop>
+                  <stop offset="100%" stopColor="#d97706" stopOpacity="0.01"></stop>
+                </linearGradient>
+              </defs>
+
+              {/* P6 Baseline Curve (Dashed Slate) */}
+              <path d="M 40 220 C 200 215, 320 185, 480 120 C 640 55, 800 25, 960 20" fill="none" opacity="0.75" stroke="#64748b" strokeDasharray="6,6" strokeWidth="2.5"></path>
+
+              {/* Actual Earned Value Area & Path */}
+              <path d="M 40 220 C 180 216, 290 192, 420 152 C 455 142, 480 135, 480 135 L 480 220 L 40 220 Z" fill="url(#actualGradientLight)"></path>
+              <path d="M 40 220 C 180 216, 290 192, 420 152 C 455 142, 480 135, 480 135" fill="none" stroke="#1d4ed8" strokeLinecap="round" strokeWidth="3.5"></path>
+
+              {/* AI Forecast Projection Curve */}
+              <path d="M 480 135 C 560 115, 680 70, 820 40 C 890 28, 940 22, 985 20 L 985 220 L 480 220 Z" fill="url(#p85GradientLight)"></path>
+              <path d="M 480 135 C 560 115, 680 70, 820 40 C 890 28, 940 22, 985 20" fill="none" stroke="#d97706" strokeLinecap="round" strokeWidth="3"></path>
+
+              {/* Data-Date Vertical Marker */}
+              <line opacity="0.85" stroke="#d97706" strokeDasharray="3,3" strokeWidth="1.75" x1="480" x2="480" y1="10" y2="225"></line>
+
+              {/* Milestone Markers */}
+              <circle cx="270" cy="196" fill="#10b981" r="5" stroke="#ffffff" strokeWidth="2" title="HDD River Crossing Cleared"></circle>
+              <circle cx="430" cy="148" fill="#1d4ed8" r="5" stroke="#ffffff" strokeWidth="2" title="Stringing Complete (72km)"></circle>
+              <circle cx="480" cy="135" fill="#ef4444" r="7" stroke="#ffffff" strokeWidth="2.5" className="animate-ping"></circle>
+              <circle cx="710" cy="65" fill="#d97706" r="5" stroke="#ffffff" strokeWidth="2" title="Section 1 Hydrotest"></circle>
+            </svg>
+
+            {/* Tooltip Pill */}
+            <div className="absolute left-[48%] top-1 -translate-x-1/2 px-2.5 py-1 rounded bg-amber-50 border border-amber-300 text-amber-900 font-mono text-[10px] font-bold shadow-xs z-20">
+              DATA-DATE: 24 OCT 2026 (WEEK {scrubberWeek})
+            </div>
+
+            {/* Floating Milestone Badges */}
+            <div className="absolute left-[24%] bottom-14 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-emerald-200 shadow-xs text-emerald-800 font-mono text-[10px] font-semibold hidden md:flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-emerald-600">done_all</span>
+              HDD River Crossing Cleared
+            </div>
+            <div className="absolute left-[39%] top-20 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-blue-200 shadow-xs text-blue-800 font-mono text-[10px] font-semibold hidden md:flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-blue-600">check</span>
+              Stringing Complete (72km)
+            </div>
+            <div className="absolute left-[49%] top-14 px-2.5 py-1 rounded bg-rose-50 border border-rose-300 text-rose-800 font-mono text-[10px] font-bold shadow-sm flex items-center gap-1.5 animate-bounce">
+              <span className="material-symbols-outlined text-[14px] text-rose-600">report_problem</span>
+              MP 62 Tie-in Lag (-4.2d)
+            </div>
+            <div className="absolute left-[70%] top-6 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs border border-amber-200 shadow-xs text-amber-800 font-mono text-[10px] font-semibold hidden lg:flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-amber-600">schedule</span>
+              Section 1 Hydrotest (P85: Mar 15)
+            </div>
+          </div>
+
+          {/* Timeline Labels */}
+          <div className="w-full flex justify-between font-mono text-[11px] text-slate-500 pt-2 border-t border-slate-200">
+            <span>OCT '26 (Start)</span>
+            <span>DEC '26</span>
+            <span>FEB '27</span>
+            <span className="text-blue-700 font-bold">APR '27 (P6 Target)</span>
+            <span>JUN '27</span>
+            <span>AUG '27</span>
+            <span className="text-amber-700 font-bold">NOV '27 (AI {selectedFilter} Forecast)</span>
+          </div>
+        </div>
+
+        {/* Date Range Interactive Scrubber */}
+        <div className="mt-3 flex flex-col md:flex-row items-center justify-between gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div className="flex items-center gap-3 w-full md:w-2/3">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-bold whitespace-nowrap">Time Scrubber</span>
+            <input 
+              type="range" 
+              min={1} 
+              max={60} 
+              value={scrubberWeek}
+              onChange={(e) => setScrubberWeek(Number(e.target.value))}
+              className="w-full accent-blue-600 bg-slate-200 rounded h-1.5 cursor-pointer"
+            />
+            <span className="font-mono text-xs text-blue-800 font-bold whitespace-nowrap px-2 py-0.5 bg-blue-50 border border-blue-200 rounded">
+              Week {scrubberWeek} / 60
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] text-slate-600">AI Delay Dampening:</span>
+            <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-bold">
+              +1.8d Buffer Recovery
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Critical Path Corridor Risk Heatmap & Key Machinery Deployment */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 animate-entrance delay-4">
+        {/* Pipeline Corridor Risk Heatmap (8 Cols) */}
+        <div className="xl:col-span-8 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-blue-700 text-[20px]">linear_scale</span>
+              <span className="font-bold text-slate-900 text-sm">Pipeline Corridor Risk Heatmap (132 KM)</span>
+            </div>
+            <span className="font-mono text-[10px] text-slate-500 font-semibold uppercase">5 Technical Sectors</span>
+          </div>
+
+          {/* Visual Heatmap Track */}
+          <div className="w-full grid grid-cols-12 h-3.5 rounded overflow-hidden mb-4 border border-slate-200 shadow-inner bg-slate-100">
+            <div className="col-span-3 bg-emerald-500" title="MP 0-30: Nominal"></div>
+            <div className="col-span-3 bg-rose-500 relative" title="MP 30-65: Critical Bottleneck">
+              <span className="absolute inset-0 bg-white/20 animate-pulse"></span>
+            </div>
+            <div className="col-span-3 bg-amber-400" title="MP 65-100: Weather Watch"></div>
+            <div className="col-span-2 bg-emerald-500" title="MP 100-120: Nominal"></div>
+            <div className="col-span-1 bg-slate-300" title="MP 120-132: Survey Staging"></div>
+          </div>
+
+          {/* Segment Details */}
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-2 cursor-pointer">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+                <div className="flex flex-col">
+                  <span className="font-mono text-xs font-bold text-slate-900">Milepost 00.0 → 30.0 (Digboi Terminal Origin)</span>
+                  <span className="text-xs text-slate-600">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+                <div className="flex flex-col items-end">
+                  <span className="text-emerald-700 font-bold">+2.0 Days Float</span>
+                  <span className="text-slate-500 text-[10px]">Progress: 98.4%</span>
+                </div>
+                <span className="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold">OPTIMAL</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border-l-4 border-l-rose-500 border border-rose-200 bg-rose-50/40 hover:bg-rose-50 transition-colors gap-2 cursor-pointer">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-600 animate-ping shrink-0"></span>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold text-rose-950">Milepost 30.0 → 65.0 (Burhi Dihing Basin)</span>
+                    <span className="px-1.5 py-0.2 rounded bg-rose-600 text-white font-mono text-[9px] font-bold shadow-xs">CRITICAL PATH</span>
                   </div>
-                  <p className="text-[11px] text-slate-400">{item.description}</p>
+                  <span className="text-xs text-slate-700">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+                <div className="flex flex-col items-end">
+                  <span className="text-rose-700 font-bold">-4.2 Days Slip</span>
+                  <span className="text-slate-500 text-[10px]">Progress: 52.1%</span>
+                </div>
+                <span className="px-2.5 py-0.5 rounded bg-rose-100 border border-rose-200 text-rose-800 font-bold">BOTTLENECK</span>
+              </div>
             </div>
-          </div>
 
-          {/* Discipline Breakdown */}
-          <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2 mb-4">
-              <Layers className="w-4 h-4 text-sky-400" />
-              Discipline Performance
-            </h2>
-
-            <div className="space-y-3.5 text-xs">
-              <div>
-                <div className="flex justify-between text-slate-300 mb-1">
-                  <span>Civil & Structural</span>
-                  <span className="font-mono text-emerald-400 font-bold">92% (On Track)</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: '92%' }} />
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-2 cursor-pointer">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+                <div className="flex flex-col">
+                  <span className="font-mono text-xs font-bold text-slate-900">Milepost 65.0 → 100.0 (Tea Garden Reserve Corridor)</span>
+                  <span className="text-xs text-slate-600">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
                 </div>
               </div>
-
-              <div>
-                <div className="flex justify-between text-slate-300 mb-1">
-                  <span>Process Piping</span>
-                  <span className="font-mono text-rose-400 font-bold">58% (-14% delay)</span>
+              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0">
+                <div className="flex flex-col items-end">
+                  <span className="text-amber-700 font-bold">0.0d Float (Amber)</span>
+                  <span className="text-slate-500 text-[10px]">Progress: 64.8%</span>
                 </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-rose-500 h-full rounded-full" style={{ width: '58%' }} />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-slate-300 mb-1">
-                  <span>Electrical Subsystems</span>
-                  <span className="font-mono text-amber-400 font-bold">65% (-6% delay)</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '65%' }} />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-slate-300 mb-1">
-                  <span>Rotating Equipment</span>
-                  <span className="font-mono text-sky-400 font-bold">40% (Upcoming)</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-sky-500 h-full rounded-full" style={{ width: '40%' }} />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-slate-300 mb-1">
-                  <span>Instrumentation & Controls</span>
-                  <span className="font-mono text-emerald-400 font-bold">85% (On Track)</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: '85%' }} />
-                </div>
+                <span className="px-2.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 font-bold">WEATHER WATCH</span>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Machinery Deployment Status (4 Cols) */}
+        <div className="xl:col-span-4 flex flex-col p-5 rounded-lg bg-white border border-slate-200 shadow-xs justify-between hover-elevate">
+          <div>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-blue-700 text-[20px]">precision_manufacturing</span>
+                <span className="font-bold text-slate-900 text-sm">Key Machinery Live Status</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] font-bold text-slate-700">TELEMETRY</span>
+            </div>
+
+            <div className="flex flex-col gap-2.5">
+              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-slate-900">Komatsu PC300-8M0 (HE-04)</span>
+                  <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">92% UTIL</span>
+                </div>
+                <span className="text-xs text-slate-600">Assigned: Rock Trenching KM 42+650. Ripper attachment engaged.</span>
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '92%' }}></div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded border border-rose-200 bg-rose-50/40 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-slate-900">CRC-Evans M-300 Orbital System</span>
+                  <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold animate-pulse">CALIBRATION REQ</span>
+                </div>
+                <span className="text-xs text-slate-600">Assigned: MP 62 Mainline Tie-in. Root-pass weld drift detected (0.4mm).</span>
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                  <div className="bg-rose-500 h-full rounded-full" style={{ width: '38%' }}></div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-slate-900">Herrenknecht HK250 HDD Rig</span>
+                  <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">100% STANDBY</span>
+                </div>
+                <span className="text-xs text-slate-600">Assigned: Burhi Dihing Crossing #2. Pilot bore completed successfully.</span>
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                  <div className="bg-blue-600 h-full rounded-full" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Contractor Variance & Commercial Compliance Table */}
+      <div className="animate-entrance delay-4 p-5 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-blue-700 text-[20px]">engineering</span>
+            <span className="font-bold text-slate-900 text-sm">Contractor Schedule Variance & Commercial Compliance</span>
+          </div>
+          <span className="font-mono text-[11px] text-slate-500">Oracle Contract Baseline v4.8</span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs font-mono">
+            <thead className="bg-slate-50 text-slate-500 uppercase border-b border-slate-200 text-[10px]">
+              <tr>
+                <th className="py-2.5 px-3">Contractor EPC Agency</th>
+                <th className="py-2.5 px-3">Scope Sector</th>
+                <th className="py-2.5 px-3">SPI</th>
+                <th className="py-2.5 px-3">Variance</th>
+                <th className="py-2.5 px-3">Contract Value</th>
+                <th className="py-2.5 px-3">Disputes</th>
+                <th className="py-2.5 px-3">Compliance Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-slate-700">
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-900 font-sans">Larsen & Toubro Hydrocarbon</td>
+                <td className="py-3 px-3">Spread 1 (MP 0-30)</td>
+                <td className="py-3 px-3 text-emerald-700 font-bold">1.04</td>
+                <td className="py-3 px-3 text-emerald-700">+1.8d Float</td>
+                <td className="py-3 px-3 font-bold">₹184.2 Cr</td>
+                <td className="py-3 px-3 text-emerald-700 font-bold">0 Active</td>
+                <td className="py-3 px-3">
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[10px]">
+                    NOMINAL
+                  </span>
+                </td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors bg-rose-50/30">
+                <td className="py-3 px-3 font-bold text-rose-950 font-sans">Punj Lloyd Pipeline Div</td>
+                <td className="py-3 px-3">Spread 2 (MP 30-65)</td>
+                <td className="py-3 px-3 text-rose-700 font-bold">0.88</td>
+                <td className="py-3 px-3 text-rose-700 font-bold">-4.2d Slip</td>
+                <td className="py-3 px-3 font-bold">₹142.6 Cr</td>
+                <td className="py-3 px-3 text-rose-700 font-bold">2 Claims</td>
+                <td className="py-3 px-3">
+                  <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 font-bold text-[10px]">
+                    ROOT PASS DRIFT
+                  </span>
+                </td>
+              </tr>
+              <tr className="hover:bg-slate-50 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-900 font-sans">Kalpataru Projects Intl</td>
+                <td className="py-3 px-3">Spread 3 (MP 65-100)</td>
+                <td className="py-3 px-3 text-amber-700 font-bold">0.99</td>
+                <td className="py-3 px-3 text-amber-700">-0.4d Float</td>
+                <td className="py-3 px-3 font-bold">₹94.0 Cr</td>
+                <td className="py-3 px-3 text-emerald-700 font-bold">0 Active</td>
+                <td className="py-3 px-3">
+                  <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold text-[10px]">
+                    WEATHER CAUTION
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

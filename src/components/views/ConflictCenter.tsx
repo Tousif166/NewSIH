@@ -1,332 +1,741 @@
 import React, { useState } from 'react';
 import { useApp } from '../../services/store';
-import { 
-  AlertCircle, 
-  CheckCircle2, 
-  Clock, 
-  FileText, 
-  Mic, 
-  FileSpreadsheet, 
-  ShieldAlert, 
-  Scale, 
-  Check, 
-  X,
-  ChevronRight,
-  Lock
-} from 'lucide-react';
-import { DataConflict } from '../../types';
 
 export const ConflictCenter: React.FC = () => {
-  const { currentRole, roleMetadata, setCurrentRole, conflicts, resolveConflict, activities } = useApp();
+  const { showToast } = useApp();
+  const [chronoFilter, setChronoFilter] = useState<'all' | 'critical' | 'claims' | 'equipment' | 'weather'>('all');
+  const [card1Endorsed, setCard1Endorsed] = useState(false);
+  const [card2Authorized, setCard2Authorized] = useState(false);
 
-  const [selectedConflictId, setSelectedConflictId] = useState<string | null>(null);
-  const [resolutionChoice, setResolutionChoice] = useState<string>('SOURCE_1');
-  const [resolutionNotes, setResolutionNotes] = useState<string>('');
-  const [mobileTab, setMobileTab] = useState<'LIST' | 'ADJUDICATE'>('LIST');
+  const handleEndorseCard1 = () => {
+    setCard1Endorsed(true);
+    showToast('Arbitration Order Enacted: WBS OIL.TRUNK.04.B recovery window (+2.1d) synced with EPPM', 'success');
+  };
 
-  const unresolved = conflicts.filter(c => c.status === 'UNRESOLVED');
-  const activeConflict = conflicts.find(c => c.id === (selectedConflictId || unresolved[0]?.id)) || conflicts[0];
-
-  const handleResolve = () => {
-    if (!activeConflict) return;
-    resolveConflict(
-      activeConflict.id,
-      resolutionChoice === 'SOURCE_1' ? activeConflict.sources[0]?.sourceRef : activeConflict.sources[1]?.sourceRef,
-      resolutionNotes || 'Planner investigated and verified ground truth.'
-    );
-    setResolutionNotes('');
+  const handleAuthorizeCard2 = () => {
+    setCard2Authorized(true);
+    showToast('Extension Capped at 3 Days: Liquidated damages of ₹2.10 Cr legally safeguarded under CVC rules', 'success');
   };
 
   return (
-    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
-      {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
-        <div>
-          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
-            Data Conflict & Chronology Center
-          </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Reconciliation layer: Detects contradictory progress percentages across disparate channels and blocks chronological sequence violations.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 flex items-center gap-2.5">
-            <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
-            <div>
-              <div className="text-[9px] uppercase font-mono text-slate-400">Open Conflicts</div>
-              <div className="text-xs font-bold text-rose-400">
-                {unresolved.length} Adjudications Pending
+    <div className="flex flex-col w-full gap-5">
+      {/* Top Urgent Alert Protocol Bar: Clean Light Alert Banner */}
+      <div className="relative overflow-hidden rounded-lg bg-rose-50 border border-rose-200 p-4 shadow-xs">
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-red-600"></div>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pl-2">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="relative w-9 h-9 rounded bg-red-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <span className="material-symbols-outlined text-[20px] animate-pulse">warning</span>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-red-600 text-white font-bold tracking-wider inline-flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                  CRITICAL BREACH SEV-1
+                </span>
+                <span className="font-mono text-[10px] text-slate-600 font-medium">
+                  PROTOCOL: <span className="text-slate-900 font-mono font-bold">CONF-2024-OIL-091</span>
+                </span>
+                <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white text-slate-700 border border-rose-200 font-medium inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                  MILESTONE THREAT: TIE-IN #4
+                </span>
               </div>
+              <span className="font-bold text-slate-900 text-sm sm:text-base mt-1 tracking-tight">
+                2 Unresolved Critical Path Schedule Conflicts Requiring Controls Intervention
+              </span>
             </div>
           </div>
+
+          <div className="flex items-center gap-4 shrink-0 self-end lg:self-center">
+            <div className="text-right hidden sm:block">
+              <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">P6 EXPOSURE WINDOW</div>
+              <div className="font-mono text-xs text-red-600 font-bold tracking-wider">-100.8 HRS (CRITICAL SLIP)</div>
+            </div>
+            <button
+              onClick={() => showToast('Tribunal Quorum Summoned: Notice transmitted to Chief Eng & Project Director', 'info')}
+              type="button"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded bg-red-600 text-white hover:bg-red-700 active:scale-95 font-mono text-xs font-semibold transition-all shadow-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">gavel</span>
+              <span>Emergency Arbitration Panel</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Adjudication Authority Banner */}
-      <div className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
-        currentRole === 'project_manager' || currentRole === 'planner'
-          ? 'bg-sky-500/10 border-sky-500/30 text-sky-200'
-          : 'bg-amber-500/10 border-amber-500/30 text-amber-200'
-      }`}>
-        <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/30">
-            <Scale className="w-4 h-4" />
+      {/* Top Metric Vitals Bento Grid: Clean White Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+        {/* Card 1 */}
+        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-300 hover:shadow-sm transition-all">
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col">
+              <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                Conflict Inventory
+              </span>
+              <span className="text-2xl text-slate-900 font-mono mt-1 font-bold">
+                02 <span className="text-sm text-slate-400 font-normal">/ 11 Resolved</span>
+              </span>
+            </div>
+            <div className="w-8 h-8 rounded bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700">
+              <span className="material-symbols-outlined text-[18px]">difference</span>
+            </div>
           </div>
-          <div>
-            <span className="font-bold text-white font-display">Dispute Adjudication Authority: </span>
-            {currentRole === 'project_manager' ? (
-              <span className="text-sky-300 font-semibold">Project Manager (Executive Binding Resolution Authority)</span>
-            ) : currentRole === 'planner' ? (
-              <span className="text-emerald-300 font-semibold">Lead Project Planner (Schedule Ground Truth Authority)</span>
-            ) : (
-              <span>Site Supervisor Persona (Read-Only Status — Disputes must be ratified by PM or Planner)</span>
-            )}
-          </div>
-        </div>
-        {currentRole === 'supervisor' && (
-          <button
-            onClick={() => setCurrentRole('project_manager')}
-            className="text-[11px] px-3 py-1.5 bg-sky-500/20 text-sky-300 border border-sky-500/40 rounded-lg hover:bg-sky-500 hover:text-slate-950 font-bold transition-all shrink-0 self-start sm:self-auto cursor-pointer"
-          >
-            Switch to Project Manager to Adjudicate
-          </button>
-        )}
-      </div>
-
-      {/* Mobile Tab Switcher */}
-      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
-        <button
-          onClick={() => setMobileTab('LIST')}
-          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-            mobileTab === 'LIST'
-              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <span>Conflict Queue ({conflicts.length})</span>
-          {unresolved.length > 0 && (
-            <span className="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full">
-              {unresolved.length}
+          <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between font-mono text-[10px]">
+            <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> 84.6% Closed &lt;72h
             </span>
-          )}
-        </button>
-
-        <button
-          onClick={() => setMobileTab('ADJUDICATE')}
-          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-            mobileTab === 'ADJUDICATE'
-              ? 'bg-rose-600 text-white shadow font-bold'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <Scale className="w-3.5 h-3.5" />
-          <span>Adjudicate</span>
-        </button>
-      </div>
-
-      {/* Main Grid: Conflict List on Left, Resolution Workbench on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-        {/* Left Col: Conflict Cards */}
-        <div className={`lg:col-span-5 space-y-3 ${mobileTab === 'ADJUDICATE' ? 'hidden lg:block' : 'block'}`}>
-          <div className="text-xs font-mono uppercase text-slate-400 px-1">
-            Detected Contradictions ({conflicts.length})
-          </div>
-
-          <div className="space-y-2.5">
-            {conflicts.map(cnf => {
-              const isSelected = activeConflict?.id === cnf.id;
-              const isUnresolved = cnf.status === 'UNRESOLVED';
-
-              return (
-                <button
-                  key={cnf.id}
-                  onClick={() => {
-                    setSelectedConflictId(cnf.id);
-                    setMobileTab('ADJUDICATE');
-                  }}
-                  className={`w-full text-left p-4 rounded-xl border transition-all text-xs space-y-2 ${
-                    isSelected 
-                      ? 'bg-slate-800/90 border-rose-500/80 shadow-md ring-1 ring-rose-500/30' 
-                      : 'bg-slate-900 border-slate-800 hover:border-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold ${
-                      cnf.severity === 'CRITICAL' 
-                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' 
-                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                    }`}>
-                      {cnf.conflictType.replace('_', ' ')}
-                    </span>
-                    <span className={`text-[10px] font-mono font-bold ${
-                      isUnresolved ? 'text-rose-400' : 'text-emerald-400'
-                    }`}>
-                      {cnf.status}
-                    </span>
-                  </div>
-
-                  <div className="font-bold text-slate-200 line-clamp-1">
-                    {cnf.title}
-                  </div>
-
-                  <p className="text-[11px] text-slate-400 line-clamp-2">
-                    {cnf.description}
-                  </p>
-
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono pt-1 border-t border-slate-800/60">
-                    <span className="text-amber-400">{cnf.activityCode}</span>
-                    <span>{cnf.detectedAt.split('T')[0]}</span>
-                  </div>
-                </button>
-              );
-            })}
+            <span className="text-slate-400">90-Day Audit Cycle</span>
           </div>
         </div>
 
-        {/* Right Col: Deep Cross-Examination & Reconciliation Workbench */}
-        <div className={`lg:col-span-7 ${mobileTab === 'LIST' ? 'hidden lg:block' : 'block'}`}>
-          {activeConflict ? (
-            <div className="bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 space-y-4 sm:space-y-6 shadow-sm">
+        {/* Card 2 */}
+        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-rose-300 hover:shadow-sm transition-all">
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col">
+              <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                Critical Path Delay Exposure
+              </span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl text-red-600 font-mono font-bold">-4.2</span>
+                <span className="text-xs text-slate-500 font-medium font-mono">DAYS</span>
+              </div>
+            </div>
+            <div className="w-8 h-8 rounded bg-rose-50 border border-rose-100 flex items-center justify-center text-red-600">
+              <span className="material-symbols-outlined text-[18px]">trending_down</span>
+            </div>
+          </div>
+          <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between font-mono text-[10px]">
+            <span className="text-red-700 font-bold">₹2.10 Cr LD At Stake</span>
+            <span className="text-slate-400">Liquidated Damages</span>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-sky-300 hover:shadow-sm transition-all">
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col">
+              <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                Dominant Delay Vector
+              </span>
+              <span className="text-base text-slate-900 font-bold mt-1 truncate">Geotech & Hydro-Met</span>
+            </div>
+            <div className="w-8 h-8 rounded bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-700">
+              <span className="material-symbols-outlined text-[18px]">storm</span>
+            </div>
+          </div>
+          <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between font-mono text-[10px]">
+            <span className="text-sky-800 font-medium">Monsoon Runoff (Digboi)</span>
+            <span className="text-slate-400">64% Total Variance</span>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-emerald-300 hover:shadow-sm transition-all">
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col">
+              <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                AI Arbitration Benchmark
+              </span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl text-emerald-700 font-mono font-bold">84.6%</span>
+                <span className="text-xs text-emerald-700 font-semibold font-mono">TRIBUNAL-FREE</span>
+              </div>
+            </div>
+            <div className="w-8 h-8 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700">
+              <span className="material-symbols-outlined text-[18px]">verified_user</span>
+            </div>
+          </div>
+          <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between font-mono text-[10px]">
+            <span className="text-emerald-700 font-semibold">Zero Litigation Escalations</span>
+            <span className="text-slate-400">CVC Clause Comp.</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Primary Detail Section: The 2 Active Critical Disputes */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded bg-blue-700"></span>
+            <span className="font-bold text-slate-900 text-sm tracking-tight">Active Discrepancy Forensic Desks</span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold ml-1">
+              2 IN QUEUE
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
+            <span className="material-symbols-outlined text-[16px] text-emerald-600">memory</span>
+            <span>SYNCHRONIZED WITH ORACLE P6 R19.12 RUNTIME</span>
+          </div>
+        </div>
+
+        {/* Conflict Card #1 */}
+        <div className="rounded-lg bg-white border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+          {/* Card Header */}
+          <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-3">
+              <span className="px-2 py-1 rounded bg-red-600 text-white font-mono text-[10px] font-bold shrink-0">
+                CRIT-01
+              </span>
               <div>
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-mono font-bold">
-                    {activeConflict.severity} SEVERITY
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-[10px] text-blue-700 font-semibold">WBS: OIL.TRUNK.04.B (Spread 2)</span>
+                  <span className="text-slate-300 text-xs">•</span>
+                  <span className="font-mono text-[10px] text-slate-600">ACT-WD-3105 ⇄ ACT-TR-4290</span>
+                  <span className="text-slate-300 text-xs">•</span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-red-700 font-semibold">
+                    SPATIAL & RESOURCE COLLISION
                   </span>
-                  <span className="text-slate-400 text-xs font-mono">• Node: <strong className="text-white">{activeConflict.activityCode}</strong></span>
                 </div>
-                <h2 className="text-base font-bold text-white">
-                  {activeConflict.title}
-                </h2>
-                <p className="text-xs text-slate-300 mt-2 bg-slate-950 p-3 rounded-lg border border-slate-800/80 leading-relaxed">
-                  {activeConflict.description}
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base mt-1">
+                  Milepost 62 Tie-in vs Automatic Orbital Welding Rig Misalignment
+                </h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 self-end md:self-center shrink-0">
+              <div className="px-2.5 py-1 rounded bg-white border border-slate-200 text-right">
+                <div className="font-mono text-[10px] text-slate-400">CP IMPACT</div>
+                <div className="font-mono text-xs text-red-600 font-bold">-1.5 DAYS SLIP</div>
+              </div>
+              <span className="material-symbols-outlined text-slate-400">more_vert</span>
+            </div>
+          </div>
+
+          {/* Card Body: Split Grid */}
+          <div className="p-4 grid grid-cols-1 lg:grid-cols-12 gap-5">
+            {/* Left: Diagnostic & Evidence (7 cols) */}
+            <div className="lg:col-span-7 flex flex-col gap-4">
+              {/* Root Cause Box */}
+              <div className="rounded-lg bg-blue-50/50 border border-blue-100 p-3.5 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-blue-700 uppercase font-bold flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[16px]">psychology</span> Forensic Root Cause Analysis
+                  </span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
+                    CONFIDENCE: 98.4%
+                  </span>
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed">
+                  Trench excavated 1.8m ahead of schedule in Sector A while CRC-Evans M-300 welding head suffered calibration drift (0.4mm root-pass weld defect). Mechanical gang and trenching spread are now physically occupying the same 45-meter corridor without valid safety separation.
                 </p>
               </div>
 
-              {/* Side-by-Side Contradictory Sources */}
-              <div className="space-y-3">
-                <div className="text-xs font-mono uppercase text-slate-400 font-semibold flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-amber-400" />
-                  Cross-Channel Source Discrepancy Evidence
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {activeConflict.sources.map((src, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-4 rounded-xl border space-y-2.5 text-xs ${
-                        idx === 0 
-                          ? 'bg-slate-950 border-amber-500/40' 
-                          : 'bg-slate-950 border-sky-500/40'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-slate-850 text-slate-300 border border-slate-700">
-                          SOURCE #{idx + 1} ({src.sourceType})
-                        </span>
-                        <span className="text-[10px] text-slate-500 font-mono">{src.timestamp}</span>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="text-slate-400 text-[10px] uppercase font-mono">Reported Claim:</div>
-                        <div className="text-lg font-black text-white">{src.reportedValue}</div>
-                      </div>
-
-                      <div className="space-y-0.5 pt-1 border-t border-slate-800/80 text-[11px] text-slate-400">
-                        <div>Channel: <span className="text-slate-200 font-mono">{src.sourceRef}</span></div>
-                        <div>Submitter: <span className="text-slate-200">{src.reporter}</span></div>
-                      </div>
+              {/* Field Evidence Strip */}
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                  Field Evidence Dossier (NDT Radiography + RTK GNSS)
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* Evidence 1: NDT Film */}
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
+                    <div className="relative w-full h-24 rounded overflow-hidden bg-slate-900 flex items-center justify-center">
+                      <div className="w-full h-1 bg-emerald-400/80 my-auto shadow-sm"></div>
+                      <span className="absolute bottom-1 right-1 font-mono text-[9px] bg-white/95 px-1.5 py-0.5 rounded text-red-600 font-bold">
+                        DEFECT: 0.4mm
+                      </span>
                     </div>
-                  ))}
+                    <div className="flex items-center justify-between px-1 mt-0.5 font-mono text-[10px]">
+                      <span className="text-slate-800 font-bold truncate">NDT Film #RT-391</span>
+                      <span className="text-slate-500">JOINT J-118</span>
+                    </div>
+                  </div>
+
+                  {/* Evidence 2: Drone Corridor */}
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
+                    <div className="relative w-full h-24 rounded overflow-hidden bg-emerald-950/80 flex items-center justify-center">
+                      <div className="w-2/3 h-6 border border-emerald-400/40 rounded flex items-center justify-center text-[9px] font-mono text-emerald-300">
+                        SURVEY ORTHO
+                      </div>
+                      <span className="absolute bottom-1 right-1 font-mono text-[9px] bg-white/95 px-1.5 py-0.5 rounded text-blue-700 font-bold">
+                        CORRIDOR 42+480
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between px-1 mt-0.5 font-mono text-[10px]">
+                      <span className="text-slate-800 font-bold truncate">UAV Orthomosaic</span>
+                      <span className="text-slate-500">ALT 45M</span>
+                    </div>
+                  </div>
+
+                  {/* Evidence 3: GNSS Vector Telemetry */}
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 flex flex-col justify-between">
+                    <div className="flex flex-col gap-0.5 font-mono text-[10px]">
+                      <span className="text-slate-800 font-bold uppercase">GNSS Deviation Readout</span>
+                      <div className="text-slate-600">LAT: 27.38091° N</div>
+                      <div className="text-slate-600">LON: 95.31904° E</div>
+                      <div className="text-red-600 font-bold mt-1">Δ LATERAL: +0.42m DRIFT</div>
+                    </div>
+                    <div className="bg-white border border-slate-200 px-2 py-0.5 rounded text-center mt-1">
+                      <span className="font-mono text-[9px] text-slate-500 font-bold uppercase">TRIMBLE RTK VERIFIED</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Human Adjudication Controls */}
-              {activeConflict.status === 'UNRESOLVED' ? (
-                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4">
-                  <div className="text-xs font-mono font-bold text-white uppercase">
-                    Planner Adjudication & Schedule Resolution
+              {/* Reconstructed Chronology Mini-Flow */}
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                  AI Reconstructed Incident Chronology
+                </span>
+                <div className="flex flex-col gap-1.5 font-mono text-[10px]">
+                  <div className="flex items-start gap-2 p-2 rounded bg-slate-50 border border-slate-100">
+                    <span className="text-blue-700 font-bold shrink-0">21 OCT 08:30 IST</span>
+                    <span className="text-slate-400">→</span>
+                    <span className="text-slate-800">Trench opened by Komatsu PC300 at KM 42+480 (Ahead by 26 hours vs baseline).</span>
                   </div>
+                  <div className="flex items-start gap-2 p-2 rounded bg-slate-50 border border-slate-100">
+                    <span className="text-amber-700 font-bold shrink-0">22 OCT 14:15 IST</span>
+                    <span className="text-slate-400">→</span>
+                    <span className="text-slate-800">CRC-Evans M-300 welding crew flagged joint #J-118 refusal due to thermal pipe warp.</span>
+                  </div>
+                  <div className="flex items-start gap-2 p-2 rounded bg-rose-50 border border-rose-100">
+                    <span className="text-red-700 font-bold shrink-0">23 OCT 09:00 IST</span>
+                    <span className="text-slate-400">→</span>
+                    <span className="text-red-900 font-medium">P6 baseline slip confirmed: Negative total float (-36h). Resource blockage declared.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs text-slate-400 block font-mono">Select Verified Ground Truth:</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                      <button
-                        type="button"
-                        onClick={() => setResolutionChoice('SOURCE_1')}
-                        className={`p-2.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
-                          resolutionChoice === 'SOURCE_1'
-                            ? 'bg-amber-500/10 border-amber-400 text-amber-300 font-semibold'
-                            : 'bg-slate-900 border-slate-800 text-slate-400'
-                        }`}
-                      >
-                        <Check className="w-3.5 h-3.5 shrink-0" />
-                        <span>Accept Source 1 ({activeConflict.sources[0]?.reportedValue})</span>
-                      </button>
+            {/* Right: AI Arbitration Vector & Action Panel (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col justify-between rounded-lg bg-emerald-50/50 border border-emerald-200 p-4">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between pb-2 border-b border-emerald-200">
+                  <span className="font-mono text-[10px] text-emerald-800 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                    <span className="material-symbols-outlined text-[18px] text-emerald-600">verified</span>
+                    SiteSync Recommended Arbitrament
+                  </span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold">
+                    +2.1 DAYS RECOVERY
+                  </span>
+                </div>
 
-                      <button
-                        type="button"
-                        onClick={() => setResolutionChoice('SOURCE_2')}
-                        className={`p-2.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
-                          resolutionChoice === 'SOURCE_2'
-                            ? 'bg-sky-500/10 border-sky-400 text-sky-300 font-semibold'
-                            : 'bg-slate-900 border-slate-800 text-slate-400'
-                        }`}
-                      >
-                        <Check className="w-3.5 h-3.5 shrink-0" />
-                        <span>Accept Source 2 ({activeConflict.sources[1]?.reportedValue || 'Alternative'})</span>
-                      </button>
+                <div className="rounded-lg bg-white border border-emerald-100 p-3.5 flex flex-col gap-2 shadow-xs">
+                  <span className="font-bold text-slate-900 text-xs sm:text-sm">Immediate Spread Bypass Maneuver</span>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Re-route heavy orbital welding spread directly to KM 43+100 dry-pad corridor. Deploy manual shielded-metal arc backup crew (Team Assam-B) for tie-in joint rectification at KM 42+480.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    <div className="px-2 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[10px] font-semibold">
+                      Cost delta: ₹2.4 Lakh
+                    </div>
+                    <div className="px-2 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] font-semibold">
+                      Zero Milestone Pen.
                     </div>
                   </div>
-
-                  <div className="space-y-1">
-                    <label className="text-xs text-slate-400 block font-mono">Resolution Justification (Recorded in Immutable Audit Trail):</label>
-                    <input
-                      type="text"
-                      value={resolutionNotes}
-                      onChange={(e) => setResolutionNotes(e.target.value)}
-                      placeholder="e.g. Physical site inspection verified 18m erected today (78% total complete)."
-                      className="w-full bg-slate-900 text-slate-200 text-xs px-3 py-2 rounded-lg border border-slate-700 focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-
-                  {currentRole === 'supervisor' ? (
-                    <button
-                      onClick={() => setCurrentRole('project_manager')}
-                      className="w-full py-2.5 rounded-lg bg-slate-800 border border-amber-500/50 text-amber-300 hover:bg-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98 cursor-pointer"
-                    >
-                      <Lock className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Requires PM Authority (Click to Switch to Project Manager & Adjudicate)</span>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={handleResolve}
-                      className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-98 cursor-pointer"
-                    >
-                      <Check className="w-4 h-4" />
-                      <span>Confirm Adjudication & Log Schedule Resolution ({roleMetadata.shortLabel})</span>
-                    </button>
-                  )}
                 </div>
-              ) : (
-                <div className="p-4 bg-emerald-950/40 rounded-xl border border-emerald-600/40 text-xs space-y-1.5">
-                  <div className="flex items-center gap-2 text-emerald-400 font-bold">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Conflict Adjudicated & Resolved</span>
+
+                {/* Arbitration Impact Gauge */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between font-mono text-[10px]">
+                    <span className="text-slate-600 font-medium">Schedule Float Recovery Probability</span>
+                    <span className="text-emerald-700 font-bold">94.2%</span>
                   </div>
-                  <p className="text-slate-300">{activeConflict.resolutionNotes}</p>
-                  <div className="text-[10px] text-slate-400 font-mono">
-                    Resolved by: {activeConflict.resolvedBy || 'Lead Project Planner'}
+                  <div className="w-full h-2 rounded bg-slate-200 overflow-hidden flex">
+                    <div className="bg-emerald-600 h-full rounded" style={{ width: '94%' }}></div>
+                  </div>
+                  <span className="font-mono text-[9px] text-slate-500">
+                    Validated against 14 prior Northeast India pipeline monsoonal lay records.
+                  </span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-emerald-200">
+                <button
+                  onClick={handleEndorseCard1}
+                  disabled={card1Endorsed}
+                  type="button"
+                  className={`w-full py-2.5 px-3 rounded font-mono text-xs font-semibold transition-all flex items-center justify-center gap-2 shadow-xs ${
+                    card1Endorsed
+                      ? 'bg-emerald-600 text-white cursor-default'
+                      : 'bg-blue-700 hover:bg-blue-800 text-white active:scale-95'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    {card1Endorsed ? 'verified' : 'check_circle'}
+                  </span>
+                  <span>{card1Endorsed ? 'Endorsed & Logged to P6' : 'Endorse Arbitration Resolution'}</span>
+                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => showToast('Dispute Dossier Queued under Contract Clause 67.2', 'info')}
+                    type="button"
+                    className="py-2 px-2 rounded bg-white hover:bg-rose-50 text-slate-700 hover:text-red-700 hover:border-red-300 active:scale-95 border border-slate-200 font-mono text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-red-600">gavel</span>
+                    <span>Dispute Claim</span>
+                  </button>
+                  <button
+                    onClick={() => showToast('Simulating Team Assam-B bypass CPM impact...', 'info')}
+                    type="button"
+                    className="py-2 px-2 rounded bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-800 hover:border-blue-300 active:scale-95 border border-slate-200 font-mono text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-blue-700">tune</span>
+                    <span>Simulate What-If</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Conflict Card #2 */}
+        <div className="rounded-lg bg-white border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+          {/* Card Header */}
+          <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-3">
+              <span className="px-2 py-1 rounded bg-amber-500 text-white font-mono text-[10px] font-bold shrink-0">
+                CRIT-02
+              </span>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-[10px] text-slate-900 font-bold">
+                    CONTRACTOR: L&T HYDROCARBON ENGINEERING
+                  </span>
+                  <span className="text-slate-300 text-xs">•</span>
+                  <span className="font-mono text-[10px] text-slate-500">CONTRACT PKG: OIL/TR/2023/C-08</span>
+                  <span className="text-slate-300 text-xs">•</span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-red-700 font-semibold">
+                    FORCE MAJEURE COMMERCIAL CLAIM
+                  </span>
+                </div>
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base mt-1">
+                  Monsoon Rain Extension & Idling Charges Claim (14 Calendar Days)
+                </h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 self-end md:self-center shrink-0">
+              <div className="px-2.5 py-1 rounded bg-white border border-slate-200 text-right">
+                <div className="font-mono text-[10px] text-slate-400">CLAIM QUANTUM</div>
+                <div className="font-mono text-xs text-slate-900 font-bold">14 DAYS / ₹1.85 CR</div>
+              </div>
+              <span className="material-symbols-outlined text-slate-400">more_vert</span>
+            </div>
+          </div>
+
+          {/* Card Body: Split Grid */}
+          <div className="p-4 grid grid-cols-1 lg:grid-cols-12 gap-5">
+            {/* Left: Forensic Cross-Audit & Radar (7 cols) */}
+            <div className="lg:col-span-7 flex flex-col gap-4">
+              <div className="rounded-lg bg-slate-50 border border-slate-200 p-3.5 flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-blue-700 uppercase font-bold flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[16px] text-blue-600">satellite_alt</span>
+                    Satellite SAR (Sentinel-1) & Digboi Weather Station Cross-Audit
+                  </span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-rose-100 text-red-800 font-bold">
+                    11 DAYS DISPROVED
+                  </span>
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed">
+                  Contractor submitted a 14-day schedule relief petition citing unworkable monsoonal inundation between 04 Oct and 17 Oct. Cryptographic telemetry cross-reference against Indian Meteorological Department (IMD) Digboi station radar and European Space Agency SAR soil backscatter data confirms only <span className="text-emerald-700 font-bold font-mono">3 legitimate torrential rain days (&gt;65mm/day)</span>.
+                </p>
+              </div>
+
+              {/* Table */}
+              <div className="flex flex-col gap-1.5">
+                <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+                  Forensic Rainfall & Rig Utilization Matrix
+                </span>
+                <div className="overflow-x-auto rounded-lg border border-slate-200">
+                  <table className="w-full text-left font-mono text-[10px]">
+                    <thead className="bg-slate-100 text-slate-600 font-bold uppercase border-b border-slate-200">
+                      <tr>
+                        <th className="py-2 px-3">Date Window</th>
+                        <th className="py-2 px-3">Claimed Condition</th>
+                        <th className="py-2 px-3">IMD / SAR Telemetry</th>
+                        <th className="py-2 px-3">UAV Flyover Evidence</th>
+                        <th className="py-2 px-3 text-right">Audit Determination</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 text-slate-800 bg-white">
+                      <tr className="hover:bg-slate-50">
+                        <td className="py-2 px-3 font-bold">04–06 Oct</td>
+                        <td className="py-2 px-3 text-red-600 font-medium">Heavy Cloudburst (&gt;80mm)</td>
+                        <td className="py-2 px-3 text-emerald-700 font-bold">72.4mm / Sat Saturation</td>
+                        <td className="py-2 px-3 text-slate-500">Standing floodwater 0.6m</td>
+                        <td className="py-2 px-3 text-right text-emerald-700 font-bold">LEGITIMATE (3.0d)</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="py-2 px-3 font-bold">07–12 Oct</td>
+                        <td className="py-2 px-3 text-red-600 font-medium">Saturated Ground Runoff</td>
+                        <td className="py-2 px-3 text-blue-700 font-semibold">4.2mm / Dry SAR Scatter</td>
+                        <td className="py-2 px-3 text-slate-700">Haul road accessible to 40T</td>
+                        <td className="py-2 px-3 text-right text-red-600 font-bold">DISALLOWED (6.0d)</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="py-2 px-3 font-bold">13–17 Oct</td>
+                        <td className="py-2 px-3 text-red-600 font-medium">Inaccessible RoW Corridor</td>
+                        <td className="py-2 px-3 text-blue-700 font-semibold">0.0mm / Clear sky</td>
+                        <td className="py-2 px-3 text-slate-700">Contractor excavators demobilized</td>
+                        <td className="py-2 px-3 text-right text-red-600 font-bold">DISALLOWED (5.0d)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Drone flight verification callout */}
+              <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="w-16 h-12 rounded bg-amber-950/80 flex items-center justify-center text-[9px] font-mono text-amber-300 border border-amber-500/40 shrink-0">
+                  DRY HAUL
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold text-slate-900 text-xs">
+                    UAV Photogrammetry Flight OIL-SRV-882 (11 Oct, 11:42 IST)
+                  </span>
+                  <span className="font-mono text-[10px] text-slate-500 mt-0.5">
+                    Soil compaction index: 96% CBR. Dump trucks operating without track slips. Clear evidence against Force Majeure conditions.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: AI Arbitrated Ruling & Signoff (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col justify-between rounded-lg bg-slate-50 border border-slate-200 p-4">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                  <span className="font-mono text-[10px] text-red-700 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                    <span className="material-symbols-outlined text-[18px]">balance</span>
+                    Automated Legal-Engineering Finding
+                  </span>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-rose-100 text-red-800 font-bold">
+                    PARTIALLY DISPUTED
+                  </span>
+                </div>
+
+                <div className="rounded-lg bg-white border border-slate-200 p-3.5 flex flex-col gap-2 shadow-xs">
+                  <div className="flex justify-between items-center font-mono text-xs">
+                    <span className="text-slate-500">LEGITIMATE RELIEF:</span>
+                    <span className="text-emerald-700 font-bold">3.0 CALENDAR DAYS</span>
+                  </div>
+                  <div className="flex justify-between items-center font-mono text-xs">
+                    <span className="text-slate-500">DISALLOWED DEFICIT:</span>
+                    <span className="text-red-600 font-bold">11.0 CALENDAR DAYS</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 bg-blue-50 border border-blue-100 p-2 rounded font-mono text-xs">
+                    <span className="text-blue-900 font-bold text-[10px]">LIQUIDATED DAMAGES SAFEGUARDED:</span>
+                    <span className="text-blue-700 font-bold text-sm">₹2.10 CRORE</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-500 font-mono text-[10px] mt-1">
+                    <span className="material-symbols-outlined text-[16px] text-emerald-600">verified</span>
+                    <span>Awaiting Chief Planning Engineer Authorization (Pranjal Saikia)</span>
                   </div>
                 </div>
-              )}
+
+                <div className="rounded-lg bg-white border border-slate-200 p-2.5 flex items-center gap-2.5 shadow-xs">
+                  <span className="material-symbols-outlined text-blue-700 text-[22px]">policy</span>
+                  <div className="flex flex-col">
+                    <span className="font-mono text-[10px] text-slate-900 font-bold">CVC / CAG Vigilance Compliance</span>
+                    <span className="font-mono text-[9px] text-slate-500">Forensic chain of custody sealed under SHA-256 for public sector audit defense.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-slate-200">
+                <button
+                  onClick={handleAuthorizeCard2}
+                  disabled={card2Authorized}
+                  type="button"
+                  className={`w-full py-2.5 px-3 rounded font-mono text-xs font-semibold transition-all flex items-center justify-center gap-2 shadow-xs ${
+                    card2Authorized
+                      ? 'bg-emerald-700 text-white cursor-default'
+                      : 'bg-emerald-600 hover:bg-emerald-700 text-white active:scale-95'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    {card2Authorized ? 'lock' : 'verified'}
+                  </span>
+                  <span>{card2Authorized ? 'Form 8-B Signed (3-Day Limit)' : 'Authorize 3-Day Extension Only'}</span>
+                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => showToast('Form 8-B Rejection Issued to L&T Project Director', 'error')}
+                    type="button"
+                    className="py-2 px-2 rounded bg-white hover:bg-rose-50 text-red-700 hover:border-red-300 active:scale-95 border border-slate-200 font-mono text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-red-600">block</span>
+                    <span>Form 8-B Rejection</span>
+                  </button>
+                  <button
+                    onClick={() => showToast('Exporting CVC Cryptographic Dossier...', 'info')}
+                    type="button"
+                    className="py-2 px-2 rounded bg-white hover:bg-slate-50 text-slate-700 hover:border-slate-300 active:scale-95 border border-slate-200 font-mono text-[11px] font-medium transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-blue-700">download</span>
+                    <span>CVC Audit Dossier</span>
+                  </button>
+                </div>
+              </div>
             </div>
-          ) : (
-            <div className="p-12 text-center bg-slate-900 rounded-xl border border-slate-800 text-slate-400">
-              Select a conflict from the left column.
+          </div>
+        </div>
+      </div>
+
+      {/* Interactive Chronological Event Timeline Ribbon */}
+      <div className="rounded-lg bg-white border border-slate-200 p-4 shadow-xs flex flex-col gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-slate-100">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-blue-700 text-[20px]">timeline</span>
+            <span className="font-bold text-slate-900 text-sm tracking-tight">Telemetry Delay Chronology Strip</span>
+            <span className="font-mono text-[10px] text-slate-400 ml-2">OCTOBER 2024 FIELD TRAJECTORY</span>
+          </div>
+
+          {/* Filter Chips */}
+          <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
+            {(
+              [
+                { id: 'all', label: 'All Events (18)' },
+                { id: 'critical', label: 'Critical Path Only' },
+                { id: 'claims', label: 'Contractor Claims' },
+                { id: 'equipment', label: 'Equipment Telemetry' },
+                { id: 'weather', label: 'Weather Influx' }
+              ] as const
+            ).map((f) => (
+              <button
+                key={f.id}
+                onClick={() => setChronoFilter(f.id)}
+                className={`px-2.5 py-1 rounded font-semibold transition-all shadow-xs ${
+                  chronoFilter === f.id
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Timeline Horizon View */}
+        <div className="relative overflow-x-auto pb-2">
+          <div className="min-w-[900px] flex flex-col gap-4">
+            {/* Day Scale */}
+            <div className="grid grid-cols-7 gap-2 text-center font-mono text-[10px] text-slate-600">
+              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+                01–04 OCT <br />
+                <span className="text-slate-500">W1-TRENCH</span>
+              </div>
+              <div className="p-2 rounded bg-rose-50 border border-rose-200">
+                05–08 OCT <br />
+                <span className="text-red-700 font-bold">RAIN-PEAK</span>
+              </div>
+              <div className="p-2 rounded bg-sky-50 border border-sky-200">
+                09–12 OCT <br />
+                <span className="text-sky-700 font-bold">SAR-DRY</span>
+              </div>
+              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+                13–16 OCT <br />
+                <span className="text-slate-500">HAUL-CLEAR</span>
+              </div>
+              <div className="p-2 rounded bg-emerald-50 border border-emerald-200">
+                17–20 OCT <br />
+                <span className="text-emerald-700 font-bold">WELD-PREP</span>
+              </div>
+              <div className="p-2 rounded bg-rose-50 border border-rose-200">
+                21–24 OCT <br />
+                <span className="text-red-700 font-bold">J-118 DRIFT</span>
+              </div>
+              <div className="p-2 rounded bg-blue-50 border border-blue-200">
+                25–28 OCT <br />
+                <span className="text-blue-700 font-bold">ARBITRATE</span>
+              </div>
             </div>
-          )}
+
+            {/* Horizontal Event Track Ribbon */}
+            <div className="relative h-28 rounded-lg bg-slate-50 border border-slate-200 flex items-center px-4 overflow-visible">
+              {/* Central Baseline Datum Line */}
+              <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-300 -translate-y-1/2"></div>
+
+              {/* Event Node 1: Weather */}
+              <div
+                className={`absolute left-[16%] flex flex-col items-center group cursor-pointer transition-all ${
+                  chronoFilter !== 'all' && chronoFilter !== 'weather' ? 'opacity-20' : 'opacity-100'
+                }`}
+              >
+                <div className="relative w-8 h-8 rounded-full bg-sky-100 text-sky-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-[16px]">water_drop</span>
+                </div>
+                <div className="absolute top-9 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                  <div className="font-mono text-[9px] text-sky-800 font-bold">05 OCT: 72mm Rain</div>
+                  <div className="font-mono text-[9px] text-slate-500 truncate">Flooding Spread 1</div>
+                </div>
+              </div>
+
+              {/* Event Node 2: L&T Claim Lodged */}
+              <div
+                className={`absolute left-[38%] flex flex-col items-center group cursor-pointer transition-all ${
+                  chronoFilter !== 'all' && chronoFilter !== 'claims' ? 'opacity-20' : 'opacity-100'
+                }`}
+              >
+                <div className="relative w-8 h-8 rounded-full bg-red-100 text-red-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-[16px]">description</span>
+                </div>
+                <div className="absolute -top-14 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                  <div className="font-mono text-[9px] text-red-600 font-bold">14 OCT: 14D Claim</div>
+                  <div className="font-mono text-[9px] text-slate-500 truncate">L&T Force Majeure</div>
+                </div>
+              </div>
+
+              {/* Event Node 3: Trench Advancing */}
+              <div
+                className={`absolute left-[62%] flex flex-col items-center group cursor-pointer transition-all ${
+                  chronoFilter !== 'all' && chronoFilter !== 'equipment' ? 'opacity-20' : 'opacity-100'
+                }`}
+              >
+                <div className="relative w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-[16px]">engineering</span>
+                </div>
+                <div className="absolute top-9 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                  <div className="font-mono text-[9px] text-emerald-800 font-bold">21 OCT: Trench Rush</div>
+                  <div className="font-mono text-[9px] text-slate-500 truncate">+1.8m Lead over Weld</div>
+                </div>
+              </div>
+
+              {/* Event Node 4: Rig Failure & Slip */}
+              <div
+                className={`absolute left-[78%] flex flex-col items-center group cursor-pointer transition-all ${
+                  chronoFilter !== 'all' && chronoFilter !== 'critical' ? 'opacity-20' : 'opacity-100'
+                }`}
+              >
+                <div className="relative w-8 h-8 rounded-full bg-red-600 text-white border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform animate-pulse">
+                  <span className="material-symbols-outlined text-[16px]">error</span>
+                </div>
+                <div className="absolute -top-14 w-40 -left-16 text-center rounded bg-white border border-rose-200 p-1.5 shadow-sm">
+                  <div className="font-mono text-[9px] text-red-600 font-bold">22 OCT: M-300 Rig Drift</div>
+                  <div className="font-mono text-[9px] text-slate-500 truncate">0.4mm NDT Root Refusal</div>
+                </div>
+              </div>
+
+              {/* Event Node 5: Current Arbitration Marker */}
+              <div className="absolute left-[92%] flex flex-col items-center">
+                <div className="w-3 h-12 bg-blue-700 rounded shadow-xs"></div>
+                <div className="absolute top-14 w-32 -left-14 text-center rounded bg-blue-700 text-white p-1 shadow-sm">
+                  <div className="font-mono text-[9px] font-bold uppercase tracking-wider">TODAY: ARBITRATION</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Legend Ribbon */}
+            <div className="flex flex-wrap items-center justify-between text-slate-500 font-mono text-[10px] pt-1">
+              <div className="flex items-center gap-4">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-600"></span>Sev-1 Unresolved
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-blue-700"></span>Pending Endorsement
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600"></span>Telemetry Validated
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-sky-600"></span>Atmospheric Sensor
+                </span>
+              </div>
+              <span className="text-slate-500">CHRONO-ENGINE: SITESYNC-VERITAS-4.8 // 128 SENSOR CHANNELS ACTIVE</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
