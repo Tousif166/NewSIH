@@ -52,7 +52,10 @@
   word-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+  user-select: none;
+  vertical-align: middle;
 }
 
 /* Tabular Numerals for P6 and WBS Codes */

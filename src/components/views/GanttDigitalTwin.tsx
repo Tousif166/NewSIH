@@ -252,27 +252,27 @@ export const GanttDigitalTwin: React.FC = () => {
         {viewMode !== 'GANTT' && (
           <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs flex flex-col gap-3 relative overflow-hidden hover-elevate">
             {/* Section Micro Header */}
-            <div className="flex items-center justify-between z-10">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs">
-                  <span className="material-symbols-outlined text-[18px]">maps_ar</span>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 z-10">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-7 h-7 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs shrink-0 overflow-hidden">
+                  <span className="material-symbols-outlined text-[18px]">layers</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-slate-900 font-bold">132KM GIS CORRIDOR DIGITAL TWIN</span>
+                <div className="flex flex-wrap items-center gap-2 min-w-0">
+                  <span className="text-sm text-slate-900 font-bold whitespace-nowrap">132KM GIS CORRIDOR DIGITAL TWIN</span>
                   <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-slate-100 border border-slate-200 text-slate-700 font-medium">
                     CHAINAGE 00+000 TO 132+000
                   </span>
-                  <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-blue-50 border border-blue-200 text-blue-700 font-medium">
+                  <span className="hidden sm:inline px-2 py-0.5 rounded font-mono text-[10px] bg-blue-50 border border-blue-200 text-blue-700 font-medium">
                     SRTM-30M + UAV 2.5CM/PX
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 font-mono text-[11px]">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] sm:text-[11px] text-slate-600">
                 <span className="text-slate-400">SUBSURFACE DEPTH:</span>
                 <span className="text-slate-800 font-bold">2.40m TRENCH INCLINE</span>
-                <span className="text-slate-300 ml-2">|</span>
-                <span className="text-slate-400 ml-2">DATUM:</span>
-                <span className="text-slate-700 font-bold">WGS-84 / UTM ZONE 46N</span>
+                <span className="text-slate-300 hidden sm:inline">|</span>
+                <span className="text-slate-400 hidden sm:inline">DATUM:</span>
+                <span className="text-slate-700 font-bold hidden sm:inline">WGS-84 / UTM ZONE 46N</span>
               </div>
             </div>
 
