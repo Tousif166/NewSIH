@@ -61,6 +61,65 @@ export const ReviewCenter: React.FC = () => {
     showToast('New corporate vocabulary mapping stored permanently.', 'success');
   };
 
+  // Contextual optical & forensics metadata for each event
+  const getEventForensics = (event: typeof relatedEvent) => {
+    if (!event) return {
+      station: 'STATION KM 42+650 • SPREAD 2',
+      lat: "27° 23' 21.12\" N",
+      lon: "95° 37' 02.64\" E",
+      elev: "+142.48m AMSL",
+      device: 'Trimble SX12 Scanning Base Station',
+      lens: '28mm f/2.8 (1/1200s, ISO 100)',
+      time: '11:15 IST'
+    };
+
+    if (event.discipline === 'Civil' || event.eventId === 'evt-002') {
+      return {
+        station: 'COMPRESSOR BAY 2 • FOUNDATION F-102',
+        lat: "27° 23' 28.45\" N",
+        lon: "95° 37' 11.20\" E",
+        elev: "+138.10m AMSL",
+        device: 'Trimble SX12 3D Scanning Total Station',
+        lens: '35mm f/4.0 (1/800s, ISO 200)',
+        time: `${event.startTime || '08:30'} - ${event.endTime || '17:00'} IST`
+      };
+    }
+    if (event.discipline === 'Electrical' || event.eventId === 'evt-003') {
+      return {
+        station: 'UNIT 2 COMPRESSOR BAY • CABLE TRENCH WAY A',
+        lat: "27° 23' 25.10\" N",
+        lon: "95° 37' 08.90\" E",
+        elev: "+146.75m AMSL",
+        device: 'FLIR T865 Thermal / Optical Inspection Unit',
+        lens: '24mm f/2.0 (1/250s, ISO 400)',
+        time: `${event.startTime || '08:45'} - ${event.endTime || '15:00'} IST`
+      };
+    }
+    if (event.sourceType === 'SPREADSHEET' || event.eventId === 'evt-004') {
+      return {
+        station: 'GCU AREA CORRIDOR • KM 42+650 SPREAD 2',
+        lat: "27° 23' 35.80\" N",
+        lon: "95° 37' 22.40\" E",
+        elev: "+144.90m AMSL",
+        device: 'Leica GS18 T GNSS RTK Rover + Drone UAV',
+        lens: '24mm f/2.8 (1/2000s, ISO 100)',
+        time: '18:00 IST Compilation'
+      };
+    }
+    // Default / Piping evt-001
+    return {
+      station: 'COMPRESSOR SECTION (AREA 04) • KM 42+650',
+      lat: "27° 23' 21.12\" N",
+      lon: "95° 37' 02.64\" E",
+      elev: "+142.48m AMSL",
+      device: 'Sony α7 IV + Leica BLK360 Industrial LiDAR',
+      lens: '28mm f/2.8 (1/1600s, ISO 100)',
+      time: `${event.startTime || '09:00'} - ${event.endTime || '16:30'} IST`
+    };
+  };
+
+  const forensics = getEventForensics(relatedEvent);
+
   return (
     <div className="flex flex-col w-full gap-6">
       {/* Top Banner & Header */}
@@ -386,24 +445,24 @@ export const ReviewCenter: React.FC = () => {
                   {/* Photo Display */}
                   <div className="md:col-span-7 relative h-56 md:h-64 bg-slate-900 overflow-hidden group">
                     <img
-                      src={relatedEvent.photoUrl?.startsWith('http') ? relatedEvent.photoUrl : '/images/pipeline-drone-4k.jpg'}
+                      src={relatedEvent.photoUrl || '/images/piping-spool-erection.jpg'}
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/images/pipeline-drone-4k.jpg';
+                        (e.currentTarget as HTMLImageElement).src = '/images/piping-spool-erection.jpg';
                       }}
-                      alt="Field inspection photograph proof"
+                      alt={`Field inspection photograph for ${relatedEvent.activityDescription || 'Activity'}`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
                     <div className="absolute top-2 left-2 px-2 py-1 rounded bg-slate-900/80 text-white font-mono text-[10px] font-semibold flex items-center gap-1.5 border border-white/20">
                       <span className="material-symbols-outlined text-[14px] text-blue-400">farsight_digital</span>
-                      <span>STATION KM 42+650 • SPREAD 2</span>
+                      <span>{forensics.station}</span>
                     </div>
                     <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between font-mono text-[10px] text-white">
                       <span className="bg-slate-900/80 px-2 py-0.5 rounded border border-white/10">
-                        LAT: 27° 23' 21.12" N • LON: 95° 37' 02.64" E
+                        LAT: {forensics.lat} • LON: {forensics.lon}
                       </span>
                       <span className="text-emerald-400 font-bold bg-slate-900/80 px-2 py-0.5 rounded border border-white/10">
-                        ELEV: +142.48m AMSL
+                        ELEV: {forensics.elev}
                       </span>
                     </div>
                   </div>
@@ -417,15 +476,17 @@ export const ReviewCenter: React.FC = () => {
                       <div className="flex flex-col gap-1.5 font-mono text-[11px]">
                         <div className="flex justify-between items-center py-1 border-b border-slate-200">
                           <span className="text-slate-500">Capture Device:</span>
-                          <span className="text-slate-900 font-semibold">Trimble SX12 Scanning Base</span>
+                          <span className="text-slate-900 font-semibold truncate max-w-[170px]" title={forensics.device}>
+                            {forensics.device}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-slate-200">
-                          <span className="text-slate-500">Lens / Aperture:</span>
-                          <span className="text-slate-800">24mm f/2.8 (1/1200s)</span>
+                          <span className="text-slate-500">Lens / Specs:</span>
+                          <span className="text-slate-800">{forensics.lens}</span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-slate-200">
                           <span className="text-slate-500">Timestamp:</span>
-                          <span className="text-slate-900 font-semibold">{relatedEvent.reportedDate} 11:15 IST</span>
+                          <span className="text-slate-900 font-semibold">{relatedEvent.reportedDate} {forensics.time}</span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-slate-200">
                           <span className="text-slate-500">Cryptographic Hash:</span>

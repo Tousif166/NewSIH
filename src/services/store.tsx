@@ -313,12 +313,40 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   
   const [fieldEvents, setFieldEvents] = useState<NormalizedExecutionEvent[]>(() => {
     const saved = localStorage.getItem('sitesync_events');
-    return saved ? JSON.parse(saved) : DEMO_FIELD_EVENTS;
+    if (saved) {
+      try {
+        const parsed: NormalizedExecutionEvent[] = JSON.parse(saved);
+        return parsed.map(evt => {
+          const fresh = DEMO_FIELD_EVENTS.find(d => d.eventId === evt.eventId);
+          if (fresh && fresh.photoUrl) {
+            return { ...evt, photoUrl: fresh.photoUrl };
+          }
+          return evt;
+        });
+      } catch {
+        return DEMO_FIELD_EVENTS;
+      }
+    }
+    return DEMO_FIELD_EVENTS;
   });
 
   const [matches, setMatches] = useState<ActivityMatchRecord[]>(() => {
     const saved = localStorage.getItem('sitesync_matches');
-    return saved ? JSON.parse(saved) : DEMO_MATCHES;
+    if (saved) {
+      try {
+        const parsed: ActivityMatchRecord[] = JSON.parse(saved);
+        const merged = [...parsed];
+        for (const dm of DEMO_MATCHES) {
+          if (!merged.some(m => m.matchId === dm.matchId)) {
+            merged.push(dm);
+          }
+        }
+        return merged;
+      } catch {
+        return DEMO_MATCHES;
+      }
+    }
+    return DEMO_MATCHES;
   });
 
   const [conflicts, setConflicts] = useState<DataConflict[]>(() => {
