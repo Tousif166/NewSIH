@@ -631,7 +631,13 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Timeline Horizon View */}
-        <div className="relative overflow-x-auto pb-2">
+        <div className="relative overflow-x-auto pb-4 pt-2 -mx-2 px-2">
+          {/* Mobile scroll hint */}
+          <div className="md:hidden flex items-center justify-between text-[10px] font-mono text-slate-500 pb-1 px-1">
+            <span>← Swipe horizontally to inspect full timeline →</span>
+            <span className="text-blue-700 font-semibold">900px TRACK</span>
+          </div>
+
           <div className="min-w-[900px] flex flex-col gap-4">
             {/* Day Scale */}
             <div className="grid grid-cols-7 gap-2 text-center font-mono text-[10px] text-slate-600">
@@ -665,8 +671,8 @@ export const ConflictCenter: React.FC = () => {
               </div>
             </div>
 
-            {/* Horizontal Event Track Ribbon */}
-            <div className="relative h-28 rounded-lg bg-slate-50 border border-slate-200 flex items-center px-4 overflow-visible">
+            {/* Horizontal Event Track Ribbon with Ample Vertical Spacing to prevent any tooltip collisions */}
+            <div className="relative h-28 my-14 rounded-lg bg-slate-50 border border-slate-200 flex items-center px-4 overflow-visible">
               {/* Central Baseline Datum Line */}
               <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-300 -translate-y-1/2"></div>
 
@@ -679,7 +685,7 @@ export const ConflictCenter: React.FC = () => {
                 <div className="relative w-8 h-8 rounded-full bg-sky-100 text-sky-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
                   <span className="material-symbols-outlined text-[16px]">water_drop</span>
                 </div>
-                <div className="absolute top-9 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                <div className="absolute top-10 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm z-10 pointer-events-none">
                   <div className="font-mono text-[9px] text-sky-800 font-bold">05 OCT: 72mm Rain</div>
                   <div className="font-mono text-[9px] text-slate-500 truncate">Flooding Spread 1</div>
                 </div>
@@ -694,7 +700,7 @@ export const ConflictCenter: React.FC = () => {
                 <div className="relative w-8 h-8 rounded-full bg-red-100 text-red-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
                   <span className="material-symbols-outlined text-[16px]">description</span>
                 </div>
-                <div className="absolute -top-14 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                <div className="absolute -top-14 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm z-10 pointer-events-none">
                   <div className="font-mono text-[9px] text-red-600 font-bold">14 OCT: 14D Claim</div>
                   <div className="font-mono text-[9px] text-slate-500 truncate">L&T Force Majeure</div>
                 </div>
@@ -709,7 +715,7 @@ export const ConflictCenter: React.FC = () => {
                 <div className="relative w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
                   <span className="material-symbols-outlined text-[16px]">engineering</span>
                 </div>
-                <div className="absolute top-9 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm">
+                <div className="absolute top-10 w-36 -left-14 text-center rounded bg-white border border-slate-200 p-1.5 shadow-sm z-10 pointer-events-none">
                   <div className="font-mono text-[9px] text-emerald-800 font-bold">21 OCT: Trench Rush</div>
                   <div className="font-mono text-[9px] text-slate-500 truncate">+1.8m Lead over Weld</div>
                 </div>
@@ -724,7 +730,7 @@ export const ConflictCenter: React.FC = () => {
                 <div className="relative w-8 h-8 rounded-full bg-red-600 text-white border-2 border-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform animate-pulse">
                   <span className="material-symbols-outlined text-[16px]">error</span>
                 </div>
-                <div className="absolute -top-14 w-40 -left-16 text-center rounded bg-white border border-rose-200 p-1.5 shadow-sm">
+                <div className="absolute -top-14 w-40 -left-16 text-center rounded bg-white border border-rose-200 p-1.5 shadow-sm z-10 pointer-events-none">
                   <div className="font-mono text-[9px] text-red-600 font-bold">22 OCT: M-300 Rig Drift</div>
                   <div className="font-mono text-[9px] text-slate-500 truncate">0.4mm NDT Root Refusal</div>
                 </div>
@@ -733,7 +739,7 @@ export const ConflictCenter: React.FC = () => {
               {/* Event Node 5: Current Arbitration Marker */}
               <div className="absolute left-[92%] flex flex-col items-center">
                 <div className="w-3 h-12 bg-blue-700 rounded shadow-xs"></div>
-                <div className="absolute top-14 w-32 -left-14 text-center rounded bg-blue-700 text-white p-1 shadow-sm">
+                <div className="absolute top-14 w-32 -left-14 text-center rounded bg-blue-700 text-white p-1 shadow-sm z-10">
                   <div className="font-mono text-[9px] font-bold uppercase tracking-wider">TODAY: ARBITRATION</div>
                 </div>
               </div>

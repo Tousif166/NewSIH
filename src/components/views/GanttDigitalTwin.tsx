@@ -278,41 +278,41 @@ export const GanttDigitalTwin: React.FC = () => {
 
             {/* Corridor Strip Overview Indicator Bar */}
             <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 flex flex-col gap-1.5 z-10">
-              <div className="flex items-center justify-between font-mono text-[10px]">
-                <span className="text-emerald-700 font-bold">DIGBOI TERMINAL [KM 00+000]</span>
-                <span className="text-blue-700 font-bold">SPREAD 2 WORK-FRONT [KM 42+650]</span>
-                <span className="text-slate-600 font-medium">BURHI DIHING HDD [KM 71+200]</span>
-                <span className="text-slate-600 font-medium">DULIAJAN REFINERY [KM 132+000]</span>
+              <div className="flex items-center justify-between font-mono text-[9px] sm:text-[10px] overflow-x-auto gap-2">
+                <span className="text-emerald-700 font-bold whitespace-nowrap">DIGBOI<span className="hidden sm:inline"> TERMINAL [KM 00+000]</span></span>
+                <span className="text-blue-700 font-bold whitespace-nowrap">SPREAD 2<span className="hidden sm:inline"> WORK-FRONT [KM 42+650]</span></span>
+                <span className="text-slate-600 font-medium whitespace-nowrap hidden xs:inline">BURHI DIHING<span className="hidden sm:inline"> HDD [KM 71+200]</span></span>
+                <span className="text-slate-600 font-medium whitespace-nowrap">DULIAJAN<span className="hidden sm:inline"> REFINERY [KM 132+000]</span></span>
               </div>
 
               {/* 4-segment visual strip */}
               <div className="w-full h-3 rounded flex overflow-hidden shadow-inner gap-0.5 bg-slate-200 p-0.5">
                 <div
-                  className="w-[23%] h-full bg-emerald-600 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110"
+                  className="w-[23%] h-full bg-emerald-600 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110 px-1 truncate"
                   title="KM 0-30 Completed"
                 >
-                  <span className="font-mono text-[8px] text-white font-bold tracking-tight">100% INSTALLED</span>
+                  <span className="font-mono text-[8px] text-white font-bold tracking-tight truncate">100% INSTALLED</span>
                 </div>
                 <div
-                  className="w-[26%] h-full bg-blue-600 rounded-xs relative flex items-center justify-center cursor-pointer hover:brightness-110"
+                  className="w-[26%] h-full bg-blue-600 rounded-xs relative flex items-center justify-center cursor-pointer hover:brightness-110 px-1 truncate"
                   title="Active Focus Spread"
                 >
-                  <span className="font-mono text-[8px] text-white font-bold tracking-tight">
-                    KM 30-65 ACTIVE TRENCHING
+                  <span className="font-mono text-[8px] text-white font-bold tracking-tight truncate">
+                    KM 30-65 ACTIVE
                   </span>
                   <div className="absolute -top-1 left-[45%] w-2 h-4 bg-rose-600 rounded-xs shadow-xs border border-white animate-pulse"></div>
                 </div>
                 <div
-                  className="w-[27%] h-full bg-amber-500 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110"
+                  className="w-[27%] h-full bg-amber-500 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110 px-1 truncate"
                   title="KM 65-100 NDT Verification"
                 >
-                  <span className="font-mono text-[8px] text-white font-bold tracking-tight">KM 65-100 STRINGING/NDT</span>
+                  <span className="font-mono text-[8px] text-white font-bold tracking-tight truncate">KM 65-100 NDT</span>
                 </div>
                 <div
-                  className="w-[24%] h-full bg-slate-400 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110"
+                  className="w-[24%] h-full bg-slate-400 rounded-xs flex items-center justify-center cursor-pointer hover:brightness-110 px-1 truncate"
                   title="KM 100-132 Pre-Commissioning"
                 >
-                  <span className="font-mono text-[8px] text-white font-bold tracking-tight">KM 100-132 HYDRO-TEST PREP</span>
+                  <span className="font-mono text-[8px] text-white font-bold tracking-tight truncate">KM 100-132 HYDRO</span>
                 </div>
               </div>
             </div>
@@ -579,16 +579,23 @@ export const GanttDigitalTwin: React.FC = () => {
               </div>
             </div>
 
+            {/* Mobile swipe hint */}
+            <div className="xl:hidden px-3 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-mono text-slate-500 flex justify-between">
+              <span>← Swipe Gantt panes horizontally →</span>
+              <span className="text-blue-700 font-semibold">DUAL-PANE P6</span>
+            </div>
+
             {/* Gantt Dual-Pane Container */}
             <div className="w-full grid grid-cols-1 xl:grid-cols-12 rounded-lg overflow-hidden border border-slate-200 bg-white">
               {/* Left Activity Sheet (5 Columns Span on XL) */}
               <div className="xl:col-span-5 flex flex-col bg-white border-r border-slate-200 overflow-x-auto">
-                <div className="grid grid-cols-12 bg-slate-100/80 border-b border-slate-200 py-2.5 px-3 font-mono text-[10px] text-slate-600 font-bold uppercase tracking-wider">
-                  <div className="col-span-3">Activity ID</div>
-                  <div className="col-span-5">Activity Description</div>
-                  <div className="col-span-2 text-right">Float</div>
-                  <div className="col-span-2 text-right">Phys %</div>
-                </div>
+                <div className="min-w-[420px]">
+                  <div className="grid grid-cols-12 bg-slate-100/80 border-b border-slate-200 py-2.5 px-3 font-mono text-[10px] text-slate-600 font-bold uppercase tracking-wider">
+                    <div className="col-span-3">Activity ID</div>
+                    <div className="col-span-5">Activity Description</div>
+                    <div className="col-span-2 text-right">Float</div>
+                    <div className="col-span-2 text-right">Phys %</div>
+                  </div>
 
                 <div className="flex flex-col text-xs divide-y divide-slate-100">
                   {/* Row 1 */}
@@ -688,6 +695,7 @@ export const GanttDigitalTwin: React.FC = () => {
                     <div className="col-span-2 text-right font-mono text-[10px] text-rose-600 font-semibold">-3.8d</div>
                     <div className="col-span-2 text-right font-mono text-[10px] text-slate-400">0%</div>
                   </div>
+                </div>
                 </div>
               </div>
 

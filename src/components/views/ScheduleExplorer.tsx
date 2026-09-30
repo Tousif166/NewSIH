@@ -266,13 +266,22 @@ export const ScheduleExplorer: React.FC = () => {
             </div>
           </div>
 
-          {/* Table Header */}
-          <div className="grid grid-cols-12 bg-slate-100 px-3 py-2 text-slate-600 font-mono text-[10px] uppercase tracking-wider select-none border-b border-slate-200">
-            <div className="col-span-6 flex items-center gap-1.5">WBS Code &amp; Scope Hierarchy</div>
-            <div className="col-span-2 text-left">OBS Resp</div>
-            <div className="col-span-2 text-left">Schedule Span</div>
-            <div className="col-span-2 text-right">Actual / Plan</div>
+          {/* Mobile swipe hint */}
+          <div className="md:hidden px-3 py-1 bg-slate-50 border-b border-slate-200 text-[10px] font-mono text-slate-500 flex justify-between">
+            <span>← Swipe table horizontally to inspect OBS & metrics →</span>
+            <span className="text-blue-700 font-semibold">680px GRID</span>
           </div>
+
+          {/* Responsive Table Track */}
+          <div className="overflow-x-auto w-full">
+            <div className="min-w-[680px]">
+              {/* Table Header */}
+              <div className="grid grid-cols-12 bg-slate-100 px-3 py-2 text-slate-600 font-mono text-[10px] uppercase tracking-wider select-none border-b border-slate-200">
+                <div className="col-span-6 flex items-center gap-1.5">WBS Code &amp; Scope Hierarchy</div>
+                <div className="col-span-2 text-left">OBS Resp</div>
+                <div className="col-span-2 text-left">Schedule Span</div>
+                <div className="col-span-2 text-right">Actual / Plan</div>
+              </div>
 
           {/* Tree Rows Container */}
           <div className="flex flex-col text-slate-800 divide-y divide-slate-100 text-xs">
@@ -746,6 +755,8 @@ export const ScheduleExplorer: React.FC = () => {
                 )}
               </>
             )}
+          </div>
+            </div>
           </div>
 
           {/* Footnote */}

@@ -256,8 +256,8 @@ export const FieldInputCenter: React.FC = () => {
       />
 
       {/* Telemetry Sub-Navigation Ribbon */}
-      <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-6">
+      <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs hover-elevate flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <div className="flex items-center gap-2.5">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -297,11 +297,13 @@ export const FieldInputCenter: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Supervisor:</span>
-          <span className="px-2.5 py-1 rounded bg-slate-100 border border-slate-300 font-mono text-xs text-slate-900 font-medium">
-            Debashis Gogoi (OIL-FLD-8820)
-          </span>
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100">
+          <div className="flex items-center gap-1.5">
+            <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Supervisor:</span>
+            <span className="px-2.5 py-1 rounded bg-slate-100 border border-slate-300 font-mono text-xs text-slate-900 font-medium">
+              Debashis Gogoi (OIL-FLD-8820)
+            </span>
+          </div>
           <button
             onClick={handleForceFlush}
             type="button"
@@ -352,7 +354,7 @@ export const FieldInputCenter: React.FC = () => {
         {/* Left 7 Cols: Live AI Speech-to-DPR Voice Agent Console */}
         <div className="xl:col-span-7 flex flex-col gap-6">
           {/* Primary Recording Card */}
-          <div className="relative bg-white border border-slate-200 rounded-xl p-5 shadow-xs overflow-hidden transition-all duration-200 hover:shadow-md">
+          <div className="relative bg-white border border-slate-300 rounded-xl p-5 shadow-xs hover-elevate overflow-hidden transition-all duration-200">
             <div className="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-slate-100 gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs">

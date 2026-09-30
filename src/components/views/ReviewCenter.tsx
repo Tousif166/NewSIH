@@ -133,10 +133,39 @@ export const ReviewCenter: React.FC = () => {
         </div>
       )}
 
+      {/* Mobile Tab Switcher (Visible on <lg screens) */}
+      <div className="lg:hidden flex items-center p-1 bg-slate-100 rounded-xl border border-slate-300 shadow-2xs">
+        <button
+          type="button"
+          onClick={() => setMobileTab('QUEUE')}
+          className={`flex-1 py-2 text-xs font-mono font-bold rounded-lg transition-all ${
+            mobileTab === 'QUEUE'
+              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          Proposals Queue ({pendingMatches.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab('INSPECTION')}
+          className={`flex-1 py-2 text-xs font-mono font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            mobileTab === 'INSPECTION'
+              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <span>Inspection Workbench</span>
+          {activeMatch && (
+            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+          )}
+        </button>
+      </div>
+
       {/* Main Grid: Pending Queue (4 cols) & Inspection Workbench (8 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Proposals Queue (4 cols) */}
-        <div className="lg:col-span-4 flex flex-col gap-3">
+        <div className={`lg:col-span-4 flex-col gap-3 ${mobileTab === 'QUEUE' ? 'flex' : 'hidden lg:flex'}`}>
           <div className="flex items-center justify-between">
             <div className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
               Pending AI Ingestion Queue ({pendingMatches.length})
@@ -208,13 +237,22 @@ export const ReviewCenter: React.FC = () => {
         </div>
 
         {/* Right Column: Deep Inspection Workbench (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col gap-5">
+        <div className={`lg:col-span-8 flex-col gap-5 ${mobileTab === 'INSPECTION' ? 'flex' : 'hidden lg:flex'}`}>
           {activeMatch && relatedEvent ? (
-            <div className="bg-white p-6 rounded-xl border border-slate-300 shadow-xs flex flex-col gap-6 hover-elevate">
-              {/* Header Details */}
+            <div className="bg-white p-4 sm:p-6 rounded-xl border border-slate-300 shadow-xs flex flex-col gap-6 hover-elevate">
+              {/* Header Details with Mobile Back Button */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setMobileTab('QUEUE')}
+                      className="lg:hidden text-xs font-mono text-blue-700 font-bold flex items-center gap-0.5 hover:underline"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+                      Queue
+                    </button>
+                    <span className="lg:hidden text-slate-300">•</span>
                     <span className="font-mono text-[11px] text-blue-700 font-bold">
                       PROPOSAL #{activeMatch.matchId.toUpperCase()}
                     </span>

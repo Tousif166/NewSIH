@@ -345,15 +345,22 @@ export const WhatIfSimulator: React.FC = () => {
             </div>
           </div>
 
+          {/* Mobile swipe hint */}
+          <div className="md:hidden px-3 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-mono text-slate-500 flex justify-between">
+            <span>← Swipe Gantt chart horizontally →</span>
+            <span className="text-blue-700 font-semibold">620px TRACK</span>
+          </div>
+
           {/* Gantt Canvas */}
-          <div className="flex flex-col gap-3.5 pt-1">
-            <div className="grid grid-cols-12 gap-1 text-center font-mono text-[10px] text-slate-500 bg-slate-50 py-1.5 px-2 rounded border border-blue-100">
-              <div className="col-span-4 text-left font-semibold">ACTIVITY / WBS NODE</div>
-              <div className="col-span-2">OCT W3</div>
-              <div className="col-span-2">OCT W4</div>
-              <div className="col-span-2">NOV W1</div>
-              <div className="col-span-2 font-bold text-blue-700">NOV W2 [CRITICAL]</div>
-            </div>
+          <div className="overflow-x-auto w-full">
+            <div className="min-w-[620px] flex flex-col gap-3.5 pt-1">
+              <div className="grid grid-cols-12 gap-1 text-center font-mono text-[10px] text-slate-500 bg-slate-50 py-1.5 px-2 rounded border border-blue-100">
+                <div className="col-span-4 text-left font-semibold">ACTIVITY / WBS NODE</div>
+                <div className="col-span-2">OCT W3</div>
+                <div className="col-span-2">OCT W4</div>
+                <div className="col-span-2">NOV W1</div>
+                <div className="col-span-2 font-bold text-blue-700">NOV W2 [CRITICAL]</div>
+              </div>
 
             {/* Activity 1 */}
             <div className="flex flex-col gap-1.5 bg-slate-50/50 p-2.5 rounded border border-slate-200">
@@ -436,10 +443,11 @@ export const WhatIfSimulator: React.FC = () => {
               </div>
             </div>
           </div>
+            </div>
 
-          <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-slate-500 font-mono text-[10px]">
-            <span>P6 EPPM NETWORK ENGINE // CPM METHODOLOGY: FORWARD PASS / BACKWARD PASS DETERMINISTIC</span>
-            <span className="text-blue-700 font-bold">P6 ACTIVITY RE-CALCULATION DURATION: 18ms</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-2 border-t border-slate-100 text-slate-500 font-mono text-[10px]">
+            <span className="truncate">P6 EPPM NETWORK ENGINE // CPM METHODOLOGY: FORWARD PASS / BACKWARD PASS</span>
+            <span className="text-blue-700 font-bold shrink-0">RE-CALCULATION: 18ms</span>
           </div>
         </div>
 
@@ -599,31 +607,31 @@ export const WhatIfSimulator: React.FC = () => {
             </svg>
 
             {/* Dynamic Labels Overlay */}
-            <div className="absolute top-4 left-[46%] -translate-x-1/2 flex flex-col items-center">
-              <span className="px-1.5 py-0.5 rounded bg-blue-700 text-white font-mono text-[10px] font-bold shadow-xs">
+            <div className="absolute top-4 left-[46%] -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
+              <span className="px-1.5 py-0.5 rounded bg-blue-700 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-xs">
                 P50: 12 NOV
               </span>
-              <span className="text-[9px] font-mono text-slate-500">Most Likely</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-slate-500">Most Likely</span>
             </div>
-            <div className="absolute top-12 left-[68%] -translate-x-1/2 flex flex-col items-center">
-              <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-600 text-white font-mono text-[10px] font-bold shadow-md">
+            <div className="absolute top-12 left-[68%] -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
+              <div className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded bg-emerald-600 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
                 <span>P85: 24 NOV</span>
               </div>
-              <span className="text-[9px] font-mono text-emerald-800 font-bold bg-white/90 px-1 rounded shadow-2xs mt-0.5">
+              <span className="text-[8px] sm:text-[9px] font-mono text-emerald-800 font-bold bg-white/90 px-1 rounded shadow-2xs mt-0.5">
                 Contract Goal (94.2%)
               </span>
             </div>
-            <div className="absolute top-24 left-[86%] -translate-x-1/2 flex flex-col items-center">
-              <span className="px-1.5 py-0.5 rounded bg-rose-600 text-white font-mono text-[10px] font-bold shadow-xs">
+            <div className="absolute top-24 left-[84%] -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
+              <span className="px-1.5 py-0.5 rounded bg-rose-600 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-xs">
                 P99: 15 JAN
               </span>
-              <span className="text-[9px] font-mono text-rose-700">Tail-Risk</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-rose-700">Tail-Risk</span>
             </div>
           </div>
 
           {/* Probability Milestone Summary Grid */}
-          <div className="grid grid-cols-3 gap-2 text-center pt-1 font-mono text-[10px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center pt-1 font-mono text-[10px]">
             <div className="bg-slate-50 p-2 rounded border border-blue-100 flex flex-col gap-0.5">
               <span className="text-slate-500">P50 BASELINE ESTIMATE</span>
               <span className="text-sm font-bold text-slate-900 font-mono">12 NOV 2025</span>

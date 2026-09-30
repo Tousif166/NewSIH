@@ -34,12 +34,12 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-4 sm:px-6 flex items-center justify-between shadow-xs">
-      <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+    <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-3 sm:px-6 flex items-center justify-between shadow-xs">
+      <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1 mr-2">
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+          className="md:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0"
           aria-label="Toggle Navigation Menu"
         >
           <span className="material-symbols-outlined text-[22px]">
@@ -49,11 +49,11 @@ export const Header: React.FC = () => {
 
         {/* Project Branding & WBS Header */}
         <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-bold text-slate-900 text-sm sm:text-base tracking-tight truncate">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span className="font-bold text-slate-900 text-xs sm:text-base tracking-tight truncate max-w-[150px] xs:max-w-[220px] sm:max-w-none">
               {activeProject.name || 'Digboi–Duliajan 132km Crude Trunkline'}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-300 font-mono text-[10px] sm:text-[11px] font-semibold text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
+            <span className="hidden xs:inline px-1.5 sm:px-2 py-0.5 rounded-md bg-slate-100 border border-slate-300 font-mono text-[9px] sm:text-[11px] font-semibold text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
               WBS-REV-4.8
             </span>
           </div>
@@ -78,7 +78,7 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Right Controls & Quick Actions */}
-      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
         {/* Offline Queue Toggle if disconnected */}
         <button
           onClick={() => {
@@ -107,7 +107,7 @@ export const Header: React.FC = () => {
         {/* AI Copilot Toggle */}
         <button
           onClick={() => setIsCopilotOpen(!isCopilotOpen)}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border transition-all ${
+          className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border transition-all ${
             isCopilotOpen 
               ? 'bg-blue-700 text-white border-blue-800 shadow-sm' 
               : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 shadow-2xs'
@@ -118,8 +118,8 @@ export const Header: React.FC = () => {
           <span className="hidden lg:inline text-[11px]">Copilot</span>
         </button>
 
-        {/* Operator Pill with Role Switcher Dropdown */}
-        <div className="relative flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-md text-left hover:bg-slate-100/80 transition-colors shadow-2xs">
+        {/* Operator Pill with Role Switcher Dropdown (desktop) */}
+        <div className="relative hidden md:flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-md text-left hover:bg-slate-100/80 transition-colors shadow-2xs">
           <span className="material-symbols-outlined text-slate-500 text-[18px]">switch_account</span>
           <div className="flex flex-col">
             <span className="font-mono text-[11px] font-bold text-slate-800 leading-tight">
@@ -152,11 +152,12 @@ export const Header: React.FC = () => {
         {/* Commit to P6 Button */}
         <button
           onClick={handleCommitP6}
-          className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs btn-tactile cursor-pointer"
+          className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs btn-tactile cursor-pointer"
           type="button"
         >
-          <span className="material-symbols-outlined text-[16px]">cloud_upload</span>
-          <span>Commit to P6</span>
+          <span className="material-symbols-outlined text-[15px] sm:text-[16px]">cloud_upload</span>
+          <span className="hidden sm:inline">Commit to P6</span>
+          <span className="sm:hidden text-[10px]">Commit</span>
         </button>
 
         {/* User Avatar Circle */}

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp, NavigationTab } from '../services/store';
+import { UserRole } from '../types';
 
 export const Sidebar: React.FC = () => {
+  const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const { 
     activeTab, 
     setActiveTab, 
@@ -117,8 +119,15 @@ export const Sidebar: React.FC = () => {
     }
   ];
 
+  const availableRoles: { id: UserRole; label: string; badge: string }[] = [
+    { id: 'planner', label: 'Project Planner', badge: 'LEVEL-4' },
+    { id: 'supervisor', label: 'Site Supervisor', badge: 'LEVEL-2' },
+    { id: 'project_manager', label: 'Project Manager', badge: 'LEVEL-5' },
+    { id: 'admin', label: 'System Admin', badge: 'ROOT' },
+  ];
+
   const renderNavContent = () => (
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col min-h-full justify-between">
       <div className="flex flex-col">
         {/* Workspace Brand Badge */}
         <div className="p-4 flex flex-col gap-1 border-b border-slate-200 bg-slate-50/70">
@@ -146,18 +155,62 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
 
-        {/* Active Persona Strip */}
-        <div className="px-3.5 py-2.5 bg-blue-50/40 border-b border-slate-200 flex items-center justify-between">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="material-symbols-outlined text-[16px] text-blue-700">shield_person</span>
-            <div className="flex flex-col min-w-0">
-              <span className="text-[11px] font-semibold text-slate-900 truncate">{roleMetadata.label}</span>
-              <span className="text-[10px] text-slate-500 font-mono truncate">{roleMetadata.shortLabel} Clearance</span>
+        {/* Active Persona Strip with Interactive Role Selector */}
+        <div className="border-b border-slate-200 bg-blue-50/40">
+          <button
+            type="button"
+            onClick={() => setRoleMenuOpen(!roleMenuOpen)}
+            className="w-full px-3.5 py-2.5 flex items-center justify-between text-left hover:bg-blue-100/50 transition-colors focus:outline-none"
+            title="Click to switch active role clearance"
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="material-symbols-outlined text-[16px] text-blue-700 shrink-0">shield_person</span>
+              <div className="flex flex-col min-w-0">
+                <span className="text-[11px] font-semibold text-slate-900 truncate">{roleMetadata.label}</span>
+                <span className="text-[10px] text-slate-500 font-mono truncate">{roleMetadata.shortLabel} Clearance</span>
+              </div>
             </div>
-          </div>
-          <span className="px-2 py-0.5 rounded-md bg-white text-blue-800 border border-blue-200 font-mono text-[9px] font-semibold shrink-0 shadow-2xs">
-            {roleMetadata.badge}
-          </span>
+            <div className="flex items-center gap-1 shrink-0">
+              <span className="px-2 py-0.5 rounded-md bg-white text-blue-800 border border-blue-200 font-mono text-[9px] font-semibold shadow-2xs">
+                {roleMetadata.badge}
+              </span>
+              <span className="material-symbols-outlined text-[14px] text-slate-400">
+                {roleMenuOpen ? 'expand_less' : 'expand_more'}
+              </span>
+            </div>
+          </button>
+
+          {/* Role Dropdown */}
+          {roleMenuOpen && (
+            <div className="px-2 pb-2.5 pt-1 space-y-1 bg-white border-t border-blue-100 animate-in fade-in duration-150">
+              <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider px-2 py-1">
+                SWITCH CLEARANCE LEVEL
+              </div>
+              {availableRoles.map((r) => {
+                const isSelected = currentRole === r.id;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => {
+                      setCurrentRole(r.id);
+                      setRoleMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2 py-1.5 rounded text-xs transition-colors ${
+                      isSelected
+                        ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200'
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <span>{r.label}</span>
+                    <span className="font-mono text-[9px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                      {r.badge}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Navigation Groups */}

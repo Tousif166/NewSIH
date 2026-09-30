@@ -61,7 +61,7 @@ export const ProjectDashboard: React.FC = () => {
         </div>
 
         {/* Rapid Telemetry Counters */}
-        <div className="flex items-center gap-2 overflow-x-auto py-0.5 no-scrollbar">
+        <div className="flex items-center gap-2 overflow-x-auto py-1 w-full xl:w-auto no-scrollbar shrink-0">
           <div className="flex flex-col px-3 py-1.5 rounded-md bg-slate-50 border border-slate-200 min-w-[110px] transition-all hover:bg-white hover:border-slate-300 shadow-2xs">
             <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Corridor Length</span>
             <span className="font-mono text-sm font-bold text-slate-900">132.0 <span className="text-[11px] font-medium text-slate-500">KM</span></span>
@@ -300,40 +300,40 @@ export const ProjectDashboard: React.FC = () => {
 
             {/* Tooltip Pill - Clean 1px border */}
             <div 
-              className="absolute top-1 -translate-x-1/2 px-3 py-1 rounded-md bg-amber-50 border border-amber-400 text-amber-950 font-mono text-[11px] font-semibold shadow-xs z-20 transition-all duration-100 ease-out pointer-events-none"
-              style={{ left: `${Math.min(Math.max(currentBadgePct, 8), 92)}%` }}
+              className="absolute top-1 -translate-x-1/2 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md bg-amber-50 border border-amber-400 text-amber-950 font-mono text-[10px] sm:text-[11px] font-semibold shadow-xs z-20 transition-all duration-100 ease-out pointer-events-none whitespace-nowrap"
+              style={{ left: `${Math.min(Math.max(currentBadgePct, 12), 88)}%` }}
             >
               DATA-DATE: 24 OCT 2026 (WEEK {scrubberWeek})
             </div>
 
             {/* Floating Milestone Badges - Clean 1px borders for balanced contrast */}
-            <div className="absolute left-[24%] bottom-14 px-2.5 py-1 rounded-md bg-white border border-emerald-300 shadow-xs text-emerald-900 font-mono text-[11px] font-semibold hidden md:flex items-center gap-1.5">
+            <div className="absolute left-[24%] bottom-14 px-2.5 py-1 rounded-md bg-white border border-emerald-300 shadow-xs text-emerald-900 font-mono text-[11px] font-semibold hidden md:flex items-center gap-1.5 pointer-events-none">
               <span className="material-symbols-outlined text-[15px] text-emerald-600 font-bold">done_all</span>
               HDD River Crossing Cleared
             </div>
-            <div className="absolute left-[39%] top-20 px-2.5 py-1 rounded-md bg-white border border-blue-300 shadow-xs text-blue-900 font-mono text-[11px] font-semibold hidden md:flex items-center gap-1.5">
+            <div className="absolute left-[39%] top-20 px-2.5 py-1 rounded-md bg-white border border-blue-300 shadow-xs text-blue-900 font-mono text-[11px] font-semibold hidden md:flex items-center gap-1.5 pointer-events-none">
               <span className="material-symbols-outlined text-[15px] text-blue-600 font-bold">check</span>
               Stringing Complete (72km)
             </div>
-            <div className="absolute left-[49%] top-14 px-3 py-1.5 rounded-md bg-rose-50 border border-rose-300 text-rose-900 font-mono text-[11px] font-semibold shadow-xs flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer">
-              <span className="material-symbols-outlined text-[16px] text-rose-600 font-bold">report_problem</span>
+            <div className="absolute left-[44%] sm:left-[49%] top-16 sm:top-14 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-rose-50 border border-rose-300 text-rose-900 font-mono text-[10px] sm:text-[11px] font-semibold shadow-xs flex items-center gap-1 sm:gap-1.5 transition-transform hover:scale-105 cursor-pointer whitespace-nowrap z-10">
+              <span className="material-symbols-outlined text-[14px] sm:text-[16px] text-rose-600 font-bold">report_problem</span>
               MP 62 Tie-in Lag (-4.2d)
             </div>
-            <div className="absolute left-[70%] top-6 px-2.5 py-1 rounded-md bg-white border border-amber-300 shadow-xs text-amber-900 font-mono text-[11px] font-semibold hidden lg:flex items-center gap-1.5">
+            <div className="absolute left-[70%] top-6 px-2.5 py-1 rounded-md bg-white border border-amber-300 shadow-xs text-amber-900 font-mono text-[11px] font-semibold hidden lg:flex items-center gap-1.5 pointer-events-none">
               <span className="material-symbols-outlined text-[15px] text-amber-600 font-bold">schedule</span>
               Section 1 Hydrotest (P85: Mar 15)
             </div>
           </div>
 
           {/* Timeline Labels */}
-          <div className="w-full flex justify-between font-mono text-[11px] text-slate-500 font-medium pt-2.5 border-t border-slate-200">
-            <span>OCT '26 (Start)</span>
-            <span>DEC '26</span>
+          <div className="w-full flex justify-between font-mono text-[10px] sm:text-[11px] text-slate-500 font-medium pt-2.5 border-t border-slate-200">
+            <span>OCT '26<span className="hidden sm:inline"> (Start)</span></span>
+            <span className="hidden sm:inline">DEC '26</span>
             <span>FEB '27</span>
-            <span className="text-blue-800 font-semibold">APR '27 (P6 Target)</span>
-            <span>JUN '27</span>
-            <span>AUG '27</span>
-            <span className="text-amber-800 font-semibold">NOV '27 (AI {selectedFilter} Forecast)</span>
+            <span className="text-blue-800 font-semibold">APR '27<span className="hidden sm:inline"> (P6 Target)</span></span>
+            <span className="hidden sm:inline">JUN '27</span>
+            <span className="hidden sm:inline">AUG '27</span>
+            <span className="text-amber-800 font-semibold">NOV '27<span className="hidden sm:inline"> (AI {selectedFilter} Forecast)</span></span>
           </div>
         </div>
 
@@ -402,8 +402,8 @@ export const ProjectDashboard: React.FC = () => {
                   <span className="text-xs text-slate-600 font-medium mt-0.5">Spread A: Trenching, Lowering & Padding complete. Pre-commission ready.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
-                <div className="flex flex-col items-end">
+              <div className="flex items-center justify-between md:justify-end gap-4 font-mono text-[11px] shrink-0 w-full md:w-auto pt-2 md:pt-0 border-t border-slate-100 md:border-t-0">
+                <div className="flex flex-col items-start md:items-end">
                   <span className="text-emerald-700 font-semibold">+2.0 Days Float</span>
                   <span className="text-slate-500 font-medium text-[10px]">Progress: 98.4%</span>
                 </div>
@@ -419,7 +419,7 @@ export const ProjectDashboard: React.FC = () => {
                   className="w-14 h-12 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
                 />
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <span className="w-2 h-2 rounded-full bg-rose-600 shrink-0 animate-pulse"></span>
                     <span className="font-mono text-xs font-semibold text-rose-950">Milepost 30.0 → 65.0 (Burhi Dihing Basin)</span>
                     <span className="px-2 py-0.5 rounded bg-rose-600 text-white font-mono text-[9px] font-semibold shadow-xs">CRITICAL PATH</span>
@@ -427,8 +427,8 @@ export const ProjectDashboard: React.FC = () => {
                   <span className="text-xs text-slate-700 font-medium mt-0.5">Hard rock strata at KM 42+650. Automated orbital welding head misalignment at MP 62 tie-in.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
-                <div className="flex flex-col items-end">
+              <div className="flex items-center justify-between md:justify-end gap-4 font-mono text-[11px] shrink-0 w-full md:w-auto pt-2 md:pt-0 border-t border-rose-100 md:border-t-0">
+                <div className="flex flex-col items-start md:items-end">
                   <span className="text-rose-700 font-semibold">-4.2 Days Slip</span>
                   <span className="text-slate-500 font-medium text-[10px]">Progress: 52.1%</span>
                 </div>
@@ -451,8 +451,8 @@ export const ProjectDashboard: React.FC = () => {
                   <span className="text-xs text-slate-600 font-medium mt-0.5">Monsoon mud inundation at culvert crossings. Earthworks de-watering active.</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[11px] shrink-0 self-end md:self-center">
-                <div className="flex flex-col items-end">
+              <div className="flex items-center justify-between md:justify-end gap-4 font-mono text-[11px] shrink-0 w-full md:w-auto pt-2 md:pt-0 border-t border-slate-100 md:border-t-0">
+                <div className="flex flex-col items-start md:items-end">
                   <span className="text-amber-700 font-semibold">0.0d Float (Amber)</span>
                   <span className="text-slate-500 font-medium text-[10px]">Progress: 64.8%</span>
                 </div>
