@@ -495,7 +495,7 @@ export const ActivityDNAView: React.FC = () => {
             {/* Field Operational Recommendation Callout with Core Sample Photo */}
             <div className="bg-blue-50/60 p-3 rounded-lg flex flex-col sm:flex-row items-start gap-3 border border-blue-200/80">
               <img
-                src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=300"
+                src="/images/pipeline-ortho-survey.jpg"
                 alt="Granitic Rock Strata Trench Sample"
                 className="w-full sm:w-20 h-16 rounded object-cover border border-blue-200 shrink-0 shadow-2xs"
               />
@@ -673,7 +673,7 @@ export const ActivityDNAView: React.FC = () => {
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
-                    src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=200"
+                    src="/images/pipeline-drone-4k.jpg"
                     alt="Komatsu PC300 Excavator"
                     className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                   />
@@ -692,7 +692,7 @@ export const ActivityDNAView: React.FC = () => {
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
-                    src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=200"
+                    src="/images/ndt-film-scan.jpg"
                     alt="CRC-Evans Welder"
                     className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                   />
@@ -711,7 +711,7 @@ export const ActivityDNAView: React.FC = () => {
               <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
-                    src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                    src="/images/pipeline-ortho-survey.jpg"
                     alt="Caterpillar 336D Excavator"
                     className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                   />

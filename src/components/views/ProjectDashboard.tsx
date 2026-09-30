@@ -366,7 +366,7 @@ export const ProjectDashboard: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
                 <img
-                  src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=300"
+                  src="/images/uav-corridor-ortho.jpg"
                   alt="Milepost 0-30 Digboi Corridor"
                   className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                 />
@@ -390,7 +390,7 @@ export const ProjectDashboard: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border-l-4 border-l-rose-500 border border-rose-200 bg-rose-50/40 hover:bg-rose-50 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
                 <img
-                  src="https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&q=80&w=300"
+                  src="/images/pipeline-drone-4k.jpg"
                   alt="Milepost 30-65 Burhi Dihing Basin"
                   className="w-14 h-12 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
                 />
@@ -415,7 +415,7 @@ export const ProjectDashboard: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50/80 transition-colors gap-3 cursor-pointer">
               <div className="flex items-center gap-3">
                 <img
-                  src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&q=80&w=300"
+                  src="/images/dry-haul-survey.jpg"
                   alt="Milepost 65-100 Tea Garden Corridor"
                   className="w-14 h-12 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                 />
@@ -455,7 +455,7 @@ export const ProjectDashboard: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
-                      src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=200"
+                      src="/images/pipeline-ortho-survey.jpg"
                       alt="Komatsu PC300 Excavator"
                       className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                     />
@@ -477,7 +477,7 @@ export const ProjectDashboard: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
-                      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=200"
+                      src="/images/ndt-film-scan.jpg"
                       alt="CRC-Evans Orbital Welding Rig"
                       className="w-10 h-9 rounded object-cover border border-rose-200 shrink-0 shadow-2xs"
                     />
@@ -499,7 +499,7 @@ export const ProjectDashboard: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
-                      src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                      src="/images/pipeline-drone-4k.jpg"
                       alt="Herrenknecht HK250 HDD Rig"
                       className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                     />

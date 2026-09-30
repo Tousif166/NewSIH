@@ -230,7 +230,7 @@ export const ConflictCenter: React.FC = () => {
                   <div className="rounded-lg border border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
                     <div className="relative w-full h-24 rounded overflow-hidden bg-slate-900 group">
                       <img
-                        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400"
+                        src="/images/ndt-film-scan.jpg"
                         alt="Radiographic NDT Weld Inspection Joint J-118"
                         className="w-full h-full object-cover opacity-90 transition-transform duration-300 group-hover:scale-105"
                       />
@@ -252,7 +252,7 @@ export const ConflictCenter: React.FC = () => {
                   <div className="rounded-lg border border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
                     <div className="relative w-full h-24 rounded overflow-hidden bg-slate-900 group">
                       <img
-                        src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=400"
+                        src="/images/uav-corridor-ortho.jpg"
                         alt="UAV Orthomosaic Aerial Corridor KM 42+480"
                         className="w-full h-full object-cover opacity-90 transition-transform duration-300 group-hover:scale-105"
                       />
@@ -493,7 +493,7 @@ export const ConflictCenter: React.FC = () => {
               <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200">
                 <div className="relative w-16 h-12 rounded overflow-hidden border border-slate-200 shadow-2xs shrink-0 group">
                   <img
-                    src="https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&q=80&w=300"
+                    src="/images/dry-haul-survey.jpg"
                     alt="UAV Photogrammetry Flight OIL-SRV-882 Dry Haul Proof"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />

@@ -441,7 +441,7 @@ export const GanttDigitalTwin: React.FC = () => {
 
                   <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
                     <img
-                      src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=300"
+                      src="/images/pipeline-ortho-survey.jpg"
                       alt="Komatsu PC300 Heavy Excavator"
                       className="w-12 h-10 object-cover rounded border border-slate-200 shadow-2xs shrink-0"
                     />
@@ -491,7 +491,7 @@ export const GanttDigitalTwin: React.FC = () => {
                   <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-2xs flex flex-col justify-between hover:shadow-md transition-shadow">
                     <div className="relative w-full h-32 bg-slate-900 overflow-hidden group">
                       <img
-                        src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=800"
+                        src="/images/pipeline-drone-4k.jpg"
                         alt="UAV Ortho Cam-3 Pipeline Corridor Aerial Drone Photograph"
                         className="w-full h-full object-cover opacity-95 transition-transform duration-500 group-hover:scale-105"
                       />

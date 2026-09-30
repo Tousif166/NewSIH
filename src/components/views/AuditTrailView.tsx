@@ -632,7 +632,7 @@ export const AuditTrailView: React.FC = () => {
                 <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 mt-1">
                   <div className="relative w-20 h-14 rounded overflow-hidden bg-slate-900 shrink-0 border border-slate-200 shadow-2xs group">
                     <img
-                      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=300"
+                      src="/images/ndt-film-scan.jpg"
                       alt="NDT Radiography Film RT-391"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                     />
@@ -732,7 +732,7 @@ export const AuditTrailView: React.FC = () => {
                 <div className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 mt-1">
                   <div className="relative w-20 h-14 rounded overflow-hidden bg-slate-900 shrink-0 border border-slate-200 shadow-2xs group">
                     <img
-                      src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=300"
+                      src="/images/uav-corridor-ortho.jpg"
                       alt="UAV Orthomosaic Flyover D300-88"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                     />

@@ -283,7 +283,10 @@ export const ReviewCenter: React.FC = () => {
                   {/* Photo Display */}
                   <div className="md:col-span-7 relative h-56 md:h-64 bg-slate-900 overflow-hidden group">
                     <img
-                      src={relatedEvent.photoUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=1200'}
+                      src={relatedEvent.photoUrl?.startsWith('http') ? relatedEvent.photoUrl : '/images/pipeline-drone-4k.jpg'}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = '/images/pipeline-drone-4k.jpg';
+                      }}
                       alt="Field inspection photograph proof"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />

@@ -850,7 +850,7 @@ export const ScheduleExplorer: React.FC = () => {
               <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200 gap-3">
                 <div className="flex items-center gap-2.5">
                   <img
-                    src="https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=200"
+                    src="/images/pipeline-drone-4k.jpg"
                     alt="Spread 2 Corridor Orthomosaic Scan"
                     className="w-12 h-10 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
                   />

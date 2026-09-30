@@ -165,7 +165,7 @@ export const FieldInputCenter: React.FC = () => {
   };
 
   const handleSimulatePhoto = () => {
-    const droneSampleUrl = 'https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=1200';
+    const droneSampleUrl = '/images/pipeline-drone-4k.jpg';
     setAttachedPhoto(droneSampleUrl);
     setTextInput((prev) => 
       prev.includes('Geotagged optical telemetry attached')
@@ -633,71 +633,99 @@ export const FieldInputCenter: React.FC = () => {
           {/* Geotagged Camera / Drone HUD Card */}
           <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs flex flex-col hover:shadow-md transition-shadow">
             <div className="p-3.5 flex items-center justify-between bg-[#f8faff] border-b border-slate-200">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-blue-700 text-[18px]">photo_camera_front</span>
-                <span className="font-mono text-xs text-slate-900 font-bold uppercase tracking-wide">
-                  Optical Telemetry Feed
-                </span>
+              <div className="flex items-center gap-2.5">
+                <span className="material-symbols-outlined text-blue-700 text-[20px]">photo_camera_front</span>
+                <div className="flex flex-col leading-tight">
+                  <span className="font-mono text-xs text-slate-900 font-bold uppercase tracking-wider">
+                    OPTICAL
+                  </span>
+                  <span className="font-mono text-xs text-slate-900 font-bold uppercase tracking-wider">
+                    TELEMETRY FEED
+                  </span>
+                </div>
               </div>
-              <span className="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-[10px] font-semibold">
-                CAM-EX-04A // 4K RAW
-              </span>
+              <div className="px-3 py-1 rounded bg-[#eff4ff] border border-[#dce1ff] text-[#0037b0] font-mono text-[11px] font-bold flex flex-col items-end leading-tight">
+                <span>CAM-EX-04A //</span>
+                <span>4K RAW</span>
+              </div>
             </div>
 
             {/* Camera Media Display with Inset HUD Overlay */}
-            <div className="relative w-full h-64 bg-slate-900 overflow-hidden group select-none" id="camera-viewport">
+            <div className="relative w-full h-72 bg-slate-950 overflow-hidden group select-none" id="camera-viewport">
               <img
-                className="w-full h-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-105"
+                className="w-full h-full object-cover opacity-95 transition-transform duration-700 ease-out group-hover:scale-105"
                 alt="Industrial drone aerial photo capturing pipeline trenching operation across terrain"
-                src={
-                  attachedPhoto ||
-                  'https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?auto=format&fit=crop&q=80&w=1200'
-                }
+                src={attachedPhoto || '/images/pipeline-drone-4k.jpg'}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/images/pipeline-drone-4k.jpg';
+                }}
               />
               {/* Subtle scanning line effect */}
               <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none animate-scanline"></div>
-              {/* Ground-truth Match Badge Top Right */}
-              <div className="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded shadow-lg flex items-center gap-1.5 border border-slate-700">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-mono text-[10px] text-emerald-400 font-medium">
-                  UAV Multispectral Pass #012 Correlated
-                </span>
-              </div>
+
               {/* Crosshairs & HUD Elements */}
-              <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-4">
-                <div className="flex justify-between items-start">
-                  <div className="font-mono text-[10px] text-white bg-slate-900/85 backdrop-blur-xs px-2 py-0.5 rounded font-medium border border-slate-700 tracking-wider flex items-center gap-1.5 shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    CHAINAGE: <span className="font-bold text-cyan-300">{hudChainage}</span>
+              <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-3.5">
+                {/* Top HUD Box */}
+                <div className="bg-[#0b1329]/85 backdrop-blur-xs rounded-lg p-2.5 border border-slate-700/60 shadow-lg flex items-center justify-between text-white font-mono">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-[10px] text-slate-300 font-bold tracking-wider">
+                        CHAINAGE: <span className="text-white">KM</span>
+                      </span>
+                      <span className="text-xs font-bold text-white tracking-wider">
+                        {hudChainage.replace(/^KM\s*/i, '') || '42+650'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="font-mono text-[10px] text-slate-300 bg-slate-900/85 backdrop-blur-xs px-2 py-0.5 rounded font-medium border border-slate-700 tracking-wider">
-                    AZIMUTH: <span className="font-bold text-slate-100">{hudAzimuth}</span>
+                  <div className="flex flex-col items-start leading-tight pr-2">
+                    <span className="text-[10px] text-slate-300 font-bold tracking-wider">
+                      AZIMUTH: <span className="text-white">184°</span>
+                    </span>
+                    <span className="text-xs font-bold text-white tracking-wider">
+                      {hudAzimuth.includes('S') ? 'S' : hudAzimuth}
+                    </span>
                   </div>
                 </div>
+
                 {/* Center Reticle */}
-                <div className="self-center flex flex-col items-center animate-reticle">
-                  <svg className="text-blue-300/85" height="42" viewBox="0 0 40 40" width="42">
-                    <circle cx="20" cy="20" fill="none" r="12" stroke="currentColor" strokeDasharray="2 2" strokeWidth="1"></circle>
-                    <line stroke="currentColor" strokeWidth="1.5" x1="20" x2="20" y1="4" y2="14"></line>
-                    <line stroke="currentColor" strokeWidth="1.5" x1="20" x2="20" y1="26" y2="36"></line>
-                    <line stroke="currentColor" strokeWidth="1.5" x1="20" x2="20" y1="4" y2="14"></line>
-                    <line stroke="currentColor" strokeWidth="1.5" x1="26" x2="36" y1="20" y2="20"></line>
+                <div className="self-center flex flex-col items-center">
+                  <svg className="text-cyan-400/90" height="46" viewBox="0 0 40 40" width="46">
+                    <circle cx="20" cy="20" fill="none" r="12" stroke="currentColor" strokeDasharray="3 3" strokeWidth="1.2"></circle>
+                    <line stroke="currentColor" strokeWidth="1.5" x1="20" x2="20" y1="2" y2="12"></line>
+                    <line stroke="currentColor" strokeWidth="1.5" x1="20" x2="20" y1="28" y2="38"></line>
+                    <line stroke="currentColor" strokeWidth="1.5" x1="2" x2="12" y1="20" y2="20"></line>
+                    <line stroke="currentColor" strokeWidth="1.5" x1="28" x2="38" y1="20" y2="20"></line>
                   </svg>
                 </div>
-                {/* Bottom Data Readout Ribbon */}
-                <div className="bg-slate-900/90 backdrop-blur-md rounded p-2 flex items-center justify-between text-slate-100 font-mono text-[10px] shadow-md border border-slate-700">
-                  <span className="text-blue-300 tracking-tight">LAT: 27.3892° N • LON: 95.6174° E</span>
-                  <span className="text-slate-200">ALT: +142.4m AMSL</span>
-                  <span className="text-amber-400 font-semibold">11:15 IST</span>
+
+                {/* Bottom HUD Box */}
+                <div className="bg-[#0b1329]/85 backdrop-blur-xs rounded-lg p-2.5 border border-slate-700/60 shadow-lg flex items-center justify-between text-slate-100 font-mono text-[10px]">
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-blue-300 tracking-tight font-medium">LAT: 27.3892° N •</span>
+                    <span className="text-blue-300 tracking-tight font-medium">LON: 95.6174° E</span>
+                  </div>
+                  <div className="flex flex-col items-start leading-tight">
+                    <span className="text-slate-300 font-medium">ALT:</span>
+                    <span className="text-white font-bold tracking-tight">+142.4m</span>
+                    <span className="text-slate-400 text-[9px]">AMSL</span>
+                  </div>
+                  <div className="flex flex-col items-end leading-tight">
+                    <span className="text-[#facc15] font-bold text-xs tracking-wider">11:15</span>
+                    <span className="text-[#facc15] font-bold text-[10px] tracking-wider">IST</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Ingestion Status Bar */}
             <div className="p-3.5 bg-white border-t border-slate-200 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                <span className="text-xs text-slate-700 font-medium">Photogrammetry Orthomosaic Synced</span>
+              <div className="flex items-center gap-2.5">
+                <span className="material-symbols-outlined text-[20px] text-emerald-600">check_circle</span>
+                <div className="flex flex-col font-mono text-xs text-slate-800 leading-tight">
+                  <span className="font-semibold">Photogrammetry</span>
+                  <span className="font-semibold text-slate-700">Orthomosaic Synced</span>
+                </div>
               </div>
               <button
                 type="button"
@@ -706,12 +734,15 @@ export const FieldInputCenter: React.FC = () => {
                   showToast('HUD optical sensors recalibrated to current GPS datum.');
                   setTimeout(() => setCalibrated(false), 2000);
                 }}
-                className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 active:scale-95 border border-slate-300 font-mono text-[10px] text-slate-900 font-semibold transition-all flex items-center gap-1 group cursor-pointer"
+                className="px-3.5 py-1.5 rounded bg-[#f8faff] hover:bg-slate-100 active:scale-95 border border-slate-300 font-mono text-[11px] text-slate-900 font-bold transition-all flex items-center gap-2 group cursor-pointer shadow-xs"
               >
-                <span className="material-symbols-outlined text-[14px] group-hover:rotate-90 transition-transform duration-300">
+                <span className="material-symbols-outlined text-[16px] text-slate-700 group-hover:rotate-90 transition-transform duration-300">
                   tune
                 </span>
-                <span>{calibrated ? 'CALIBRATED' : 'CALIBRATE HUD'}</span>
+                <div className="flex flex-col text-left leading-tight">
+                  <span>{calibrated ? 'CALIBRATED' : 'CALIBRATE'}</span>
+                  <span>HUD</span>
+                </div>
               </button>
             </div>
           </div>
