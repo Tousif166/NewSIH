@@ -12,7 +12,11 @@ import {
   History, 
   PlayCircle,
   X,
-  LogOut
+  LogOut,
+  Compass,
+  HardHat,
+  Briefcase,
+  ShieldCheck
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {

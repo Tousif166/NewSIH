@@ -18,7 +18,8 @@ import {
   Image as ImageIcon,
   CheckCircle2,
   Radio,
-  FileSpreadsheet
+  FileSpreadsheet,
+  HardHat
 } from 'lucide-react';
 
 export const FieldInputCenter: React.FC = () => {
