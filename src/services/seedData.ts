@@ -699,6 +699,104 @@ export const DEMO_MATCHES: ActivityMatchRecord[] = [
         ]
       }
     ]
+  },
+  {
+    matchId: 'match-003',
+    eventId: 'evt-002',
+    selectedActivityId: 'act-civ-0102',
+    confidence: 98,
+    status: 'APPROVED',
+    plannerNotes: 'Foundation F-102 pouring verified with batching plant slips. 75 m3 Grade M35 concrete cubes sampled.',
+    reviewedBy: 'Pranjal Saikia (Lead Project Planner)',
+    reviewedAt: '2026-09-28T19:45:00Z',
+    appliedToSchedule: true,
+    candidates: [
+      {
+        activityId: 'act-civ-0102',
+        activityCode: 'CIV-FOUND-L6-0102',
+        activityName: 'Foundation F-102 concrete pouring and curing',
+        discipline: 'Civil',
+        wbsHierarchy: 'GCU > Civil Works > Foundation F-102',
+        lexicalScore: 0.98,
+        fuzzyScore: 0.99,
+        semanticScore: 0.97,
+        contextScore: 0.98,
+        temporalScore: 0.98,
+        finalConfidence: 98,
+        confidenceTier: 'HIGH',
+        explanationPoints: [
+          { passed: true, text: 'Foundation F-102 matches WBS asset nomenclature' },
+          { passed: true, text: 'Pouring volume (75 m3) exactly matches planned design envelope' },
+          { passed: true, text: 'Excavation & rebar inspection prerequisites verified complete' },
+          { passed: true, text: 'Digboi Compressor Bay 2 location coordinates verified' }
+        ]
+      },
+      {
+        activityId: 'act-civ-0103',
+        activityCode: 'CIV-PLINTH-L6-0103',
+        activityName: 'Anchor bolt grouting and pocket curing for foundation F-102',
+        discipline: 'Civil',
+        wbsHierarchy: 'GCU > Civil Works > Foundation Plinth',
+        lexicalScore: 0.70,
+        fuzzyScore: 0.74,
+        semanticScore: 0.75,
+        contextScore: 0.72,
+        temporalScore: 0.60,
+        finalConfidence: 71,
+        confidenceTier: 'MEDIUM',
+        explanationPoints: [
+          { passed: false, text: 'Successor activity: requires 48hr initial concrete set before anchor grouting' },
+          { passed: true, text: 'Foundation F-102 component matched' }
+        ]
+      }
+    ]
+  },
+  {
+    matchId: 'match-004',
+    eventId: 'evt-004',
+    selectedActivityId: 'act-pipe-0142',
+    confidence: 88,
+    status: 'PENDING_REVIEW',
+    plannerNotes: 'Subcontractor spreadsheet claims 70% vs supervisor voice claim of 78%. Flagged under Dispute Resolution.',
+    appliedToSchedule: false,
+    candidates: [
+      {
+        activityId: 'act-pipe-0142',
+        activityCode: 'PIPE-ERECT-L6-0142',
+        activityName: 'Erection of 12-inch process line at compressor area',
+        discipline: 'Piping',
+        wbsHierarchy: 'GCU > Piping > Compressor Spools',
+        lexicalScore: 0.88,
+        fuzzyScore: 0.89,
+        semanticScore: 0.86,
+        contextScore: 0.89,
+        temporalScore: 0.90,
+        finalConfidence: 88,
+        confidenceTier: 'HIGH',
+        explanationPoints: [
+          { passed: true, text: '12-inch GCU spool item matches line specification' },
+          { passed: true, text: 'Piping discipline matches AIES scope of work' },
+          { passed: false, text: 'Progress contradiction: 70% reported vs 78% supervisor log' }
+        ]
+      },
+      {
+        activityId: 'act-pipe-0143',
+        activityCode: 'PIPE-FITUP-L6-0143',
+        activityName: 'Fit-up and pre-welding inspection of 12-inch discharge line',
+        discipline: 'Piping',
+        wbsHierarchy: 'GCU > Piping > Discharge Header',
+        lexicalScore: 0.55,
+        fuzzyScore: 0.60,
+        semanticScore: 0.62,
+        contextScore: 0.58,
+        temporalScore: 0.70,
+        finalConfidence: 61,
+        confidenceTier: 'LOW',
+        explanationPoints: [
+          { passed: false, text: 'Action mismatch: erection vs fit-up inspection' }
+        ]
+      }
+    ]
   }
 ];
 

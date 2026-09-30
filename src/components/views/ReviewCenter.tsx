@@ -12,18 +12,26 @@ export const ReviewCenter: React.FC = () => {
     addTerminologyMapping,
     terminologyMappings,
     setActiveTab,
+    selectedMatchId,
+    setSelectedMatchId,
+    navigateToActivitySchedule,
     showToast
   } = useApp();
 
-  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [plannerNote, setPlannerNote] = useState('');
   const [termModalOpen, setTermModalOpen] = useState(false);
   const [newTermField, setNewTermField] = useState('');
   const [newTermActivityCode, setNewTermActivityCode] = useState('');
   const [mobileTab, setMobileTab] = useState<'QUEUE' | 'INSPECTION'>('QUEUE');
+  const [queueFilter, setQueueFilter] = useState<'ALL' | 'PENDING' | 'APPROVED'>('ALL');
 
   const pendingMatches = matches.filter(m => m.status === 'PENDING_REVIEW');
-  const activeMatch = matches.find(m => m.matchId === (selectedMatchId || pendingMatches[0]?.matchId)) || matches[0];
+  const approvedMatches = matches.filter(m => m.status === 'APPROVED');
+  
+  // Resolve active match using selectedMatchId if present, otherwise default to first pending or first match
+  const activeMatch = (selectedMatchId ? matches.find(m => m.matchId === selectedMatchId) : null) 
+    || pendingMatches[0] 
+    || matches[0];
   const relatedEvent = activeMatch ? fieldEvents.find(e => e.eventId === activeMatch.eventId) : null;
   const matchedActivity = activeMatch ? activities.find(a => a.id === activeMatch.selectedActivityId) : null;
 
@@ -166,24 +174,72 @@ export const ReviewCenter: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Proposals Queue (4 cols) */}
         <div className={`lg:col-span-4 flex-col gap-3 ${mobileTab === 'QUEUE' ? 'flex' : 'hidden lg:flex'}`}>
-          <div className="flex items-center justify-between">
-            <div className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
-              Pending AI Ingestion Queue ({pendingMatches.length})
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <div className="font-mono text-xs uppercase font-bold text-slate-700 tracking-wider">
+                Proposals Queue ({matches.length})
+              </div>
+              <span className="font-mono text-[10px] text-blue-700 font-semibold">EPPM STAGING</span>
             </div>
-            <span className="font-mono text-[10px] text-blue-700 font-semibold">EPPM STAGING</span>
+
+            {/* Filter Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-lg border border-slate-200 text-[11px] font-mono">
+              <button
+                type="button"
+                onClick={() => setQueueFilter('ALL')}
+                className={`flex-1 py-1 px-2 rounded-md font-bold transition-colors ${
+                  queueFilter === 'ALL'
+                    ? 'bg-white text-blue-900 shadow-2xs border border-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                All ({matches.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setQueueFilter('PENDING')}
+                className={`flex-1 py-1 px-2 rounded-md font-bold transition-colors ${
+                  queueFilter === 'PENDING'
+                    ? 'bg-white text-amber-800 shadow-2xs border border-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Pending ({pendingMatches.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setQueueFilter('APPROVED')}
+                className={`flex-1 py-1 px-2 rounded-md font-bold transition-colors ${
+                  queueFilter === 'APPROVED'
+                    ? 'bg-white text-emerald-800 shadow-2xs border border-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Approved ({approvedMatches.length})
+              </button>
+            </div>
           </div>
 
-          {pendingMatches.length === 0 ? (
+          {matches.filter(m => {
+            if (queueFilter === 'PENDING') return m.status === 'PENDING_REVIEW';
+            if (queueFilter === 'APPROVED') return m.status === 'APPROVED';
+            return true;
+          }).length === 0 ? (
             <div className="p-8 text-center bg-white rounded-xl border border-slate-300 text-slate-500 font-mono text-xs">
               <span className="material-symbols-outlined text-emerald-600 text-[28px] mb-2">done_all</span>
-              <p>All field events have been reviewed and approved into the Oracle P6 baseline!</p>
+              <p>No proposals matching the current filter.</p>
             </div>
           ) : (
             <div className="flex flex-col gap-2.5">
-              {pendingMatches.map((m) => {
+              {matches.filter(m => {
+                if (queueFilter === 'PENDING') return m.status === 'PENDING_REVIEW';
+                if (queueFilter === 'APPROVED') return m.status === 'APPROVED';
+                return true;
+              }).map((m) => {
                 const isSelected = activeMatch?.matchId === m.matchId;
                 const evt = fieldEvents.find((e) => e.eventId === m.eventId);
                 const cand = m.candidates?.[0];
+                const isApproved = m.status === 'APPROVED';
 
                 return (
                   <div
@@ -199,9 +255,18 @@ export const ReviewCenter: React.FC = () => {
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">
-                        {evt?.discipline || 'Pipeline'}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">
+                          {evt?.discipline || 'Pipeline'}
+                        </span>
+                        <span className={`font-mono text-[9px] px-1.5 py-0.2 rounded font-bold border ${
+                          isApproved 
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
+                            : 'bg-amber-50 text-amber-800 border-amber-300'
+                        }`}>
+                          {isApproved ? 'P6 COMMITTED' : 'PENDING'}
+                        </span>
+                      </div>
                       <span className="font-mono text-[11px] font-bold text-emerald-700 flex items-center gap-1">
                         <span className="material-symbols-outlined text-[13px]">bolt</span>
                         {m.confidence}% MATCH
@@ -465,49 +530,107 @@ export const ReviewCenter: React.FC = () => {
               </div>
 
               {/* Inspector Review Notes & Action Buttons */}
-              <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
-                <div className="flex flex-col gap-1">
-                  <label className="font-mono text-[10px] uppercase font-bold text-slate-500">
-                    Lead Planning Engineer Decision Notes (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    value={plannerNote}
-                    onChange={(e) => setPlannerNote(e.target.value)}
-                    placeholder="Enter approval note or variance reason for Oracle P6 audit log..."
-                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-700"
-                  />
-                </div>
+              {activeMatch.status === 'APPROVED' ? (
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
+                  <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center shrink-0">
+                        <span className="material-symbols-outlined text-[20px]">verified</span>
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-emerald-950 font-mono flex items-center gap-2">
+                          <span>COMMITTED TO PRIMAVERA P6 BASELINE</span>
+                          <span className="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 text-[9px]">ACTIVE RECORD</span>
+                        </div>
+                        <div className="text-[11px] text-emerald-800 font-mono mt-0.5">
+                          {activeMatch.plannerNotes || 'Approved by Lead Planner P. Saikia. Matched against schedule baseline.'}
+                        </div>
+                        <div className="text-[10px] text-emerald-700 font-mono mt-0.5">
+                          Reviewed by {activeMatch.reviewedBy || 'Pranjal Saikia'} • {activeMatch.reviewedAt ? new Date(activeMatch.reviewedAt).toLocaleDateString() : '2026-09-28'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                      <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white px-2 py-1 rounded-md border border-emerald-300 shadow-2xs">
+                        SHA-256 VERIFIED
+                      </span>
+                    </div>
+                  </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={handleReject}
-                    className="px-4 py-2 rounded-lg bg-white border border-rose-300 text-rose-700 hover:bg-rose-50 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">cancel</span>
-                    <span>Reject / Flag Dispute</span>
-                  </button>
-
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                     <button
                       type="button"
-                      onClick={() => setTermModalOpen(true)}
-                      className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono text-xs font-semibold border border-slate-300 transition-all"
+                      onClick={() => navigateToActivitySchedule(activeMatch.selectedActivityId)}
+                      className="px-4 py-2 rounded-lg bg-white border border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 text-slate-700 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
                     >
-                      Teach Synonym
+                      <span className="material-symbols-outlined text-[16px]">account_tree</span>
+                      <span>Locate in WBS Schedule</span>
                     </button>
-                    <button
-                      type="button"
-                      onClick={handleApprove}
-                      className="px-5 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold flex items-center gap-2 shadow-xs transition-all active:scale-95"
-                    >
-                      <span className="material-symbols-outlined text-[16px]">check_circle</span>
-                      <span>Approve & Commit to P6</span>
-                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setTermModalOpen(true)}
+                        className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono text-xs font-semibold border border-slate-300 transition-all"
+                      >
+                        Teach Synonym
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleReject}
+                        className="px-4 py-2 rounded-lg bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
+                      >
+                        <span className="material-symbols-outlined text-[16px]">restart_alt</span>
+                        <span>Re-evaluate Linkage</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
+                  <div className="flex flex-col gap-1">
+                    <label className="font-mono text-[10px] uppercase font-bold text-slate-500">
+                      Lead Planning Engineer Decision Notes (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={plannerNote}
+                      onChange={(e) => setPlannerNote(e.target.value)}
+                      placeholder="Enter approval note or variance reason for Oracle P6 audit log..."
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-700"
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={handleReject}
+                      className="px-4 py-2 rounded-lg bg-white border border-rose-300 text-rose-700 hover:bg-rose-50 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">cancel</span>
+                      <span>Reject / Flag Dispute</span>
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setTermModalOpen(true)}
+                        className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono text-xs font-semibold border border-slate-300 transition-all"
+                      >
+                        Teach Synonym
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleApprove}
+                        className="px-5 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold flex items-center gap-2 shadow-xs transition-all active:scale-95"
+                      >
+                        <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                        <span>Approve & Commit to P6</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="p-12 text-center bg-white rounded-xl border border-slate-200 text-slate-400 font-mono text-xs">

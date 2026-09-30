@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../../services/store';
+import { NormalizedExecutionEvent } from '../../types';
 
 export const FieldInputCenter: React.FC = () => {
   const { 
@@ -10,10 +11,15 @@ export const FieldInputCenter: React.FC = () => {
     syncOfflineQueue, 
     setActiveTab, 
     fieldEvents, 
+    matches,
+    activities,
+    navigateToEventReview,
+    navigateToActivitySchedule,
     showToast 
   } = useApp();
 
   const fieldLogs = fieldEvents || [];
+  const [inspectingLog, setInspectingLog] = useState<NormalizedExecutionEvent | null>(null);
 
   const [textInput, setTextInput] = useState(
     'Encountered subterranean hard rock strata at chainage 42+650. Deployed two auxiliary Komatsu PC300 excavators. Completed 420m laid today without safety incident.'
@@ -841,6 +847,11 @@ export const FieldInputCenter: React.FC = () => {
               ) : (
                 fieldLogs.slice(0, 8).map((log, index) => {
                   const isNew = lastSubmittedId === log.eventId;
+                  const match = matches.find(m => m.eventId === log.eventId);
+                  const isApproved = match?.status === 'APPROVED';
+                  const isPending = match?.status === 'PENDING_REVIEW' || !match;
+                  const isRejected = match?.status === 'REJECTED';
+
                   return (
                     <tr 
                       key={log.eventId || index} 
@@ -874,20 +885,43 @@ export const FieldInputCenter: React.FC = () => {
                         <div className="font-mono text-[10px] text-slate-500 mt-0.5">{log.action || 'Progress Reported'}</div>
                       </td>
                       <td className="py-3 px-4 font-mono text-[11px]">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                          EPPM COMMITTED
-                        </span>
+                        {isApproved ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold shadow-2xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                            EPPM COMMITTED
+                          </span>
+                        ) : isRejected ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 border border-rose-300 text-rose-800 font-semibold shadow-2xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                            FLAGGED DISPUTE
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-800 font-semibold shadow-2xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            PENDING REVIEW
+                          </span>
+                        )}
                       </td>
                       <td className="py-3 px-4 text-right">
-                        <div className="inline-flex items-center gap-1.5">
+                        <div className="inline-flex items-center gap-1.5 justify-end">
+                          {/* Inspect this specific dispatch log */}
                           <button
                             type="button"
-                            onClick={() => setActiveTab('REVIEW_CENTER')}
-                            className="p-1.5 rounded bg-slate-100 border border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 text-slate-600 active:scale-95 transition-all cursor-pointer"
-                            title="View In AI Review Desk"
+                            onClick={() => setInspectingLog(log)}
+                            className="p-1.5 rounded-lg bg-slate-100 border border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-400 text-slate-600 active:scale-95 transition-all cursor-pointer shadow-2xs"
+                            title={`Inspect telemetry & evidence for #${log.eventId?.toUpperCase() || index + 1}`}
                           >
                             <span className="material-symbols-outlined text-[16px]">visibility</span>
+                          </button>
+
+                          {/* Direct navigation to this specific proposal in Review Desk */}
+                          <button
+                            type="button"
+                            onClick={() => navigateToEventReview(log.eventId)}
+                            className="p-1.5 rounded-lg bg-white border border-slate-300 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-400 text-slate-600 active:scale-95 transition-all cursor-pointer shadow-2xs"
+                            title={`Open #${log.eventId?.toUpperCase() || index + 1} in AI Review Desk`}
+                          >
+                            <span className="material-symbols-outlined text-[16px]">rule</span>
                           </button>
                         </div>
                       </td>
@@ -908,6 +942,199 @@ export const FieldInputCenter: React.FC = () => {
           <span className="font-medium text-slate-600">AUTOMATIC PUSH TRIGGER ON LTE-M / SATELLITE HANDSHAKE</span>
         </div>
       </div>
+
+      {/* Field Dispatch & Telemetry Evidence Inspector Modal */}
+      {inspectingLog && (() => {
+        const inspectingMatch = matches.find(m => m.eventId === inspectingLog.eventId);
+        const isApproved = inspectingMatch?.status === 'APPROVED';
+        const isPending = inspectingMatch?.status === 'PENDING_REVIEW' || !inspectingMatch;
+        const linkedAct = inspectingMatch 
+          ? activities.find(a => a.id === inspectingMatch.selectedActivityId)
+          : activities.find(a => a.discipline === inspectingLog.discipline) || activities[0];
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl border border-slate-300 shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+              {/* Modal Top Bar */}
+              <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 border border-blue-200 text-blue-800 flex items-center justify-center shrink-0 shadow-2xs">
+                    <span className="material-symbols-outlined text-[22px]">
+                      {inspectingLog.sourceType === 'VOICE' ? 'mic' : inspectingLog.sourceType === 'DPR' ? 'description' : 'analytics'}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-slate-900 font-mono text-sm">
+                        DISPATCH #{inspectingLog.eventId?.toUpperCase()}
+                      </span>
+                      <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+                        {inspectingLog.sourceType}
+                      </span>
+                      {isApproved ? (
+                        <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold border border-emerald-200">
+                          P6 COMMITTED
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[10px] font-bold border border-amber-200">
+                          PENDING REVIEW
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-xs text-slate-500 font-mono mt-0.5">
+                      Reported {inspectingLog.reportedDate} • {inspectingLog.reportedBy}
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setInspectingLog(null)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+                  title="Close Inspector"
+                >
+                  <span className="material-symbols-outlined text-[20px]">close</span>
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-4 sm:p-6 overflow-y-auto space-y-4">
+                {/* Verbatim Raw Telemetry Box */}
+                <div className="rounded-xl bg-[#f8faff] border border-slate-200 p-4 space-y-2">
+                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-500 uppercase">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[15px] text-blue-700">record_voice_over</span>
+                      Raw Verbatim Field Submission
+                    </span>
+                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      {inspectingLog.extractionConfidence}% AI Confidence
+                    </span>
+                  </div>
+                  <div className="p-3 bg-white rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 font-sans italic leading-relaxed">
+                    "{inspectingLog.rawText}"
+                  </div>
+                </div>
+
+                {/* Structured Extraction Matrix Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Discipline</span>
+                    <span className="font-bold text-blue-900">{inspectingLog.discipline}</span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Action</span>
+                    <span className="font-bold text-slate-900 capitalize">{inspectingLog.action}</span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Asset / Scope</span>
+                    <span className="font-bold text-slate-900 truncate">{inspectingLog.assetOrComponent || 'Corridor Segment'}</span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Location</span>
+                    <span className="font-bold text-slate-900 truncate">{inspectingLog.location}</span>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Quantity Installed</span>
+                    <span className="font-bold text-emerald-700">
+                      {inspectingLog.quantity ? `${inspectingLog.quantity} ${inspectingLog.unit || 'm'}` : 'Progress update'}
+                    </span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Progress Reported</span>
+                    <span className="font-bold text-blue-700">{inspectingLog.percentComplete || 75}% Pace</span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">Assigned Contractor</span>
+                    <span className="font-bold text-slate-900 truncate">{inspectingLog.contractor || 'AIES Engineering'}</span>
+                  </div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase font-bold text-slate-500">HSE Incident Audit</span>
+                    <span className="font-bold text-emerald-700 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                      Zero Incidents
+                    </span>
+                  </div>
+                </div>
+
+                {/* Photo Evidence (if available) */}
+                {inspectingLog.photoUrl && (
+                  <div className="rounded-xl border border-slate-200 overflow-hidden bg-slate-50 p-3 space-y-2">
+                    <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-600">
+                      <span className="flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-[15px] text-blue-700">photo_camera</span>
+                        Geotagged Field Evidence Proof
+                      </span>
+                      <span className="text-slate-500">27.3821° N, 95.6214° E</span>
+                    </div>
+                    <div className="relative rounded-lg overflow-hidden border border-slate-200 h-44 bg-slate-900 flex items-center justify-center">
+                      <img 
+                        src={inspectingLog.photoUrl} 
+                        alt="Site submission evidence" 
+                        className="w-full h-full object-cover" 
+                      />
+                      <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 text-white font-mono text-[10px] backdrop-blur-xs">
+                        GPS EXIF VERIFIED • OIL-SEC-CORRIDOR
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Linked P6 Activity Card */}
+                {linkedAct && (
+                  <div className="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <span className="material-symbols-outlined text-[20px] text-blue-700">account_tree</span>
+                      <div>
+                        <div className="text-xs font-bold text-blue-950 font-mono">
+                          LINKED P6 ACTIVITY: {linkedAct.activityCode}
+                        </div>
+                        <div className="text-[11px] text-slate-600 mt-0.5">{linkedAct.name}</div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigateToActivitySchedule(linkedAct.activityCode);
+                        setInspectingLog(null);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-white border border-blue-300 text-blue-800 hover:bg-blue-100 font-mono text-[11px] font-bold flex items-center gap-1 shadow-2xs self-start sm:self-auto cursor-pointer"
+                    >
+                      <span>Locate in Schedule</span>
+                      <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer Controls */}
+              <div className="p-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/80">
+                <button
+                  type="button"
+                  onClick={() => setInspectingLog(null)}
+                  className="px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 font-mono text-xs font-semibold cursor-pointer shadow-2xs"
+                >
+                  Close Inspector
+                </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigateToEventReview(inspectingLog.eventId);
+                      setInspectingLog(null);
+                    }}
+                    className="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95 transition-all"
+                  >
+                    <span>Open in AI Review Desk</span>
+                    <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

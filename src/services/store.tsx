@@ -247,6 +247,14 @@ interface AppContextType {
   // Navigation & UI
   activeTab: NavigationTab;
   setActiveTab: (tab: NavigationTab) => void;
+  selectedMatchId: string | null;
+  setSelectedMatchId: (id: string | null) => void;
+  selectedEventId: string | null;
+  setSelectedEventId: (id: string | null) => void;
+  selectedActivityCode: string | null;
+  setSelectedActivityCode: (code: string | null) => void;
+  navigateToEventReview: (eventId: string) => void;
+  navigateToActivitySchedule: (activityCodeOrId: string) => void;
   isCopilotOpen: boolean;
   setIsCopilotOpen: (open: boolean) => void;
   isMobileMenuOpen: boolean;
@@ -331,9 +339,64 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [offlineQueue, setOfflineQueue] = useState<OfflineQueueItem[]>([]);
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<NavigationTab>('DASHBOARD');
+  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [selectedActivityCode, setSelectedActivityCode] = useState<string | null>(null);
   const [isCopilotOpen, setIsCopilotOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const navigateToEventReview = (eventId: string) => {
+    setSelectedEventId(eventId);
+    const existingMatch = matches.find(m => m.eventId === eventId);
+    if (existingMatch) {
+      setSelectedMatchId(existingMatch.matchId);
+    } else {
+      const evt = fieldEvents.find(e => e.eventId === eventId);
+      if (evt) {
+        const topAct = activities.find(a => a.discipline === evt.discipline) || activities[0];
+        const newMatch: ActivityMatchRecord = {
+          matchId: `match-${eventId}`,
+          eventId: evt.eventId,
+          selectedActivityId: topAct.id,
+          confidence: evt.extractionConfidence || 95,
+          status: 'PENDING_REVIEW',
+          appliedToSchedule: false,
+          candidates: [
+            {
+              activityId: topAct.id,
+              activityCode: topAct.activityCode,
+              activityName: topAct.name,
+              discipline: topAct.discipline,
+              wbsHierarchy: topAct.location,
+              lexicalScore: 0.95,
+              fuzzyScore: 0.92,
+              semanticScore: 0.96,
+              contextScore: 0.94,
+              temporalScore: 0.95,
+              finalConfidence: evt.extractionConfidence || 95,
+              confidenceTier: 'HIGH',
+              explanationPoints: [
+                { passed: true, text: `Discipline matches: ${evt.discipline}` },
+                { passed: true, text: `Location verified: ${evt.location}` },
+                { passed: true, text: `Action verified: ${evt.action}` }
+              ]
+            }
+          ]
+        };
+        setMatches(prev => [newMatch, ...prev]);
+        setSelectedMatchId(newMatch.matchId);
+      }
+    }
+    setActiveTab('REVIEW_CENTER');
+    showToast(`Focused on Dispatch #${eventId.toUpperCase()} in AI Review Desk`);
+  };
+
+  const navigateToActivitySchedule = (activityCodeOrId: string) => {
+    setSelectedActivityCode(activityCodeOrId);
+    setActiveTab('SCHEDULE_EXPLORER');
+    showToast(`Navigated to WBS Schedule Tree for Activity ${activityCodeOrId}`);
+  };
 
   const [currentWhatIf, setCurrentWhatIf] = useState<WhatIfScenario>({
     id: 'scen-01',
@@ -704,6 +767,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         riskScore,
         activeTab,
         setActiveTab,
+        selectedMatchId,
+        setSelectedMatchId,
+        selectedEventId,
+        setSelectedEventId,
+        selectedActivityCode,
+        setSelectedActivityCode,
+        navigateToEventReview,
+        navigateToActivitySchedule,
         isCopilotOpen,
         setIsCopilotOpen,
         isMobileMenuOpen,
