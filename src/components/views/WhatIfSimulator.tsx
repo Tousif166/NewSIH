@@ -53,7 +53,7 @@ export const WhatIfSimulator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-4 pb-12 pt-6">
+    <div className="flex flex-col w-full gap-5">
       {/* TOP BAR: BREADCRUMB, STATUS & SCENARIO ACTION HEADER */}
       <section className="bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-3">

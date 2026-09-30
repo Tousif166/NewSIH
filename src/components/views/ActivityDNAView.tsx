@@ -334,11 +334,11 @@ export const ActivityDNAView: React.FC = () => {
             {/* Inline Visual Chart Graphic with interactive nodes and animations */}
             <div className="w-full bg-slate-50 p-3 rounded-lg border border-slate-200 relative">
               {activeTooltip && (
-                <div className="absolute top-2 right-4 bg-slate-900 text-white font-mono text-xs px-2.5 py-1 rounded shadow-md z-30 flex items-center gap-2">
-                  <span className="text-blue-300">{activeTooltip.day}</span>
-                  <span className="text-slate-400">•</span>
-                  <span>{activeTooltip.km}</span>
-                  <span className="text-emerald-400 font-bold">{activeTooltip.val}</span>
+                <div className="absolute top-2 right-4 bg-white border border-slate-200 text-slate-900 font-mono text-xs px-2.5 py-1 rounded shadow-md z-30 flex items-center gap-2">
+                  <span className="text-blue-700 font-bold">{activeTooltip.day}</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-600">{activeTooltip.km}</span>
+                  <span className="text-emerald-700 font-bold">{activeTooltip.val}</span>
                 </div>
               )}
 

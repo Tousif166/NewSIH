@@ -7,13 +7,10 @@ import {
   Bot, 
   User, 
   ArrowRight, 
-  CornerDownRight, 
-  HelpCircle,
-  Clock,
-  Search,
-  AlertTriangle,
-  Calendar,
-  Users
+  Search, 
+  AlertTriangle, 
+  Calendar, 
+  Users 
 } from 'lucide-react';
 import { queryProjectCopilot } from '../../services/aiEngine';
 
@@ -84,73 +81,73 @@ export const CopilotDrawer: React.FC = () => {
   if (!isCopilotOpen) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col backdrop-blur-md">
+    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-white border-l border-slate-200 shadow-2xl flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-slate-800 bg-slate-950 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+      <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs">
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-white tracking-tight flex items-center gap-1.5 font-sans">
+            <h2 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-1.5 font-sans">
               AI Project Copilot
-              <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500 text-slate-950 font-bold uppercase font-mono">
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-100 text-blue-800 font-bold uppercase font-mono">
                 Live Data
               </span>
             </h2>
-            <p className="text-[10px] text-slate-400 font-mono">Ground Truth Project Intelligence</p>
+            <p className="text-[10px] text-slate-500 font-mono">Ground Truth Project Intelligence</p>
           </div>
         </div>
 
         <button
           onClick={() => setIsCopilotOpen(false)}
-          className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+          className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       {/* Suggested Quick Prompt Chips */}
-      <div className="p-2.5 sm:p-3 bg-slate-950/60 border-b border-slate-800/80 overflow-x-auto no-scrollbar flex gap-2 shrink-0">
+      <div className="p-2.5 sm:p-3 bg-slate-50/60 border-b border-slate-200 overflow-x-auto no-scrollbar flex gap-2 shrink-0">
         <button
           onClick={() => handleSend('Which activities are delayed?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-white hover:bg-blue-50 border border-slate-200 text-slate-700 hover:text-blue-800 whitespace-nowrap transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
         >
-          <Search className="w-3 h-3 text-sky-400" />
+          <Search className="w-3 h-3 text-blue-600" />
           <span>Which activities are delayed?</span>
         </button>
         <button
           onClick={() => handleSend('Show conflicting progress reports')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-white hover:bg-amber-50 border border-slate-200 text-slate-700 hover:text-amber-900 whitespace-nowrap transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
         >
-          <AlertTriangle className="w-3 h-3 text-amber-400" />
+          <AlertTriangle className="w-3 h-3 text-amber-600" />
           <span>Show conflicts</span>
         </button>
         <button
           onClick={() => handleSend('What changed since yesterday?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-white hover:bg-emerald-50 border border-slate-200 text-slate-700 hover:text-emerald-900 whitespace-nowrap transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
         >
-          <Calendar className="w-3 h-3 text-emerald-400" />
+          <Calendar className="w-3 h-3 text-emerald-600" />
           <span>What changed yesterday?</span>
         </button>
         <button
           onClick={() => handleSend('Which contractor has the largest schedule variance?')}
-          className="text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 whitespace-nowrap transition-colors flex items-center gap-1.5"
+          className="text-[11px] px-2.5 py-1 rounded-full bg-white hover:bg-purple-50 border border-slate-200 text-slate-700 hover:text-purple-900 whitespace-nowrap transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
         >
-          <Users className="w-3 h-3 text-purple-400" />
+          <Users className="w-3 h-3 text-purple-600" />
           <span>Contractor variance</span>
         </button>
       </div>
 
       {/* Message Stream */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs">
+      <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs bg-[#f8fafc]">
         {messages.map((m) => (
           <div
             key={m.id}
             className={`flex gap-3 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             {m.sender === 'assistant' && (
-              <div className="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
+              <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0 mt-0.5 shadow-2xs">
                 <Bot className="w-4 h-4" />
               </div>
             )}
@@ -158,21 +155,21 @@ export const CopilotDrawer: React.FC = () => {
             <div
               className={`max-w-[85%] rounded-xl p-3.5 space-y-2 leading-relaxed ${
                 m.sender === 'user'
-                  ? 'bg-amber-500 text-slate-950 font-medium ml-8'
-                  : 'bg-slate-950 border border-slate-800 text-slate-200 shadow-sm'
+                  ? 'bg-blue-700 text-white font-medium ml-8 shadow-xs'
+                  : 'bg-white border border-slate-200 text-slate-800 shadow-2xs'
               }`}
             >
               <div className="whitespace-pre-wrap">{m.text}</div>
 
               {/* Related Activity Links */}
               {m.relatedActivityCodes && m.relatedActivityCodes.length > 0 && (
-                <div className="pt-2 border-t border-slate-800/80 flex flex-wrap gap-1.5 items-center">
+                <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5 items-center">
                   <span className="text-[10px] text-slate-500 font-mono">Linked Nodes:</span>
                   {m.relatedActivityCodes.map((code) => (
                     <span
                       key={code}
                       onClick={() => setActiveTab('GANTT_4D')}
-                      className="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-700 cursor-pointer"
+                      className="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 cursor-pointer transition-colors"
                     >
                       {code}
                     </span>
@@ -185,7 +182,7 @@ export const CopilotDrawer: React.FC = () => {
                 <div className="pt-1">
                   <button
                     onClick={() => handleActionButton(m.actionButton!.action)}
-                    className="w-full py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 font-medium text-xs flex items-center justify-center gap-1.5 border border-slate-700"
+                    className="w-full py-1.5 rounded bg-blue-50 hover:bg-blue-100 text-blue-800 font-medium text-xs flex items-center justify-center gap-1.5 border border-blue-200 transition-colors cursor-pointer"
                   >
                     <span>{m.actionButton.label}</span>
                     <ArrowRight className="w-3 h-3" />
@@ -193,11 +190,13 @@ export const CopilotDrawer: React.FC = () => {
                 </div>
               )}
 
-              <div className="text-[9px] text-slate-500 text-right font-mono">{m.timestamp}</div>
+              <div className={`text-[9px] text-right font-mono ${m.sender === 'user' ? 'text-blue-200' : 'text-slate-400'}`}>
+                {m.timestamp}
+              </div>
             </div>
 
             {m.sender === 'user' && (
-              <div className="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 shrink-0 mt-0.5">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-600 shrink-0 mt-0.5 shadow-2xs">
                 <User className="w-4 h-4" />
               </div>
             )}
@@ -206,7 +205,7 @@ export const CopilotDrawer: React.FC = () => {
       </div>
 
       {/* Input Form */}
-      <div className="p-3 bg-slate-950 border-t border-slate-800 safe-area-pb">
+      <div className="p-3 bg-white border-t border-slate-200 safe-area-pb">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -219,12 +218,12 @@ export const CopilotDrawer: React.FC = () => {
             value={inputQuery}
             onChange={(e) => setInputQuery(e.target.value)}
             placeholder="Ask anything about Oil India project status..."
-            className="flex-1 bg-slate-900 border border-slate-700 text-slate-100 px-3 py-2 rounded-lg text-xs focus:outline-none focus:border-amber-400"
+            className="flex-1 bg-slate-50 border border-slate-300 text-slate-900 px-3 py-2 rounded-lg text-xs focus:outline-none focus:bg-white focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all font-sans"
           />
           <button
             type="submit"
             disabled={!inputQuery.trim()}
-            className="p-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 transition-colors"
+            className="p-2 rounded-lg bg-blue-700 hover:bg-blue-800 disabled:opacity-50 text-white transition-colors cursor-pointer shadow-xs"
           >
             <Send className="w-4 h-4" />
           </button>

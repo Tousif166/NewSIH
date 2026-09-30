@@ -79,7 +79,9 @@ const MainLayout: React.FC = () => {
 
         {/* Dynamic View Canvas */}
         <main className="flex-1 pt-16 pb-12 w-full overflow-y-auto">
-          {renderActiveView()}
+          <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            {renderActiveView()}
+          </div>
 
           {/* Institutional Compliance Footer */}
           <footer className="mt-8 px-6 py-4 border-t border-slate-200/80 bg-white/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-mono gap-2">

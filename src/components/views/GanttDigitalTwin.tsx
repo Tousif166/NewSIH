@@ -47,7 +47,7 @@ export const GanttDigitalTwin: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-5 pb-12 pt-6">
+    <div className="flex flex-col w-full gap-5">
       {/* TOP HEADER / TIME MACHINE SCRUBBER BAR */}
       <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-col gap-3">
         {/* Row 1: Epoch, Speed, View Switchers, Layer Filters */}

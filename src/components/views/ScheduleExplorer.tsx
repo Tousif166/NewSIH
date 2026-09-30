@@ -76,7 +76,7 @@ export const ScheduleExplorer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-4 pb-12 pt-6">
+    <div className="flex flex-col w-full gap-5">
       {/* Top Banner & Quick Controls */}
       <section className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">

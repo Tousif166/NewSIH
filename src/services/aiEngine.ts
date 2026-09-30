@@ -203,13 +203,14 @@ export function matchExecutionEvent(
 
     // Stage 4: Semantic domain & terminology memory boost
     let terminologyBoost = 0;
-    const matchingTerm = terminologyMappings.find(t => 
-      t.canonicalActivityCode === act.activityCode &&
-      (event.rawText.toLowerCase().includes(t.fieldTerm.toLowerCase()) || 
-       event.activityDescription.toLowerCase().includes(t.fieldTerm.toLowerCase()))
+    const matchingTerm = (terminologyMappings || []).find(t => 
+      t?.canonicalActivityCode === act?.activityCode &&
+      t?.fieldTerm &&
+      ((event.rawText || '').toLowerCase().includes(t.fieldTerm.toLowerCase()) || 
+       (event.activityDescription || '').toLowerCase().includes(t.fieldTerm.toLowerCase()))
     );
     if (matchingTerm) {
-      terminologyBoost = matchingTerm.confidenceBoost;
+      terminologyBoost = matchingTerm.confidenceBoost || 0;
     }
 
     // Dimension / Attribute checks (e.g. 12-inch vs 8-inch)
@@ -343,11 +344,11 @@ export function checkTemporalConsistency(
 export function detectProgressConflict(
   activity: ScheduleActivity,
   newEvent: NormalizedExecutionEvent,
-  existingEvents: NormalizedExecutionEvent[]
+  existingEvents: NormalizedExecutionEvent[] = []
 ): DataConflict | null {
-  const previousEvents = existingEvents.filter(e => 
-    e.activityDescription.toLowerCase().includes(activity.activityCode.toLowerCase()) ||
-    activity.name.toLowerCase().includes(e.assetOrComponent.toLowerCase())
+  const previousEvents = (existingEvents || []).filter(e => 
+    (e.activityDescription || '').toLowerCase().includes((activity.activityCode || '').toLowerCase()) ||
+    (activity.name || '').toLowerCase().includes((e.assetOrComponent || '').toLowerCase())
   );
 
   for (const prev of previousEvents) {

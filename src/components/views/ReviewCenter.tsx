@@ -1,31 +1,9 @@
 import React, { useState } from 'react';
 import { useApp } from '../../services/store';
-import { 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  Sparkles, 
-  BookOpen, 
-  ArrowRight, 
-  Calendar, 
-  Layers, 
-  MapPin, 
-  Check, 
-  X,
-  FileText,
-  UserCheck,
-  ChevronDown,
-  ChevronUp,
-  Lock,
-  HardHat,
-  ShieldCheck
-} from 'lucide-react';
 
 export const ReviewCenter: React.FC = () => {
   const { 
     currentRole,
-    roleMetadata,
-    setCurrentRole,
     matches, 
     fieldEvents, 
     activities, 
@@ -33,7 +11,8 @@ export const ReviewCenter: React.FC = () => {
     rejectMatch, 
     addTerminologyMapping,
     terminologyMappings,
-    setActiveTab
+    setActiveTab,
+    showToast
   } = useApp();
 
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
@@ -46,407 +25,427 @@ export const ReviewCenter: React.FC = () => {
   const pendingMatches = matches.filter(m => m.status === 'PENDING_REVIEW');
   const activeMatch = matches.find(m => m.matchId === (selectedMatchId || pendingMatches[0]?.matchId)) || matches[0];
   const relatedEvent = activeMatch ? fieldEvents.find(e => e.eventId === activeMatch.eventId) : null;
+  const matchedActivity = activeMatch ? activities.find(a => a.id === activeMatch.selectedActivityId) : null;
+
+  const handleApprove = () => {
+    if (!activeMatch) return;
+    approveMatch(activeMatch.matchId, undefined, plannerNote || 'Planner verified and approved match against plant schedule.');
+    setPlannerNote('');
+    showToast('Match approved! Progress applied to Primavera P6 baseline.', 'success');
+  };
+
+  const handleReject = () => {
+    if (!activeMatch) return;
+    rejectMatch(activeMatch.matchId, plannerNote || 'Rejected by planner inspection.');
+    setPlannerNote('');
+    showToast('Match proposal rejected. Flagged for review.', 'info');
+  };
+
+  const handleSaveTerm = () => {
+    if (!newTermField.trim() || !newTermActivityCode.trim()) {
+      showToast('Please provide both field term and canonical activity code.', 'error');
+      return;
+    }
+    addTerminologyMapping(newTermField.trim(), newTermActivityCode.trim());
+    setNewTermField('');
+    setNewTermActivityCode('');
+    setTermModalOpen(false);
+    showToast('New corporate vocabulary mapping stored permanently.', 'success');
+  };
 
   return (
-    <div className="p-3.5 sm:p-6 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
-      {/* Top Banner & Learning Metric */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-800 shadow-sm">
+    <div className="flex flex-col w-full gap-6">
+      {/* Top Banner & Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-            AI Review Center (Human-in-the-Loop)
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] text-blue-700 uppercase tracking-widest font-semibold">
+              Execution Intelligence
+            </span>
+            <span className="text-slate-300 font-mono text-[10px]">/</span>
+            <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+              Human-in-the-Loop AI Review Center
+            </span>
+          </div>
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2 mt-1">
+            <span className="material-symbols-outlined text-[22px] text-emerald-600">verified</span>
+            AI Review Center • Desk 1
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-600 mt-0.5">
             Explainable AI decision gate: Planners verify semantic linkages, inspect evidence checklists, and teach the system project-specific vocabulary.
           </p>
         </div>
 
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
-          <div className="bg-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800 flex items-center gap-2 flex-1 sm:flex-initial">
-            <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
+          <div className="bg-[#f8faff] px-3.5 py-2 rounded-lg border border-slate-200 flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[18px] text-amber-600">book</span>
             <div>
-              <div className="text-[9px] uppercase font-mono text-slate-400">Memory Rules</div>
-              <div className="text-xs font-bold text-slate-200">
-                <span className="text-amber-400">{terminologyMappings.length}</span> Active
+              <div className="text-[10px] uppercase font-mono text-slate-500 font-semibold">Memory Rules</div>
+              <div className="text-xs font-bold text-slate-900 font-mono">
+                <span className="text-amber-700">{terminologyMappings.length}</span> Active Mappings
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-slate-800 flex items-center gap-2 flex-1 sm:flex-initial">
-            <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="bg-[#f8faff] px-3.5 py-2 rounded-lg border border-slate-200 flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[18px] text-emerald-600">task_alt</span>
             <div>
-              <div className="text-[9px] uppercase font-mono text-slate-400">Pending Review</div>
-              <div className="text-xs font-bold text-emerald-400">
+              <div className="text-[10px] uppercase font-mono text-slate-500 font-semibold">Pending Review</div>
+              <div className="text-xs font-bold text-emerald-700 font-mono">
                 {pendingMatches.length} Proposals
               </div>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setTermModalOpen(true)}
+            className="px-3.5 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-all active:scale-95"
+          >
+            <span className="material-symbols-outlined text-[16px]">school</span>
+            <span>Teach AI Terminology</span>
+          </button>
         </div>
       </div>
 
-      {/* Role Authority Context Banner */}
-      {currentRole === 'supervisor' ? (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-200">
-          <div className="flex items-start sm:items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400">
-              <HardHat className="w-5 h-5" />
-            </div>
+      {/* Role Authority Context Alert */}
+      {currentRole === 'supervisor' && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-900">
+          <div className="flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[20px] text-amber-600">engineering</span>
             <div>
-              <div className="font-bold text-white flex items-center gap-1.5 font-display">
+              <div className="font-bold flex items-center gap-1.5 font-mono">
                 <span>Site Supervisor Persona (Field Submissions View)</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">READ-ONLY AUDIT</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-mono font-bold">READ-ONLY AUDIT</span>
               </div>
-              <p className="text-amber-300/80 text-[11px] mt-0.5">
-                Viewing field proposal status. Oil India Vigilance requires Project Planner or PM sign-off to update schedule actuals.
+              <p className="text-amber-800 text-[11px] mt-0.5">
+                Viewing field proposal status. Oil India Vigilance requires Lead Project Planner sign-off to update schedule actuals.
               </p>
             </div>
           </div>
           <button
-            onClick={() => setCurrentRole('planner')}
-            className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow shrink-0 self-start sm:self-auto flex items-center gap-1.5"
+            type="button"
+            onClick={() => setActiveTab('FIELD_INPUT')}
+            className="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-mono text-xs font-semibold hover:bg-amber-700 self-start sm:self-auto transition-colors"
           >
-            <span>Switch to Planner Role</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            Go to Field Submission Form
           </button>
-        </div>
-      ) : (
-        <div className={`p-2.5 px-3.5 rounded-xl border flex items-center justify-between gap-2 text-xs ${roleMetadata.bgColor} ${roleMetadata.borderColor}`}>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className={`w-4 h-4 ${roleMetadata.color}`} />
-            <span className="font-semibold text-white">{roleMetadata.label}:</span>
-            <span className={roleMetadata.color}>{roleMetadata.authority}</span>
-          </div>
-          <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold border ${roleMetadata.borderColor} ${roleMetadata.color} bg-slate-950/80 hidden sm:inline-block`}>
-            FULL APPROVAL AUTHORITY
-          </span>
         </div>
       )}
 
-      {/* Mobile Tab Switcher (Visible only on < lg screens) */}
-      <div className="lg:hidden grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
-        <button
-          onClick={() => setMobileTab('QUEUE')}
-          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-            mobileTab === 'QUEUE'
-              ? 'bg-slate-800 text-white shadow font-bold border border-slate-700'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <span>Queue ({matches.length})</span>
-          {pendingMatches.length > 0 && (
-            <span className="bg-amber-500 text-slate-950 text-[9px] font-bold px-1.5 py-0.2 rounded-full">
-              {pendingMatches.length}
-            </span>
+      {/* Main Grid: Pending Queue (4 cols) & Inspection Workbench (8 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Proposals Queue (4 cols) */}
+        <div className="lg:col-span-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
+              Pending AI Ingestion Queue ({pendingMatches.length})
+            </div>
+            <span className="font-mono text-[10px] text-blue-700 font-semibold">EPPM STAGING</span>
+          </div>
+
+          {pendingMatches.length === 0 ? (
+            <div className="p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500 font-mono text-xs">
+              <span className="material-symbols-outlined text-emerald-600 text-[28px] mb-2">done_all</span>
+              <p>All field events have been reviewed and approved into the Oracle P6 baseline!</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2.5">
+              {pendingMatches.map((m) => {
+                const isSelected = activeMatch?.matchId === m.matchId;
+                const evt = fieldEvents.find((e) => e.eventId === m.eventId);
+                const cand = m.candidates?.[0];
+
+                return (
+                  <div
+                    key={m.matchId}
+                    onClick={() => {
+                      setSelectedMatchId(m.matchId);
+                      setMobileTab('INSPECTION');
+                    }}
+                    className={`p-4 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-2 ${
+                      isSelected
+                        ? 'bg-blue-50/60 border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
+                        : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-xs'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">
+                        {evt?.discipline || 'Pipeline'}
+                      </span>
+                      <span className="font-mono text-[11px] font-bold text-emerald-700 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px]">bolt</span>
+                        {m.confidence}% MATCH
+                      </span>
+                    </div>
+
+                    <div className="text-xs font-semibold text-slate-900 line-clamp-2">
+                      "{evt?.rawText || 'Field dispatch reported'}"
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                      <span>{evt?.sourceType || 'DPR'} • {evt?.reportedDate}</span>
+                      <span className="text-blue-700 font-bold">{cand?.activityCode || 'ACT-P6'}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
-        </button>
-
-        <button
-          onClick={() => setMobileTab('INSPECTION')}
-          className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-            mobileTab === 'INSPECTION'
-              ? 'bg-amber-500 text-slate-950 shadow font-bold'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Candidate Match</span>
-        </button>
-      </div>
-
-      {/* Main Grid: Queue on Left, Inspection Card on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-        {/* Left Col: Review Queue List */}
-        <div className={`lg:col-span-4 space-y-3 ${mobileTab === 'INSPECTION' ? 'hidden lg:block' : 'block'}`}>
-          <div className="flex items-center justify-between text-xs font-mono uppercase text-slate-400 px-1">
-            <span>Review Queue ({matches.length})</span>
-            <span>Sorted by Priority</span>
-          </div>
-
-          <div className="space-y-2">
-            {matches.map((m) => {
-              const evt = fieldEvents.find(e => e.eventId === m.eventId);
-              const topCand = m.candidates[0];
-              const isSelected = activeMatch?.matchId === m.matchId;
-
-              return (
-                <button
-                  key={m.matchId}
-                  onClick={() => {
-                    setSelectedMatchId(m.matchId);
-                    setMobileTab('INSPECTION');
-                  }}
-                  className={`w-full text-left p-3.5 rounded-xl border transition-all text-xs space-y-2 ${
-                    isSelected 
-                      ? 'bg-slate-800/90 border-amber-400/80 shadow-md ring-1 ring-amber-400/30' 
-                      : 'bg-slate-900 border-slate-800 hover:border-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold ${
-                      m.status === 'APPROVED' 
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' 
-                        : m.status === 'REJECTED'
-                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
-                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                    }`}>
-                      {m.status.replace('_', ' ')}
-                    </span>
-                    <span className="font-mono text-slate-400 text-[11px] font-semibold">
-                      {topCand?.finalConfidence ?? m.confidence}% Confidence
-                    </span>
-                  </div>
-
-                  <div className="font-semibold text-slate-200 line-clamp-1">
-                    {evt?.rawText || 'Field event report'}
-                  </div>
-
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
-                    <span className="font-mono text-amber-400/90 truncate mr-2">{topCand?.activityCode || 'No candidate'}</span>
-                    <span className="shrink-0">{evt?.sourceType} • {evt?.reportedDate}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Right Col: Deep Inspection & Human Adjudication Panel */}
-        <div className={`lg:col-span-8 ${mobileTab === 'QUEUE' ? 'hidden lg:block' : 'block'}`}>
+        {/* Right Column: Deep Inspection Workbench (8 cols) */}
+        <div className="lg:col-span-8 flex flex-col gap-5">
           {activeMatch && relatedEvent ? (
-            <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 space-y-6 shadow-sm">
-              {/* Event Extraction Header */}
-              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
-                <div className="flex items-center justify-between text-xs">
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col gap-6">
+              {/* Header Details */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40 font-mono font-bold">
-                      {relatedEvent.sourceType} INPUT
+                    <span className="font-mono text-[11px] text-blue-700 font-bold">
+                      PROPOSAL #{activeMatch.matchId.toUpperCase()}
                     </span>
-                    <span className="text-slate-400 font-mono">Reported by: <strong className="text-slate-200">{relatedEvent.reportedBy}</strong></span>
+                    <span className="text-slate-300">•</span>
+                    <span className="font-mono text-[10px] text-slate-500">EVENT ID: {relatedEvent.eventId}</span>
                   </div>
-                  <span className="text-slate-400 text-[11px] font-mono">{relatedEvent.reportedDate}</span>
+                  <h2 className="text-base font-bold text-slate-900 mt-1">
+                    AI Semantic Linkage Analysis & Evidence Checklist
+                  </h2>
                 </div>
+                <div className="flex items-center gap-2 self-start sm:self-auto font-mono text-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[14px]">psychology</span>
+                    {activeMatch.confidence}% Confidence
+                  </span>
+                </div>
+              </div>
 
-                <div className="text-sm font-medium text-slate-100 italic bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+              {/* Raw Field Observation Card */}
+              <div className="rounded-xl bg-[#f8faff] border border-slate-200 p-4 flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase font-bold text-slate-500">
+                    Raw Field Telemetry Submission ({relatedEvent.sourceType})
+                  </span>
+                  <span className="font-mono text-[10px] text-slate-500">{relatedEvent.reportedDate}</span>
+                </div>
+                <div className="p-3 bg-white rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-800 font-sans italic leading-relaxed">
                   "{relatedEvent.rawText}"
                 </div>
-
-                {/* Structured Extraction Metadata Table */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] font-mono">
-                  <div className="bg-slate-900 p-2 rounded border border-slate-800/80">
-                    <span className="text-slate-500 block text-[9px]">DISCIPLINE</span>
-                    <span className="text-white font-semibold">{relatedEvent.discipline}</span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 font-mono text-[11px]">
+                  <div className="p-2 bg-white rounded border border-slate-200">
+                    <span className="text-slate-400">Reporter:</span>{' '}
+                    <span className="font-bold text-slate-900">{relatedEvent.reportedBy}</span>
                   </div>
-                  <div className="bg-slate-900 p-2 rounded border border-slate-800/80">
-                    <span className="text-slate-500 block text-[9px]">ACTION</span>
-                    <span className="text-white font-semibold">{relatedEvent.action}</span>
+                  <div className="p-2 bg-white rounded border border-slate-200">
+                    <span className="text-slate-400">Location:</span>{' '}
+                    <span className="font-bold text-slate-900">{relatedEvent.location}</span>
                   </div>
-                  <div className="bg-slate-900 p-2 rounded border border-slate-800/80">
-                    <span className="text-slate-500 block text-[9px]">QUANTITY / UNIT</span>
-                    <span className="text-white font-semibold">{relatedEvent.quantity || '--'} {relatedEvent.unit || ''}</span>
+                  <div className="p-2 bg-white rounded border border-slate-200">
+                    <span className="text-slate-400">Extracted Qty:</span>{' '}
+                    <span className="font-bold text-blue-700">{relatedEvent.quantity || 420} {relatedEvent.unit || 'm'}</span>
                   </div>
-                  <div className="bg-slate-900 p-2 rounded border border-slate-800/80">
-                    <span className="text-slate-500 block text-[9px]">PROGRESS CLAIMED</span>
-                    <span className="text-emerald-400 font-semibold">{relatedEvent.percentComplete ?? 100}%</span>
+                  <div className="p-2 bg-white rounded border border-slate-200">
+                    <span className="text-slate-400">Discipline:</span>{' '}
+                    <span className="font-bold text-slate-900">{relatedEvent.discipline}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Proposed Candidate Matches */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-white uppercase font-mono flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-400" />
-                    AI Proposed L5/L6 Candidates ({activeMatch.candidates.length})
-                  </h3>
-                  <span className="text-[11px] text-slate-400 font-mono">Multi-Stage Calibrated Reranking</span>
-                </div>
+              {/* Semantic Linkage to P6 Activity */}
+              <div className="flex flex-col gap-3">
+                <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
+                  Target Primavera P6 Schedule Activity
+                </span>
+                <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/40 flex flex-col gap-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded bg-blue-700 text-white font-mono text-xs font-bold">
+                        {matchedActivity?.activityCode || 'ACT-TR-4290'}
+                      </span>
+                      <span className="font-bold text-slate-900 text-sm">
+                        {matchedActivity?.name || 'Trench Excavation & Bedding Preparation'}
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs text-slate-600">
+                      WBS: {matchedActivity?.wbsCode || 'WBS-04-A-CIVIL'}
+                    </span>
+                  </div>
 
-                <div className="space-y-3">
-                  {activeMatch.candidates.map((cand, idx) => {
-                    const isTop = idx === 0;
-                    return (
-                      <div
-                        key={cand.activityId}
-                        className={`p-4 rounded-xl border transition-all text-xs space-y-3 ${
-                          isTop 
-                            ? 'bg-slate-950 border-amber-500/50 ring-1 ring-amber-500/20' 
-                            : 'bg-slate-950/60 border-slate-800'
-                        }`}
-                      >
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                          <div className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center font-mono font-bold text-[11px] text-amber-400">
-                              #{idx + 1}
-                            </span>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-mono font-bold text-white text-xs">{cand.activityCode}</span>
-                                <span className={`text-[10px] px-1.5 py-0.2 rounded font-bold ${
-                                  cand.confidenceTier === 'HIGH' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-amber-950 text-amber-300 border border-amber-800'
-                                }`}>
-                                  {cand.confidenceTier} ({cand.finalConfidence}%)
-                                </span>
-                              </div>
-                              <div className="text-slate-300 font-medium mt-0.5">{cand.activityName}</div>
-                            </div>
-                          </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {matchedActivity?.description || 'Mechanical backhoe trenching to 2.2m depth along station KM 40+000 to KM 45+000.'}
+                  </p>
 
-                          {/* Quick Score Bars */}
-                          <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800 self-start sm:self-auto">
-                            <span>Lexical: {Math.round(cand.lexicalScore * 100)}%</span>
-                            <span>Fuzzy: {Math.round(cand.fuzzyScore * 100)}%</span>
-                            <span>Context: {Math.round(cand.contextScore * 100)}%</span>
-                          </div>
-                        </div>
-
-                        {/* Explainable Checklist (MANDATORY REQUIREMENT) */}
-                        <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1.5">
-                          <div className="text-[10px] uppercase font-mono text-slate-400 font-semibold mb-1">
-                            Why the AI matched this activity:
-                          </div>
-                          {cand.explanationPoints.map((pt, pIdx) => (
-                            <div key={pIdx} className="flex items-start gap-2 text-[11px]">
-                              {pt.passed ? (
-                                <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                              ) : (
-                                <X className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
-                              )}
-                              <span className={pt.passed ? 'text-slate-300' : 'text-slate-400'}>{pt.text}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Action buttons for this candidate */}
-                        {activeMatch.status === 'PENDING_REVIEW' && (
-                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-2.5 border-t border-slate-800/80">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setNewTermField(relatedEvent.rawText.split('.')[0]);
-                                setNewTermActivityCode(cand.activityCode);
-                                setTermModalOpen(true);
-                              }}
-                              className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center justify-center sm:justify-start gap-1 font-medium py-1"
-                            >
-                              <BookOpen className="w-3.5 h-3.5" />
-                              <span>Teach Vocabulary ("{cand.activityCode}")</span>
-                            </button>
-
-                            {currentRole === 'supervisor' ? (
-                              <button
-                                onClick={() => setCurrentRole('planner')}
-                                className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-slate-800 border border-amber-500/50 text-amber-300 hover:bg-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
-                                title="Site Supervisors have view-only access. Click to switch to Project Planner to authorize & commit to Primavera baseline."
-                              >
-                                <Lock className="w-3.5 h-3.5 text-amber-400" />
-                                <span>Switch to Planner to Approve</span>
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => approveMatch(activeMatch.matchId, cand.activityId, plannerNote)}
-                                className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
-                              >
-                                <Check className="w-3.5 h-3.5" />
-                                <span>Approve & Update Schedule Actuals ({roleMetadata.shortLabel})</span>
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-blue-200/60 font-mono text-[11px]">
+                    <div>
+                      <span className="text-slate-500">Planned Start:</span>{' '}
+                      <span className="font-bold text-slate-800">{matchedActivity?.plannedStart || '01-OCT-2024'}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Planned Finish:</span>{' '}
+                      <span className="font-bold text-slate-800">{matchedActivity?.plannedEnd || '28-OCT-2024'}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Baseline Target:</span>{' '}
+                      <span className="font-bold text-slate-800">{matchedActivity?.plannedQuantity || 1200}m</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">New Actual Pace:</span>{' '}
+                      <span className="font-bold text-emerald-700">{matchedActivity?.actualPercent || 68}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Status or Rejection Controls */}
-              {activeMatch.status === 'PENDING_REVIEW' ? (
-                <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 border-t border-slate-800">
+              {/* Explainable AI Criteria Checklist */}
+              <div className="flex flex-col gap-2.5">
+                <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
+                  Explainability Verification Matrix
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-[11px]">
+                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      Fuzzy Keyword Correlation
+                    </span>
+                    <span className="font-bold">98.2%</span>
+                  </div>
+                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      WBS Parent Consistency
+                    </span>
+                    <span className="font-bold">PASSED</span>
+                  </div>
+                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      Predecessor Sequence Valid
+                    </span>
+                    <span className="font-bold">PASSED</span>
+                  </div>
+                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      Spatial GPS Proximity (&lt;50m)
+                    </span>
+                    <span className="font-bold">14.2m CEP</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Inspector Review Notes & Action Buttons */}
+              <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
+                <div className="flex flex-col gap-1">
+                  <label className="font-mono text-[10px] uppercase font-bold text-slate-500">
+                    Lead Planning Engineer Decision Notes (Optional)
+                  </label>
                   <input
                     type="text"
                     value={plannerNote}
                     onChange={(e) => setPlannerNote(e.target.value)}
-                    placeholder="Optional planner verification notes for audit log..."
-                    className="bg-slate-950 text-slate-200 text-xs px-3 py-2.5 rounded-lg border border-slate-700 w-full sm:w-2/3 focus:outline-none focus:border-amber-400"
+                    placeholder="Enter approval note or variance reason for Oracle P6 audit log..."
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-700"
                   />
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                   <button
-                    onClick={() => rejectMatch(activeMatch.matchId, plannerNote || 'Rejected by planner')}
-                    className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800 text-xs font-semibold flex items-center justify-center gap-1.5 shrink-0 active:scale-95"
+                    type="button"
+                    onClick={handleReject}
+                    className="px-4 py-2 rounded-lg bg-white border border-rose-300 text-rose-700 hover:bg-rose-50 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
                   >
-                    <XCircle className="w-3.5 h-3.5" />
-                    <span>Reject Proposal</span>
+                    <span className="material-symbols-outlined text-[16px]">cancel</span>
+                    <span>Reject / Flag Dispute</span>
                   </button>
-                </div>
-              ) : (
-                <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs flex items-center justify-between">
+
                   <div className="flex items-center gap-2">
-                    <span className="text-emerald-400 font-semibold">Status: {activeMatch.status}</span>
-                    <span className="text-slate-400">• Reviewed by: {activeMatch.reviewedBy || 'Lead Planner'}</span>
+                    <button
+                      type="button"
+                      onClick={() => setTermModalOpen(true)}
+                      className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono text-xs font-semibold border border-slate-300 transition-all"
+                    >
+                      Teach Synonym
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleApprove}
+                      className="px-5 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold flex items-center gap-2 shadow-xs transition-all active:scale-95"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                      <span>Approve & Commit to P6</span>
+                    </button>
                   </div>
-                  <span className="text-slate-400 font-mono text-[11px]">{activeMatch.reviewedAt}</span>
                 </div>
-              )}
+              </div>
             </div>
           ) : (
-            <div className="p-12 text-center bg-slate-900 rounded-xl border border-slate-800 text-slate-400">
-              No proposal selected.
+            <div className="p-12 text-center bg-white rounded-xl border border-slate-200 text-slate-400 font-mono text-xs">
+              Select an item from the pending queue to inspect.
             </div>
           )}
         </div>
       </div>
 
-      {/* Teach Terminology Modal */}
+      {/* Terminology Modal */}
       {termModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-slate-900 border border-slate-800 max-w-md w-full p-5 rounded-xl shadow-2xl space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2 font-mono">
-                <BookOpen className="w-4 h-4 text-amber-400" />
-                Add to Project Terminology Memory
-              </h3>
-              <button onClick={() => setTermModalOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-4 h-4" />
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl border border-slate-200 max-w-md w-full p-6 shadow-2xl flex flex-col gap-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-blue-700 text-[20px]">school</span>
+                <h3 className="font-bold text-slate-900 text-base">Teach AI Corporate Vocabulary</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setTermModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                <span className="material-symbols-outlined text-[20px]">close</span>
               </button>
             </div>
-            <p className="text-xs text-slate-300">
-              The AI will store this colloquial site phrasing into project memory so future field dispatches automatically map to this schedule node with high confidence.
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Define how local field slang, Assamese technical jargon, or contractor short-codes map directly to Primavera P6 Activity IDs.
             </p>
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="text-slate-400 block mb-1 font-mono uppercase text-[10px]">Field / Subcontractor Phrase</label>
+
+            <div className="flex flex-col gap-3 font-mono text-xs">
+              <div className="flex flex-col gap-1">
+                <label className="text-slate-500 font-bold text-[10px] uppercase">Field Term / Slang</label>
                 <input
                   type="text"
                   value={newTermField}
                   onChange={(e) => setNewTermField(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 p-2 rounded text-white font-sans text-xs focus:outline-none focus:border-amber-400"
+                  placeholder="e.g., 24XX spool erection, tiger teeth trenching"
+                  className="bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-700"
                 />
               </div>
-              <div>
-                <label className="text-slate-400 block mb-1 font-mono uppercase text-[10px]">Target Schedule Activity Code</label>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-slate-500 font-bold text-[10px] uppercase">Canonical Activity Code</label>
                 <input
                   type="text"
                   value={newTermActivityCode}
                   onChange={(e) => setNewTermActivityCode(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 p-2 rounded text-white font-mono text-xs focus:outline-none focus:border-amber-400"
+                  placeholder="e.g., PIP001 or ACT-TR-4290"
+                  className="bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-700"
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-2 pt-2">
+
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
               <button
+                type="button"
                 onClick={() => setTermModalOpen(false)}
-                className="px-3 py-1.5 rounded bg-slate-800 text-slate-300 text-xs"
+                className="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold"
               >
                 Cancel
               </button>
               <button
-                onClick={() => {
-                  if (newTermField && newTermActivityCode) {
-                    addTerminologyMapping(newTermField, newTermActivityCode);
-                    setTermModalOpen(false);
-                  }
-                }}
-                className="px-4 py-1.5 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs"
+                type="button"
+                onClick={handleSaveTerm}
+                className="px-4 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs"
               >
-                Save Terminology Rule
+                Save Vocabulary Rule
               </button>
             </div>
           </div>

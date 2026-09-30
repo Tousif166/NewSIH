@@ -69,7 +69,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-5 pb-12 pt-6">
+    <div className="flex flex-col w-full gap-5">
       {/* Top Header Banner & Actions */}
       <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 bg-white p-5 rounded-lg shadow-xs border border-slate-200">
         <div className="flex flex-col gap-1.5 max-w-4xl">

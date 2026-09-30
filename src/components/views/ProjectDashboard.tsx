@@ -24,7 +24,7 @@ export const ProjectDashboard: React.FC = () => {
   const completedCount = activities.filter(a => a.actualPercent === 100);
 
   return (
-    <div className="w-full px-4 sm:px-8 py-5 flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6">
       {/* 1. Operational Persona Header Bar (Stitch Screen 3) */}
       <div className="animate-entrance delay-1 flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 rounded-lg bg-white border border-slate-200 shadow-xs hover-elevate">
         <div className="flex items-center gap-4">
