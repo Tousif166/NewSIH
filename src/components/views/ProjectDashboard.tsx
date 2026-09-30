@@ -19,6 +19,10 @@ export const ProjectDashboard: React.FC = () => {
   const [scrubberWeek, setScrubberWeek] = useState<number>(43);
   const [selectedFilter, setSelectedFilter] = useState<'P50' | 'P85' | 'P95'>('P85');
 
+  // Dynamic mapped horizontal position for the data-date scrubber (Week 43 default = 480)
+  const currentDataX = Math.min(940, Math.max(60, 480 + (scrubberWeek - 43) * 14));
+  const currentBadgePct = (currentDataX / 1000) * 100;
+
   const delayedActivities = activities.filter(a => a.forecastVarianceDays > 0);
   const criticalActivities = activities.filter(a => a.isCriticalPath);
   const completedCount = activities.filter(a => a.actualPercent === 100);
@@ -268,17 +272,37 @@ export const ProjectDashboard: React.FC = () => {
               <path d="M 480 135 C 560 115, 680 70, 820 40 C 890 28, 940 22, 985 20" fill="none" stroke="#d97706" strokeLinecap="round" strokeWidth="3"></path>
 
               {/* Data-Date Vertical Marker */}
-              <line opacity="0.85" stroke="#d97706" strokeDasharray="3,3" strokeWidth="1.75" x1="480" x2="480" y1="10" y2="225"></line>
+              <line 
+                opacity="0.85" 
+                stroke="#d97706" 
+                strokeDasharray="3,3" 
+                strokeWidth="1.75" 
+                x1={currentDataX} 
+                x2={currentDataX} 
+                y1="10" 
+                y2="225"
+                style={{ transition: 'x1 0.1s ease-out, x2 0.1s ease-out' }}
+              />
 
               {/* Milestone Markers */}
-              <circle cx="270" cy="196" fill="#10b981" r="5" stroke="#ffffff" strokeWidth="2" title="HDD River Crossing Cleared"></circle>
-              <circle cx="430" cy="148" fill="#1d4ed8" r="5" stroke="#ffffff" strokeWidth="2" title="Stringing Complete (72km)"></circle>
-              <circle cx="480" cy="135" fill="#ef4444" r="7" stroke="#ffffff" strokeWidth="2.5" className="animate-ping"></circle>
-              <circle cx="710" cy="65" fill="#d97706" r="5" stroke="#ffffff" strokeWidth="2" title="Section 1 Hydrotest"></circle>
+              <circle cx="270" cy="196" fill="#10b981" r="5" stroke="#ffffff" strokeWidth="2" title="HDD River Crossing Cleared" />
+              <circle cx="430" cy="148" fill="#1d4ed8" r="5" stroke="#ffffff" strokeWidth="2" title="Stringing Complete (72km)" />
+              
+              {/* Milestone Marker 3: Orbital Tie-in MP 62 Bottleneck Indicator (In-place radial beacon, zero coordinate translation) */}
+              <circle cx="480" cy="135" fill="#ef4444" opacity="0.35" r="7">
+                <animate attributeName="r" values="7;18;7" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="480" cy="135" fill="#ef4444" r="6.5" stroke="#ffffff" strokeWidth="2.5" className="cursor-pointer" title="MP 62 Tie-in Lag Bottleneck (-4.2d)" />
+
+              <circle cx="710" cy="65" fill="#d97706" r="5" stroke="#ffffff" strokeWidth="2" title="Section 1 Hydrotest" />
             </svg>
 
             {/* Tooltip Pill */}
-            <div className="absolute left-[48%] top-1 -translate-x-1/2 px-2.5 py-1 rounded bg-amber-50 border border-amber-300 text-amber-900 font-mono text-[10px] font-bold shadow-xs z-20">
+            <div 
+              className="absolute top-1 -translate-x-1/2 px-2.5 py-1 rounded bg-amber-50 border border-amber-300 text-amber-900 font-mono text-[10px] font-bold shadow-xs z-20 transition-all duration-100 ease-out pointer-events-none"
+              style={{ left: `${Math.min(Math.max(currentBadgePct, 8), 92)}%` }}
+            >
               DATA-DATE: 24 OCT 2026 (WEEK {scrubberWeek})
             </div>
 
@@ -291,7 +315,7 @@ export const ProjectDashboard: React.FC = () => {
               <span className="material-symbols-outlined text-[13px] text-blue-600">check</span>
               Stringing Complete (72km)
             </div>
-            <div className="absolute left-[49%] top-14 px-2.5 py-1 rounded bg-rose-50 border border-rose-300 text-rose-800 font-mono text-[10px] font-bold shadow-sm flex items-center gap-1.5 animate-bounce">
+            <div className="absolute left-[49%] top-14 px-2.5 py-1 rounded bg-rose-50 border border-rose-300 text-rose-800 font-mono text-[10px] font-bold shadow-sm flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer">
               <span className="material-symbols-outlined text-[14px] text-rose-600">report_problem</span>
               MP 62 Tie-in Lag (-4.2d)
             </div>
