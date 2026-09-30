@@ -56,7 +56,7 @@ export const ReviewCenter: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-6">
       {/* Top Banner & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-300 shadow-xs hover-elevate">
         <div>
           <div className="flex items-center gap-2">
             <span className="font-mono text-[10px] text-blue-700 uppercase tracking-widest font-semibold">
@@ -145,7 +145,7 @@ export const ReviewCenter: React.FC = () => {
           </div>
 
           {pendingMatches.length === 0 ? (
-            <div className="p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500 font-mono text-xs">
+            <div className="p-8 text-center bg-white rounded-xl border border-slate-300 text-slate-500 font-mono text-xs">
               <span className="material-symbols-outlined text-emerald-600 text-[28px] mb-2">done_all</span>
               <p>All field events have been reviewed and approved into the Oracle P6 baseline!</p>
             </div>
@@ -166,7 +166,7 @@ export const ReviewCenter: React.FC = () => {
                     className={`p-4 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-2 ${
                       isSelected
                         ? 'bg-blue-50/60 border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
-                        : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-xs'
+                        : 'bg-white border-slate-300 hover:border-blue-400 hover:shadow-xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -210,7 +210,7 @@ export const ReviewCenter: React.FC = () => {
         {/* Right Column: Deep Inspection Workbench (8 cols) */}
         <div className="lg:col-span-8 flex flex-col gap-5">
           {activeMatch && relatedEvent ? (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col gap-6">
+            <div className="bg-white p-6 rounded-xl border border-slate-300 shadow-xs flex flex-col gap-6 hover-elevate">
               {/* Header Details */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div>
@@ -265,7 +265,7 @@ export const ReviewCenter: React.FC = () => {
               </div>
 
               {/* Geotagged Photographic Proof & Optical Telemetry Dossier */}
-              <div className="rounded-xl bg-white border border-slate-200 overflow-hidden shadow-xs flex flex-col">
+              <div className="rounded-xl bg-white border border-slate-300 overflow-hidden shadow-xs flex flex-col">
                 <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-[18px] text-blue-700">photo_camera</span>

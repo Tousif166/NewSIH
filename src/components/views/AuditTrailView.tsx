@@ -41,7 +41,7 @@ export const AuditTrailView: React.FC = () => {
     <div className="flex flex-col w-full gap-5">
       {/* Top Command & Provenance Trust Header */}
       <section className="flex flex-col gap-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-5 rounded-lg shadow-xs border border-slate-200">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[10px] text-blue-700 uppercase tracking-widest font-semibold">
@@ -111,9 +111,9 @@ export const AuditTrailView: React.FC = () => {
         </div>
 
         {/* 4 High-Density Vitals Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {/* Card 1 */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:-translate-y-0.5 hover:shadow-md transition-all">
+          <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-bold">
                 Immutable Ledger Entries
@@ -131,7 +131,7 @@ export const AuditTrailView: React.FC = () => {
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:-translate-y-0.5 hover:shadow-md transition-all">
+          <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-bold">
                 Cryptographic Merkle Root
@@ -150,7 +150,7 @@ export const AuditTrailView: React.FC = () => {
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:-translate-y-0.5 hover:shadow-md transition-all">
+          <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-bold">
                 Dispute Defense Savings
@@ -168,7 +168,7 @@ export const AuditTrailView: React.FC = () => {
           </div>
 
           {/* Card 4 */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:-translate-y-0.5 hover:shadow-md transition-all">
+          <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-bold">
                 CVC / CAG Readiness
@@ -192,7 +192,7 @@ export const AuditTrailView: React.FC = () => {
         {/* Left Column (8 cols) */}
         <div className="lg:col-span-8 flex flex-col gap-4">
           {/* Search & Filter Bar */}
-          <div className="bg-white p-3.5 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
+          <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 hover-elevate flex flex-col gap-3">
             <div className="flex items-center gap-2 bg-slate-50 px-3 py-2 rounded border border-slate-200 focus-within:ring-2 focus-within:ring-blue-600/20 transition-all">
               <span className="material-symbols-outlined text-[18px] text-slate-400">search</span>
               <input
@@ -247,10 +247,10 @@ export const AuditTrailView: React.FC = () => {
             {/* BLOCK #1842 */}
             <article
               id="block-1842"
-              className={`bg-white rounded-lg p-4 shadow-xs border transition-all flex flex-col gap-3 relative overflow-hidden ${
+              className={`bg-white rounded-xl p-4 shadow-xs border transition-all hover-elevate flex flex-col gap-3 relative overflow-hidden ${
                 activeHighlightBlock === '1842'
                   ? 'border-blue-500 ring-2 ring-blue-500/30 bg-blue-50/20'
-                  : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
+                  : 'border-slate-300 hover:border-blue-400 hover:shadow-md'
               }`}
             >
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-700"></div>
@@ -423,10 +423,10 @@ export const AuditTrailView: React.FC = () => {
             {/* BLOCK #1841 */}
             <article
               id="block-1841"
-              className={`bg-white rounded-lg p-4 shadow-xs border transition-all flex flex-col gap-3 relative overflow-hidden ${
+              className={`bg-white rounded-xl p-4 shadow-xs border transition-all hover-elevate flex flex-col gap-3 relative overflow-hidden ${
                 activeHighlightBlock === '1841'
                   ? 'border-rose-500 ring-2 ring-rose-500/30 bg-rose-50/20'
-                  : 'border-slate-200 hover:border-rose-300 hover:shadow-md'
+                  : 'border-slate-300 hover:border-rose-400 hover:shadow-md'
               }`}
             >
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-700"></div>
@@ -573,10 +573,10 @@ export const AuditTrailView: React.FC = () => {
             {/* BLOCK #1840 */}
             <article
               id="block-1840"
-              className={`bg-white rounded-lg p-4 shadow-xs border transition-all flex flex-col gap-3 relative overflow-hidden ${
+              className={`bg-white rounded-xl p-4 shadow-xs border transition-all hover-elevate flex flex-col gap-3 relative overflow-hidden ${
                 activeHighlightBlock === '1840'
                   ? 'border-blue-500 ring-2 ring-blue-500/30 bg-blue-50/20'
-                  : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
+                  : 'border-slate-300 hover:border-blue-400 hover:shadow-md'
               }`}
             >
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-400"></div>
@@ -656,10 +656,10 @@ export const AuditTrailView: React.FC = () => {
             {/* BLOCK #1839 */}
             <article
               id="block-1839"
-              className={`bg-white rounded-lg p-4 shadow-xs border transition-all flex flex-col gap-3 relative overflow-hidden ${
+              className={`bg-white rounded-xl p-4 shadow-xs border transition-all hover-elevate flex flex-col gap-3 relative overflow-hidden ${
                 activeHighlightBlock === '1839'
                   ? 'border-blue-500 ring-2 ring-blue-500/30 bg-blue-50/20'
-                  : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
+                  : 'border-slate-300 hover:border-blue-400 hover:shadow-md'
               }`}
             >
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-400"></div>
@@ -755,7 +755,7 @@ export const AuditTrailView: React.FC = () => {
           </div>
 
           {/* Pagination / Ledger Cursor */}
-          <div className="p-3 bg-white rounded-lg shadow-xs border border-slate-200 flex items-center justify-between text-slate-500 font-mono text-[10px]">
+          <div className="p-3 bg-white rounded-xl shadow-xs border border-slate-300 hover-elevate flex items-center justify-between text-slate-500 font-mono text-[10px]">
             <span>SHOWING 4 OF 1,842 ANCHORED BLOCKS</span>
             <div className="flex items-center gap-1.5">
               <button className="px-2 py-1 rounded bg-slate-100 font-semibold text-slate-400 cursor-not-allowed">
@@ -794,7 +794,7 @@ export const AuditTrailView: React.FC = () => {
         {/* Right Column (4 cols) */}
         <div className="lg:col-span-4 flex flex-col gap-4">
           {/* Merkle Tree Visual Inspector */}
-          <div className="bg-white rounded-lg p-4 shadow-xs border border-slate-200 flex flex-col gap-4">
+          <div className="bg-white rounded-xl p-5 shadow-xs border border-slate-300 hover-elevate flex flex-col gap-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[20px] text-blue-700">account_tree</span>
@@ -931,7 +931,7 @@ export const AuditTrailView: React.FC = () => {
           </div>
 
           {/* Regulatory & Legal Compliance Frameworks Panel */}
-          <div className="bg-white rounded-lg p-4 shadow-xs border border-slate-200 flex flex-col gap-3.5">
+          <div className="bg-white rounded-xl p-5 shadow-xs border border-slate-300 hover-elevate flex flex-col gap-3.5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[20px] text-blue-700">balance</span>

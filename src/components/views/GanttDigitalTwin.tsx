@@ -49,7 +49,7 @@ export const GanttDigitalTwin: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-5">
       {/* TOP HEADER / TIME MACHINE SCRUBBER BAR */}
-      <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-col gap-3">
+      <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs flex flex-col gap-3 hover-elevate">
         {/* Row 1: Epoch, Speed, View Switchers, Layer Filters */}
         <div className="flex flex-wrap items-center justify-between gap-4">
           {/* Simulation Epoch & Playhead Controls */}
@@ -250,7 +250,7 @@ export const GanttDigitalTwin: React.FC = () => {
       <div className="w-full flex flex-col gap-4">
         {/* UPPER SECTION: GIS CORRIDOR DIGITAL TWIN (Visible in SPLIT and SPATIAL) */}
         {viewMode !== 'GANTT' && (
-          <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-col gap-3 relative overflow-hidden">
+          <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs flex flex-col gap-3 relative overflow-hidden hover-elevate">
             {/* Section Micro Header */}
             <div className="flex items-center justify-between z-10">
               <div className="flex items-center gap-2">
@@ -536,7 +536,7 @@ export const GanttDigitalTwin: React.FC = () => {
 
         {/* LOWER SECTION: PRIMAVERA P6 SYNCHRONIZED GANTT SCHEDULE GRID (Visible in SPLIT and GANTT) */}
         {viewMode !== 'SPATIAL' && (
-          <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-col gap-3 overflow-hidden">
+          <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs flex flex-col gap-3 overflow-hidden hover-elevate">
             {/* Gantt Workspace Control Ribbon */}
             <div className="flex flex-wrap items-center justify-between gap-3 pb-1">
               <div className="flex items-center gap-3">
@@ -827,7 +827,7 @@ export const GanttDigitalTwin: React.FC = () => {
         )}
 
         {/* BOTTOM FLOATING TELEMETRY & RE-SEQUENCING MITIGATION PANEL */}
-        <div className="w-full bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full bg-white rounded-xl p-4 border border-slate-300 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-4 hover-elevate">
           {/* Left Diagnostic */}
           <div className="flex items-start gap-4 min-w-0">
             <div className="w-10 h-10 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center shrink-0 shadow-2xs">

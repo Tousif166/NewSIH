@@ -78,7 +78,7 @@ export const ScheduleExplorer: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-5">
       {/* Top Banner & Quick Controls */}
-      <section className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
+      <section className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white shadow-2xs">
@@ -163,7 +163,7 @@ export const ScheduleExplorer: React.FC = () => {
         {/* 4 High-Density Metric Strip Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
           {/* Total WBS Elements */}
-          <div className="bg-white p-3 rounded-lg shadow-xs flex flex-col justify-between border border-slate-200 hover:border-blue-300 transition-all cursor-default">
+          <div className="bg-white p-3.5 rounded-xl shadow-xs flex flex-col justify-between border border-slate-300 hover-elevate transition-all cursor-default">
             <div className="flex items-center justify-between text-slate-500 font-mono text-[10px]">
               <span className="uppercase">Total WBS Elements</span>
               <span className="material-symbols-outlined text-[16px] text-blue-700">lan</span>
@@ -179,7 +179,7 @@ export const ScheduleExplorer: React.FC = () => {
           </div>
 
           {/* Scope Lock */}
-          <div className="bg-white p-3 rounded-lg shadow-xs flex flex-col justify-between border border-slate-200 hover:border-blue-300 transition-all cursor-default">
+          <div className="bg-white p-3.5 rounded-xl shadow-xs flex flex-col justify-between border border-slate-300 hover-elevate transition-all cursor-default">
             <div className="flex items-center justify-between text-slate-500 font-mono text-[10px]">
               <span className="uppercase">Baseline Scope Lock</span>
               <span className="material-symbols-outlined text-[16px] text-blue-700">verified</span>
@@ -195,7 +195,7 @@ export const ScheduleExplorer: React.FC = () => {
           </div>
 
           {/* Critical Path Load */}
-          <div className="bg-white p-3 rounded-lg shadow-xs flex flex-col justify-between border border-rose-200 hover:border-rose-300 transition-all cursor-default">
+          <div className="bg-white p-3.5 rounded-xl shadow-xs flex flex-col justify-between border border-rose-300 hover-elevate transition-all cursor-default">
             <div className="flex items-center justify-between text-slate-500 font-mono text-[10px]">
               <span className="uppercase">Critical Path Load</span>
               <span className="material-symbols-outlined text-[16px] text-rose-600">warning</span>
@@ -214,7 +214,7 @@ export const ScheduleExplorer: React.FC = () => {
           </div>
 
           {/* BAC / Earned Value */}
-          <div className="bg-white p-3 rounded-lg shadow-xs flex flex-col justify-between border border-slate-200 hover:border-blue-300 transition-all cursor-default">
+          <div className="bg-white p-3.5 rounded-xl shadow-xs flex flex-col justify-between border border-slate-300 hover-elevate transition-all cursor-default">
             <div className="flex items-center justify-between text-slate-500 font-mono text-[10px]">
               <span className="uppercase">BAC / Earned Value</span>
               <span className="material-symbols-outlined text-[16px] text-blue-700">price_check</span>
@@ -234,7 +234,7 @@ export const ScheduleExplorer: React.FC = () => {
       {/* MAIN DUAL-COLUMN WORKSPACE */}
       <section className="grid grid-cols-1 xl:grid-cols-12 gap-3 items-start">
         {/* LEFT COLUMN: HIERARCHICAL WBS TREE (8 cols) */}
-        <div className="xl:col-span-8 flex flex-col bg-white rounded-lg shadow-xs overflow-hidden border border-slate-200">
+        <div className="xl:col-span-8 flex flex-col bg-white rounded-xl shadow-xs overflow-hidden border border-slate-300 hover-elevate">
           {/* Table Filter Bar */}
           <div className="p-3 bg-slate-50 flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200">
             <div className="flex items-center gap-2 flex-1 min-w-[240px]">
@@ -761,7 +761,7 @@ export const ScheduleExplorer: React.FC = () => {
         {/* RIGHT COLUMN: WBS DICTIONARY INSPECTOR & DONUT (4 cols) */}
         <div className="xl:col-span-4 flex flex-col gap-3">
           {/* Primary Node Inspector */}
-          <div className="bg-white rounded-lg shadow-xs overflow-hidden flex flex-col border border-slate-200">
+          <div className="bg-white rounded-xl shadow-xs overflow-hidden flex flex-col border border-slate-300 hover-elevate">
             {/* Title Bar */}
             <div className="p-3 bg-slate-50 flex items-center justify-between border-b border-slate-200">
               <div className="flex items-center gap-2">
@@ -1022,7 +1022,7 @@ export const ScheduleExplorer: React.FC = () => {
       </section>
 
       {/* BOTTOM BAR: SPREAD LINEAR PROGRESSION PROFILE */}
-      <section className="bg-white p-3.5 rounded-lg shadow-xs flex flex-col gap-3 border border-slate-200">
+      <section className="bg-white p-4 rounded-xl shadow-xs flex flex-col gap-3 border border-slate-300 hover-elevate">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-[18px] text-blue-700">linear_scale</span>

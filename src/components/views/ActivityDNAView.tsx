@@ -36,7 +36,7 @@ export const ActivityDNAView: React.FC = () => {
         </div>
 
         {/* Title and Action Filters Bar */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-white p-3.5 rounded-lg shadow-xs border border-slate-200">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-300 shadow-xs hover-elevate">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded bg-blue-700 flex items-center justify-center text-white transition-transform hover:rotate-6 duration-200 shadow-xs">
               <span className="material-symbols-outlined text-[20px]">biotech</span>
@@ -90,9 +90,9 @@ export const ActivityDNAView: React.FC = () => {
       </div>
 
       {/* Corpus Intelligence Vitals (4 Metric Cards) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="bg-white p-3.5 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
           <div className="flex items-start justify-between">
             <span className="font-mono text-[10px] text-slate-500 font-bold uppercase tracking-wider">Corpus Depth</span>
             <span className="material-symbols-outlined text-[18px] text-blue-700">database</span>
@@ -113,7 +113,7 @@ export const ActivityDNAView: React.FC = () => {
         </div>
 
         {/* Metric 2 */}
-        <div className="bg-white p-3.5 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
           <div className="flex items-start justify-between">
             <span className="font-mono text-[10px] text-slate-500 font-bold uppercase tracking-wider">Prediction Confidence</span>
             <span className="material-symbols-outlined text-[18px] text-blue-700">speed</span>
@@ -131,7 +131,7 @@ export const ActivityDNAView: React.FC = () => {
         </div>
 
         {/* Metric 3 */}
-        <div className="bg-white p-3.5 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
           <div className="flex items-start justify-between">
             <span className="font-mono text-[10px] text-slate-500 font-bold uppercase tracking-wider">Strata Resistance</span>
             <span className="material-symbols-outlined text-[18px] text-rose-600">terrain</span>
@@ -149,7 +149,7 @@ export const ActivityDNAView: React.FC = () => {
         </div>
 
         {/* Metric 4 */}
-        <div className="bg-white p-3.5 rounded-lg shadow-xs border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between hover-elevate transition-all">
           <div className="flex items-start justify-between">
             <span className="font-mono text-[10px] text-slate-500 font-bold uppercase tracking-wider">Anomaly Patterns</span>
             <span className="material-symbols-outlined text-[18px] text-blue-700">auto_fix_high</span>
@@ -175,8 +175,8 @@ export const ActivityDNAView: React.FC = () => {
         {/* Left Column (8 cols) */}
         <div className="lg:col-span-8 flex flex-col gap-4">
           {/* Activity Productivity DNA Velocity Curves */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 bg-slate-50 -mx-4 -mt-4 px-4 py-3 rounded-t-lg border-b border-slate-200">
+          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-4 hover-elevate">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 bg-slate-50 -mx-5 -mt-5 px-5 py-3.5 rounded-t-xl border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-blue-700">timeline</span>
                 <span className="font-bold text-slate-900 text-sm tracking-tight">Activity Productivity DNA Velocity Curves</span>
@@ -315,7 +315,7 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* 30-Day Linear Progression Velocity Chart */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
+          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <div className="font-bold text-slate-900 text-sm tracking-tight">
@@ -435,7 +435,7 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* Terrain & Soil Geological Learning Matrix */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
+          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-blue-700">layers</span>
@@ -517,8 +517,8 @@ export const ActivityDNAView: React.FC = () => {
         {/* Right Column (4 cols) */}
         <div className="lg:col-span-4 flex flex-col gap-4">
           {/* Institutional Memory Engine */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
-            <div className="flex items-center justify-between pb-2 bg-slate-50 -mx-4 -mt-4 px-4 py-3 rounded-t-lg border-b border-slate-200">
+          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
+            <div className="flex items-center justify-between pb-2 bg-slate-50 -mx-5 -mt-5 px-5 py-3.5 rounded-t-xl border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-blue-700">history_edu</span>
                 <span className="font-bold text-slate-900 text-sm tracking-tight">Institutional Memory Engine</span>
@@ -656,7 +656,7 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* Equipment & Operator Ground Truth Benchmarks */}
-          <div className="bg-white p-4 rounded-lg shadow-xs border border-slate-200 flex flex-col gap-3">
+          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-blue-700">engineering</span>

@@ -55,7 +55,7 @@ export const WhatIfSimulator: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-5">
       {/* TOP BAR: BREADCRUMB, STATUS & SCENARIO ACTION HEADER */}
-      <section className="bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col gap-3">
+      <section className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider">
@@ -127,9 +127,9 @@ export const WhatIfSimulator: React.FC = () => {
       </section>
 
       {/* PARAMETER COCKPIT: 4 CLEAN TECHNICAL CONTROL CARDS */}
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Parameter 01: Critical Path */}
-        <div className="bg-white p-3.5 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-3 hover-elevate transition-all">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 font-bold tracking-wider">
@@ -184,7 +184,7 @@ export const WhatIfSimulator: React.FC = () => {
         </div>
 
         {/* Parameter 02: Manpower Dual-Shift */}
-        <div className="bg-white p-3.5 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-3 hover-elevate transition-all">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 font-bold tracking-wider">
@@ -232,7 +232,7 @@ export const WhatIfSimulator: React.FC = () => {
         </div>
 
         {/* Parameter 03: Meteorology */}
-        <div className="bg-white p-3.5 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-3 hover:border-amber-300 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-3 hover-elevate transition-all">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 font-bold tracking-wider">
@@ -271,7 +271,7 @@ export const WhatIfSimulator: React.FC = () => {
         </div>
 
         {/* Parameter 04: River Crossing Milestone */}
-        <div className="bg-white p-3.5 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
+        <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-3 hover-elevate transition-all">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-slate-500 font-bold tracking-wider">
@@ -307,7 +307,7 @@ export const WhatIfSimulator: React.FC = () => {
       {/* MID SECTION SPLIT: 65% DUAL-GANTT TIMELINE vs 35% TORNADO DRIVERS */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* LEFT CARD: DUAL-GANTT TIMELINE (8 Cols) */}
-        <div className="lg:col-span-8 bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-4">
+        <div className="lg:col-span-8 bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-4 hover-elevate">
           <div className="flex flex-col gap-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
@@ -444,7 +444,7 @@ export const WhatIfSimulator: React.FC = () => {
         </div>
 
         {/* RIGHT CARD: SENSITIVITY TORNADO DRIVERS (4 Cols) */}
-        <div className="lg:col-span-4 bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-4">
+        <div className="lg:col-span-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-4 hover-elevate">
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -559,7 +559,7 @@ export const WhatIfSimulator: React.FC = () => {
       {/* LOWER SECTION SPLIT: 60% MONTE CARLO PDF vs 40% VALUE PRESERVATION */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* LEFT CARD: MONTE CARLO (7 Cols) */}
-        <div className="lg:col-span-7 bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-4">
+        <div className="lg:col-span-7 bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-4 hover-elevate">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-blue-700 text-[20px]">analytics</span>
@@ -643,7 +643,7 @@ export const WhatIfSimulator: React.FC = () => {
         </div>
 
         {/* RIGHT CARD: EXECUTIVE VALUE PRESERVATION (5 Cols) */}
-        <div className="lg:col-span-5 bg-white p-4 rounded shadow-xs border border-slate-200 flex flex-col justify-between gap-4">
+        <div className="lg:col-span-5 bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col justify-between gap-4 hover-elevate">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-blue-700 text-[20px]">account_balance</span>
@@ -727,7 +727,7 @@ export const WhatIfSimulator: React.FC = () => {
       </section>
 
       {/* BOTTOM BAR: TELEMETRY RUNTIME METADATA & REPRODUCIBILITY */}
-      <section className="bg-white px-4 py-2.5 rounded shadow-xs border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-slate-500 font-mono text-[10px]">
+      <section className="bg-white px-4 py-3 rounded-xl shadow-xs border border-slate-300 flex flex-wrap items-center justify-between gap-3 text-slate-500 font-mono text-[10px] hover-elevate">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-2 text-slate-800 font-semibold">
             <span className="relative flex h-2 w-2">

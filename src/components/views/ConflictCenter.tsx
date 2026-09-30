@@ -20,7 +20,7 @@ export const ConflictCenter: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-5">
       {/* Top Urgent Alert Protocol Bar: Clean Light Alert Banner */}
-      <div className="relative overflow-hidden rounded-lg bg-rose-50 border border-rose-200 p-4 shadow-xs">
+      <div className="relative overflow-hidden rounded-xl bg-rose-50 border border-rose-300 p-4 shadow-xs hover-elevate">
         <div className="absolute inset-y-0 left-0 w-1.5 bg-red-600"></div>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pl-2">
           <div className="flex items-start sm:items-center gap-3">
@@ -65,9 +65,9 @@ export const ConflictCenter: React.FC = () => {
       </div>
 
       {/* Top Metric Vitals Bento Grid: Clean White Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Card 1 */}
-        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-300 hover:shadow-sm transition-all">
+        <div className="rounded-xl bg-white p-4 border border-slate-300 shadow-xs hover-elevate flex flex-col justify-between transition-all">
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
@@ -90,7 +90,7 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-rose-300 hover:shadow-sm transition-all">
+        <div className="rounded-xl bg-white p-4 border border-slate-300 shadow-xs hover-elevate flex flex-col justify-between transition-all">
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
@@ -112,7 +112,7 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-sky-300 hover:shadow-sm transition-all">
+        <div className="rounded-xl bg-white p-4 border border-slate-300 shadow-xs hover-elevate flex flex-col justify-between transition-all">
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
@@ -131,7 +131,7 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Card 4 */}
-        <div className="rounded-lg bg-white p-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-emerald-300 hover:shadow-sm transition-all">
+        <div className="rounded-xl bg-white p-4 border border-slate-300 shadow-xs hover-elevate flex flex-col justify-between transition-all">
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <span className="font-mono text-[10px] text-slate-500 uppercase font-bold tracking-wider">
@@ -170,7 +170,7 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Conflict Card #1 */}
-        <div className="rounded-lg bg-white border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+        <div className="rounded-xl bg-white border border-slate-300 shadow-xs hover-elevate overflow-hidden flex flex-col">
           {/* Card Header */}
           <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-start sm:items-center gap-3">
@@ -394,7 +394,7 @@ export const ConflictCenter: React.FC = () => {
         </div>
 
         {/* Conflict Card #2 */}
-        <div className="rounded-lg bg-white border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+        <div className="rounded-xl bg-white border border-slate-300 shadow-xs hover-elevate overflow-hidden flex flex-col">
           {/* Card Header */}
           <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-start sm:items-center gap-3">
@@ -596,7 +596,7 @@ export const ConflictCenter: React.FC = () => {
       </div>
 
       {/* Interactive Chronological Event Timeline Ribbon */}
-      <div className="rounded-lg bg-white border border-slate-200 p-4 shadow-xs flex flex-col gap-4">
+      <div className="rounded-xl bg-white border border-slate-300 p-5 shadow-xs hover-elevate flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-blue-700 text-[20px]">timeline</span>

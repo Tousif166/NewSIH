@@ -71,7 +71,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
   return (
     <div className="flex flex-col w-full gap-5">
       {/* Top Header Banner & Actions */}
-      <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 bg-white p-5 rounded-lg shadow-xs border border-slate-200">
+      <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
         <div className="flex flex-col gap-1.5 max-w-4xl">
           {/* Compliance Badges Ribbon */}
           <div className="flex flex-wrap items-center gap-2">
@@ -134,7 +134,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
       </div>
 
       {/* 5-Gate Guided Progression Pipeline Ribbon */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-2 bg-white p-3 rounded-lg shadow-xs border border-slate-200">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-2 bg-white p-3.5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
         {/* Gate 01 */}
         <div
           onClick={() => setActiveGate(1)}
@@ -235,7 +235,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
       {/* 3-Column Demonstration Interactive Cockpit */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* COLUMN 1: Stage 01 // Edge Ingestion */}
-        <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow-xs border border-slate-200">
+        <div className="flex flex-col gap-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="w-2 h-4 rounded bg-blue-700"></div>
@@ -364,7 +364,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
         </div>
 
         {/* COLUMN 2: Stage 02 // Satellite Arbitration */}
-        <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow-xs border border-slate-200">
+        <div className="flex flex-col gap-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="w-2 h-4 rounded bg-rose-600"></div>
@@ -494,7 +494,7 @@ export const JudgeDemoWalkthrough: React.FC = () => {
         </div>
 
         {/* COLUMN 3: Stage 03 // Enterprise P6 Sync */}
-        <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow-xs border border-slate-200">
+        <div className="flex flex-col gap-4 bg-white p-5 rounded-xl shadow-xs border border-slate-300 hover-elevate">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <div className="w-2 h-4 rounded bg-blue-700"></div>
