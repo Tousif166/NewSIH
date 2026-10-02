@@ -442,7 +442,7 @@ export const Sidebar: React.FC = () => {
                 tabIndex={0}
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleTheme()}
                 title={theme === 'dark' ? 'Active: Dark Mode (Click for Light Mode)' : 'Active: Light Mode (Click for Dark Mode)'}
-                className="flex items-center bg-slate-200/90 dark:bg-[#1c2028] p-0.5 rounded-full border border-slate-300/80 dark:border-[#31353e] cursor-pointer shadow-inner transition-colors"
+                className="flex items-center bg-slate-200/90 dark:bg-[#070c16] p-0.5 rounded-full border border-slate-300/80 dark:border-amber-500/30 cursor-pointer shadow-inner transition-colors"
                 aria-label="Toggle Dark and Light Mode"
               >
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${
@@ -454,7 +454,7 @@ export const Sidebar: React.FC = () => {
                 </div>
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${
                   theme === 'dark'
-                    ? 'bg-[#4d8eff] text-white shadow-[0_0_8px_rgba(77,142,255,0.5)]'
+                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-[0_0_10px_rgba(245,158,11,0.6)]'
                     : 'text-slate-400 hover:text-slate-600'
                 }`}>
                   <span className="material-symbols-outlined text-[13px]">dark_mode</span>

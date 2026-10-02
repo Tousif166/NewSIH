@@ -222,14 +222,14 @@ export const Header: React.FC = () => {
           <span className="hidden sm:inline text-[11px]">Commit</span>
         </button>
 
-        {/* Dark / Light Mode Capsule Pill (Stitch Inspired) */}
+        {/* Dark / Light Mode Capsule Pill (Obsidian Amber Theme) */}
         <div 
           onClick={toggleTheme}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleTheme()}
           title={theme === 'dark' ? 'Active: Dark Mode (Click for Light Mode)' : 'Active: Light Mode (Click for Dark Mode)'}
-          className="flex items-center gap-0.5 p-1 rounded-full bg-slate-100 dark:bg-[#1c2028] border border-slate-200 dark:border-[#31353e] cursor-pointer shadow-inner transition-colors shrink-0"
+          className="flex items-center gap-0.5 p-1 rounded-full bg-slate-100 dark:bg-[#070c16] border border-slate-200 dark:border-amber-500/30 cursor-pointer shadow-inner transition-colors shrink-0"
           aria-label="Toggle dark and light mode"
         >
           <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
@@ -241,7 +241,7 @@ export const Header: React.FC = () => {
           </div>
           <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
             theme === 'dark' 
-              ? 'bg-[#4d8eff] text-white shadow-[0_0_8px_rgba(77,142,255,0.5)]' 
+              ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-[0_0_10px_rgba(245,158,11,0.6)]' 
               : 'text-slate-400 hover:text-slate-600'
           }`}>
             <span className="material-symbols-outlined text-[15px]">dark_mode</span>

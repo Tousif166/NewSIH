@@ -1,27 +1,31 @@
-# Design System: Obsidian Command (SiteSync AI)
-*Generated via Stitch MCP Server for Oil India Limited (SIH26122)*
+# Design System: Obsidian Amber Ember (SiteSync AI)
+*Calibrated from the Gamified Safety & HSE Compliance Training Hub reference for Oil India Limited (SIH26122)*
 
 ## 1. Visual Theme & Atmosphere
-An ultra-high-density industrial telemetry environment engineered for critical national infrastructure, capital megaprojects, and pipeline monitoring under the aegis of Oil India Limited. The visual aesthetic synthesizes Bloomberg-terminal density, aerospace-grade instrumentation, and modern tactical execution tooling (Linear-grade precision).
+An ultra-high-density industrial command center environment engineered for critical national petroleum infrastructure, capital megaprojects, and crude pipeline telemetry under the aegis of Oil India Limited. The visual aesthetic synthesizes Bloomberg-terminal density, aerospace telemetry, and high-heat industrial pipeline engineering.
 
-The emotional tone balances absolute structural certainty, executive authority, and operational urgency. Surfaces recede into deep obsidian darkness to minimize cognitive fatigue during prolonged operations room shifts, while high-tensile brass/amber accents prioritize project execution risks and mechanical stress. Emerald status signals confirm cryptographically validated telemetry and ledger entries.
-
-The styling rejects decorative fluff, generic AI pastel gradients, skeletal placeholders, and ornamental blurs. Instead, it relies on disciplined data matrices, technical dividing rules, razor-sharp geometric boundaries, and monospaced cryptographic/telemetry readouts. Every pixel delivers mission-critical information architecture: schedule variances, SCADA readings, Primavera P6 linkage tokens, and SHA-256 provenance confirmations.
+The emotional tone balances absolute structural certainty, executive authority, and operational urgency:
+- **Atmospheric Ember Radiance**: Deep midnight obsidian canvas bathed in warm copper/amber ember radial gradients along the top and right perimeters.
+- **Obsidian Titanium Glass**: Elevated command panels and data cards recede into obsidian (`#0e1626` to `#080d19`) with crisp 1px amber-titanium hairline borders (`rgba(245, 158, 11, 0.2)`).
+- **Incandescent Amber Primary Action Buttons**: High-contrast, tactile brass/amber triggers (`#f59e0b` to `#d97706`) paired with bold `#070b14` jet-black typography and warm 20px amber glows.
+- **Luminous Statutory Certifications**: Vibrant mint-emerald (`#34d399`) pills with dark translucent wells for zero-harm compliance and P6 synchronization.
+- **Telemetry Score Readouts**: Monospaced gold readouts (`#fbbf24`) with glowing borders for HSE scores and performance metrics.
 
 ## 2. Color Palette & Roles
-- **Deep Obsidian Sub-base Canvas** (`#090D14` / `#0C1322`): Primary canvas baseline, light-absorbing matrix.
-- **Charcoal Telemetry Panel** (`#0E1422` / `#111827`): Primary command cards, real-time data grids, and P6 milestone boards. Enclosed with a crisp 1px border of `#1E293B`.
-- **Selected Module Fill** (`#141C2E` / `#182236`): Focused telemetry streams, expanded pipeline nodes, and active input terminals.
-- **Industrial Brass / Amber Accent** (`#F59E0B`): Core execution momentum, active telemetry warnings, critical path bottlenecks, and primary operator actions. Complemented by `#D97706` for interactive state borders and focus indicators.
-- **Crisp Precision Emerald** (`#10B981`): Ledger reconciliation, operational integrity, live pipeline flow states, Primavera P6 synchronization, and SHA-256 validation seals.
-- **Telemetry Cyan / Blue** (`#38BDF8` / `#3B82F6`): Non-blocking instrumentation, active network channels, SCADA streams, and georeferenced pipeline coordinates.
-- **Structural Titanium Borders** (`#1E293B` / `rgba(255, 255, 255, 0.08)`): Precision 1px gridlines that divide dense telemetry matrices without creating visual occlusion.
+- **Deep Obsidian Sub-base Canvas** (`#070B14`): Primary light-absorbing canvas baseline with fixed warm atmospheric ember radial gradients.
+- **Obsidian Glass Panel** (`#0E1626` to `#080D19`): Elevated command cards, real-time data grids, and P6 milestone boards with amber hairline borders (`rgba(245, 158, 11, 0.2)`).
+- **Recessed Carbon Wells** (`#060A12`): Secondary containers, table matrices, and nested toolbars.
+- **Incandescent Amber CTA Accent** (`#F59E0B` / `#D97706`): Primary operator action buttons with `#070B14` bold text and golden amber drop shadows.
+- **Glowing Amber Telemetry** (`#FBBF24` / `#FDE68A`): Score indicators, WBS markers, OISD gamified badges, and critical path warnings.
+- **Precision Statutory Emerald** (`#34D399` / `#10B981`): Zero-harm statutory certifications, P6 sync status, SHA-256 ledger validation seals, and active spread clearances.
+- **SCADA Telemetry Cyan** (`#38BDF8` / `#0EA5E9`): Non-blocking RTK positioning, geofencing, and pipeline corridor telemetry.
+- **Precision Titanium Gridlines** (`rgba(245, 158, 11, 0.16)`): Hairline divisions maintaining readability without visual occlusion.
 
 ### Semantic Status Matrix
-- **Critical / Alert:** `#EF4444` (Weld integrity breach, unverified hash, major delay > 10d)
-- **Warning / Critical Path:** `#F59E0B` (Primavera schedule slip > 5 days, thermal deviation)
-- **Nominal / Verified:** `#10B981` (P6 sync active, SHA-256 valid, actuals committed)
-- **Idle / Baseline:** `#64748B` (Dormant terminal, baseline target)
+- **Critical / Alert:** `#EF4444` / `#F87171` (Weld integrity breach, unverified hash, major delay > 10d)
+- **Warning / Critical Path:** `#F59E0B` / `#FBBF24` (Primavera schedule slip > 5 days, thermal deviation)
+- **Nominal / Verified:** `#10B981` / `#34D399` (P6 sync active, SHA-256 valid, statutory zero-harm cert)
+- **SCADA Live Stream:** `#38BDF8` (RTK GPS, drone telemetry, SCADA registers)
 
 ## 3. Typography Architecture
 1. **Space Grotesk** (Structural Display): Panel headers, operational titles, and terminal cluster markers. Track-tight (`letter-spacing: -0.02em`), confident weight-driven hierarchy.
