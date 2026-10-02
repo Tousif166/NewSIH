@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useApp } from '../../services/store';
+import { HISTORICAL_PROJECT_RECORDS, calculateEMBExposureSummary } from '../../services/level1Engine';
 
 export const ActivityDNAView: React.FC = () => {
-  const { showToast } = useApp();
+  const { showToast, embItems, issueEmbCertificate, activeDNAMode, setActiveDNAMode } = useApp();
   const [selectedDiscipline, setSelectedDiscipline] = useState<'ALL' | 'TRENCH' | 'WELD' | 'HDD'>('ALL');
   const [selectedCase, setSelectedCase] = useState<number | null>(0);
   const [activeTooltip, setActiveTooltip] = useState<{ day: string; km: string; val: string } | null>(null);
+  const [terrainFilter, setTerrainFilter] = useState<string>('ALL');
 
   const handleExportCSV = () => {
     showToast('Exporting Historical DNA Corpus (.CSV)...', 'info');
@@ -34,6 +36,203 @@ export const ActivityDNAView: React.FC = () => {
             <span className="font-mono text-[10px] text-slate-900 font-semibold">EPOCH 2025.04_v2</span>
           </div>
         </div>
+
+        {/* View Switcher: Historical DNA vs e-Measurement Book */}
+        <div className="w-full bg-white border border-slate-300 rounded-xl p-2 shadow-xs flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-lg">
+            <button
+              type="button"
+              onClick={() => setActiveDNAMode('HISTORICAL_DNA')}
+              className={`px-4 py-2 rounded-md font-mono text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                activeDNAMode === 'HISTORICAL_DNA'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-300'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[16px] text-blue-700">biotech</span>
+              <span>Activity DNA & Historical Benchmarks</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveDNAMode('EMB_BILLING')}
+              className={`px-4 py-2 rounded-md font-mono text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                activeDNAMode === 'EMB_BILLING'
+                  ? 'bg-white text-emerald-950 shadow-xs border border-emerald-300 ring-2 ring-emerald-500/10'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[16px] text-emerald-700">receipt_long</span>
+              <span>e-Measurement Book (e-MB) & Contractor RA Bill Audit</span>
+              <span className="px-1.5 py-0.5 rounded text-[9px] bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
+                ANTI-OVERBILLING
+              </span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-mono text-slate-500 px-3">
+            <span className="material-symbols-outlined text-[15px] text-emerald-600">verified</span>
+            <span>Physical-to-Financial Verification Ledger</span>
+          </div>
+        </div>
+      </div>
+
+      {activeDNAMode === 'EMB_BILLING' ? (
+          /* e-Measurement Book (e-MB) & Contractor RA Bill Auditor */
+          <div className="flex flex-col gap-6">
+            {/* Header Banner */}
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-xs flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-2xs">
+                  <span className="material-symbols-outlined text-[24px]">receipt_long</span>
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-lg text-slate-900 font-bold tracking-tight">e-Measurement Book (e-MB) & Running Account (RA) Bill Auditor</h2>
+                    <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 font-bold border border-emerald-300 font-mono">
+                      PHYSICAL-FINANCIAL RECONCILER
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium">
+                    Automatically verifies contractor claimed billing percentages against SiteSync AI verified schedule physical actuals. Prevents advance overbilling and generates audit-ready e-MB measurement certificates.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 font-mono text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                  <span className="material-symbols-outlined text-[16px] text-emerald-700">security</span>
+                  <span>CVC & CAG BILLING INTEGRITY SAFEGUARD</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Exposure Summary Cards */}
+            {(() => {
+              const summary = calculateEMBExposureSummary(embItems);
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
+                    <span className="font-mono text-[10px] text-slate-500 font-bold uppercase block">Total Committed BoQ Value</span>
+                    <div className="text-xl font-bold font-mono text-slate-900 mt-1">
+                      ₹{(summary.totalContractINR / 10000000).toFixed(2)} Cr
+                    </div>
+                    <span className="text-[11px] text-slate-500 mt-1 block">Approved Contract Packages</span>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
+                    <span className="font-mono text-[10px] text-amber-700 font-bold uppercase block">Contractor Invoiced Claims</span>
+                    <div className="text-xl font-bold font-mono text-amber-900 mt-1">
+                      ₹{(summary.totalClaimedINR / 10000000).toFixed(2)} Cr
+                    </div>
+                    <span className="text-[11px] text-slate-500 mt-1 block">Average Claimed Progress: 73.8%</span>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
+                    <span className="font-mono text-[10px] text-blue-700 font-bold uppercase block">AI Verified Schedule Progress</span>
+                    <div className="text-xl font-bold font-mono text-blue-900 mt-1">
+                      ₹{(summary.totalVerifiedINR / 10000000).toFixed(2)} Cr
+                    </div>
+                    <span className="text-[11px] text-slate-500 mt-1 block">Physical Rolled-Up Earned Value</span>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 shadow-xs">
+                    <span className="font-mono text-[10px] text-rose-700 font-bold uppercase block">Overbilling Risk Blocked</span>
+                    <div className="text-xl font-bold font-mono text-rose-800 mt-1">
+                      ₹{(summary.totalRiskPreventedINR / 100000).toFixed(2)} Lakhs
+                    </div>
+                    <span className="text-[11px] text-rose-700 font-semibold mt-1 block">{summary.itemsOnHold} Items on Audit Hold</span>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Reconciliation Table */}
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-xs flex flex-col gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 font-mono">Running Account (RA) Bill Reconciliation Register</h3>
+                  <span className="text-xs text-slate-500 font-sans">Compare contractor invoice claimed progress vs schedule actuals</span>
+                </div>
+                <span className="font-mono text-xs text-slate-500">Cycle: RA Bill #06 (October 2026)</span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left font-sans text-xs">
+                  <thead>
+                    <tr className="bg-slate-100 border-b border-slate-300 font-mono text-[11px] text-slate-700">
+                      <th className="p-3">BoQ Item & Description</th>
+                      <th className="p-3">Contractor</th>
+                      <th className="p-3 text-right">Order Value</th>
+                      <th className="p-3 text-center">Claimed %</th>
+                      <th className="p-3 text-center">AI Verified %</th>
+                      <th className="p-3 text-right">Overbilling Risk</th>
+                      <th className="p-3 text-center">Audit Status</th>
+                      <th className="p-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 font-mono text-xs">
+                    {embItems.map((item) => (
+                      <tr key={item.id} className="hover:bg-slate-50">
+                        <td className="p-3">
+                          <span className="px-1.5 py-0.5 rounded bg-slate-200 text-slate-800 text-[10px] font-bold block w-fit mb-0.5">
+                            {item.boqItemCode}
+                          </span>
+                          <span className="font-sans font-medium text-slate-900">{item.description}</span>
+                        </td>
+                        <td className="p-3 text-slate-700 font-sans font-medium">{item.contractor}</td>
+                        <td className="p-3 text-right text-slate-900 font-bold">
+                          ₹{(item.totalOrderValueINR / 100000).toFixed(1)}L
+                        </td>
+                        <td className="p-3 text-center">
+                          <span className="font-bold text-amber-800">{item.contractorClaimedPercent}%</span>
+                          <span className="text-[10px] text-slate-500 block">₹{(item.contractorClaimedAmountINR / 100000).toFixed(1)}L</span>
+                        </td>
+                        <td className="p-3 text-center">
+                          <span className="font-bold text-blue-800">{item.aiVerifiedSchedulePercent}%</span>
+                          <span className="text-[10px] text-slate-500 block">₹{(item.aiVerifiedAmountINR / 100000).toFixed(1)}L</span>
+                        </td>
+                        <td className="p-3 text-right font-bold">
+                          {item.overbillingRiskINR > 0 ? (
+                            <span className="text-rose-700">+₹{(item.overbillingRiskINR / 100000).toFixed(2)}L</span>
+                          ) : (
+                            <span className="text-emerald-700">₹0 (Matched)</span>
+                          )}
+                        </td>
+                        <td className="p-3 text-center">
+                          <span className={`px-2 py-1 rounded-full text-[10px] font-extrabold ${
+                            item.auditStatus === 'APPROVED'
+                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                              : 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse'
+                          }`}>
+                            {item.auditStatus === 'APPROVED' ? 'CLEARED' : 'AUDIT HOLD'}
+                          </span>
+                        </td>
+                        <td className="p-3 text-right">
+                          {item.auditStatus === 'AUDIT_HOLD' ? (
+                            <button
+                              type="button"
+                              onClick={() => issueEmbCertificate(item.id)}
+                              className="px-3 py-1 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[11px] transition-all cursor-pointer shadow-2xs"
+                              title="Clear billing after field physical verification"
+                            >
+                              Clear e-MB
+                            </button>
+                          ) : (
+                            <span className="text-emerald-700 text-[11px] font-semibold flex items-center justify-end gap-1">
+                              <span className="material-symbols-outlined text-[14px]">verified</span>
+                              e-MB Signed
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        ) : (
+        <>
 
         {/* Title and Action Filters Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-300 shadow-xs hover-elevate">
@@ -87,7 +286,6 @@ export const ActivityDNAView: React.FC = () => {
             </button>
           </div>
         </div>
-      </div>
 
       {/* Corpus Intelligence Vitals (4 Metric Cards) */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -737,6 +935,136 @@ export const ActivityDNAView: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* ========================================================================= */}
+      {/* LEVEL 1 - FEATURE 6: INSTITUTIONAL EXECUTION MEMORY & HISTORICAL BENCHMARKS */}
+      {/* ========================================================================= */}
+      <section className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-4 hover-elevate transition-all">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded bg-amber-600 flex items-center justify-center text-white shadow-2xs">
+              <span className="material-symbols-outlined text-[19px]">history</span>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-bold text-slate-900 tracking-tight">
+                  Institutional Execution Memory &amp; Historical Benchmarking Archive
+                </h2>
+                <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-mono text-[10px] font-bold">
+                  LEVEL 1 • FEATURE 6
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 font-mono mt-0.5">
+                Calibrating activity duration, variance drivers, and contractor performance using completed Oil India Limited capital projects.
+              </p>
+            </div>
+          </div>
+
+          {/* Terrain Filter Pills */}
+          <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-lg border border-slate-200 font-mono text-xs overflow-x-auto">
+            {['ALL', 'Alluvial Floodplain', 'Hilly Rainforest', 'River Crossing HDD'].map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTerrainFilter(t)}
+                className={`py-1 px-2.5 rounded-md font-bold transition-all cursor-pointer whitespace-nowrap ${
+                  terrainFilter === t
+                    ? 'bg-white text-blue-900 shadow-2xs border border-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {t === 'ALL' ? 'All Terrains' : t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Top Intelligence Stats Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+            <span className="text-[10px] text-slate-500 uppercase font-bold">Historical Duration Stretch</span>
+            <div className="text-xl font-bold text-amber-700 mt-1 font-mono">
+              +22.8% Average Overrun
+            </div>
+            <span className="text-[10px] text-slate-500 mt-1">4 comparable Upper Assam baselines</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+            <span className="text-[10px] text-slate-500 uppercase font-bold">Dominant Delay Catalyst</span>
+            <div className="text-xl font-bold text-slate-900 mt-1 font-mono">
+              Monsoon Waterlogging
+            </div>
+            <span className="text-[10px] text-slate-500 mt-1">42% of recorded execution slippages</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex flex-col justify-between">
+            <span className="text-[10px] text-blue-800 uppercase font-bold">AI Calibration Safeguard</span>
+            <div className="text-xl font-bold text-blue-900 mt-1 font-mono">
+              +2.5 Day Buffer Suggested
+            </div>
+            <span className="text-[10px] text-blue-700 mt-1">Auto-injected into float analysis</span>
+          </div>
+        </div>
+
+        {/* Historical Project Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {HISTORICAL_PROJECT_RECORDS.filter(p => terrainFilter === 'ALL' || (p.terrainType && p.terrainType.toLowerCase().includes(terrainFilter.toLowerCase()))).map((proj) => (
+            <div
+              key={proj.id}
+              className="p-4 rounded-xl bg-white border border-slate-300 hover:border-blue-400 hover:shadow-xs transition-all flex flex-col gap-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 font-sans">{proj.projectName}</h3>
+                  <div className="flex items-center gap-2 mt-0.5 font-mono text-[10px]">
+                    <span className="text-slate-500">ID: {proj.id.toUpperCase()}</span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-blue-700 font-semibold">{proj.contractor}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10px] font-bold">
+                    CY {proj.completionYear || 2024}
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+                    {proj.terrainType || proj.location}
+                  </span>
+                </div>
+              </div>
+
+              {/* Numerical Metrics */}
+              <div className="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 font-mono text-[11px] border border-slate-200">
+                <div>
+                  <span className="text-slate-400 text-[10px] block">Planned Span:</span>
+                  <span className="font-bold text-slate-800">{proj.plannedDurationDays} Days</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 text-[10px] block">Actual Span:</span>
+                  <span className="font-bold text-amber-700">{proj.actualDurationDays} Days</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 text-[10px] block">Cost Variance:</span>
+                  <span className="font-bold text-rose-700">+{proj.costVariancePercent ?? Math.round((proj.varianceDays / proj.plannedDurationDays) * 100)}%</span>
+                </div>
+              </div>
+
+              {/* Lessons Learned and Cause */}
+              <div className="text-xs text-slate-700 leading-relaxed font-sans bg-amber-50/50 p-2.5 rounded border border-amber-200">
+                <div className="font-bold text-amber-950 font-mono text-[11px] flex items-center gap-1 mb-1">
+                  <span className="material-symbols-outlined text-[14px] text-amber-700">lightbulb</span>
+                  <span>Institutional Lessons Learned:</span>
+                </div>
+                <p className="text-slate-800">{proj.lessonsLearned}</p>
+                <div className="text-[10px] font-mono text-slate-500 mt-1.5 pt-1 border-t border-amber-200/60">
+                  Primary Root Cause: <strong className="text-slate-700">{(proj.delayFactors || proj.delayCauses || []).join(', ')}</strong>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      </>
+      )}
     </div>
   );
 };

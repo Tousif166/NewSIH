@@ -100,7 +100,7 @@ export const WhatIfSimulator: React.FC = () => {
           <div className="flex items-center flex-wrap gap-2 shrink-0">
             <button
               type="button"
-              onClick={() => setActiveTab('GANTT_TWIN')}
+              onClick={() => setActiveTab('GANTT_4D')}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-white text-slate-800 font-mono text-xs font-semibold shadow-xs border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
             >
               <span className="material-symbols-outlined text-[16px] text-slate-500">compare_arrows</span>

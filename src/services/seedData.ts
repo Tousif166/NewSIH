@@ -143,6 +143,54 @@ export const DEMO_ACTIVITIES: ScheduleActivity[] = [
     historicalBenchmarkDays: 7,
     historicalVarianceDays: 1.4,
     commonDelayCause: 'Material delivery & crane rigging availability',
+    lifecycleHistory: [
+      {
+        id: 'life-p142-1',
+        activityId: 'act-pipe-0142',
+        activityCode: 'PIPE-ERECT-L6-0142',
+        date: '2026-09-20',
+        eventType: 'START',
+        progressPct: 15,
+        rawReport: 'Spool rigging started at compressor bay. Mobile crane 50T mobilized.',
+        reportedBy: 'Bikash Gogoi (Senior Piping Supervisor)',
+        sourceRef: 'Field Voice Log #089',
+        durationToDateDays: 1,
+        velocityMetric: '15%/day'
+      },
+      {
+        id: 'life-p142-2',
+        activityId: 'act-pipe-0142',
+        activityCode: 'PIPE-ERECT-L6-0142',
+        date: '2026-09-24',
+        eventType: 'PROGRESS',
+        progressPct: 45,
+        rawReport: 'Spool placement reached 45%. 22 meters of 12-inch line aligned on rack.',
+        reportedBy: 'Bikash Gogoi (Senior Piping Supervisor)',
+        sourceRef: 'Site Daily Log #104',
+        durationToDateDays: 5,
+        velocityMetric: '9%/day'
+      },
+      {
+        id: 'life-p142-3',
+        activityId: 'act-pipe-0142',
+        activityCode: 'PIPE-ERECT-L6-0142',
+        date: '2026-09-28',
+        eventType: 'PROGRESS',
+        progressPct: 78,
+        rawReport: '12 inch spool erected near compressor section. Around 18m completed between 9:00 AM and 4:30 PM.',
+        reportedBy: 'Bikash Gogoi (Senior Piping Supervisor)',
+        sourceRef: 'Voice Update #001',
+        durationToDateDays: 9,
+        velocityMetric: '8.7%/day'
+      }
+    ],
+    subtasks: [
+      { id: 'sub-p142-1', activityId: 'act-pipe-0142', code: 'PIPE-0142.1', name: 'Spool Transportation & Rigging Crane Setup', weightPct: 15, progressPct: 100, status: 'COMPLETED' },
+      { id: 'sub-p142-2', activityId: 'act-pipe-0142', code: 'PIPE-0142.2', name: 'Pipe Spool Hoisting & Alignment on Rack', weightPct: 35, progressPct: 90, status: 'IN_PROGRESS' },
+      { id: 'sub-p142-3', activityId: 'act-pipe-0142', code: 'PIPE-0142.3', name: 'Joint Fit-Up & Root Pass TIG Tack Welding', weightPct: 25, progressPct: 65, status: 'IN_PROGRESS' },
+      { id: 'sub-p142-4', activityId: 'act-pipe-0142', code: 'PIPE-0142.4', name: 'Hot Pass & Cap Pass Shielded Arc Welding', weightPct: 15, progressPct: 40, status: 'IN_PROGRESS' },
+      { id: 'sub-p142-5', activityId: 'act-pipe-0142', code: 'PIPE-0142.5', name: 'Visual QC & Radiographic NDT Testing', weightPct: 10, progressPct: 0, status: 'NOT_STARTED' }
+    ]
   },
   {
     id: 'act-pipe-0143',
@@ -263,6 +311,54 @@ export const DEMO_ACTIVITIES: ScheduleActivity[] = [
     historicalBenchmarkDays: 12.5,
     historicalVarianceDays: 1.5,
     commonDelayCause: 'Batching plant logistics & heavy monsoon downpours',
+    lifecycleHistory: [
+      {
+        id: 'life-c102-1',
+        activityId: 'act-civ-0102',
+        activityCode: 'CIV-FOUND-L6-0102',
+        date: '2026-09-14',
+        eventType: 'START',
+        progressPct: 15,
+        rawReport: 'F-102 excavation and mud mat PCC casting commenced.',
+        reportedBy: 'Site Civil Foreman',
+        sourceRef: 'Civil Shift Diary #044',
+        durationToDateDays: 1,
+        velocityMetric: '15%/day'
+      },
+      {
+        id: 'life-c102-2',
+        activityId: 'act-civ-0102',
+        activityCode: 'CIV-FOUND-L6-0102',
+        date: '2026-09-20',
+        eventType: 'PROGRESS',
+        progressPct: 60,
+        rawReport: 'Rebar cage tying and shuttering forms erected. Plinth anchor template secured.',
+        reportedBy: 'Civil Site Inspector',
+        sourceRef: 'Inspection Report IR-CIV-08',
+        durationToDateDays: 7,
+        velocityMetric: '8.5%/day'
+      },
+      {
+        id: 'life-c102-3',
+        activityId: 'act-civ-0102',
+        activityCode: 'CIV-FOUND-L6-0102',
+        date: '2026-09-26',
+        eventType: 'FINISH',
+        progressPct: 100,
+        rawReport: 'Concrete pouring for foundation F-102 completed at 17:00. Batching plant delivered 75 m3 grade M35 concrete.',
+        reportedBy: 'DPR Daily Compilation Desk',
+        sourceRef: 'DPR Shift #1 (#evt-002)',
+        durationToDateDays: 13,
+        velocityMetric: '7.7%/day'
+      }
+    ],
+    subtasks: [
+      { id: 'sub-c102-1', activityId: 'act-civ-0102', code: 'CIV-0102.1', name: 'Excavation, Shoring & Dewatering', weightPct: 20, progressPct: 100, status: 'COMPLETED' },
+      { id: 'sub-c102-2', activityId: 'act-civ-0102', code: 'CIV-0102.2', name: 'PCC Mud Mat & Plinth Marking', weightPct: 15, progressPct: 100, status: 'COMPLETED' },
+      { id: 'sub-c102-3', activityId: 'act-civ-0102', code: 'CIV-0102.3', name: 'Rebar Cage Tying & Bolt Embedment', weightPct: 30, progressPct: 100, status: 'COMPLETED' },
+      { id: 'sub-c102-4', activityId: 'act-civ-0102', code: 'CIV-0102.4', name: 'Shuttering Formwork Assembly', weightPct: 15, progressPct: 100, status: 'COMPLETED' },
+      { id: 'sub-c102-5', activityId: 'act-civ-0102', code: 'CIV-0102.5', name: 'M35 Concrete Pouring & Curing', weightPct: 20, progressPct: 100, status: 'COMPLETED' }
+    ]
   },
   {
     id: 'act-civ-0103',
@@ -574,6 +670,27 @@ export const DEMO_FIELD_EVENTS: NormalizedExecutionEvent[] = [
     photoUrl: '/images/subcon-pipeline-survey.jpg',
     extractionConfidence: 91,
     createdAt: '2026-09-28T18:00:00Z',
+  },
+  {
+    eventId: 'evt-005',
+    projectId: 'proj-oil-01',
+    sourceId: 'src-voice-005',
+    sourceType: 'VOICE',
+    reportedBy: 'Bikash Gogoi (Senior Piping Supervisor)',
+    reporterRole: 'supervisor',
+    reportedDate: '2026-09-29',
+    rawText: 'Temporary drainage channel created near Unit 4 because of flooding. Excavator deployed for 6 hours to divert stormwater away from open trenches.',
+    activityDescription: 'Temporary drainage channel excavation at Unit 4',
+    discipline: 'Civil',
+    action: 'excavated',
+    assetOrComponent: 'Temporary stormwater trench',
+    location: 'Area 04 — Unit 4 Corridor',
+    percentComplete: 100,
+    statusReported: 'COMPLETED',
+    contractor: 'Emergency Site Crew',
+    photoUrl: '/images/concrete-foundation-pouring.jpg',
+    extractionConfidence: 92,
+    createdAt: '2026-09-29T11:30:00Z',
   }
 ];
 
@@ -794,6 +911,38 @@ export const DEMO_MATCHES: ActivityMatchRecord[] = [
         confidenceTier: 'LOW',
         explanationPoints: [
           { passed: false, text: 'Action mismatch: erection vs fit-up inspection' }
+        ]
+      }
+    ]
+  },
+  {
+    matchId: 'match-005',
+    eventId: 'evt-005',
+    selectedActivityId: '',
+    confidence: 38,
+    status: 'UNPLANNED_WORK',
+    isUnplanned: true,
+    unplannedCategory: 'NON_SCHEDULE_SUPPORT',
+    plannerNotes: 'Flagged by Unplanned Work Detector: Out-of-baseline stormwater protection work. No matching P6 baseline activity found.',
+    appliedToSchedule: false,
+    candidates: [
+      {
+        activityId: 'act-civ-0102',
+        activityCode: 'CIV-FOUND-L6-0102',
+        activityName: 'Foundation F-102 concrete pouring and curing',
+        discipline: 'Civil',
+        wbsHierarchy: 'GCU > Civil Works > Foundation F-102',
+        lexicalScore: 0.18,
+        fuzzyScore: 0.25,
+        semanticScore: 0.32,
+        contextScore: 0.40,
+        temporalScore: 0.70,
+        finalConfidence: 38,
+        confidenceTier: 'LOW',
+        explanationPoints: [
+          { passed: false, text: 'No schedule match: temporary drainage channel is absent from baseline P6 WBS' },
+          { passed: true, text: 'Civil discipline aligned with emergency excavation' },
+          { passed: false, text: 'Confidence below 65% threshold: safely routed to Unplanned Work Queue' }
         ]
       }
     ]

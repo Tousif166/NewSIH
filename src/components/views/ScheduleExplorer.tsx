@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../services/store';
+import { P6ScheduleImportModal } from './schedule/P6ScheduleImportModal';
 
 interface WbsNodeData {
   code: string;
@@ -22,7 +23,8 @@ interface WbsNodeData {
 }
 
 export const ScheduleExplorer: React.FC = () => {
-  const { setActiveTab } = useApp();
+  const { setActiveTab, importProjectSchedule, showToast } = useApp();
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const [expandedBranches, setExpandedBranches] = useState<Record<string, boolean>>({
     'trunk-all': true,
@@ -156,6 +158,14 @@ export const ScheduleExplorer: React.FC = () => {
             >
               <span className="material-symbols-outlined text-[14px]">file_download</span>
               <span>Export XER/CSV</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsImportModalOpen(true)}
+              className="px-2.5 py-1.5 rounded bg-emerald-700 text-white hover:bg-emerald-800 font-mono text-xs flex items-center gap-1 shadow-xs transition-all cursor-pointer font-semibold"
+            >
+              <span className="material-symbols-outlined text-[14px]">file_upload</span>
+              <span>Import P6 (CSV)</span>
             </button>
           </div>
         </div>
@@ -875,6 +885,47 @@ export const ScheduleExplorer: React.FC = () => {
                 <span className="font-mono font-bold text-sm text-blue-700 shrink-0">97.4%</span>
               </div>
 
+              {/* Level 1 Subtasks & Lifecycle Chronology Card */}
+              <div className="flex flex-col gap-2.5 p-3 bg-purple-50/60 rounded-xl border border-purple-200 font-mono text-[11px]">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-purple-950 uppercase flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[15px] text-purple-700">splitscreen</span>
+                    Execution Subtasks &amp; Lifecycle
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-200 text-purple-900 font-bold">
+                    N-to-1 ROLLUP
+                  </span>
+                </div>
+                
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center justify-between text-slate-700">
+                    <span>1. Trenching &amp; Subgrade:</span>
+                    <span className="font-bold text-emerald-700">100% (Weight: 25%)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-700">
+                    <span>2. Bedding Cushion Prep:</span>
+                    <span className="font-bold text-emerald-700">100% (Weight: 15%)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-700">
+                    <span>3. Pipe Stringing &amp; Alignment:</span>
+                    <span className="font-bold text-blue-700">80% (Weight: 30%)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-700">
+                    <span>4. Joint Fit-up &amp; NDT:</span>
+                    <span className="font-bold text-blue-700">40% (Weight: 20%)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-700">
+                    <span>5. Backfilling &amp; Compaction:</span>
+                    <span className="font-bold text-slate-400">0% (Weight: 10%)</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-purple-200/80 flex items-center justify-between text-[10px]">
+                  <span className="text-slate-500">Actual Start: 24-SEP-2024</span>
+                  <span className="font-bold text-purple-900">Duration: 5d / 14d</span>
+                </div>
+              </div>
+
               {/* Action Buttons */}
               <div className="flex flex-col gap-1.5 pt-1">
                 <button
@@ -1105,6 +1156,16 @@ export const ScheduleExplorer: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Level 1 Feature 5: Real Schedule Import Modal */}
+      <P6ScheduleImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImport={(imported) => {
+          importProjectSchedule(imported);
+          showToast(`Imported ${imported.length} activities into Primavera P6 baseline!`);
+        }}
+      />
     </div>
   );
 };

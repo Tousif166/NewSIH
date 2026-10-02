@@ -22,11 +22,19 @@ export const Header: React.FC = () => {
     setIsMobileMenuOpen,
     setActiveTab,
     commitScheduleActuals,
-    showToast
+    setIsDossierOpen,
+    openP6XerExport,
+    openVoiceCommander,
+    openPipeline3D,
+    openBlockchainLedger,
+    showToast,
+    theme,
+    toggleTheme
   } = useApp();
 
   const handleExportAudit = () => {
-    showToast('Audit Package Generated: Verified SHA-256 ledger proof bundle ready for export.');
+    setIsDossierOpen(true);
+    showToast('Opening CVC & CAG Statutory Delay Defense & Arbitration Dossier...', 'info');
   };
 
   const handleCommitP6 = () => {
@@ -35,7 +43,8 @@ export const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-3 sm:px-6 flex items-center justify-between shadow-xs">
-      <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1 mr-2">
+      {/* Left: Project Branding & WBS Info (Guaranteed overflow-hidden to prevent overlapping) */}
+      <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1 overflow-hidden mr-3">
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -48,122 +57,188 @@ export const Header: React.FC = () => {
         </button>
 
         {/* Project Branding & WBS Header */}
-        <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <span className="font-bold text-slate-900 text-xs sm:text-base tracking-tight truncate max-w-[150px] xs:max-w-[220px] sm:max-w-none">
+        <div className="flex flex-col min-w-0 overflow-hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="font-bold text-slate-900 text-xs sm:text-base tracking-tight truncate">
               {activeProject.name || 'Digboi–Duliajan 132km Crude Trunkline'}
             </span>
-            <span className="hidden xs:inline px-1.5 sm:px-2 py-0.5 rounded-md bg-slate-100 border border-slate-300 font-mono text-[9px] sm:text-[11px] font-semibold text-slate-700 hover:bg-slate-200 transition-colors shrink-0">
-              WBS-REV-4.8
+            <span className="hidden xs:inline px-1.5 py-0.5 rounded-md bg-slate-100 border border-slate-300 font-mono text-[9px] sm:text-[10px] font-semibold text-slate-700 shrink-0">
+              WBS-4.8
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-2 sm:gap-3 font-mono text-[11px] text-slate-500 truncate">
-            <span className="truncate font-medium text-slate-600">PIPELINE REINFORCEMENT SEGMENT 04-A</span>
+          <div className="hidden sm:flex items-center gap-2 font-mono text-[10.5px] text-slate-500 truncate">
+            <span className="truncate font-medium text-slate-600">OIL-INFRA-TRUNKLINE</span>
             <span className="text-slate-300">•</span>
-            <span className="text-slate-600 font-medium shrink-0">LAT: 27.3805° N, 95.3182° E</span>
+            <span className="text-slate-600 font-medium shrink-0">132 KM ASSAM</span>
           </div>
         </div>
 
-        {/* Live Network & Ledger Validation Telemetry */}
-        <div className="hidden xl:flex items-center gap-2.5 pl-4 border-l border-slate-200 font-mono text-[11px] shrink-0">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 radar-beacon"></span>
-            18ms LATENCY
+        {/* Telemetry pill (strictly visible only on 2XL screens to never crowd header) */}
+        <div className="hidden 2xl:flex items-center gap-2 pl-3 border-l border-slate-200 font-mono text-[10px] shrink-0">
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            18ms
           </div>
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-blue-50 text-blue-800 border border-blue-200 font-semibold shadow-2xs">
-            <span className="material-symbols-outlined text-[13px]">lock</span>
-            LEDGER VALIDATED
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-800 border border-blue-200 font-semibold shadow-2xs">
+            <span className="material-symbols-outlined text-[12px]">lock</span>
+            LEDGER
           </div>
         </div>
       </div>
 
-      {/* Right Controls & Quick Actions */}
-      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-        {/* Offline Queue Toggle if disconnected */}
-        <button
-          onClick={() => {
-            const nextOnline = !isOnline;
-            setIsOnline(nextOnline);
-            if (nextOnline && offlineQueue.length > 0) syncOfflineQueue();
-          }}
-          className={`hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono border transition-all font-semibold ${
-            isOnline 
-              ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
-              : 'bg-rose-50 border-rose-300 text-rose-800 animate-pulse'
-          }`}
-          title="Simulate network connectivity & offline queue"
-        >
-          <span className="material-symbols-outlined text-[14px]">
-            {isOnline ? 'wifi' : 'wifi_off'}
-          </span>
-          <span className="text-[10px]">{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
-          {offlineQueue.length > 0 && (
-            <span className="bg-amber-500 text-white text-[9px] font-bold px-1.5 rounded-full">
-              {offlineQueue.length}
-            </span>
-          )}
-        </button>
-
-        {/* AI Copilot Toggle */}
-        <button
-          onClick={() => setIsCopilotOpen(!isCopilotOpen)}
-          className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border transition-all ${
-            isCopilotOpen 
-              ? 'bg-blue-700 text-white border-blue-800 shadow-sm' 
-              : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 shadow-2xs'
-          }`}
-          title="Open AI Project Copilot"
-        >
-          <span className="material-symbols-outlined text-[16px] text-blue-600">psychology</span>
-          <span className="hidden lg:inline text-[11px]">Copilot</span>
-        </button>
-
-        {/* Operator Pill with Role Switcher Dropdown (desktop) */}
-        <div className="relative hidden md:flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-md text-left hover:bg-slate-100/80 transition-colors shadow-2xs">
-          <span className="material-symbols-outlined text-slate-500 text-[18px]">switch_account</span>
-          <div className="flex flex-col">
-            <span className="font-mono text-[11px] font-bold text-slate-800 leading-tight">
-              {currentUser?.name || 'Pranjal Saikia'}
-            </span>
-            <select
-              value={currentRole}
-              onChange={(e) => setCurrentRole(e.target.value as UserRole)}
-              className="font-mono text-[10px] text-slate-600 bg-transparent border-0 p-0 focus:outline-none cursor-pointer leading-tight font-semibold"
-              aria-label="Select Active Persona"
+      {/* Right Controls: Role-Scoped Quick Actions (No overlap, clean layout) */}
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* ROLE SPECIFIC ACTIONS: Field Supervisor */}
+        {currentRole === 'supervisor' && (
+          <>
+            <button
+              onClick={openVoiceCommander}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Open Hands-Free Voice Field Commander (Hotkey: V)"
             >
-              <option value="planner">Chief Eng (Planner)</option>
-              <option value="supervisor">Site Supervisor (Field)</option>
-              <option value="project_manager">Project Manager (Exec)</option>
-              <option value="admin">System Admin (Vigilance)</option>
-            </select>
-          </div>
-        </div>
+              <span className="material-symbols-outlined text-[15px] text-amber-700 animate-pulse">mic</span>
+              <span className="text-[11px] font-bold">Voice [V]</span>
+            </button>
+            <button
+              onClick={() => {
+                const nextOnline = !isOnline;
+                setIsOnline(nextOnline);
+                if (nextOnline && offlineQueue.length > 0) syncOfflineQueue();
+              }}
+              className={`flex items-center gap-1 px-2 py-1.5 rounded-md text-xs font-mono border transition-all font-semibold shrink-0 cursor-pointer ${
+                isOnline 
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
+                  : 'bg-rose-50 border-rose-300 text-rose-800 animate-pulse'
+              }`}
+              title="Simulate network connectivity & offline queue"
+            >
+              <span className="material-symbols-outlined text-[14px]">
+                {isOnline ? 'wifi' : 'wifi_off'}
+              </span>
+              <span className="text-[10px] hidden xs:inline">{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
+              {offlineQueue.length > 0 && (
+                <span className="bg-amber-500 text-white text-[9px] font-bold px-1.5 rounded-full">
+                  {offlineQueue.length}
+                </span>
+              )}
+            </button>
+          </>
+        )}
 
-        {/* Export Audit PKG Button */}
-        <button
-          onClick={handleExportAudit}
-          className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-mono text-xs font-semibold shadow-2xs transition-all active:scale-95 cursor-pointer"
-          type="button"
-        >
-          <span className="material-symbols-outlined text-[16px] text-slate-500">inventory_2</span>
-          <span>Export Audit PKG</span>
-        </button>
+        {/* ROLE SPECIFIC ACTIONS: Project Planner */}
+        {currentRole === 'planner' && (
+          <>
+            <button
+              onClick={() => setIsCopilotOpen(!isCopilotOpen)}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
+                isCopilotOpen 
+                  ? 'bg-blue-700 text-white border-blue-800 shadow-sm' 
+                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 shadow-2xs'
+              }`}
+              title="Open Ask SiteSync NL Copilot"
+            >
+              <span className="material-symbols-outlined text-[15px] text-blue-600">psychology</span>
+              <span className="text-[11px] font-bold">Copilot</span>
+            </button>
+            <button
+              onClick={openP6XerExport}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-300 font-mono text-xs font-bold shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Export authentic Oracle Primavera P6 .XER ASCII file"
+            >
+              <span className="material-symbols-outlined text-[15px] text-blue-700">file_download</span>
+              <span className="text-[11px]">.XER</span>
+            </button>
+          </>
+        )}
+
+        {/* ROLE SPECIFIC ACTIONS: Project Manager */}
+        {currentRole === 'project_manager' && (
+          <>
+            <button
+              onClick={openPipeline3D}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-900 shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Launch WebGL 3D Pipeline Digital Twin"
+            >
+              <span className="material-symbols-outlined text-[15px] text-blue-700">view_in_ar</span>
+              <span className="text-[11px] font-bold">3D Twin</span>
+            </button>
+            <button
+              onClick={handleExportAudit}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md bg-amber-100/90 hover:bg-amber-200 text-amber-950 border border-amber-400 font-mono text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Open CVC & CAG Statutory Delay Defense Dossier"
+            >
+              <span className="material-symbols-outlined text-[15px] text-amber-800">gavel</span>
+              <span className="text-[11px]">CVC Dossier</span>
+            </button>
+          </>
+        )}
+
+        {/* ROLE SPECIFIC ACTIONS: System Admin */}
+        {currentRole === 'admin' && (
+          <>
+            <button
+              onClick={openBlockchainLedger}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md font-mono text-xs font-semibold border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Open Immutable Blockchain Audit Ledger"
+            >
+              <span className="material-symbols-outlined text-[15px] text-emerald-700">enhanced_encryption</span>
+              <span className="text-[11px] font-bold">Ledger</span>
+            </button>
+            <button
+              onClick={handleExportAudit}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-md bg-amber-100/90 hover:bg-amber-200 text-amber-950 border border-amber-400 font-mono text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Open CVC & CAG Statutory Delay Defense Dossier"
+            >
+              <span className="material-symbols-outlined text-[15px] text-amber-800">gavel</span>
+              <span className="text-[11px]">CVC Dossier</span>
+            </button>
+          </>
+        )}
+
+        {/* Persona Selector (Compact, No text collisions) */}
+        <div className="relative hidden lg:flex items-center gap-1 bg-slate-50 border border-slate-200 px-2 py-1 rounded-md text-left shadow-2xs shrink-0">
+          <span className="material-symbols-outlined text-slate-500 text-[16px]">switch_account</span>
+          <select
+            value={currentRole}
+            onChange={(e) => setCurrentRole(e.target.value as UserRole)}
+            className="font-mono text-[10px] text-slate-700 bg-transparent border-0 p-0 focus:outline-none cursor-pointer leading-tight font-semibold"
+            aria-label="Select Active Persona"
+          >
+            <option value="supervisor">👷 Field Supervisor</option>
+            <option value="planner">📐 Project Planner</option>
+            <option value="project_manager">💼 Project Manager</option>
+            <option value="admin">🛡️ System Admin</option>
+          </select>
+        </div>
 
         {/* Commit to P6 Button */}
         <button
           onClick={handleCommitP6}
-          className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs btn-tactile cursor-pointer"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs btn-tactile cursor-pointer shrink-0"
           type="button"
+          title="Commit Schedule Actuals to Oracle Primavera P6"
         >
-          <span className="material-symbols-outlined text-[15px] sm:text-[16px]">cloud_upload</span>
-          <span className="hidden sm:inline">Commit to P6</span>
-          <span className="sm:hidden text-[10px]">Commit</span>
+          <span className="material-symbols-outlined text-[15px]">cloud_upload</span>
+          <span className="hidden sm:inline text-[11px]">Commit</span>
+        </button>
+
+        {/* Dark / Light Mode Toggle Button */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          className="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-amber-400 shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+          aria-label="Toggle dark and light mode"
+        >
+          <span className="material-symbols-outlined text-[18px]">
+            {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+          </span>
         </button>
 
         {/* User Avatar Circle */}
         <div 
           onClick={logout}
-          className="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-800 flex items-center justify-center font-bold text-xs hover:ring-2 hover:ring-blue-500/30 transition-all cursor-pointer shrink-0"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-800 flex items-center justify-center font-bold text-xs hover:ring-2 hover:ring-blue-500/30 transition-all cursor-pointer shrink-0"
           title="Click to Sign Out"
         >
           {currentUser?.name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'PS'}

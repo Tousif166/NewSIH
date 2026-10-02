@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useApp } from '../../services/store';
+import { UnplannedResolutionDesk } from './review/UnplannedResolutionDesk';
+import { SubtasksRollupTab } from './review/SubtasksRollupTab';
+import { LifecycleTab } from './review/LifecycleTab';
+import { HistoricalBenchmarkTab } from './review/HistoricalBenchmarkTab';
 
 export const ReviewCenter: React.FC = () => {
   const { 
@@ -9,6 +13,9 @@ export const ReviewCenter: React.FC = () => {
     activities, 
     approveMatch, 
     rejectMatch, 
+    approveUnplannedWork,
+    updateSubtaskProgress,
+    unplannedQueueCount,
     addTerminologyMapping,
     terminologyMappings,
     setActiveTab,
@@ -23,14 +30,18 @@ export const ReviewCenter: React.FC = () => {
   const [newTermField, setNewTermField] = useState('');
   const [newTermActivityCode, setNewTermActivityCode] = useState('');
   const [mobileTab, setMobileTab] = useState<'QUEUE' | 'INSPECTION'>('QUEUE');
-  const [queueFilter, setQueueFilter] = useState<'ALL' | 'PENDING' | 'APPROVED'>('ALL');
+  const [queueFilter, setQueueFilter] = useState<'ALL' | 'PENDING' | 'APPROVED' | 'UNPLANNED'>('ALL');
+
+  const [activeWorkbenchTab, setActiveWorkbenchTab] = useState<'MATCH' | 'SUBTASKS' | 'LIFECYCLE' | 'BENCHMARK'>('MATCH');
 
   const pendingMatches = matches.filter(m => m.status === 'PENDING_REVIEW');
   const approvedMatches = matches.filter(m => m.status === 'APPROVED');
+  const unplannedMatches = matches.filter(m => m.status === 'UNPLANNED_WORK' || m.isUnplanned);
   
   // Resolve active match using selectedMatchId if present, otherwise default to first pending or first match
   const activeMatch = (selectedMatchId ? matches.find(m => m.matchId === selectedMatchId) : null) 
     || pendingMatches[0] 
+    || unplannedMatches[0]
     || matches[0];
   const relatedEvent = activeMatch ? fieldEvents.find(e => e.eventId === activeMatch.eventId) : null;
   const matchedActivity = activeMatch ? activities.find(a => a.id === activeMatch.selectedActivityId) : null;
@@ -267,6 +278,19 @@ export const ReviewCenter: React.FC = () => {
               </button>
               <button
                 type="button"
+                onClick={() => setQueueFilter('UNPLANNED')}
+                className={`flex-1 py-1 px-2 rounded-md font-bold transition-colors flex items-center justify-center gap-1 ${
+                  queueFilter === 'UNPLANNED'
+                    ? 'bg-white text-rose-800 shadow-2xs border border-slate-200'
+                    : 'text-rose-700 hover:text-rose-900'
+                }`}
+              >
+                <span>Unplanned</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+                <span>({unplannedMatches.length})</span>
+              </button>
+              <button
+                type="button"
                 onClick={() => setQueueFilter('APPROVED')}
                 className={`flex-1 py-1 px-2 rounded-md font-bold transition-colors ${
                   queueFilter === 'APPROVED'
@@ -282,6 +306,7 @@ export const ReviewCenter: React.FC = () => {
           {matches.filter(m => {
             if (queueFilter === 'PENDING') return m.status === 'PENDING_REVIEW';
             if (queueFilter === 'APPROVED') return m.status === 'APPROVED';
+            if (queueFilter === 'UNPLANNED') return m.status === 'UNPLANNED_WORK' || m.isUnplanned;
             return true;
           }).length === 0 ? (
             <div className="p-8 text-center bg-white rounded-xl border border-slate-300 text-slate-500 font-mono text-xs">
@@ -293,12 +318,14 @@ export const ReviewCenter: React.FC = () => {
               {matches.filter(m => {
                 if (queueFilter === 'PENDING') return m.status === 'PENDING_REVIEW';
                 if (queueFilter === 'APPROVED') return m.status === 'APPROVED';
+                if (queueFilter === 'UNPLANNED') return m.status === 'UNPLANNED_WORK' || m.isUnplanned;
                 return true;
               }).map((m) => {
                 const isSelected = activeMatch?.matchId === m.matchId;
                 const evt = fieldEvents.find((e) => e.eventId === m.eventId);
                 const cand = m.candidates?.[0];
                 const isApproved = m.status === 'APPROVED';
+                const isUnplannedItem = m.status === 'UNPLANNED_WORK' || m.isUnplanned;
 
                 return (
                   <div
@@ -309,7 +336,11 @@ export const ReviewCenter: React.FC = () => {
                     }}
                     className={`p-4 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-2 ${
                       isSelected
-                        ? 'bg-blue-50/60 border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
+                        ? isUnplannedItem
+                          ? 'bg-rose-50/70 border-rose-500 ring-2 ring-rose-500/20 shadow-xs'
+                          : 'bg-blue-50/60 border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
+                        : isUnplannedItem
+                        ? 'bg-rose-50/30 border-rose-300 hover:border-rose-400 hover:shadow-xs'
                         : 'bg-white border-slate-300 hover:border-blue-400 hover:shadow-xs'
                     }`}
                   >
@@ -319,16 +350,22 @@ export const ReviewCenter: React.FC = () => {
                           {evt?.discipline || 'Pipeline'}
                         </span>
                         <span className={`font-mono text-[9px] px-1.5 py-0.2 rounded font-bold border ${
-                          isApproved 
+                          isUnplannedItem
+                            ? 'bg-rose-100 text-rose-800 border-rose-300'
+                            : isApproved 
                             ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
                             : 'bg-amber-50 text-amber-800 border-amber-300'
                         }`}>
-                          {isApproved ? 'P6 COMMITTED' : 'PENDING'}
+                          {isUnplannedItem ? 'UNPLANNED SCOPE' : isApproved ? 'P6 COMMITTED' : 'PENDING'}
                         </span>
                       </div>
-                      <span className="font-mono text-[11px] font-bold text-emerald-700 flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[13px]">bolt</span>
-                        {m.confidence}% MATCH
+                      <span className={`font-mono text-[11px] font-bold flex items-center gap-1 ${
+                        isUnplannedItem ? 'text-rose-700' : 'text-emerald-700'
+                      }`}>
+                        <span className="material-symbols-outlined text-[13px]">
+                          {isUnplannedItem ? 'warning' : 'bolt'}
+                        </span>
+                        {isUnplannedItem ? 'OUT-OF-SCOPE' : `${m.confidence}% MATCH`}
                       </span>
                     </div>
 
@@ -351,7 +388,9 @@ export const ReviewCenter: React.FC = () => {
 
                     <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
                       <span>{evt?.sourceType || 'DPR'} • {evt?.reportedDate}</span>
-                      <span className="text-blue-700 font-bold">{cand?.activityCode || 'ACT-P6'}</span>
+                      <span className={`font-bold ${isUnplannedItem ? 'text-rose-700' : 'text-blue-700'}`}>
+                        {isUnplannedItem ? 'P6 VARIANCE REQ' : cand?.activityCode || 'ACT-P6'}
+                      </span>
                     </div>
                   </div>
                 );
@@ -363,39 +402,134 @@ export const ReviewCenter: React.FC = () => {
         {/* Right Column: Deep Inspection Workbench (8 cols) */}
         <div className={`lg:col-span-8 flex-col gap-5 ${mobileTab === 'INSPECTION' ? 'flex' : 'hidden lg:flex'}`}>
           {activeMatch && relatedEvent ? (
-            <div className="bg-white p-4 sm:p-6 rounded-xl border border-slate-300 shadow-xs flex flex-col gap-6 hover-elevate">
-              {/* Header Details with Mobile Back Button */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setMobileTab('QUEUE')}
-                      className="lg:hidden text-xs font-mono text-blue-700 font-bold flex items-center gap-0.5 hover:underline"
-                    >
-                      <span className="material-symbols-outlined text-[16px]">arrow_back</span>
-                      Queue
-                    </button>
-                    <span className="lg:hidden text-slate-300">•</span>
-                    <span className="font-mono text-[11px] text-blue-700 font-bold">
-                      PROPOSAL #{activeMatch.matchId.toUpperCase()}
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="font-mono text-[10px] text-slate-500">EVENT ID: {relatedEvent.eventId}</span>
+            activeMatch.isUnplanned || activeMatch.status === 'UNPLANNED_WORK' ? (
+              <UnplannedResolutionDesk
+                activeMatch={activeMatch}
+                relatedEvent={relatedEvent}
+                activities={activities}
+                onApproveUnplanned={(matchId, action, opts) => approveUnplannedWork(matchId, action, opts)}
+                onReject={handleReject}
+                onBackToQueue={() => setMobileTab('QUEUE')}
+              />
+            ) : (
+              <div className="bg-white p-4 sm:p-6 rounded-xl border border-slate-300 shadow-xs flex flex-col gap-6 hover-elevate">
+                {/* Header Details with Mobile Back Button */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setMobileTab('QUEUE')}
+                        className="lg:hidden text-xs font-mono text-blue-700 font-bold flex items-center gap-0.5 hover:underline"
+                      >
+                        <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+                        Queue
+                      </button>
+                      <span className="lg:hidden text-slate-300">•</span>
+                      <span className="font-mono text-[11px] text-blue-700 font-bold">
+                        PROPOSAL #{activeMatch.matchId.toUpperCase()}
+                      </span>
+                      <span className="text-slate-300">•</span>
+                      <span className="font-mono text-[10px] text-slate-500">EVENT ID: {relatedEvent.eventId}</span>
+                    </div>
+                    <h2 className="text-base font-bold text-slate-900 mt-1">
+                      AI Semantic Linkage Analysis &amp; Multi-Level Verification
+                    </h2>
                   </div>
-                  <h2 className="text-base font-bold text-slate-900 mt-1">
-                    AI Semantic Linkage Analysis & Evidence Checklist
-                  </h2>
+                  <div className="flex items-center gap-2 self-start sm:self-auto font-mono text-xs">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[14px]">psychology</span>
+                      {activeMatch.confidence}% Confidence
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 self-start sm:self-auto font-mono text-xs">
-                  <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">psychology</span>
-                    {activeMatch.confidence}% Confidence
-                  </span>
-                </div>
-              </div>
 
-              {/* Raw Field Observation Card */}
+                {/* 4-Tab Workbench Navigation Bar */}
+                <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-mono overflow-x-auto">
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkbenchTab('MATCH')}
+                    className={`py-2 px-3 rounded-lg font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeWorkbenchTab === 'MATCH'
+                        ? 'bg-white text-blue-800 shadow-xs border border-slate-200'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-blue-700">verified</span>
+                    <span>1. Semantic Match &amp; Telemetry</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkbenchTab('SUBTASKS')}
+                    className={`py-2 px-3 rounded-lg font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeWorkbenchTab === 'SUBTASKS'
+                        ? 'bg-white text-blue-800 shadow-xs border border-slate-200'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-purple-700">splitscreen</span>
+                    <span>2. Execution Subtasks Rollup</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-100 text-purple-800">
+                      N-to-1
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkbenchTab('LIFECYCLE')}
+                    className={`py-2 px-3 rounded-lg font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeWorkbenchTab === 'LIFECYCLE'
+                        ? 'bg-white text-blue-800 shadow-xs border border-slate-200'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-emerald-700">history_toggle_off</span>
+                    <span>3. Activity Lifecycle</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">
+                      Actuals
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkbenchTab('BENCHMARK')}
+                    className={`py-2 px-3 rounded-lg font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeWorkbenchTab === 'BENCHMARK'
+                        ? 'bg-white text-blue-800 shadow-xs border border-slate-200'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[16px] text-amber-700">analytics</span>
+                    <span>4. Historical Memory</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">
+                      Corpus
+                    </span>
+                  </button>
+                </div>
+
+                {activeWorkbenchTab === 'SUBTASKS' && (
+                  <SubtasksRollupTab
+                    matchedActivity={matchedActivity || null}
+                    onUpdateSubtask={updateSubtaskProgress}
+                  />
+                )}
+
+                {activeWorkbenchTab === 'LIFECYCLE' && (
+                  <LifecycleTab
+                    matchedActivity={matchedActivity || null}
+                  />
+                )}
+
+                {activeWorkbenchTab === 'BENCHMARK' && (
+                  <HistoricalBenchmarkTab
+                    matchedActivity={matchedActivity || null}
+                  />
+                )}
+
+                {activeWorkbenchTab === 'MATCH' && (
+                  <>
+                    {/* Raw Field Observation Card */}
               <div className="rounded-xl bg-[#f8faff] border border-slate-200 p-4 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase font-bold text-slate-500">
@@ -524,12 +658,12 @@ export const ReviewCenter: React.FC = () => {
                       </span>
                     </div>
                     <span className="font-mono text-xs text-slate-600">
-                      WBS: {matchedActivity?.wbsCode || 'WBS-04-A-CIVIL'}
+                      WBS: {matchedActivity?.wbsCode || matchedActivity?.wbsId || 'WBS-04-A-CIVIL'}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    {matchedActivity?.description || 'Mechanical backhoe trenching to 2.2m depth along station KM 40+000 to KM 45+000.'}
+                    {matchedActivity?.description || matchedActivity?.name || 'Mechanical backhoe trenching to 2.2m depth along station KM 40+000 to KM 45+000.'}
                   </p>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-blue-200/60 font-mono text-[11px]">
@@ -539,11 +673,11 @@ export const ReviewCenter: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-slate-500">Planned Finish:</span>{' '}
-                      <span className="font-bold text-slate-800">{matchedActivity?.plannedEnd || '28-OCT-2024'}</span>
+                      <span className="font-bold text-slate-800">{matchedActivity?.plannedFinish || '28-OCT-2024'}</span>
                     </div>
                     <div>
                       <span className="text-slate-500">Baseline Target:</span>{' '}
-                      <span className="font-bold text-slate-800">{matchedActivity?.plannedQuantity || 1200}m</span>
+                      <span className="font-bold text-slate-800">{matchedActivity?.plannedQuantity || matchedActivity?.quantity || 1200}m</span>
                     </div>
                     <div>
                       <span className="text-slate-500">New Actual Pace:</span>{' '}
@@ -692,8 +826,11 @@ export const ReviewCenter: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div>
-          ) : (
+            </>
+          )}
+        </div>
+      )
+    ) : (
             <div className="p-12 text-center bg-white rounded-xl border border-slate-200 text-slate-400 font-mono text-xs">
               Select an item from the pending queue to inspect.
             </div>

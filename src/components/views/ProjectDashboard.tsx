@@ -13,6 +13,26 @@ export const ProjectDashboard: React.FC = () => {
     matches, 
     setActiveTab,
     commitScheduleActuals,
+    openIndicSpeechStudio,
+    openRoWGeofence,
+    openEMbReconciler,
+    openCvcAuditDossier,
+    openDroneAuditor,
+    openWhatsAppGateway,
+    openFloodPredictor,
+    openP6XerExport,
+    openPipeline3D,
+    openBlockchainLedger,
+    openDelayCascade,
+    openVoiceCommander,
+    openIoTPredictive,
+    openARInspection,
+    openDroneFleet,
+    openSafetyTraining,
+    openGeofenceGIS,
+    openComplianceReport,
+    openFlowEnergy,
+    setIsCopilotOpen,
     showToast 
   } = useApp();
 
@@ -79,6 +99,35 @@ export const ProjectDashboard: React.FC = () => {
             <span className="font-mono text-sm font-semibold text-emerald-800">7 / 7 Active</span>
           </div>
         </div>
+      </div>
+
+      {/* Quick Access to 5-Min Judge Demonstration Console */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-900/10 via-indigo-900/10 to-blue-900/10 border border-blue-200/80 shadow-2xs">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+            <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-xs sm:text-sm text-slate-900 truncate">
+                Smart India Hackathon SIH26122 Innovations Showcase
+              </span>
+              <span className="px-2 py-0.5 rounded text-[9px] bg-amber-400 text-slate-950 font-mono font-bold uppercase shrink-0">
+                JURY READY
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-600 truncate">
+              All 20 role-scoped modules and deep-dive technical engines have been moved to the 5-Minute Jury Demonstration Console.
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setActiveTab('DEMO_WALKTHROUGH')}
+          className="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs flex items-center gap-1.5 shrink-0 transition-all active:scale-95 cursor-pointer"
+        >
+          <span>Open 5-Min Judge Demo</span>
+          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </button>
       </div>
 
       {/* 2. Executive KPI Summary Cards (Grid of 4) */}
@@ -285,17 +334,25 @@ export const ProjectDashboard: React.FC = () => {
               />
 
               {/* Milestone Markers */}
-              <circle cx="270" cy="196" fill="#10b981" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="HDD River Crossing Cleared" />
-              <circle cx="430" cy="148" fill="#1d4ed8" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="Stringing Complete (72km)" />
+              <circle cx="270" cy="196" fill="#10b981" r="5.5" stroke="#ffffff" strokeWidth="2.5">
+                <title>HDD River Crossing Cleared</title>
+              </circle>
+              <circle cx="430" cy="148" fill="#1d4ed8" r="5.5" stroke="#ffffff" strokeWidth="2.5">
+                <title>Stringing Complete (72km)</title>
+              </circle>
               
               {/* Milestone Marker 3: Orbital Tie-in MP 62 Bottleneck Indicator (In-place radial beacon, zero coordinate translation) */}
               <circle cx="480" cy="135" fill="#ef4444" opacity="0.4" r="7">
                 <animate attributeName="r" values="7;18;7" dur="2s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" />
               </circle>
-              <circle cx="480" cy="135" fill="#ef4444" r="7" stroke="#ffffff" strokeWidth="2.5" className="cursor-pointer" title="MP 62 Tie-in Lag Bottleneck (-4.2d)" />
+              <circle cx="480" cy="135" fill="#ef4444" r="7" stroke="#ffffff" strokeWidth="2.5" className="cursor-pointer">
+                <title>MP 62 Tie-in Lag Bottleneck (-4.2d)</title>
+              </circle>
 
-              <circle cx="710" cy="65" fill="#d97706" r="5.5" stroke="#ffffff" strokeWidth="2.5" title="Section 1 Hydrotest" />
+              <circle cx="710" cy="65" fill="#d97706" r="5.5" stroke="#ffffff" strokeWidth="2.5">
+                <title>Section 1 Hydrotest</title>
+              </circle>
             </svg>
 
             {/* Tooltip Pill - Clean 1px border */}

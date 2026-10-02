@@ -79,11 +79,15 @@ export interface ScheduleActivity {
   quantity?: number;
   unit?: string;
   installedQuantity?: number;
+  plannedQuantity?: number;
   
   // Status & Critical Path
   status: ActivityStatus;
   isCriticalPath: boolean;
   isMilestone: boolean;
+  isCritical?: boolean;
+  wbsCode?: string;
+  description?: string;
   
   // Intelligence metrics
   matchConfidence?: number;
@@ -95,6 +99,101 @@ export interface ScheduleActivity {
   historicalBenchmarkDays?: number;
   historicalVarianceDays?: number;
   commonDelayCause?: string;
+
+  // Level 1: Start-Progress-Finish Lifecycle Reconstruction
+  lifecycleHistory?: ActivityLifecycleEvent[];
+
+  // Level 1: Granularity Mismatch Resolver (Execution Subtasks)
+  subtasks?: ExecutionSubtask[];
+
+  // Level 1: Unplanned Work Tracking
+  isUnplanned?: boolean;
+  unplannedType?: 'SCOPE_VARIATION' | 'CONTRACTOR_REWORK' | 'NON_SCHEDULE_SUPPORT';
+  changeRequestId?: string;
+}
+
+export interface ActivityLifecycleEvent {
+  id: string;
+  activityId: string;
+  activityCode: string;
+  date: string;
+  eventType: 'START' | 'PROGRESS' | 'FINISH' | 'HOLD' | 'INSPECTION' | 'ACTUAL_START' | 'PROGRESS_UPDATE';
+  progressPct: number;
+  rawReport: string;
+  reportedBy: string;
+  sourceRef: string;
+  durationToDateDays?: number;
+  velocityMetric?: string;
+  timestamp?: string;
+  description?: string;
+  progressPercent?: number;
+}
+
+export interface ExecutionSubtask {
+  id: string;
+  activityId: string;
+  code: string;
+  name: string;
+  weightPct: number;
+  progressPct: number;
+  status: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
+  lastUpdatedDate?: string;
+  lastEventRef?: string;
+  weightPercent?: number;
+  progressPercent?: number;
+  discipline?: string;
+  linkedFieldEventsCount?: number;
+}
+
+export interface UnplannedWorkProposal {
+  id: string;
+  eventId: string;
+  detectedReason: string;
+  suggestedTitle: string;
+  suggestedDiscipline: DisciplineType;
+  suggestedLocation: string;
+  category: 'SCOPE_VARIATION' | 'CONTRACTOR_REWORK' | 'NON_SCHEDULE_SUPPORT';
+  status: 'PENDING' | 'APPROVED_AS_NEW_ACTIVITY' | 'MARKED_REWORK' | 'MARKED_SUPPORT' | 'LINKED_MANUALLY' | 'REJECTED';
+  createdActivityId?: string;
+  estimatedDurationDays: number;
+  costImpactINR: number;
+  plannerNotes?: string;
+  createdAt: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  suggestedActivityName?: string;
+  suggestedDurationDays?: number;
+}
+
+export interface HistoricalProjectRecord {
+  id: string;
+  projectCode: string;
+  projectName: string;
+  activityName: string;
+  discipline: DisciplineType;
+  plannedDurationDays: number;
+  actualDurationDays: number;
+  varianceDays: number;
+  actualStart: string;
+  actualFinish: string;
+  contractor: string;
+  delayCauses: string[];
+  location: string;
+  monsoonImpacted: boolean;
+  lessonsLearned: string;
+  terrainType?: string;
+  completionYear?: number;
+  costVariancePercent?: number;
+  delayFactors?: string[];
+}
+
+export interface ScheduleImportPreview {
+  fileName: string;
+  rowCount: number;
+  validCount: number;
+  errorCount: number;
+  activities: ScheduleActivity[];
+  errors: { row: number; column: string; message: string }[];
 }
 
 export interface NormalizedExecutionEvent {
@@ -128,6 +227,10 @@ export interface NormalizedExecutionEvent {
   
   photoUrl?: string;
   extractionConfidence: number;
+  geofenceStatus?: 'VERIFIED' | 'WARNING_BUFFER' | 'GEOFENCE_ANOMALY';
+  geofenceDistanceMeters?: number;
+  indicTranscript?: string;
+  detectedDialect?: string;
   createdAt: string;
 }
 
@@ -160,7 +263,11 @@ export interface ActivityMatchRecord {
   selectedActivityId: string;
   candidates: CandidateMatch[];
   confidence: number;
-  status: 'PENDING_REVIEW' | 'APPROVED' | 'REJECTED' | 'REASSIGNED' | 'MARKED_NEW';
+  status: 'PENDING_REVIEW' | 'APPROVED' | 'REJECTED' | 'REASSIGNED' | 'MARKED_NEW' | 'UNPLANNED_WORK';
+  isUnplanned?: boolean;
+  unplannedCategory?: 'SCOPE_VARIATION' | 'CONTRACTOR_REWORK' | 'NON_SCHEDULE_SUPPORT';
+  unplannedProposal?: Partial<UnplannedWorkProposal>;
+  matchedSubtaskId?: string;
   plannerNotes?: string;
   reviewedBy?: string;
   reviewedAt?: string;
@@ -313,4 +420,162 @@ export interface ProjectSummary {
   criticalPathActivitiesCount: number;
   unresolvedConflictsCount: number;
   pendingReviewsCount: number;
+}
+
+// ============================================================================
+// UNIQUE SIH HACKATHON INNOVATION TYPES (OIL INDIA LIMITED SPECIFIC)
+// ============================================================================
+
+export interface IndicSpeechDispatch {
+  id: string;
+  label: string;
+  dialect: 'Hinglish' | 'Assamese' | 'Hindi/Bhojpuri' | 'English';
+  rawVoiceTranscript: string;
+  translatedEnglishText: string;
+  detectedTerms: {
+    vernacular: string;
+    canonicalMeaning: string;
+    discipline: DisciplineType;
+  }[];
+  matchedP6ActivityCode: string;
+  suggestedPercent: number;
+}
+
+export interface RoWGeofenceVerification {
+  latitude: number;
+  longitude: number;
+  chainageKm: number;
+  distanceFromRoWCenterlineMeters: number;
+  status: 'VERIFIED' | 'WARNING_BUFFER' | 'GEOFENCE_ANOMALY';
+  integrityScore: number;
+  details: string;
+}
+
+export interface EMeasurementBookItem {
+  id: string;
+  boqItemCode: string;
+  description: string;
+  discipline: DisciplineType;
+  contractor: string;
+  totalOrderValueINR: number;
+  contractorClaimedPercent: number;
+  contractorClaimedAmountINR: number;
+  aiVerifiedSchedulePercent: number;
+  aiVerifiedAmountINR: number;
+  overbillingRiskINR: number;
+  auditStatus: 'APPROVED' | 'AUDIT_HOLD' | 'DISPUTED';
+  evidenceCount: number;
+  latestInspectionDate: string;
+}
+
+export interface StatutoryArbitrationDossier {
+  dossierId: string;
+  projectCode: string;
+  projectName: string;
+  organization: string;
+  contractRef: string;
+  generatedDate: string;
+  baselineFinishDate: string;
+  currentForecastDate: string;
+  totalScheduleVarianceDays: number;
+  delayAttribution: {
+    category: 'FORCE_MAJEURE' | 'CLIENT_DELAY' | 'CONTRACTOR_DEFAULT';
+    title: string;
+    days: number;
+    financialExposureINR: number;
+    primaryCause: string;
+    excusable: boolean;
+  }[];
+  statutoryCompliance: {
+    clause: string;
+    standard: string;
+    status: 'COMPLIANT' | 'FLAGGED';
+    proofHash: string;
+  }[];
+  contemporaneousLedgerCount: number;
+  liquidatedDamagesINR: number;
+}
+
+// ============================================================================
+// FRONTIER INNOVATIONS (SIH26122 / OIL INDIA SPECIAL):
+// 1. Drone & Satellite CV Progress Auditor
+// 2. WhatsApp & Telegram Enterprise Field Webhook Gateway
+// 3. Brahmaputra Basin Hydrology & IMD Flood Predictor
+// 4. Native Primavera P6 .XER Exporter & Oracle EPPM Sync
+// ============================================================================
+
+export interface DroneAuditMission {
+  id: string;
+  missionName: string;
+  chainageKm: number;
+  surveyDate: string;
+  targetActivityCode: string;
+  targetActivityName: string;
+  contractorClaimedLinearMeters: number;
+  cvDetectedLinearMeters: number;
+  discrepancyMeters: number;
+  confidenceScore: number;
+  beforeImageUrl: string;
+  afterImageUrl: string;
+  segmentationMasks: {
+    type: 'TRENCH' | 'PIPE_STRINGING' | 'BACKFILL';
+    label: string;
+    color: string;
+    linearMeters: number;
+    areaSqMeters: number;
+  }[];
+  auditStatus: 'VERIFIED_MATCH' | 'DISCREPANCY_FLAGGED' | 'SUPERVISOR_HOLD';
+  notes: string;
+}
+
+export interface WhatsAppMessage {
+  id: string;
+  senderName: string;
+  senderPhone: string;
+  senderRole: string;
+  timestamp: string;
+  text: string;
+  voiceNoteSeconds?: number;
+  mediaUrl?: string;
+  mediaType?: 'photo' | 'audio' | 'document';
+  exifGps?: { lat: number; lon: number; accuracyM: number };
+  status: 'received' | 'parsing' | 'reconciled' | 'flagged';
+  parsedDiscipline?: string;
+  matchedActivityCode?: string;
+  reportedProgress?: number;
+  rowVerificationStatus?: 'ON_ROW' | 'OFF_ROW' | 'PENDING';
+  aiNotes?: string;
+}
+
+export interface HydrologicalStation {
+  stationId: string;
+  name: string;
+  river: string;
+  currentWaterLevelM: number;
+  dangerLevelM: number;
+  warningLevelM: number;
+  rainfall24hMm: number;
+  trend: 'RISING' | 'FALLING' | 'STEADY';
+  chainageImpactKm: string;
+  floodRiskStatus: 'LOW' | 'MODERATE' | 'SEVERE' | 'FLASH_FLOOD_CREST';
+}
+
+export interface FloodMitigationPlan {
+  recommendationId: string;
+  severity: 'CRITICAL' | 'WARNING' | 'ADVISORY';
+  affectedChainage: string;
+  affectedActivities: string[];
+  actionPlan: string;
+  potentialEquipmentSavedINR: number;
+  scheduleRecoveryDays: number;
+}
+
+export interface OracleEppmSyncStatus {
+  endpoint: string;
+  connectionStatus: 'CONNECTED' | 'SYNCING' | 'STANDBY';
+  lastSyncTimestamp: string;
+  tokenExpiry: string;
+  mirrorLatencyMs: number;
+  activitiesSyncedCount: number;
+  lastCommittedBatchId: string;
 }

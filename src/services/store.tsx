@@ -16,7 +16,14 @@ import {
   TerminologyMapping, 
   AuditRecord, 
   ProjectRiskScore,
-  WhatIfScenario
+  WhatIfScenario,
+  ExecutionSubtask,
+  UnplannedWorkProposal,
+  ActivityLifecycleEvent,
+  IndicSpeechDispatch,
+  RoWGeofenceVerification,
+  EMeasurementBookItem,
+  StatutoryArbitrationDossier
 } from '../types';
 import { 
   DEMO_PROJECTS, 
@@ -37,6 +44,19 @@ import {
   calculateProjectRiskScore,
   simulateWhatIf
 } from './aiEngine';
+import {
+  detectUnplannedWork,
+  buildScopeChangeActivity,
+  processActivityLifecycleUpdate,
+  getDefaultSubtasksForActivity,
+  calculateSubtaskRolledUpProgress,
+  parseScheduleCSV,
+  IngestedRowPreview,
+  SAMPLE_EMB_ITEMS,
+  validateRoWGeofence,
+  generateStatutoryArbitrationDossier,
+  SAMPLE_INDIC_DISPATCHES
+} from './level1Engine';
 
 export type NavigationTab = 
   | 'DASHBOARD'
@@ -48,7 +68,17 @@ export type NavigationTab =
   | 'ACTIVITY_DNA'
   | 'WHAT_IF'
   | 'AUDIT_TRAIL'
-  | 'DEMO_WALKTHROUGH';
+  | 'DEMO_WALKTHROUGH'
+  | 'PIPELINE_3D'
+  | 'BLOCKCHAIN_LEDGER'
+  | 'DELAY_CASCADE'
+  | 'IOT_TELEMETRY'
+  | 'AR_INSPECTION'
+  | 'DRONE_FLEET'
+  | 'SAFETY_TRAINING'
+  | 'GEOFENCE_GIS'
+  | 'COMPLIANCE_REPORT'
+  | 'FLOW_ENERGY';
 
 export interface RoleDefinition {
   id: UserRole;
@@ -272,18 +302,98 @@ interface AppContextType {
   syncOfflineQueue: () => Promise<void>;
   resetToDefaultDemo: () => void;
   
+  // Level 1: Advanced Execution Bridge Actions
+  batchIngestFieldRows: (rows: IngestedRowPreview[]) => Promise<number>;
+  approveUnplannedWork: (matchId: string, actionType: 'SCOPE_CHANGE' | 'REWORK' | 'SUPPORT' | 'MANUAL_LINK', options?: { activityName?: string; duration?: number; targetActivityId?: string; notes?: string }) => void;
+  updateSubtaskProgress: (activityId: string, subtaskId: string, progressPct: number) => void;
+  importProjectSchedule: (csvContentOrActivities: string | ScheduleActivity[], mode?: 'REPLACE' | 'APPEND') => { importedCount: number; errors: string[] };
+  commitScheduleActuals: (activityId?: string) => void;
+  selectedSubtaskId: string | null;
+  setSelectedSubtaskId: (id: string | null) => void;
+  unplannedQueueCount: number;
+
   // What-If
   currentWhatIf: WhatIfScenario;
   updateWhatIfParams: (params: Partial<WhatIfScenario['parameters']>) => void;
   
+  // Unique SIH Innovations
+  isDossierOpen: boolean;
+  setIsDossierOpen: (open: boolean) => void;
+  embItems: EMeasurementBookItem[];
+  issueEmbCertificate: (itemId: string) => void;
+  activeGeofence: RoWGeofenceVerification;
+  simulateGeofenceAnomaly: () => void;
+  resetGeofenceToCenterline: () => void;
+  submitIndicFieldInput: (dispatch: IndicSpeechDispatch) => Promise<string>;
+  activeDNAMode: 'HISTORICAL_DNA' | 'EMB_BILLING';
+  setActiveDNAMode: (mode: 'HISTORICAL_DNA' | 'EMB_BILLING') => void;
+  activeIngestionMode: 'SINGLE' | 'MULTI_FORMAT' | 'INDIC_BHASHA';
+  setActiveIngestionMode: (mode: 'SINGLE' | 'MULTI_FORMAT' | 'INDIC_BHASHA') => void;
+  openIndicSpeechStudio: () => void;
+  openRoWGeofence: () => void;
+  openEMbReconciler: () => void;
+  openCvcAuditDossier: () => void;
+  isDroneAuditorOpen: boolean;
+  setIsDroneAuditorOpen: (open: boolean) => void;
+  isWhatsAppGatewayOpen: boolean;
+  setIsWhatsAppGatewayOpen: (open: boolean) => void;
+  isFloodPredictorOpen: boolean;
+  setIsFloodPredictorOpen: (open: boolean) => void;
+  isXerExportModalOpen: boolean;
+  setIsXerExportModalOpen: (open: boolean) => void;
+  openDroneAuditor: () => void;
+  openWhatsAppGateway: () => void;
+  openFloodPredictor: () => void;
+  openP6XerExport: () => void;
+  isVoiceCommanderOpen: boolean;
+  setIsVoiceCommanderOpen: (open: boolean) => void;
+  openVoiceCommander: () => void;
+  openPipeline3D: () => void;
+  openBlockchainLedger: () => void;
+  openDelayCascade: () => void;
+  openIoTPredictive: () => void;
+  openARInspection: () => void;
+  openDroneFleet: () => void;
+  openSafetyTraining: () => void;
+  openGeofenceGIS: () => void;
+  openComplianceReport: () => void;
+  openFlowEnergy: () => void;
+
   // Notification Toast
   toastMessage: string | null;
-  showToast: (msg: string) => void;
+  showToast: (msg: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
+
+  // Theme Management
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('sitesync_theme');
+      if (saved === 'dark' || (!saved && document.documentElement.classList.contains('dark'))) {
+        document.documentElement.classList.add('dark');
+        return 'dark';
+      }
+    }
+    return 'light';
+  });
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('sitesync_theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('sitesync_theme', 'light');
+    }
+  };
+
   const [currentRole, setCurrentRoleState] = useState<UserRole>(() => {
     const saved = localStorage.getItem('sitesync_current_role');
     return (saved as UserRole) || 'planner';
@@ -370,9 +480,161 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [selectedActivityCode, setSelectedActivityCode] = useState<string | null>(null);
+  const [selectedSubtaskId, setSelectedSubtaskId] = useState<string | null>(null);
   const [isCopilotOpen, setIsCopilotOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const unplannedQueueCount = matches.filter(m => m.status === 'UNPLANNED_WORK' || m.isUnplanned).length;
+
+  // Unique SIH Hackathon States
+  const [isDossierOpen, setIsDossierOpen] = useState<boolean>(false);
+  const [embItems, setEmbItems] = useState<EMeasurementBookItem[]>(() => {
+    const saved = localStorage.getItem('sitesync_emb_items');
+    return saved ? JSON.parse(saved) : SAMPLE_EMB_ITEMS;
+  });
+  const [activeGeofence, setActiveGeofence] = useState<RoWGeofenceVerification>(() => 
+    validateRoWGeofence(27.2891, 95.3214, 42.65)
+  );
+
+  useEffect(() => {
+    localStorage.setItem('sitesync_emb_items', JSON.stringify(embItems));
+  }, [embItems]);
+
+  const issueEmbCertificate = (itemId: string) => {
+    setEmbItems(prev => prev.map(item => {
+      if (item.id === itemId) {
+        return {
+          ...item,
+          auditStatus: 'APPROVED' as const,
+          overbillingRiskINR: 0
+        };
+      }
+      return item;
+    }));
+    showToast('Provisional e-MB Certificate Approved & Digitally Cleared.');
+  };
+
+  const simulateGeofenceAnomaly = () => {
+    const anomaly = validateRoWGeofence(27.3350, 95.2750, 42.65);
+    setActiveGeofence(anomaly);
+    showToast('GPS Telemetry shifted: 4.6 km outside RoW (Tampered / Ghost Report simulation active).', 'warning');
+  };
+
+  const resetGeofenceToCenterline = () => {
+    const normal = validateRoWGeofence(27.2891, 95.3214, 42.65);
+    setActiveGeofence(normal);
+    showToast('GPS Telemetry reset: Verified within Pipeline RoW (42m from Centerline).', 'success');
+  };
+
+  const [activeDNAMode, setActiveDNAMode] = useState<'HISTORICAL_DNA' | 'EMB_BILLING'>('HISTORICAL_DNA');
+  const [activeIngestionMode, setActiveIngestionMode] = useState<'SINGLE' | 'MULTI_FORMAT' | 'INDIC_BHASHA'>('INDIC_BHASHA');
+
+  const openIndicSpeechStudio = () => {
+    setActiveTab('FIELD_INPUT');
+    setActiveIngestionMode('INDIC_BHASHA');
+    showToast('Opened Indic Bhasha & Hinglish Field Speech Studio', 'info');
+  };
+
+  const openRoWGeofence = () => {
+    setActiveTab('FIELD_INPUT');
+    showToast('Viewing Anti-Ghost GPS RoW Geofence Validator HUD', 'info');
+  };
+
+  const openEMbReconciler = () => {
+    setActiveTab('ACTIVITY_DNA');
+    setActiveDNAMode('EMB_BILLING');
+    showToast('Opened e-Measurement Book (e-MB) & Contractor RA Bill Reconciler', 'info');
+  };
+
+  const openCvcAuditDossier = () => {
+    setIsDossierOpen(true);
+    showToast('Opened CVC / CAG Statutory Delay Defense Dossier', 'info');
+  };
+
+  // Frontier SIH Innovation States
+  const [isDroneAuditorOpen, setIsDroneAuditorOpen] = useState<boolean>(false);
+  const [isWhatsAppGatewayOpen, setIsWhatsAppGatewayOpen] = useState<boolean>(false);
+  const [isFloodPredictorOpen, setIsFloodPredictorOpen] = useState<boolean>(false);
+  const [isXerExportModalOpen, setIsXerExportModalOpen] = useState<boolean>(false);
+
+  const openDroneAuditor = () => {
+    setIsDroneAuditorOpen(true);
+    showToast('Opened Drone Orthomosaic & Satellite CV Progress Auditor', 'info');
+  };
+
+  const openWhatsAppGateway = () => {
+    setIsWhatsAppGatewayOpen(true);
+    showToast('Opened WhatsApp & Telegram Field Webhook Gateway Simulator', 'info');
+  };
+
+  const openFloodPredictor = () => {
+    setIsFloodPredictorOpen(true);
+    showToast('Opened Brahmaputra Basin Hydrology & IMD Flood Early Warning Engine', 'info');
+  };
+
+  const openP6XerExport = () => {
+    setIsXerExportModalOpen(true);
+    showToast('Opened Native Primavera P6 .XER Exporter & Oracle EPPM Bridge', 'info');
+  };
+
+  // Next-Level Innovation States
+  const [isVoiceCommanderOpen, setIsVoiceCommanderOpen] = useState<boolean>(false);
+
+  const openVoiceCommander = () => {
+    setIsVoiceCommanderOpen(true);
+    showToast('Voice Field Commander active. Speak or select a command.', 'info');
+  };
+
+  const openPipeline3D = () => {
+    setActiveTab('PIPELINE_3D');
+    showToast('Launched WebGL 3D Digital Twin Pipeline Corridor', 'info');
+  };
+
+  const openBlockchainLedger = () => {
+    setActiveTab('BLOCKCHAIN_LEDGER');
+    showToast('Opened Immutable Blockchain Audit Ledger', 'info');
+  };
+
+  const openDelayCascade = () => {
+    setActiveTab('DELAY_CASCADE');
+    showToast('Opened AI Delay Cascade Propagation Simulator', 'info');
+  };
+
+  const openIoTPredictive = () => {
+    setActiveTab('IOT_TELEMETRY');
+    showToast('Opened IoT Telemetry & Predictive Maintenance Dashboard', 'info');
+  };
+
+  const openARInspection = () => {
+    setActiveTab('AR_INSPECTION');
+    showToast('Launched WebXR AR Pipeline Spatial Inspection', 'info');
+  };
+
+  const openDroneFleet = () => {
+    setActiveTab('DRONE_FLEET');
+    showToast('Opened Drone Fleet Progress Imaging & Orthophoto Timeline', 'info');
+  };
+
+  const openSafetyTraining = () => {
+    setActiveTab('SAFETY_TRAINING');
+    showToast('Opened Gamified Safety & HSE Compliance Training Hub', 'info');
+  };
+
+  const openGeofenceGIS = () => {
+    setActiveTab('GEOFENCE_GIS');
+    showToast('Opened GIS Geofencing & Corridor Threat Alert System', 'info');
+  };
+
+  const openComplianceReport = () => {
+    setActiveTab('COMPLIANCE_REPORT');
+    showToast('Opened AI Statutory Compliance Report Generator', 'info');
+  };
+
+  const openFlowEnergy = () => {
+    setActiveTab('FLOW_ENERGY');
+    showToast('Opened Energy-Optimization & Flow Digital Twin Simulator', 'info');
+  };
 
   const navigateToEventReview = (eventId: string) => {
     setSelectedEventId(eventId);
@@ -471,7 +733,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('sitesync_audits', JSON.stringify(auditLogs));
   }, [auditLogs]);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, _type?: 'info' | 'success' | 'warning' | 'error') => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
   };
@@ -558,23 +820,34 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       currentRole === 'supervisor' ? 'Site Supervisor (Field Mobile App)' : 'Planning Desk'
     );
     if (photoUrl) newEvent.photoUrl = photoUrl;
+    newEvent.geofenceStatus = activeGeofence.status;
+    newEvent.geofenceDistanceMeters = activeGeofence.distanceFromRoWCenterlineMeters;
+    if (activeGeofence.status === 'GEOFENCE_ANOMALY') {
+      showToast('⚠️ Vigilance Notice: Event flagged 4.6km outside Right-of-Way. Integrity warning attached.', 'warning');
+    }
 
     // Semantic L5/L6 Matching
     const candidates = matchExecutionEvent(newEvent, activities, dependencies, terminologyMappings);
     const topCandidate = candidates[0];
+
+    // Level 1 - Feature 2: Unplanned Work Detector
+    const unplannedCheck = detectUnplannedWork(newEvent, topCandidate ? topCandidate.finalConfidence : 0);
 
     const newMatch: ActivityMatchRecord = {
       matchId: `match-${Date.now().toString(36)}`,
       eventId: newEvent.eventId,
       selectedActivityId: topCandidate ? topCandidate.activityId : '',
       confidence: topCandidate ? topCandidate.finalConfidence : 0,
-      status: topCandidate && topCandidate.finalConfidence >= 90 ? 'PENDING_REVIEW' : 'PENDING_REVIEW',
+      status: unplannedCheck.isUnplanned ? 'UNPLANNED_WORK' : 'PENDING_REVIEW',
+      isUnplanned: unplannedCheck.isUnplanned,
+      unplannedCategory: unplannedCheck.isUnplanned ? unplannedCheck.defaultCategory : undefined,
       candidates,
-      appliedToSchedule: false
+      appliedToSchedule: false,
+      plannerNotes: unplannedCheck.isUnplanned ? unplannedCheck.reason : undefined
     };
 
     // Conflict Check
-    if (topCandidate) {
+    if (topCandidate && !unplannedCheck.isUnplanned) {
       const targetAct = activities.find(a => a.id === topCandidate.activityId);
       if (targetAct) {
         const conflict = detectProgressConflict(targetAct, newEvent, fieldEvents);
@@ -622,19 +895,182 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       timestamp: new Date().toISOString(),
       entityType: 'EVENT',
       entityId: newEvent.eventId,
-      action: 'FIELD_EVENT_INGESTED',
+      action: unplannedCheck.isUnplanned ? 'UNPLANNED_EVENT_FLAGGED' : 'FIELD_EVENT_INGESTED',
       performedBy: newEvent.reportedBy,
       role: currentRole,
-      details: `Ingested ${sourceType} field event: "${rawText.slice(0, 60)}..."`,
+      details: unplannedCheck.isUnplanned 
+        ? `Flagged possible unplanned work: "${rawText.slice(0, 60)}..." (${unplannedCheck.reason})`
+        : `Ingested ${sourceType} field event: "${rawText.slice(0, 60)}..."`,
       modelVersion: 'Hybrid-Matcher-v2.4'
     };
     setAuditLogs(prev => [audit, ...prev]);
 
-    showToast(`Execution event extracted! Matched to ${topCandidate?.activityCode || 'L6 Activity'} (${topCandidate?.finalConfidence}% confidence)`);
+    if (unplannedCheck.isUnplanned) {
+      showToast(`[UNPLANNED WORK DETECTED] Routed to Planner Scope Change Desk.`);
+    } else {
+      showToast(`Execution event extracted! Matched to ${topCandidate?.activityCode || 'L6 Activity'} (${topCandidate?.finalConfidence}% confidence)`);
+    }
     return newEvent.eventId;
   };
 
-  // Approve Match in Human-in-the-Loop Review Center
+  const submitIndicFieldInput = async (dispatch: IndicSpeechDispatch): Promise<string> => {
+    const eventId = await submitFieldInput(
+      `${dispatch.translatedEnglishText} [Indic Ingest (${dispatch.dialect}): "${dispatch.rawVoiceTranscript}"]`,
+      'VOICE'
+    );
+    showToast(`Indic Speech Translated (${dispatch.dialect}): Mapped to ${dispatch.matchedP6ActivityCode} with verified lexicon.`);
+    return eventId;
+  };
+
+  // Level 1 - Feature 1: Multi-Format Batch Ingestion
+  const batchIngestFieldRows = async (rows: IngestedRowPreview[]): Promise<number> => {
+    let count = 0;
+    for (const r of rows) {
+      if (!r.isValid) continue;
+      const formattedText = `${r.activityName} at ${r.location}. Status: ${r.status}, progress: ${r.progressPct}%. Contractor: ${r.contractor || 'Site Team'}.`;
+      await submitFieldInput(formattedText, 'DPR');
+      count++;
+    }
+    showToast(`Successfully processed ${count} multi-format field updates into AI pipeline!`);
+    return count;
+  };
+
+  // Level 1 - Feature 2: Unplanned Work Adjudication & Scope Change Generator
+  const approveUnplannedWork = (
+    matchId: string, 
+    actionType: 'SCOPE_CHANGE' | 'REWORK' | 'SUPPORT' | 'MANUAL_LINK', 
+    options?: { activityName?: string; duration?: number; targetActivityId?: string; notes?: string }
+  ) => {
+    const match = matches.find(m => m.matchId === matchId);
+    if (!match) return;
+    const event = fieldEvents.find(e => e.eventId === match.eventId);
+    if (!event) return;
+
+    if (actionType === 'SCOPE_CHANGE') {
+      const newActivity = buildScopeChangeActivity(event, {
+        suggestedTitle: options?.activityName,
+        estimatedDurationDays: options?.duration,
+        category: 'SCOPE_VARIATION'
+      }, activities);
+
+      setActivities(prev => [newActivity, ...prev]);
+      setMatches(prev => prev.map(m => m.matchId === matchId ? {
+        ...m,
+        status: 'APPROVED',
+        selectedActivityId: newActivity.id,
+        plannerNotes: options?.notes || `Approved as new P6 Change Request activity: ${newActivity.activityCode} (${newActivity.name})`,
+        appliedToSchedule: true,
+        reviewedBy: 'Lead Project Planner',
+        reviewedAt: new Date().toISOString()
+      } : m));
+
+      const audit: AuditRecord = {
+        id: `aud-${Date.now().toString(36)}`,
+        timestamp: new Date().toISOString(),
+        entityType: 'SCHEDULE',
+        entityId: newActivity.id,
+        action: 'SCOPE_CHANGE_APPROVED',
+        performedBy: 'Lead Project Planner',
+        role: currentRole,
+        details: `Approved P6 Change Request ${newActivity.activityCode} for unplanned work "${event.activityDescription}".`,
+        newValue: newActivity.activityCode
+      };
+      setAuditLogs(prev => [audit, ...prev]);
+      showToast(`P6 Scope Change Approved! Added ${newActivity.activityCode} to schedule tree.`);
+    } else if (actionType === 'REWORK') {
+      setMatches(prev => prev.map(m => m.matchId === matchId ? {
+        ...m,
+        status: 'APPROVED',
+        plannerNotes: options?.notes || 'Classified as contractor non-conformity rework. Backcharge note generated without schedule baseline change.',
+        reviewedBy: 'Lead Project Planner',
+        reviewedAt: new Date().toISOString()
+      } : m));
+      showToast('Marked as contractor rework. No schedule baseline extension granted.');
+    } else if (actionType === 'SUPPORT') {
+      setMatches(prev => prev.map(m => m.matchId === matchId ? {
+        ...m,
+        status: 'APPROVED',
+        plannerNotes: options?.notes || 'Classified as temporary non-schedule supporting work. Recorded in site logs.',
+        reviewedBy: 'Lead Project Planner',
+        reviewedAt: new Date().toISOString()
+      } : m));
+      showToast('Marked as temporary non-schedule supporting work.');
+    } else if (actionType === 'MANUAL_LINK' && options?.targetActivityId) {
+      approveMatch(matchId, options.targetActivityId, options.notes || 'Manually linked by Lead Planner.');
+    }
+  };
+
+  // Level 1 - Feature 4: Granularity Mismatch Subtask Progress Rollup
+  const updateSubtaskProgress = (activityId: string, subtaskId: string, progressPct: number) => {
+    setActivities(prev => prev.map(act => {
+      if (act.id === activityId) {
+        const currentSubtasks = act.subtasks && act.subtasks.length > 0 
+          ? act.subtasks 
+          : getDefaultSubtasksForActivity(act);
+        
+        const updatedSubtasks = currentSubtasks.map(s => {
+          if (s.id === subtaskId) {
+            return {
+              ...s,
+              progressPct,
+              progressPercent: progressPct,
+              status: progressPct >= 100 ? 'COMPLETED' as const : progressPct > 0 ? 'IN_PROGRESS' as const : 'NOT_STARTED' as const,
+              lastUpdatedDate: new Date().toISOString().split('T')[0]
+            };
+          }
+          return s;
+        });
+        const rolledUp = calculateSubtaskRolledUpProgress(updatedSubtasks);
+        return {
+          ...act,
+          subtasks: updatedSubtasks,
+          actualPercent: rolledUp,
+          status: rolledUp >= 100 ? 'COMPLETED' : rolledUp > 0 ? 'IN_PROGRESS' : act.status
+        };
+      }
+      return act;
+    }));
+    showToast(`Execution subtask updated. Rolled-up parent progress updated.`);
+  };
+
+  // Level 1 - Feature 5: Real Schedule Import (Primavera P6 CSV or Parsed Array)
+  const importProjectSchedule = (csvContentOrActivities: string | ScheduleActivity[], mode: 'REPLACE' | 'APPEND' = 'APPEND') => {
+    let newActs: ScheduleActivity[] = [];
+    let errors: string[] = [];
+
+    if (Array.isArray(csvContentOrActivities)) {
+      newActs = csvContentOrActivities;
+    } else {
+      const parsed = parseScheduleCSV(csvContentOrActivities);
+      newActs = parsed.activities;
+      errors = parsed.errors;
+    }
+
+    if (errors.length > 0 && newActs.length === 0) {
+      showToast(`Schedule Import Error: ${errors[0]}`, 'error');
+      return { importedCount: 0, errors };
+    }
+
+    if (mode === 'REPLACE') {
+      setActivities(newActs);
+      showToast(`Loaded fresh project schedule (${newActs.length} activities) as active baseline!`, 'success');
+    } else {
+      setActivities(prev => {
+        const existingCodes = new Set(prev.map(a => a.activityCode));
+        const filteredNew = newActs.filter(a => !existingCodes.has(a.activityCode));
+        return [...prev, ...filteredNew];
+      });
+      showToast(`Imported ${newActs.length} schedule activities into WBS tree.`, 'success');
+    }
+
+    return { importedCount: newActs.length, errors: [] };
+  };
+
+  const commitScheduleActuals = (_activityId?: string) => {
+    showToast('Committed schedule actuals to Primavera P6 EPPM baseline.', 'success');
+  };
+
+  // Approve Match in Human-in-the-Loop Review Center (with Lifecycle Reconstruction & Subtask Rollup)
   const approveMatch = (matchId: string, candidateActivityId?: string, notes?: string) => {
     const targetMatch = matches.find(m => m.matchId === matchId);
     if (!targetMatch) return;
@@ -659,21 +1095,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return m;
     }));
 
-    // Update Schedule Actuals
+    // Level 1 - Feature 3: Start-Progress-Finish Lifecycle Reconstruction
     if (event && chosenCandidate) {
       setActivities(prev => prev.map(a => {
         if (a.id === chosenActId) {
-          const newActualPercent = Math.max(a.actualPercent, event.percentComplete ?? 100);
-          const isFinished = newActualPercent >= 100;
+          const { updatedActivity } = processActivityLifecycleUpdate(a, event);
+          
+          // Also ensure subtasks are populated if not present
+          if (!updatedActivity.subtasks || updatedActivity.subtasks.length === 0) {
+            updatedActivity.subtasks = getDefaultSubtasksForActivity(updatedActivity);
+          }
+
           return {
-            ...a,
-            actualPercent: newActualPercent,
-            actualStart: a.actualStart || event.reportedDate,
-            actualFinish: isFinished ? (a.actualFinish || event.reportedDate) : undefined,
-            status: isFinished ? 'COMPLETED' : 'IN_PROGRESS',
-            lastUpdateDate: event.reportedDate,
-            lastSourceId: event.sourceId,
-            lastReportSentence: event.rawText,
+            ...updatedActivity,
             matchConfidence: chosenCandidate.finalConfidence
           };
         }
@@ -689,12 +1123,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         action: 'PLANNER_APPROVED_MATCH',
         performedBy: currentRole === 'planner' ? 'Lead Project Planner' : 'Project Manager',
         role: currentRole,
-        details: `Approved schedule link to ${chosenCandidate.activityCode}. Schedule actuals updated to ${event.percentComplete ?? 100}%.`,
+        details: `Approved schedule link to ${chosenCandidate.activityCode}. Reconstructed lifecycle milestone to ${event.percentComplete ?? 100}%.`,
         modelVersion: 'Hybrid-Matcher-v2.4'
       };
       setAuditLogs(prev => [audit, ...prev]);
 
-      showToast(`Schedule updated! ${chosenCandidate.activityCode} updated to ${event.percentComplete ?? 100}% actual progress.`);
+      showToast(`Lifecycle milestone updated! ${chosenCandidate.activityCode} updated to ${event.percentComplete ?? 100}% actual progress.`);
     }
   };
 
@@ -819,8 +1253,59 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         resetToDefaultDemo,
         currentWhatIf,
         updateWhatIfParams,
+        batchIngestFieldRows,
+        approveUnplannedWork,
+        updateSubtaskProgress,
+        importProjectSchedule,
+        commitScheduleActuals,
+        selectedSubtaskId,
+        setSelectedSubtaskId,
+        unplannedQueueCount,
+        isDossierOpen,
+        setIsDossierOpen,
+        embItems,
+        issueEmbCertificate,
+        activeGeofence,
+        simulateGeofenceAnomaly,
+        resetGeofenceToCenterline,
+        submitIndicFieldInput,
+        activeDNAMode,
+        setActiveDNAMode,
+        activeIngestionMode,
+        setActiveIngestionMode,
+        openIndicSpeechStudio,
+        openRoWGeofence,
+        openEMbReconciler,
+        openCvcAuditDossier,
+        isDroneAuditorOpen,
+        setIsDroneAuditorOpen,
+        isWhatsAppGatewayOpen,
+        setIsWhatsAppGatewayOpen,
+        isFloodPredictorOpen,
+        setIsFloodPredictorOpen,
+        isXerExportModalOpen,
+        setIsXerExportModalOpen,
+        openDroneAuditor,
+        openWhatsAppGateway,
+        openFloodPredictor,
+        openP6XerExport,
+        isVoiceCommanderOpen,
+        setIsVoiceCommanderOpen,
+        openVoiceCommander,
+        openPipeline3D,
+        openBlockchainLedger,
+        openDelayCascade,
+        openIoTPredictive,
+        openARInspection,
+        openDroneFleet,
+        openSafetyTraining,
+        openGeofenceGIS,
+        openComplianceReport,
+        openFlowEnergy,
         toastMessage,
         showToast,
+        theme,
+        toggleTheme,
       }}
     >
       {children}

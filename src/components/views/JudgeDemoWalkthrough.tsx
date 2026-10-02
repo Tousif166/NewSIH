@@ -1,30 +1,101 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../../services/store';
 
 export const JudgeDemoWalkthrough: React.FC = () => {
-  const { setActiveTab, commitP6Update } = useApp();
+  const { 
+    setActiveTab, 
+    commitScheduleActuals,
+    currentRole,
+    roleMetadata,
+    setCurrentRole,
+    openIndicSpeechStudio,
+    openRoWGeofence,
+    openEMbReconciler,
+    openCvcAuditDossier,
+    openDroneAuditor,
+    openWhatsAppGateway,
+    openFloodPredictor,
+    openP6XerExport,
+    openPipeline3D,
+    openBlockchainLedger,
+    openDelayCascade,
+    openVoiceCommander,
+    openIoTPredictive,
+    openARInspection,
+    openDroneFleet,
+    openSafetyTraining,
+    openGeofenceGIS,
+    openComplianceReport,
+    openFlowEnergy,
+    setIsCopilotOpen,
+    showToast 
+  } = useApp();
+
+  const [innovationCategory, setInnovationCategory] = useState<
+    'MY_ROLE' | 'SUPERVISOR' | 'PLANNER' | 'PROJECT_MANAGER' | 'ADMIN' | 'ALL'
+  >('MY_ROLE');
+
+  const matchesRole = (allowedRoles: ('planner' | 'supervisor' | 'project_manager' | 'admin')[]) => {
+    if (innovationCategory === 'ALL') return true;
+    if (innovationCategory === 'MY_ROLE') return allowedRoles.includes(currentRole);
+    if (innovationCategory === 'SUPERVISOR') return allowedRoles.includes('supervisor');
+    if (innovationCategory === 'PLANNER') return allowedRoles.includes('planner');
+    if (innovationCategory === 'PROJECT_MANAGER') return allowedRoles.includes('project_manager');
+    if (innovationCategory === 'ADMIN') return allowedRoles.includes('admin');
+    return false;
+  };
 
   const [activeGate, setActiveGate] = useState<number>(4);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
-  const [audioSeconds, setAudioSeconds] = useState<number>(14);
+  const [audioCurrentTime, setAudioCurrentTime] = useState<number>(0);
+  const [audioDuration, setAudioDuration] = useState<number>(38);
   const [isCommitting, setIsCommitting] = useState<boolean>(false);
   const [committed, setCommitted] = useState<boolean>(false);
   const [tourRunning, setTourRunning] = useState<boolean>(false);
   const [tourStep, setTourStep] = useState<number>(1);
 
-  // Audio waveform playback simulation
-  useEffect(() => {
-    let interval: any;
-    if (isPlayingAudio) {
-      interval = setInterval(() => {
-        setAudioSeconds((sec) => (sec >= 38 ? 1 : sec + 1));
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlayingAudio]);
-
   const handleTogglePlay = () => {
-    setIsPlayingAudio(!isPlayingAudio);
+    if (!audioRef.current) return;
+    if (isPlayingAudio) {
+      audioRef.current.pause();
+      setIsPlayingAudio(false);
+    } else {
+      audioRef.current.play()
+        .then(() => setIsPlayingAudio(true))
+        .catch((err) => {
+          console.warn('Audio play error, falling back to counter:', err);
+          setIsPlayingAudio(true);
+        });
+    }
+  };
+
+  const handleAudioTimeUpdate = () => {
+    if (audioRef.current) {
+      setAudioCurrentTime(audioRef.current.currentTime);
+      if (audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+        setAudioDuration(audioRef.current.duration);
+      }
+    }
+  };
+
+  const handleAudioLoadedMetadata = () => {
+    if (audioRef.current && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+      setAudioDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlayingAudio(false);
+    setAudioCurrentTime(0);
+  };
+
+  const handleSeek = (fraction: number) => {
+    if (audioRef.current && audioDuration > 0) {
+      const newTime = fraction * audioDuration;
+      audioRef.current.currentTime = newTime;
+      setAudioCurrentTime(newTime);
+    }
   };
 
   const handleStartTour = () => {
@@ -45,8 +116,12 @@ export const JudgeDemoWalkthrough: React.FC = () => {
   };
 
   const handleResetSandbox = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setIsPlayingAudio(false);
-    setAudioSeconds(14);
+    setAudioCurrentTime(0);
     setIsCommitting(false);
     setCommitted(false);
     setTourRunning(false);
@@ -59,13 +134,18 @@ export const JudgeDemoWalkthrough: React.FC = () => {
     setTimeout(() => {
       setIsCommitting(false);
       setCommitted(true);
-      commitP6Update();
+      commitScheduleActuals();
     }, 1200);
   };
 
-  const formatAudioTime = (sec: number) => {
-    const s = sec < 10 ? `0${sec}` : `${sec}`;
-    return `00:${s} / 00:38`;
+  const formatAudioTime = (current: number, total: number) => {
+    const format = (sec: number) => {
+      const clamped = Math.max(0, Math.floor(sec));
+      const m = Math.floor(clamped / 60);
+      const s = clamped % 60;
+      return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+    };
+    return `${format(current)} / ${format(total || 38)}`;
   };
 
   return (
@@ -130,6 +210,728 @@ export const JudgeDemoWalkthrough: React.FC = () => {
             </span>
             {tourRunning ? `Tour in Progress (${tourStep}/5)` : 'Start Guided 5-Min Tour'}
           </button>
+        </div>
+      </div>
+
+      {/* 🌟 SMART INDIA HACKATHON (SIH26122 / OIL) 20-MODULE INNOVATIONS SHOWCASE */}
+      <div className="w-full bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-2xl p-5 text-white shadow-md border border-blue-600/40 animate-entrance">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shadow-sm shrink-0">
+              <span className="material-symbols-outlined text-[24px]">workspace_premium</span>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-base text-white tracking-tight">
+                  Role-Scoped Operational Modules
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] bg-amber-400 text-slate-950 font-mono font-bold uppercase shrink-0">
+                  {roleMetadata.label}
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] bg-blue-500/30 text-blue-200 border border-blue-400/30 font-mono font-semibold shrink-0">
+                  SIH26122 SPEC
+                </span>
+              </div>
+              <p className="text-xs text-blue-200 mt-0.5">
+                Displaying curated capabilities for the active operational clearance. Click a role pill below or in the sidebar to switch views.
+              </p>
+            </div>
+          </div>
+
+          {/* Role Filter Pills */}
+          <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10 shrink-0 flex-wrap">
+            <button
+              onClick={() => setInnovationCategory('MY_ROLE')}
+              className={`px-3 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                innovationCategory === 'MY_ROLE'
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                  : 'text-amber-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>🎯 My Role ({roleMetadata.shortLabel})</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentRole('supervisor', true);
+                setInnovationCategory('SUPERVISOR');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                innovationCategory === 'SUPERVISOR' || (innovationCategory === 'MY_ROLE' && currentRole === 'supervisor')
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>👷 Field Ops</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentRole('planner', true);
+                setInnovationCategory('PLANNER');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                innovationCategory === 'PLANNER' || (innovationCategory === 'MY_ROLE' && currentRole === 'planner')
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>📐 Planner</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentRole('project_manager', true);
+                setInnovationCategory('PROJECT_MANAGER');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                innovationCategory === 'PROJECT_MANAGER' || (innovationCategory === 'MY_ROLE' && currentRole === 'project_manager')
+                  ? 'bg-purple-600 text-white shadow-xs'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>💼 Manager</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentRole('admin', true);
+                setInnovationCategory('ADMIN');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                innovationCategory === 'ADMIN' || (innovationCategory === 'MY_ROLE' && currentRole === 'admin')
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>🛡️ Admin</span>
+            </button>
+            <button
+              onClick={() => setInnovationCategory('ALL')}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                innovationCategory === 'ALL'
+                  ? 'bg-slate-700 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <span>🌐 All Modules</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic Cards Grid - Divided strictly per Role */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3.5 mt-4">
+          {/* CARD 1: WebGL 3D Digital Twin Pipeline Corridor */}
+          {matchesRole(['supervisor', 'project_manager']) && (
+            <div 
+              onClick={openPipeline3D}
+              className="group relative bg-white/5 hover:bg-blue-950/50 border border-white/10 hover:border-blue-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-blue-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">view_in_ar</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-400/20 text-blue-300 border border-blue-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    THREE.JS 3D
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-blue-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">3D Pipeline Corridor</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-bold shrink-0">FIELD+PM</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Interactive 3D flythrough across the 132km Digboi–Duliajan route with procedural Assam terrain, Burhi Dihing River HDD crossing, and real-time chainage progress inspection.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-blue-300 group-hover:text-white">
+                <span>Launch 3D Flight</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 2: Natural Language P6 Query Copilot */}
+          {matchesRole(['planner', 'project_manager']) && (
+            <div 
+              onClick={() => setIsCopilotOpen(true)}
+              className="group relative bg-white/5 hover:bg-emerald-950/50 border border-white/10 hover:border-emerald-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-emerald-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">smart_toy</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    P6 COPILOT
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Ask SiteSync Copilot</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-400 text-slate-950 font-mono font-bold shrink-0">HINDI+EN</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Query the schedule in plain English or Hindi: "Kaunsa activity delayed hai?" Gets instant structured P6 activity tables, KPIs, and actionable Gantt links.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-emerald-300 group-hover:text-white">
+                <span>Ask P6 Question</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 3: Immutable Blockchain Audit Ledger */}
+          {matchesRole(['admin', 'project_manager']) && (
+            <div 
+              onClick={openBlockchainLedger}
+              className="group relative bg-white/5 hover:bg-emerald-950/50 border border-white/10 hover:border-emerald-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-emerald-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">enhanced_encryption</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    SHA-256
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Blockchain Audit Ledger</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-400 text-slate-950 font-mono font-bold shrink-0">CVC 2022</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Cryptographic SHA-256 hash chain verifying 1,842 schedule changes. Includes live DB tamper simulation proving zero-tolerance vigilance against retroactive alterations.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-emerald-300 group-hover:text-white">
+                <span>Inspect Hash Chain</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 4: AI Delay Cascade Propagation Simulator */}
+          {matchesRole(['planner', 'project_manager']) && (
+            <div 
+              onClick={openDelayCascade}
+              className="group relative bg-white/5 hover:bg-rose-950/50 border border-white/10 hover:border-rose-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-rose-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">hub</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-400/20 text-rose-300 border border-rose-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+                    CPM RIPPLE
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-rose-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">AI Delay Cascade Ripple</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-400 text-slate-950 font-mono font-bold shrink-0">CLAUSE 27.1</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Animated delay ripple through CPM network showing float absorption vs critical slippage, Clause 27.1 Liquidated Damages (₹1.5L/day), and prescriptive mitigations.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-rose-300 group-hover:text-white">
+                <span>Simulate Delay Ripple</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 5: Hands-Free Voice Field Commander */}
+          {matchesRole(['supervisor']) && (
+            <div 
+              onClick={openVoiceCommander}
+              className="group relative bg-white/5 hover:bg-amber-950/50 border border-white/10 hover:border-amber-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-amber-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">mic</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    VOICE HUD
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-amber-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Voice Field Commander</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-bold shrink-0">GLOVE MODE</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Hands-free field operations for supervisors wearing gloves and safety helmets in muddy Assam terrain. Continuous speech recognition with audio synthesis response.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-amber-300 group-hover:text-white">
+                <span>Launch Voice HUD [V]</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 6: Real-time IoT Sensor Dashboard & Predictive Maintenance */}
+          {matchesRole(['admin', 'supervisor']) && (
+            <div 
+              onClick={openIoTPredictive}
+              className="group relative bg-white/5 hover:bg-indigo-950/50 border border-white/10 hover:border-indigo-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-indigo-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">sensors</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-400/20 text-indigo-300 border border-indigo-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                    SCADA 48H
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-indigo-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">IoT Predictive Maint</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-400 text-slate-950 font-mono font-bold shrink-0">TELEMETRY</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Real-time multi-axial SCADA telemetry from 5 stations. In-browser LSTM forecasts impeller cavitation and wax gelation 48h ahead to auto-generate SAP-PM work orders.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-indigo-300 group-hover:text-white">
+                <span>Inspect Telemetry</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 7: AR-Enabled Site Inspection */}
+          {matchesRole(['supervisor']) && (
+            <div 
+              onClick={openARInspection}
+              className="group relative bg-white/5 hover:bg-sky-950/50 border border-white/10 hover:border-sky-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-sky-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">view_in_ar</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-400/20 text-sky-300 border border-sky-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    WEBXR CAM
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-sky-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">AR Spatial Site Inspection</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-sky-400 text-slate-950 font-mono font-bold shrink-0">INSPECTION</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Subterranean -1.85m pipeline overlay with live device camera support. Interactive AR holographic pins for NDT welds, block valves, and click-to-place defect tagging.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-sky-300 group-hover:text-white">
+                <span>Launch AR Camera</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 8: Drone Fleet & Orthophoto Timeline */}
+          {matchesRole(['planner', 'supervisor']) && (
+            <div 
+              onClick={openDroneFleet}
+              className="group relative bg-white/5 hover:bg-emerald-950/50 border border-white/10 hover:border-emerald-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-emerald-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">flight_takeoff</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    4 SECTORS
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Drone Fleet & Orthophoto</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-400 text-slate-950 font-mono font-bold shrink-0">LIDAR DEM</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Interactive Before/After orthophoto split comparison slider. Computes volumetric earthwork cut/fill from LiDAR point clouds and reconciles P6 as-built milestones.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-emerald-300 group-hover:text-white">
+                <span>View UAV Flights</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 9: Gamified Safety Training Hub */}
+          {matchesRole(['supervisor']) && (
+            <div 
+              onClick={openSafetyTraining}
+              className="group relative bg-white/5 hover:bg-amber-950/50 border border-white/10 hover:border-amber-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-amber-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">military_tech</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    OISD-141
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-amber-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Gamified Safety Hub</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-bold shrink-0">DRILLS</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Interactive timed crisis drills on toxic H₂S leaks, monsoon trench collapses, and permit violations. Live peer leaderboard and printable PSU safety certificates.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-amber-300 group-hover:text-white">
+                <span>Start Safety Drill</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 10: GIS Corridor Threat Alert */}
+          {matchesRole(['project_manager', 'supervisor']) && (
+            <div 
+              onClick={openGeofenceGIS}
+              className="group relative bg-white/5 hover:bg-rose-950/50 border border-white/10 hover:border-rose-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-rose-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">radar</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-400/20 text-rose-300 border border-rose-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+                    30M ROW
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-rose-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">GIS Threat Alerts</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-400 text-slate-950 font-mono font-bold shrink-0">CISF QRT</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Vector GIS corridor map tracking 30m legal RoW and 500m eco-sensitive Dihing Patkai buffer. Detects unauthorized excavators, river scour, and dispatches CISF QRT.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-rose-300 group-hover:text-white">
+                <span>Inspect GIS Threats</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 11: AI Compliance Report Generator */}
+          {matchesRole(['admin', 'project_manager']) && (
+            <div 
+              onClick={openComplianceReport}
+              className="group relative bg-white/5 hover:bg-yellow-950/50 border border-white/10 hover:border-yellow-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-yellow-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 border border-yellow-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">gavel</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-yellow-400/20 text-yellow-300 border border-yellow-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
+                    STATUTORY
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-yellow-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">CVC / MoP&NG Report AI</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-yellow-400 text-slate-950 font-mono font-bold shrink-0">DPR</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Converts raw voice logs into formal Ministry of Petroleum & Natural Gas DPRs. Automatically categorizes Force Majeure delays and stamps SHA-256 integrity proofs.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-yellow-300 group-hover:text-white">
+                <span>Generate Dossier</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 12: Energy-Optimization & Flow Digital Twin */}
+          {matchesRole(['project_manager', 'admin']) && (
+            <div 
+              onClick={openFlowEnergy}
+              className="group relative bg-white/5 hover:bg-teal-950/50 border border-white/10 hover:border-teal-400/80 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-teal-900/40"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 border border-teal-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">electric_bolt</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-400/20 text-teal-300 border border-teal-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+                    DRA OPTIMIZER
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-teal-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Energy & Flow Twin</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-teal-400 text-slate-950 font-mono font-bold shrink-0">HYDRAULIC</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Hydraulic Grade Line (HGL) simulator for high-wax Digboi crude. AI tunes Drag Reducing Agent (DRA) ppm & pump speeds to save ₹42.8L/month and eliminate wax risk.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-teal-300 group-hover:text-white">
+                <span>Optimize Pumping</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 13: Drone & Satellite CV Progress Auditor */}
+          {matchesRole(['planner', 'admin']) && (
+            <div 
+              onClick={openDroneAuditor}
+              className="group relative bg-white/5 hover:bg-cyan-950/40 border border-white/10 hover:border-cyan-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-cyan-900/30"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">satellite_alt</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    CV MASK
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Drone CV Progress Auditor</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 font-mono font-normal shrink-0">₹12.4L HELD</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Interactive Before/After orthomosaic aerial slider with CV masks. Directly flags 450m claimed vs 280m detected and withholds ₹12.4L unverified work.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-cyan-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Launch CV Auditor</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 14: WhatsApp & Telegram Webhook Gateway Simulator */}
+          {matchesRole(['supervisor', 'planner']) && (
+            <div 
+              onClick={openWhatsAppGateway}
+              className="group relative bg-white/5 hover:bg-emerald-950/40 border border-white/10 hover:border-emerald-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-emerald-900/30"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">chat</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    EXIF GPS
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">WhatsApp Webhook Gateway</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono font-normal shrink-0">BOT v2</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Interactive smartphone webhook simulator. Ingests vernacular voice notes, geotagged site photos & contractor dispatches straight into Primavera P6.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-emerald-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Launch Phone Simulator</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 15: Brahmaputra Flood Early Warning Engine */}
+          {matchesRole(['project_manager', 'planner']) && (
+            <div 
+              onClick={openFloodPredictor}
+              className="group relative bg-white/5 hover:bg-sky-950/40 border border-white/10 hover:border-sky-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-sky-900/30"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">water</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-400/20 text-sky-300 border border-sky-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                    CWC RIVER
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-sky-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Brahmaputra Flood Radar</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 font-mono font-normal shrink-0">+104.6M</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Real-time gauge simulation of Burhi Dihing (+104.6m). Detects flash flood RoW breach and executes 1-click preemptive schedule shifts and rig evacuations.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-sky-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Launch Flood Engine</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 16: Native Primavera P6 .XER Bi-Directional Exporter */}
+          {matchesRole(['planner', 'admin']) && (
+            <div 
+              onClick={openP6XerExport}
+              className="group relative bg-white/5 hover:bg-violet-950/40 border border-white/10 hover:border-violet-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs hover:shadow-violet-900/30"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 border border-violet-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">sync_alt</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-violet-400/20 text-violet-300 border border-violet-400/30 flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
+                    P6 .XER
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-violet-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Native P6 .XER Exporter</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-violet-500/20 text-violet-300 font-mono font-normal shrink-0">EPPM V24</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Generates authentic industry-standard Oracle Primavera P6 ASCII .XER files with 1-click direct download, syntax inspection & EPPM REST API telemetry.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-violet-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Export .XER / Sync</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 17: Indic Speech Studio */}
+          {matchesRole(['supervisor']) && (
+            <div 
+              onClick={openIndicSpeechStudio}
+              className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">translate</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
+                    BHASHA
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-amber-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">Indic Speech Studio</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono font-normal shrink-0">HINDI/AS</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Translates Hinglish, Assamese & Bhojpuri site audio (<em>dhalai, khudai, taanka, solise</em>) directly into Primavera P6 activities.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-amber-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Launch Studio</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 18: Anti-Ghost RoW Geofence */}
+          {matchesRole(['supervisor', 'admin']) && (
+            <div 
+              onClick={openRoWGeofence}
+              className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-rose-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">radar</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-400/20 text-rose-300 border border-rose-400/30 shrink-0">
+                    ANTI-GHOST
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-rose-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">GPS RoW Geofence</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono font-normal shrink-0">500M RADAR</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  500m Haversine radar across Digboi–Duliajan 132km RoW. Instantly catches and flags off-site fraudulent progress claims.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-rose-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Test GPS Radar</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 19: e-Measurement Book */}
+          {matchesRole(['admin', 'planner']) && (
+            <div 
+              onClick={openEMbReconciler}
+              className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-emerald-400/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">receipt_long</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
+                    ₹23.5L HELD
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">e-Measurement Book</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono font-normal shrink-0">RA BILLS</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Reconciles contractor RA bill % against verified physical actuals. Holds ₹23.50 Lakhs overbilling with digital signing.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-emerald-300 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Audit RA Bills</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
+
+          {/* CARD 20: CVC/CAG Audit Dossier */}
+          {matchesRole(['admin', 'project_manager']) && (
+            <div 
+              onClick={openCvcAuditDossier}
+              className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-300/60 rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-2xs"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5 gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-300/30 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">gavel</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-300/20 text-amber-200 border border-amber-300/30 shrink-0">
+                    CVC / FIDIC
+                  </span>
+                </div>
+                <h4 className="font-bold text-sm text-white group-hover:text-amber-200 transition-colors flex items-center justify-between gap-1.5 min-w-0">
+                  <span className="truncate">CVC / CAG Legal Dossier</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono font-normal shrink-0">MERKLE</span>
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  1-Click delay defense dossier: Force Majeure vs Client vs Contractor Default (₹14.20L LD) with cryptographic Merkle proof.
+                </p>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[11px] text-amber-200 font-semibold group-hover:translate-x-0.5 transition-transform">
+                <span>Open Legal Dossier</span>
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -254,44 +1056,73 @@ export const JudgeDemoWalkthrough: React.FC = () => {
           </div>
 
           {/* Audio Player Card */}
-          <div className="flex flex-col gap-2.5 p-3 rounded bg-slate-50 border border-slate-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2.5 p-3 rounded bg-slate-50 border border-slate-200 shadow-2xs">
+            {/* HTML5 Audio Element for sihaudio.mp4 */}
+            <audio
+              ref={audioRef}
+              src="/sihaudio.mp4"
+              preload="auto"
+              onTimeUpdate={handleAudioTimeUpdate}
+              onLoadedMetadata={handleAudioLoadedMetadata}
+              onEnded={handleAudioEnded}
+            />
+
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <button
                   type="button"
                   onClick={handleTogglePlay}
-                  className="w-8 h-8 rounded bg-blue-700 text-white flex items-center justify-center shadow-xs hover:bg-blue-800 transition-all cursor-pointer"
-                  title="Play telemetry recording"
+                  className="w-9 h-9 rounded-lg bg-blue-700 text-white flex items-center justify-center shadow-xs hover:bg-blue-800 active:scale-95 transition-all cursor-pointer shrink-0"
+                  title={isPlayingAudio ? 'Pause sihaudio.mp4' : 'Play sihaudio.mp4'}
                 >
-                  <span className="material-symbols-outlined text-[18px]">
+                  <span className="material-symbols-outlined text-[20px]">
                     {isPlayingAudio ? 'pause' : 'play_arrow'}
                   </span>
                 </button>
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-900">DPR_8820_03_AssamSec4.wav</span>
-                  <span className="font-mono text-[10px] text-slate-500">16kHz 24-bit PCM • Recorded 07:42 IST</span>
+                <div className="flex flex-col min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-xs font-bold text-slate-900 truncate">sihaudio.mp4</span>
+                    <span className="px-1.5 py-0.2 rounded bg-blue-100 text-blue-900 font-mono text-[9px] font-bold shrink-0">
+                      ACTUAL AUDIO
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-slate-500 truncate">
+                    Assam Field Telemetry Memo • Actual Recording Stream
+                  </span>
                 </div>
               </div>
-              <span className="font-mono text-xs text-blue-700 font-bold">
-                {formatAudioTime(audioSeconds)}
+              <span className="font-mono text-xs text-blue-700 font-bold shrink-0">
+                {formatAudioTime(audioCurrentTime, audioDuration)}
               </span>
             </div>
 
-            {/* Dynamic Waveform Visualizer */}
-            <div className="h-10 w-full bg-slate-200 rounded p-1.5 flex items-center gap-1 overflow-hidden">
+            {/* Dynamic Waveform Visualizer & Click-to-Seek Scrubber */}
+            <div 
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const frac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                handleSeek(frac);
+              }}
+              className="h-10 w-full bg-slate-200 hover:bg-slate-300/80 transition-colors rounded p-1.5 flex items-center gap-1 overflow-hidden cursor-pointer"
+              title="Click anywhere along waveform to seek audio playback"
+            >
               {[35, 60, 85, 45, 95, 70, 30, 80, 100, 65, 90, 50, 75, 85, 40, 60, 25, 70, 50, 80, 35, 25, 50, 30, 15].map(
-                (h, idx) => (
-                  <span
-                    key={idx}
-                    className={`w-1 rounded ${idx < 14 ? 'bg-blue-700' : 'bg-slate-400'} ${
-                      isPlayingAudio ? 'waveform-bar active-anim' : ''
-                    }`}
-                    style={{
-                      height: `${h}%`,
-                      animationDelay: `${(idx * 0.05).toFixed(2)}s`
-                    }}
-                  ></span>
-                )
+                (h, idx) => {
+                  const progressFrac = audioDuration > 0 ? audioCurrentTime / audioDuration : 0;
+                  const isPassed = idx / 25 <= progressFrac;
+                  return (
+                    <span
+                      key={idx}
+                      className={`flex-1 rounded transition-all duration-100 ${
+                        isPassed ? 'bg-blue-700' : 'bg-slate-400'
+                      } ${isPlayingAudio ? 'waveform-bar active-anim' : ''}`}
+                      style={{
+                        height: `${h}%`,
+                        animationDelay: `${(idx * 0.05).toFixed(2)}s`
+                      }}
+                    />
+                  );
+                }
               )}
             </div>
           </div>

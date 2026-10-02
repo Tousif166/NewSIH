@@ -15,9 +15,36 @@ import { AuditTrailView } from './components/views/AuditTrailView';
 import { JudgeDemoWalkthrough } from './components/views/JudgeDemoWalkthrough';
 import { LoginPage } from './components/views/LoginPage';
 import { CopilotDrawer } from './components/views/CopilotDrawer';
+import { StatutoryAuditDossierModal } from './components/views/StatutoryAuditDossierModal';
+import { DroneProgressAuditorModal } from './components/views/DroneProgressAuditorModal';
+import { WhatsAppGatewayModal } from './components/views/WhatsAppGatewayModal';
+import { BrahmaputraFloodPredictorModal } from './components/views/BrahmaputraFloodPredictorModal';
+import { P6XerExportModal } from './components/views/P6XerExportModal';
+import { Pipeline3DCorridor } from './components/views/Pipeline3DCorridor';
+import { BlockchainAuditLedger } from './components/views/BlockchainAuditLedger';
+import { DelayCascadeSimulator } from './components/views/DelayCascadeSimulator';
+import { VoiceFieldCommander } from './components/views/VoiceFieldCommander';
+import { IoTPredictiveMaintenance } from './components/views/IoTPredictiveMaintenance';
+import { ARInspectionView } from './components/views/ARInspectionView';
+import { DroneFleetView } from './components/views/DroneFleetView';
+import { SafetyTrainingHub } from './components/views/SafetyTrainingHub';
+import { CorridorGeofenceGIS } from './components/views/CorridorGeofenceGIS';
+import { ComplianceReportGenerator } from './components/views/ComplianceReportGenerator';
+import { FlowEnergySimulator } from './components/views/FlowEnergySimulator';
 
 const MainLayout: React.FC = () => {
-  const { activeTab, toastMessage, isAuthenticated } = useApp();
+  const { activeTab, toastMessage, isAuthenticated, openVoiceCommander } = useApp();
+
+  // Global hotkey: Pressing 'v' outside inputs or Ctrl+Space opens Voice Commander
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.key === 'v' || e.key === 'V') && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) {
+        openVoiceCommander();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [openVoiceCommander]);
 
   if (!isAuthenticated) {
     return (
@@ -55,6 +82,26 @@ const MainLayout: React.FC = () => {
         return <AuditTrailView />;
       case 'DEMO_WALKTHROUGH':
         return <JudgeDemoWalkthrough />;
+      case 'PIPELINE_3D':
+        return <Pipeline3DCorridor />;
+      case 'BLOCKCHAIN_LEDGER':
+        return <BlockchainAuditLedger />;
+      case 'DELAY_CASCADE':
+        return <DelayCascadeSimulator />;
+      case 'IOT_TELEMETRY':
+        return <IoTPredictiveMaintenance />;
+      case 'AR_INSPECTION':
+        return <ARInspectionView />;
+      case 'DRONE_FLEET':
+        return <DroneFleetView />;
+      case 'SAFETY_TRAINING':
+        return <SafetyTrainingHub />;
+      case 'GEOFENCE_GIS':
+        return <CorridorGeofenceGIS />;
+      case 'COMPLIANCE_REPORT':
+        return <ComplianceReportGenerator />;
+      case 'FLOW_ENERGY':
+        return <FlowEnergySimulator />;
       default:
         return <ProjectDashboard />;
     }
@@ -103,6 +150,12 @@ const MainLayout: React.FC = () => {
       <MobileBottomNav />
 
       <CopilotDrawer />
+      <StatutoryAuditDossierModal />
+      <DroneProgressAuditorModal />
+      <WhatsAppGatewayModal />
+      <BrahmaputraFloodPredictorModal />
+      <P6XerExportModal />
+      <VoiceFieldCommander />
     </div>
   );
 };
