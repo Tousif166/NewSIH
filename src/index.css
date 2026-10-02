@@ -247,15 +247,34 @@ html.dark button.bg-blue-600:hover {
   transform: translateY(-1px);
 }
 
+/* Custom Background Utility Overrides for Dark Mode */
+html.dark .bg-\[\#f8faff\],
+html.dark .bg-\[\#f8fafc\],
+html.dark .bg-\[\#eff4ff\],
+html.dark .bg-\[\#efeae2\],
+html.dark .bg-\[\#efeae2\]\/60 {
+  background-color: #060a12 !important;
+  border-color: rgba(245, 158, 11, 0.16) !important;
+}
+
 /* Amber Badges & Score Readouts (Matching OISD-118 & 980 XP Reference) */
-html.dark .bg-amber-50,
-html.dark .bg-amber-100,
-html.dark .bg-amber-100\/90,
-html.dark .bg-amber-500\/20 {
+html.dark .bg-amber-50:not([class*="dark:bg-"]),
+html.dark .bg-amber-50\/30:not([class*="dark:bg-"]),
+html.dark .bg-amber-50\/40:not([class*="dark:bg-"]),
+html.dark .bg-amber-50\/50:not([class*="dark:bg-"]),
+html.dark .bg-amber-50\/60:not([class*="dark:bg-"]),
+html.dark .bg-amber-50\/70:not([class*="dark:bg-"]),
+html.dark .bg-amber-100:not([class*="dark:bg-"]),
+html.dark .bg-amber-100\/90:not([class*="dark:bg-"]),
+html.dark .bg-amber-500\/20:not([class*="dark:bg-"]),
+html.dark [class*="bg-amber-50"]:not([class*="dark:bg-"]) {
   background-color: rgba(245, 158, 11, 0.16) !important;
-  color: #fbbf24 !important;
   border-color: rgba(245, 158, 11, 0.45) !important;
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.15) !important;
+}
+html.dark span[class*="bg-amber-50"],
+html.dark button[class*="bg-amber-50"] {
+  color: #fbbf24 !important;
 }
 html.dark .text-amber-900,
 html.dark .text-amber-950,
@@ -271,14 +290,22 @@ html.dark .border-amber-800\/40 {
 }
 
 /* Emerald Badges (Matching ZERO-HARM STATUTORY CERTIFICATION Reference) */
-html.dark .bg-emerald-50,
-html.dark .bg-emerald-50\/70,
-html.dark .bg-emerald-100,
-html.dark .bg-emerald-500\/20 {
+html.dark .bg-emerald-50:not([class*="dark:bg-"]),
+html.dark .bg-emerald-50\/30:not([class*="dark:bg-"]),
+html.dark .bg-emerald-50\/40:not([class*="dark:bg-"]),
+html.dark .bg-emerald-50\/50:not([class*="dark:bg-"]),
+html.dark .bg-emerald-50\/60:not([class*="dark:bg-"]),
+html.dark .bg-emerald-50\/70:not([class*="dark:bg-"]),
+html.dark .bg-emerald-100:not([class*="dark:bg-"]),
+html.dark .bg-emerald-500\/20:not([class*="dark:bg-"]),
+html.dark [class*="bg-emerald-50"]:not([class*="dark:bg-"]) {
   background-color: rgba(16, 185, 129, 0.16) !important;
-  color: #34d399 !important;
   border-color: rgba(16, 185, 129, 0.42) !important;
   box-shadow: 0 0 12px rgba(16, 185, 129, 0.15) !important;
+}
+html.dark span[class*="bg-emerald-50"],
+html.dark button[class*="bg-emerald-50"] {
+  color: #34d399 !important;
 }
 html.dark .text-emerald-900,
 html.dark .text-emerald-800,
@@ -293,14 +320,23 @@ html.dark .border-emerald-500\/30 {
 }
 
 /* Telemetry Blue / Cyan (SCADA, Geofence, RTK Channels) */
-html.dark .bg-blue-50,
-html.dark .bg-blue-50\/70,
-html.dark .bg-blue-100,
-html.dark .bg-cyan-50,
-html.dark .bg-cyan-100 {
+html.dark .bg-blue-50:not([class*="dark:bg-"]),
+html.dark .bg-blue-50\/30:not([class*="dark:bg-"]),
+html.dark .bg-blue-50\/40:not([class*="dark:bg-"]),
+html.dark .bg-blue-50\/50:not([class*="dark:bg-"]),
+html.dark .bg-blue-50\/60:not([class*="dark:bg-"]),
+html.dark .bg-blue-50\/70:not([class*="dark:bg-"]),
+html.dark .bg-blue-100:not([class*="dark:bg-"]),
+html.dark .bg-cyan-50:not([class*="dark:bg-"]),
+html.dark .bg-cyan-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-blue-50"]:not([class*="dark:bg-"]) {
   background-color: rgba(14, 165, 233, 0.14) !important;
-  color: #38bdf8 !important;
   border-color: rgba(14, 165, 233, 0.35) !important;
+}
+html.dark span[class*="bg-blue-50"],
+html.dark button[class*="bg-blue-50"],
+html.dark span[class*="bg-cyan-50"] {
+  color: #38bdf8 !important;
 }
 html.dark .text-blue-900,
 html.dark .text-blue-800,
@@ -319,12 +355,23 @@ html.dark .border-cyan-300 {
 }
 
 /* Critical Alerts & Emergency Rose/Red Badges */
-html.dark .bg-rose-50,
-html.dark .bg-red-50,
-html.dark .bg-red-100 {
+html.dark .bg-rose-50:not([class*="dark:bg-"]),
+html.dark .bg-rose-50\/30:not([class*="dark:bg-"]),
+html.dark .bg-rose-50\/40:not([class*="dark:bg-"]),
+html.dark .bg-rose-50\/50:not([class*="dark:bg-"]),
+html.dark .bg-rose-50\/60:not([class*="dark:bg-"]),
+html.dark .bg-rose-50\/70:not([class*="dark:bg-"]),
+html.dark .bg-red-50:not([class*="dark:bg-"]),
+html.dark .bg-red-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-rose-50"]:not([class*="dark:bg-"]),
+html.dark [class*="bg-red-50"]:not([class*="dark:bg-"]) {
   background-color: rgba(239, 68, 68, 0.15) !important;
-  color: #f87171 !important;
   border-color: rgba(239, 68, 68, 0.4) !important;
+}
+html.dark span[class*="bg-rose-50"],
+html.dark button[class*="bg-rose-50"],
+html.dark span[class*="bg-red-50"] {
+  color: #f87171 !important;
 }
 html.dark .text-rose-700,
 html.dark .text-rose-800,

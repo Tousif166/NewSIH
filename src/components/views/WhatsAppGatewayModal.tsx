@@ -105,7 +105,7 @@ export const WhatsAppGatewayModal: React.FC = () => {
               </div>
 
               {/* Chat Messages Feed */}
-              <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-[#efeae2]/60">
+              <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-[#efeae2]/60 dark:bg-[#070b14]">
                 {messages.map((msg) => {
                   const isSelected = selectedMessage.id === msg.id;
                   return (
@@ -114,42 +114,49 @@ export const WhatsAppGatewayModal: React.FC = () => {
                       onClick={() => setSelectedMessage(msg)}
                       className={`p-3 rounded-xl transition-all cursor-pointer max-w-[92%] ${
                         msg.status === 'flagged'
-                          ? 'bg-rose-50 border-2 border-rose-300 ml-auto'
-                          : 'bg-white border border-slate-200 shadow-2xs mr-auto'
-                      } ${isSelected ? 'ring-2 ring-emerald-600 shadow-sm' : ''}`}
+                          ? 'bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-300 dark:border-rose-600/70 ml-auto'
+                          : 'bg-white dark:bg-[#0e1626] border border-slate-200 dark:border-slate-800 shadow-2xs mr-auto'
+                      } ${isSelected ? 'ring-2 ring-emerald-600 dark:ring-emerald-400 shadow-sm' : ''}`}
                     >
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="text-xs font-bold text-emerald-950">{msg.senderName}</span>
-                        <span className="text-[10px] font-mono text-slate-400">{msg.timestamp}</span>
+                        <span className="text-xs font-bold text-emerald-950 dark:text-emerald-400">{msg.senderName}</span>
+                        <span className="text-[10px] font-mono text-slate-400 dark:text-slate-400">{msg.timestamp}</span>
                       </div>
-                      <p className="text-xs text-slate-800 leading-relaxed font-sans">{msg.text}</p>
+                      <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-sans">{msg.text}</p>
                       
                       {/* Media Thumbnail */}
                       {msg.mediaUrl && (
-                        <div className="mt-2 rounded-lg overflow-hidden border border-slate-200 max-h-32">
-                          <img src={msg.mediaUrl} alt="Field Attachment" className="w-full h-24 object-cover" />
+                        <div className="mt-2 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 max-h-32 bg-slate-900">
+                          <img 
+                            src={msg.mediaUrl} 
+                            alt="Field Attachment" 
+                            className="w-full h-24 object-cover" 
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = '/images/subcon-pipeline-survey.jpg';
+                            }}
+                          />
                         </div>
                       )}
 
                       {/* Voice Note Audio Pill */}
                       {msg.voiceNoteSeconds && (
-                        <div className="mt-2 p-2 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center gap-2">
-                          <span className="material-symbols-outlined text-emerald-700 text-[18px]">play_circle</span>
-                          <div className="flex-1 h-1.5 bg-emerald-200 rounded-full"></div>
-                          <span className="text-[10px] font-mono text-emerald-800 font-bold">0:{msg.voiceNoteSeconds}</span>
+                        <div className="mt-2 p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 flex items-center gap-2">
+                          <span className="material-symbols-outlined text-emerald-700 dark:text-emerald-400 text-[18px]">play_circle</span>
+                          <div className="flex-1 h-1.5 bg-emerald-200 dark:bg-emerald-900 rounded-full"></div>
+                          <span className="text-[10px] font-mono text-emerald-800 dark:text-emerald-300 font-bold">0:{msg.voiceNoteSeconds}</span>
                         </div>
                       )}
 
                       {/* GPS & Status Badges */}
-                      <div className="mt-2 pt-1.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono">
-                        <span className="text-slate-500 flex items-center gap-0.5">
+                      <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono">
+                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-0.5">
                           <span className="material-symbols-outlined text-[12px] text-slate-400">pin_drop</span>
                           {msg.exifGps ? `LAT ${msg.exifGps.lat.toFixed(3)}°` : 'NO GPS'}
                         </span>
-                        <span className={`px-1.5 py-0.2 rounded font-bold ${
+                        <span className={`px-1.5 py-0.2 rounded font-bold border ${
                           msg.rowVerificationStatus === 'ON_ROW'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-rose-100 text-rose-800 font-bold animate-pulse'
+                            ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
+                            : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-700/50 font-bold animate-pulse'
                         }`}>
                           {msg.rowVerificationStatus === 'ON_ROW' ? '✓ VERIFIED RoW' : '⚠ OFF-RoW GHOST'}
                         </span>

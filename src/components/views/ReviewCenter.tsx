@@ -155,21 +155,21 @@ export const ReviewCenter: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
-          <div className="bg-[#f8faff] px-3.5 py-2 rounded-lg border border-slate-200 flex items-center gap-2.5">
-            <span className="material-symbols-outlined text-[18px] text-amber-600">book</span>
+          <div className="bg-[#f8faff] dark:bg-[#070c16] px-3.5 py-2 rounded-lg border border-slate-200 dark:border-amber-500/25 flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[18px] text-amber-500">book</span>
             <div>
-              <div className="text-[10px] uppercase font-mono text-slate-500 font-semibold">Memory Rules</div>
-              <div className="text-xs font-bold text-slate-900 font-mono">
-                <span className="text-amber-700">{terminologyMappings.length}</span> Active Mappings
+              <div className="text-[10px] uppercase font-mono text-slate-500 dark:text-slate-400 font-semibold">Memory Rules</div>
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 font-mono">
+                <span className="text-amber-500 font-bold">{terminologyMappings.length}</span> Active Mappings
               </div>
             </div>
           </div>
 
-          <div className="bg-[#f8faff] px-3.5 py-2 rounded-lg border border-slate-200 flex items-center gap-2.5">
-            <span className="material-symbols-outlined text-[18px] text-emerald-600">task_alt</span>
+          <div className="bg-[#f8faff] dark:bg-[#070c16] px-3.5 py-2 rounded-lg border border-slate-200 dark:border-amber-500/25 flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[18px] text-emerald-500">task_alt</span>
             <div>
-              <div className="text-[10px] uppercase font-mono text-slate-500 font-semibold">Pending Review</div>
-              <div className="text-xs font-bold text-emerald-700 font-mono">
+              <div className="text-[10px] uppercase font-mono text-slate-500 dark:text-slate-400 font-semibold">Pending Review</div>
+              <div className="text-xs font-bold text-emerald-500 dark:text-emerald-400 font-mono">
                 {pendingMatches.length} Proposals
               </div>
             </div>
@@ -337,30 +337,30 @@ export const ReviewCenter: React.FC = () => {
                     className={`p-4 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-2 ${
                       isSelected
                         ? isUnplannedItem
-                          ? 'bg-rose-50/70 border-rose-500 ring-2 ring-rose-500/20 shadow-xs'
-                          : 'bg-blue-50/60 border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
+                          ? 'bg-rose-50/70 dark:bg-rose-950/40 border-rose-500 dark:border-rose-500 ring-2 ring-rose-500/20 shadow-xs'
+                          : 'bg-blue-50/60 dark:bg-amber-500/15 border-blue-600 dark:border-amber-400 ring-2 ring-blue-600/20 dark:ring-amber-400/30 shadow-md'
                         : isUnplannedItem
-                        ? 'bg-rose-50/30 border-rose-300 hover:border-rose-400 hover:shadow-xs'
-                        : 'bg-white border-slate-300 hover:border-blue-400 hover:shadow-xs'
+                        ? 'bg-rose-50/30 dark:bg-rose-950/20 border-rose-300 dark:border-rose-900/60 hover:border-rose-400 hover:shadow-xs'
+                        : 'bg-white dark:bg-[#0c1220] border-slate-300 dark:border-slate-800 hover:border-blue-400 hover:dark:border-amber-400/50 hover:shadow-xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">
+                        <span className="font-mono text-[10px] px-2 py-0.5 rounded font-bold bg-blue-100 dark:bg-sky-950/70 text-blue-800 dark:text-sky-300 border border-transparent dark:border-sky-700/50">
                           {evt?.discipline || 'Pipeline'}
                         </span>
                         <span className={`font-mono text-[9px] px-1.5 py-0.2 rounded font-bold border ${
                           isUnplannedItem
-                            ? 'bg-rose-100 text-rose-800 border-rose-300'
+                            ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-700/50'
                             : isApproved 
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
-                            : 'bg-amber-50 text-amber-800 border-amber-300'
+                            ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50' 
+                            : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-700/50'
                         }`}>
                           {isUnplannedItem ? 'UNPLANNED SCOPE' : isApproved ? 'P6 COMMITTED' : 'PENDING'}
                         </span>
                       </div>
                       <span className={`font-mono text-[11px] font-bold flex items-center gap-1 ${
-                        isUnplannedItem ? 'text-rose-700' : 'text-emerald-700'
+                        isUnplannedItem ? 'text-rose-700 dark:text-rose-400' : 'text-emerald-700 dark:text-emerald-400'
                       }`}>
                         <span className="material-symbols-outlined text-[13px]">
                           {isUnplannedItem ? 'warning' : 'bolt'}
@@ -371,24 +371,27 @@ export const ReviewCenter: React.FC = () => {
 
                     <div className="flex gap-2.5 items-start">
                       {evt?.photoUrl && (
-                        <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shrink-0 shadow-2xs mt-0.5">
+                        <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs mt-0.5 bg-slate-900">
                           <img
                             src={evt.photoUrl}
                             alt="Field submission proof thumbnail"
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = '/images/piping-spool-erection.jpg';
+                            }}
                           />
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-semibold text-slate-900 line-clamp-2">
+                        <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 line-clamp-2">
                           "{evt?.rawText || 'Field dispatch reported'}"
                         </div>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
                       <span>{evt?.sourceType || 'DPR'} • {evt?.reportedDate}</span>
-                      <span className={`font-bold ${isUnplannedItem ? 'text-rose-700' : 'text-blue-700'}`}>
+                      <span className={`font-bold ${isUnplannedItem ? 'text-rose-700 dark:text-rose-400' : 'text-blue-700 dark:text-amber-400'}`}>
                         {isUnplannedItem ? 'P6 VARIANCE REQ' : cand?.activityCode || 'ACT-P6'}
                       </span>
                     </div>
@@ -530,32 +533,32 @@ export const ReviewCenter: React.FC = () => {
                 {activeWorkbenchTab === 'MATCH' && (
                   <>
                     {/* Raw Field Observation Card */}
-              <div className="rounded-xl bg-[#f8faff] border border-slate-200 p-4 flex flex-col gap-2">
+              <div className="rounded-xl bg-[#f8faff] dark:bg-[#070c16] border border-slate-200 dark:border-amber-500/20 p-4 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase font-bold text-slate-500">
+                  <span className="font-mono text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
                     Raw Field Telemetry Submission ({relatedEvent.sourceType})
                   </span>
-                  <span className="font-mono text-[10px] text-slate-500">{relatedEvent.reportedDate}</span>
+                  <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">{relatedEvent.reportedDate}</span>
                 </div>
-                <div className="p-3 bg-white rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-800 font-sans italic leading-relaxed">
+                <div className="p-3 bg-white dark:bg-[#0c1220] rounded-lg border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-sans italic leading-relaxed">
                   "{relatedEvent.rawText}"
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 font-mono text-[11px]">
-                  <div className="p-2 bg-white rounded border border-slate-200">
+                  <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
                     <span className="text-slate-400">Reporter:</span>{' '}
-                    <span className="font-bold text-slate-900">{relatedEvent.reportedBy}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.reportedBy}</span>
                   </div>
-                  <div className="p-2 bg-white rounded border border-slate-200">
+                  <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
                     <span className="text-slate-400">Location:</span>{' '}
-                    <span className="font-bold text-slate-900">{relatedEvent.location}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.location}</span>
                   </div>
-                  <div className="p-2 bg-white rounded border border-slate-200">
+                  <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
                     <span className="text-slate-400">Extracted Qty:</span>{' '}
-                    <span className="font-bold text-blue-700">{relatedEvent.quantity || 420} {relatedEvent.unit || 'm'}</span>
+                    <span className="font-bold text-blue-700 dark:text-amber-400">{relatedEvent.quantity || 420} {relatedEvent.unit || 'm'}</span>
                   </div>
-                  <div className="p-2 bg-white rounded border border-slate-200">
+                  <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
                     <span className="text-slate-400">Discipline:</span>{' '}
-                    <span className="font-bold text-slate-900">{relatedEvent.discipline}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.discipline}</span>
                   </div>
                 </div>
               </div>
@@ -644,44 +647,44 @@ export const ReviewCenter: React.FC = () => {
 
               {/* Semantic Linkage to P6 Activity */}
               <div className="flex flex-col gap-3">
-                <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
+                <span className="font-mono text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
                   Target Primavera P6 Schedule Activity
                 </span>
-                <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/40 flex flex-col gap-3">
+                <div className="p-4 rounded-xl border border-blue-200 dark:border-amber-500/20 bg-blue-50/40 dark:bg-[#070c16] flex flex-col gap-3">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-1 rounded bg-blue-700 text-white font-mono text-xs font-bold">
+                      <span className="px-2.5 py-1 rounded bg-amber-500 dark:bg-amber-500 text-slate-950 font-mono text-xs font-bold shadow-xs">
                         {matchedActivity?.activityCode || 'ACT-TR-4290'}
                       </span>
-                      <span className="font-bold text-slate-900 text-sm">
+                      <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">
                         {matchedActivity?.name || 'Trench Excavation & Bedding Preparation'}
                       </span>
                     </div>
-                    <span className="font-mono text-xs text-slate-600">
+                    <span className="font-mono text-xs text-slate-600 dark:text-slate-400">
                       WBS: {matchedActivity?.wbsCode || matchedActivity?.wbsId || 'WBS-04-A-CIVIL'}
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                     {matchedActivity?.description || matchedActivity?.name || 'Mechanical backhoe trenching to 2.2m depth along station KM 40+000 to KM 45+000.'}
                   </p>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-blue-200/60 font-mono text-[11px]">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-blue-200/60 dark:border-slate-800 font-mono text-[11px]">
                     <div>
-                      <span className="text-slate-500">Planned Start:</span>{' '}
-                      <span className="font-bold text-slate-800">{matchedActivity?.plannedStart || '01-OCT-2024'}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Planned Start:</span>{' '}
+                      <span className="font-bold text-slate-800 dark:text-slate-100">{matchedActivity?.plannedStart || '01-OCT-2024'}</span>
                     </div>
                     <div>
-                      <span className="text-slate-500">Planned Finish:</span>{' '}
-                      <span className="font-bold text-slate-800">{matchedActivity?.plannedFinish || '28-OCT-2024'}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Planned Finish:</span>{' '}
+                      <span className="font-bold text-slate-800 dark:text-slate-100">{matchedActivity?.plannedFinish || '28-OCT-2024'}</span>
                     </div>
                     <div>
-                      <span className="text-slate-500">Baseline Target:</span>{' '}
-                      <span className="font-bold text-slate-800">{matchedActivity?.plannedQuantity || matchedActivity?.quantity || 1200}m</span>
+                      <span className="text-slate-500 dark:text-slate-400">Baseline Target:</span>{' '}
+                      <span className="font-bold text-slate-800 dark:text-slate-100">{matchedActivity?.plannedQuantity || matchedActivity?.quantity || 1200}m</span>
                     </div>
                     <div>
-                      <span className="text-slate-500">New Actual Pace:</span>{' '}
-                      <span className="font-bold text-emerald-700">{matchedActivity?.actualPercent || 68}%</span>
+                      <span className="text-slate-500 dark:text-slate-400">New Actual Pace:</span>{' '}
+                      <span className="font-bold text-emerald-700 dark:text-emerald-400">{matchedActivity?.actualPercent || 68}%</span>
                     </div>
                   </div>
                 </div>
@@ -689,64 +692,64 @@ export const ReviewCenter: React.FC = () => {
 
               {/* Explainable AI Criteria Checklist */}
               <div className="flex flex-col gap-2.5">
-                <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
+                <span className="font-mono text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
                   Explainability Verification Matrix
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-[11px]">
-                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                  <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-600/40 flex items-center justify-between text-emerald-900 dark:text-emerald-300 shadow-2xs">
                     <span className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                       Fuzzy Keyword Correlation
                     </span>
-                    <span className="font-bold">98.2%</span>
+                    <span className="font-bold text-emerald-800 dark:text-emerald-300">98.2%</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                  <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-600/40 flex items-center justify-between text-emerald-900 dark:text-emerald-300 shadow-2xs">
                     <span className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                       WBS Parent Consistency
                     </span>
-                    <span className="font-bold">PASSED</span>
+                    <span className="font-bold text-emerald-800 dark:text-emerald-300">PASSED</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                  <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-600/40 flex items-center justify-between text-emerald-900 dark:text-emerald-300 shadow-2xs">
                     <span className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                       Predecessor Sequence Valid
                     </span>
-                    <span className="font-bold">PASSED</span>
+                    <span className="font-bold text-emerald-800 dark:text-emerald-300">PASSED</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-emerald-900">
+                  <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-600/40 flex items-center justify-between text-emerald-900 dark:text-emerald-300 shadow-2xs">
                     <span className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                      <span className="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                       Spatial GPS Proximity (&lt;50m)
                     </span>
-                    <span className="font-bold">14.2m CEP</span>
+                    <span className="font-bold text-emerald-800 dark:text-emerald-300">14.2m CEP</span>
                   </div>
                 </div>
               </div>
 
               {/* Inspector Review Notes & Action Buttons */}
               {activeMatch.status === 'APPROVED' ? (
-                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
-                  <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                  <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-600/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 border border-emerald-300 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
                         <span className="material-symbols-outlined text-[20px]">verified</span>
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-emerald-950 font-mono flex items-center gap-2">
+                        <div className="text-xs font-bold text-emerald-950 dark:text-emerald-300 font-mono flex items-center gap-2">
                           <span>COMMITTED TO PRIMAVERA P6 BASELINE</span>
-                          <span className="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 text-[9px]">ACTIVE RECORD</span>
+                          <span className="px-1.5 py-0.2 rounded bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200 text-[9px]">ACTIVE RECORD</span>
                         </div>
-                        <div className="text-[11px] text-emerald-800 font-mono mt-0.5">
+                        <div className="text-[11px] text-emerald-800 dark:text-emerald-300 font-mono mt-0.5">
                           {activeMatch.plannerNotes || 'Approved by Lead Planner P. Saikia. Matched against schedule baseline.'}
                         </div>
-                        <div className="text-[10px] text-emerald-700 font-mono mt-0.5">
+                        <div className="text-[10px] text-emerald-700 dark:text-emerald-400 font-mono mt-0.5">
                           Reviewed by {activeMatch.reviewedBy || 'Pranjal Saikia'} • {activeMatch.reviewedAt ? new Date(activeMatch.reviewedAt).toLocaleDateString() : '2026-09-28'}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 self-start sm:self-auto">
-                      <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white px-2 py-1 rounded-md border border-emerald-300 shadow-2xs">
+                      <span className="font-mono text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-[#070c16] px-2 py-1 rounded-md border border-emerald-300 dark:border-emerald-600/50 shadow-2xs">
                         SHA-256 VERIFIED
                       </span>
                     </div>
@@ -756,7 +759,7 @@ export const ReviewCenter: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => navigateToActivitySchedule(activeMatch.selectedActivityId)}
-                      className="px-4 py-2 rounded-lg bg-white border border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 text-slate-700 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
+                      className="px-4 py-2 rounded-lg bg-white dark:bg-[#0c1220] border border-slate-300 dark:border-slate-700 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-amber-400 hover:border-blue-300 text-slate-700 dark:text-slate-200 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
                     >
                       <span className="material-symbols-outlined text-[16px]">account_tree</span>
                       <span>Locate in WBS Schedule</span>
@@ -766,14 +769,14 @@ export const ReviewCenter: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setTermModalOpen(true)}
-                        className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono text-xs font-semibold border border-slate-300 transition-all"
+                        className="px-3.5 py-2 rounded-lg bg-slate-100 dark:bg-[#0c1220] hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-mono text-xs font-semibold border border-slate-300 dark:border-slate-700 transition-all"
                       >
                         Teach Synonym
                       </button>
                       <button
                         type="button"
                         onClick={handleReject}
-                        className="px-4 py-2 rounded-lg bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
+                        className="px-4 py-2 rounded-lg bg-white dark:bg-[#0c1220] border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-mono text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all shadow-xs"
                       >
                         <span className="material-symbols-outlined text-[16px]">restart_alt</span>
                         <span>Re-evaluate Linkage</span>
@@ -782,9 +785,9 @@ export const ReviewCenter: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200">
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                   <div className="flex flex-col gap-1">
-                    <label className="font-mono text-[10px] uppercase font-bold text-slate-500">
+                    <label className="font-mono text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
                       Lead Planning Engineer Decision Notes (Optional)
                     </label>
                     <input
@@ -792,7 +795,7 @@ export const ReviewCenter: React.FC = () => {
                       value={plannerNote}
                       onChange={(e) => setPlannerNote(e.target.value)}
                       placeholder="Enter approval note or variance reason for Oracle P6 audit log..."
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-700"
+                      className="w-full bg-slate-50 dark:bg-[#070c16] border border-slate-300 dark:border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-slate-800 dark:text-slate-100 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                     />
                   </div>
 

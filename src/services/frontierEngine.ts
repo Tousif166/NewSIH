@@ -32,8 +32,8 @@ export const SAMPLE_DRONE_MISSIONS: DroneAuditMission[] = [
     cvDetectedLinearMeters: 280,
     discrepancyMeters: -170,
     confidenceScore: 96.4,
-    beforeImageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb1861593?q=80&w=1200&auto=format&fit=crop', // Trench excavation before
-    afterImageUrl: 'https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?q=80&w=1200&auto=format&fit=crop', // Pipe laying & welding after
+    beforeImageUrl: '/images/dry-haul-survey.jpg', // Trench excavation before
+    afterImageUrl: '/images/pipeline-drone-4k.jpg', // Pipe laying & welding after
     segmentationMasks: [
       {
         type: 'TRENCH',
@@ -71,8 +71,8 @@ export const SAMPLE_DRONE_MISSIONS: DroneAuditMission[] = [
     cvDetectedLinearMeters: 305,
     discrepancyMeters: -5,
     confidenceScore: 98.2,
-    beforeImageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop',
-    afterImageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1200&auto=format&fit=crop',
+    beforeImageUrl: '/images/pipeline-ortho-survey.jpg',
+    afterImageUrl: '/images/uav-corridor-ortho.jpg',
     segmentationMasks: [
       {
         type: 'TRENCH',
@@ -107,7 +107,7 @@ export const SAMPLE_WHATSAPP_CHATS: WhatsAppMessage[] = [
     timestamp: 'Today, 11:42 AM',
     text: 'Sir, KM 42+650 par 12-inch bypass line ka 4 spools fit-up complete ho gaya hai. Crane radiator leak solve kar liya hai. Photo attached.',
     mediaType: 'photo',
-    mediaUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop',
+    mediaUrl: '/images/concrete-foundation-pouring.jpg',
     exifGps: { lat: 27.2891, lon: 95.3214, accuracyM: 4.2 },
     status: 'reconciled',
     parsedDiscipline: 'Piping',
@@ -141,7 +141,7 @@ export const SAMPLE_WHATSAPP_CHATS: WhatsAppMessage[] = [
     timestamp: 'Yesterday, 04:30 PM',
     text: 'Tinsukia market camp se update: Kal subah 2 crews site aayenge. Heavy rain hold on site today.',
     mediaType: 'photo',
-    mediaUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb1861593?q=80&w=800&auto=format&fit=crop',
+    mediaUrl: '/images/subcon-pipeline-survey.jpg',
     exifGps: { lat: 27.4922, lon: 95.3533, accuracyM: 12.0 },
     status: 'flagged',
     parsedDiscipline: 'Piping',
@@ -184,7 +184,7 @@ export function processIncomingWhatsAppMessage(
     timestamp: 'Just now',
     text: rawText,
     mediaType,
-    mediaUrl: mediaType === 'photo' ? 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop' : undefined,
+    mediaUrl: mediaType === 'photo' ? '/images/piping-spool-erection.jpg' : undefined,
     exifGps: { lat: coords.lat, lon: coords.lon, accuracyM: 4.5 },
     status: isOffRoW ? 'flagged' : 'reconciled',
     parsedDiscipline: discipline,

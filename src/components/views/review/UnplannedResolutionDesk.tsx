@@ -88,32 +88,32 @@ export const UnplannedResolutionDesk: React.FC<UnplannedResolutionDeskProps> = (
       </div>
 
       {/* Raw Field Observation Card */}
-      <div className="rounded-xl bg-[#f8faff] border border-slate-200 p-4 flex flex-col gap-2">
+      <div className="rounded-xl bg-[#f8faff] dark:bg-[#070c16] border border-slate-200 dark:border-amber-500/20 p-4 flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] uppercase font-bold text-slate-500">
+          <span className="font-mono text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
             Raw Field Dispatch Telemetry ({relatedEvent.sourceType})
           </span>
-          <span className="font-mono text-[10px] text-slate-500">{relatedEvent.reportedDate}</span>
+          <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">{relatedEvent.reportedDate}</span>
         </div>
-        <div className="p-3 bg-white rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-800 font-sans italic leading-relaxed">
+        <div className="p-3 bg-white dark:bg-[#0c1220] rounded-lg border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-sans italic leading-relaxed">
           "{relatedEvent.rawText}"
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 font-mono text-[11px]">
-          <div className="p-2 bg-white rounded border border-slate-200">
+          <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400">Reporter:</span>{' '}
-            <span className="font-bold text-slate-900">{relatedEvent.reportedBy}</span>
+            <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.reportedBy}</span>
           </div>
-          <div className="p-2 bg-white rounded border border-slate-200">
+          <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400">Location:</span>{' '}
-            <span className="font-bold text-slate-900">{relatedEvent.location}</span>
+            <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.location}</span>
           </div>
-          <div className="p-2 bg-white rounded border border-slate-200">
+          <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400">Observed Qty:</span>{' '}
-            <span className="font-bold text-rose-700">{relatedEvent.quantity || 120} {relatedEvent.unit || 'm'}</span>
+            <span className="font-bold text-rose-700 dark:text-rose-400">{relatedEvent.quantity || 120} {relatedEvent.unit || 'm'}</span>
           </div>
-          <div className="p-2 bg-white rounded border border-slate-200">
+          <div className="p-2 bg-white dark:bg-[#0c1220] rounded border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400">Discipline:</span>{' '}
-            <span className="font-bold text-slate-900">{relatedEvent.discipline}</span>
+            <span className="font-bold text-slate-900 dark:text-slate-100">{relatedEvent.discipline}</span>
           </div>
         </div>
       </div>
