@@ -23,6 +23,18 @@
     --surface-muted: #e2e8f0;
   }
 
+  html.dark {
+    color-scheme: dark;
+    --surface-base: #0f131c;
+    --surface-card: #181c24;
+    --surface-well: #1c2028;
+    --surface-muted: #262a33;
+    --brand-primary: #adc6ff;
+    --brand-cobalt: #4d8eff;
+    --brand-tint: #4cd7f6;
+    --brand-light: rgba(77, 142, 255, 0.15);
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: #f8fafc;
@@ -42,87 +54,282 @@
 }
 
 /* ==========================================================================
-   Dark Theme System Overrides
+   Stitch Project: Full Site Dark Mode (Design System Tokens & Styles)
+   Project ID: 14356384326129231354
    ========================================================================== */
 html.dark {
   color-scheme: dark;
 }
 
 html.dark body {
-  background-color: #0b0f19;
-  color: #f1f5f9;
+  background-color: #0f131c;
+  color: #dfe2ee;
 }
 
+/* Deep Canvas Background Surfaces */
 html.dark .bg-\[\#f8fafc\] {
-  background-color: #0b0f19 !important;
+  background-color: #0f131c !important;
 }
 
+/* Primary Elevated Cards & Panels (Stitch surface-container-low: #181c24) */
 html.dark .bg-white {
-  background-color: #111827 !important;
-  color: #f8fafc;
+  background-color: #181c24 !important;
+  color: #dfe2ee;
 }
 
 html.dark .bg-white\/95,
 html.dark .bg-white\/90,
 html.dark .bg-white\/80,
 html.dark .bg-white\/60 {
-  background-color: rgba(17, 24, 39, 0.95) !important;
+  background-color: rgba(24, 28, 36, 0.94) !important;
 }
 
+/* Secondary Wells, Row Groups & Nested Boxes (Stitch surface-container: #1c2028) */
 html.dark .bg-slate-50,
 html.dark .bg-slate-50\/70,
 html.dark .bg-slate-100 {
-  background-color: #1e293b !important;
+  background-color: #1c2028 !important;
 }
 
 html.dark .bg-slate-200,
 html.dark .bg-slate-200\/80 {
-  background-color: #334155 !important;
+  background-color: #262a33 !important;
 }
 
+html.dark .bg-slate-300,
+html.dark .bg-slate-300\/80 {
+  background-color: #31353e !important;
+}
+
+/* Typography Hierarchy (Stitch on-surface: #dfe2ee, on-surface-variant: #c2c6d6) */
 html.dark .text-slate-900,
 html.dark .text-slate-800 {
-  color: #f8fafc !important;
+  color: #dfe2ee !important;
 }
 
 html.dark .text-slate-700,
 html.dark .text-slate-600 {
-  color: #cbd5e1 !important;
+  color: #c2c6d6 !important;
 }
 
-html.dark .text-slate-500 {
-  color: #94a3b8 !important;
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #8c909f !important;
 }
 
+/* Borders & Separators (Stitch surface-container-high / outline-variant) */
 html.dark .border-slate-200,
 html.dark .border-slate-200\/80,
 html.dark .border-slate-300,
 html.dark .border-slate-300\/80 {
-  border-color: #334155 !important;
+  border-color: #262a33 !important;
 }
 
-html.dark aside,
+/* Navigation: Sidebar & Top Header */
+html.dark aside {
+  background-color: #141820 !important;
+  border-color: #262a33 !important;
+}
+
 html.dark header {
-  background-color: rgba(15, 23, 42, 0.96) !important;
-  border-color: #1e293b !important;
+  background-color: rgba(24, 28, 36, 0.94) !important;
+  border-color: #262a33 !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.45) !important;
 }
 
+html.dark footer {
+  background-color: rgba(20, 24, 32, 0.85) !important;
+  border-color: #262a33 !important;
+}
+
+/* Modals, Drawers & Overlays */
+html.dark .bg-black\/50,
+html.dark .bg-black\/60,
+html.dark .bg-slate-900\/50 {
+  background-color: rgba(10, 14, 22, 0.82) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Interactive Form Inputs */
 html.dark input:not([type="checkbox"]):not([type="radio"]),
 html.dark select,
 html.dark textarea {
-  background-color: #1e293b !important;
-  color: #f8fafc !important;
-  border-color: #475569 !important;
+  background-color: #1c2028 !important;
+  color: #dfe2ee !important;
+  border-color: #424754 !important;
 }
 
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #4d8eff !important;
+  box-shadow: 0 0 0 2px rgba(77, 142, 255, 0.25) !important;
+}
+
+/* Telemetry & Indicator Accents (Stitch Cyber Accents) */
+html.dark .bg-blue-50,
+html.dark .bg-blue-50\/70,
+html.dark .bg-blue-100 {
+  background-color: rgba(77, 142, 255, 0.12) !important;
+  color: #adc6ff !important;
+}
+html.dark .text-blue-900,
+html.dark .text-blue-800,
+html.dark .text-blue-700 {
+  color: #adc6ff !important;
+}
+html.dark .border-blue-200,
+html.dark .border-blue-300 {
+  border-color: rgba(77, 142, 255, 0.25) !important;
+}
+
+html.dark .bg-emerald-50,
+html.dark .bg-emerald-50\/70,
+html.dark .bg-emerald-100 {
+  background-color: rgba(78, 222, 163, 0.12) !important;
+  color: #4edea3 !important;
+}
+html.dark .text-emerald-900,
+html.dark .text-emerald-800,
+html.dark .text-emerald-700 {
+  color: #4edea3 !important;
+}
+html.dark .border-emerald-200,
+html.dark .border-emerald-300 {
+  border-color: rgba(78, 222, 163, 0.25) !important;
+}
+
+html.dark .bg-amber-50,
+html.dark .bg-amber-100,
+html.dark .bg-amber-100\/90 {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+  color: #fbbf24 !important;
+}
+html.dark .text-amber-900,
+html.dark .text-amber-950,
+html.dark .text-amber-800 {
+  color: #fbbf24 !important;
+}
+html.dark .border-amber-300,
+html.dark .border-amber-400 {
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+html.dark .bg-rose-50,
+html.dark .bg-red-50,
+html.dark .bg-red-100 {
+  background-color: rgba(255, 180, 171, 0.12) !important;
+  color: #ffb4ab !important;
+}
+html.dark .text-rose-700,
+html.dark .text-red-700,
+html.dark .text-red-800 {
+  color: #ffb4ab !important;
+}
+html.dark .border-rose-200,
+html.dark .border-red-200,
+html.dark .border-red-300 {
+  border-color: rgba(255, 180, 171, 0.25) !important;
+}
+
+/* Violet / Purple (Cryptographic Vigilance & Blockchain Provenance) */
+html.dark .bg-purple-50,
+html.dark .bg-violet-50,
+html.dark .bg-purple-100,
+html.dark .bg-violet-100 {
+  background-color: rgba(168, 85, 247, 0.12) !important;
+  color: #c084fc !important;
+}
+html.dark .text-purple-700,
+html.dark .text-purple-800,
+html.dark .text-purple-900,
+html.dark .text-violet-700,
+html.dark .text-violet-800,
+html.dark .text-violet-900 {
+  color: #c084fc !important;
+}
+html.dark .border-purple-200,
+html.dark .border-purple-300,
+html.dark .border-violet-200,
+html.dark .border-violet-300 {
+  border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+/* Cyan (Real-Time SCADA Telemetry & GPS Geofence) */
+html.dark .bg-cyan-50,
+html.dark .bg-cyan-100 {
+  background-color: rgba(6, 182, 212, 0.12) !important;
+  color: #22d3ee !important;
+}
+html.dark .text-cyan-700,
+html.dark .text-cyan-800,
+html.dark .text-cyan-900 {
+  color: #22d3ee !important;
+}
+html.dark .border-cyan-200,
+html.dark .border-cyan-300 {
+  border-color: rgba(6, 182, 212, 0.25) !important;
+}
+
+/* Tables, Data Matrices & Zebra Striping for Easy Legibility */
+html.dark table {
+  border-color: #262a33 !important;
+}
+html.dark th {
+  background-color: #0c1018 !important;
+  color: #94a3b8 !important;
+  border-color: #262a33 !important;
+}
+html.dark td {
+  border-color: #1c2028 !important;
+}
+html.dark tbody tr:hover {
+  background-color: rgba(38, 42, 51, 0.45) !important;
+}
+
+/* Progress Meters & Recessed Wells */
+html.dark .bg-slate-200.h-2,
+html.dark .bg-slate-100.h-2,
+html.dark .bg-slate-200.h-1\.5,
+html.dark .bg-slate-100.h-1\.5,
+html.dark .bg-slate-200.h-1,
+html.dark .bg-slate-100.h-1 {
+  background-color: #0a0e16 !important;
+}
+
+/* Recharts & SVG Data Visualizations */
+html.dark .recharts-cartesian-grid line {
+  stroke: #1e293b !important;
+}
+html.dark .recharts-text {
+  fill: #94a3b8 !important;
+}
+html.dark .recharts-default-tooltip {
+  background-color: #181c24 !important;
+  border-color: #31353e !important;
+  color: #dfe2ee !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Ambient Canvas Glow Matching Stitch Screens */
+html.dark main {
+  background-color: #0f131c !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(77, 142, 255, 0.05) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(76, 215, 246, 0.04) 0px, transparent 55%);
+}
+
+/* Precision Scrollbars */
 html.dark ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #0f131c;
 }
 html.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #262a33;
+  border-radius: 3px;
 }
 html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #353942;
 }
 
 /* Material Symbols Outlined Font Configuration */

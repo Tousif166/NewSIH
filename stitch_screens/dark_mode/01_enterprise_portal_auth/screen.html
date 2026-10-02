@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-bright":"#353942","surface-container-highest":"#31353e","surface-container-high":"#262a33","on-tertiary-container":"#00311f","on-error-container":"#ffdad6","surface-tint":"#adc6ff","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","surface-container":"#1c2028","inverse-surface":"#dfe2ee","on-tertiary":"#003824","on-tertiary-fixed-variant":"#005236","primary-container":"#4d8eff","on-tertiary-fixed":"#002113","surface-variant":"#31353e","primary":"#adc6ff","secondary":"#4cd7f6","primary-fixed-dim":"#adc6ff","on-primary-container":"#00285d","secondary-fixed":"#acedff","tertiary":"#4edea3","tertiary-fixed-dim":"#4edea3","error-container":"#93000a","on-primary":"#002e6a","inverse-on-surface":"#2c3039","on-primary-fixed":"#001a42","primary-fixed":"#d8e2ff","on-secondary-fixed":"#001f26","error":"#ffb4ab","outline":"#8c909f","inverse-primary":"#005ac2","on-secondary-fixed-variant":"#004e5c","on-surface-variant":"#c2c6d6","tertiary-container":"#00a572","surface-container-lowest":"#0a0e16","surface-dim":"#0f131c","surface-container-low":"#181c24","surface":"#0f131c","on-secondary":"#003640","on-surface":"#dfe2ee","secondary-container":"#03b5d3","background":"#0f131c","on-primary-fixed-variant":"#004395","on-error":"#690005","secondary-fixed-dim":"#4cd7f6","outline-variant":"#424754","on-secondary-container":"#00424e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin-lg":"3.5rem","space-xl":"2.25rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin-md":"2rem","gutter-lg":"2rem","space-lg":"1.5rem","gutter":"1.25rem","margin":"1rem"},"fontFamily":{"label-caps":["JetBrains Mono"],"code-badge":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Geist"],"telemetry-data":["JetBrains Mono"],"headline-lg":["Geist"],"display-hero":["Geist"],"display-hero-mobile":["Geist"],"body-sm":["Inter"],"headline-sm":["Inter"]},"fontSize":{"label-caps":["10px",{"lineHeight":"14px","fontWeight":"700"}],"code-badge":["11px",{"lineHeight":"16px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"telemetry-data":["13px",{"lineHeight":"20px","fontWeight":"500"}],"headline-lg":["30px",{"lineHeight":"38px","fontWeight":"600"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}],"display-hero-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["17px",{"lineHeight":"24px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container flex items-center justify-center p-space-md"><main class="w-full max-w-5xl mx-auto"><div class="flex flex-col w-full py-space-sm">
+<!-- Portal Identification Header Bar -->
+<header class="flex flex-wrap items-center justify-between gap-space-sm pb-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shadow-md">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">SiteSync AI</span>
+<span class="font-label-caps text-label-caps bg-surface-container-highest text-secondary px-2 py-0.5 rounded tracking-wider">OIL INDIA LIMITED</span>
+</div>
+<p class="font-label-caps text-label-caps text-outline tracking-wider">INTELLIGENT PLANNING-TO-EXECUTION BRIDGE • SIH26122</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs bg-surface-container-low px-3 py-1.5 rounded-full shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-telemetry-data text-telemetry-data text-outline">PS-ID: <span class="text-on-surface font-semibold">26122</span></span>
+<span class="font-telemetry-data text-telemetry-data text-outline-variant">•</span>
+<span class="font-label-caps text-label-caps text-tertiary">EPPM READY</span>
+</div>
+<button class="flex items-center gap-space-xs bg-surface-container hover:bg-surface-container-high text-primary px-3 py-1.5 rounded-lg transition-colors shadow-sm" id="quickDemoBtn" type="button">
+<span class="material-symbols-outlined text-body-lg">play_circle</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Interactive Sandbox</span>
+</button>
+</div>
+</header>
+<!-- Hero Telemetry & Value Headline -->
+<section class="relative text-center max-w-3xl mx-auto py-space-lg flex flex-col items-center">
+<div class="inline-flex items-center gap-space-xs px-3 py-1 rounded-full bg-surface-container-high text-secondary shadow-sm mb-space-md">
+<span class="material-symbols-outlined text-body-sm text-secondary animate-pulse">sensors</span>
+<span class="font-label-caps text-label-caps tracking-widest uppercase">Oil India Enterprise Access &amp; Ground-Truth Portal</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg md:text-display-hero text-on-surface tracking-tight font-bold">
+      From Field Information to Trusted Schedule Progress — 
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary-container to-primary">Automatically.</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-space-sm">
+      Select an enterprise evaluator role below to simulate the automated execution pipeline, or authenticate via Oil India NetWeaver credentials.
+    </p>
+<!-- Telemetry Strip Visualization -->
+<div class="w-full max-w-xl grid grid-cols-3 gap-space-xs mt-space-lg bg-surface-container-lowest p-space-xs rounded-xl shadow-inner">
+<div class="flex flex-col items-center py-2 px-3 rounded-lg bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-outline tracking-wider">ORACLE P6 SYNC</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">12ms Delta</span>
+</div>
+</div>
+<div class="flex flex-col items-center py-2 px-3 rounded-lg bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-outline tracking-wider">BLOCKCHAIN LEDGER</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">SHA-256 Valid</span>
+</div>
+</div>
+<div class="flex flex-col items-center py-2 px-3 rounded-lg bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-outline tracking-wider">FIELD PIPELINE DPR</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">41 Units Live</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 12-Column Main Command Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mt-space-md items-start">
+<!-- Left Column: Evaluator Persona Matrix (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-body-lg">bolt</span>
+<h2 class="font-label-caps text-label-caps tracking-widest text-on-surface uppercase">1-Click Evaluator Personas (Hackathon Fast Access)</h2>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Simulate role-specific permissions, approval authority &amp; UI environments:</p>
+</div>
+<span class="font-code-badge text-code-badge bg-surface-container-high text-outline px-2.5 py-1 rounded">RBAC v4.2</span>
+</div>
+<!-- 2x2 Persona Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md" id="personaCardsContainer">
+<!-- Persona 1: Controls (Active by default) -->
+<div class="persona-card relative flex flex-col justify-between p-space-md rounded-xl bg-surface-container-high transition-all shadow-xl cursor-pointer group" data-persona="planner">
+<div class="absolute -top-px left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-primary-container to-transparent"></div>
+<div>
+<div class="flex items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-7 h-7 rounded bg-tertiary-container/30 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg" style="font-variation-settings: 'FILL' 1;">schema</span>
+</span>
+<span class="font-label-caps text-label-caps bg-tertiary-container/40 text-tertiary px-2 py-0.5 rounded tracking-wide">CONTROLS</span>
+</div>
+<span class="font-code-badge text-code-badge text-outline">OIL-PLN-4421</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Pranjal Saikia</h3>
+<p class="font-body-sm text-body-sm text-secondary font-medium">Lead Planning &amp; Controls Engineer</p>
+<p class="font-label-caps text-label-caps text-outline mt-0.5">Projects &amp; Technical Services, Duliajan HQ</p>
+<ul class="mt-space-md space-y-2">
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary">check_circle</span>
+<span>AI Review Center &amp; DPR Match</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary">check_circle</span>
+<span>Primavera Baseline Approval</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary">check_circle</span>
+<span>Teach AI Vocabulary Engine</span>
+</li>
+</ul>
+</div>
+<div class="mt-space-lg">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-xs shadow-md group-hover:brightness-110 transition-all" type="button">
+<span>Sign In as Planner</span>
+<span class="material-symbols-outlined text-body-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Persona 2: Field Ops -->
+<div class="persona-card relative flex flex-col justify-between p-space-md rounded-xl bg-surface-container transition-all shadow-md hover:bg-surface-container-high cursor-pointer group" data-persona="supervisor">
+<div>
+<div class="flex items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-7 h-7 rounded bg-surface-bright text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">construction</span>
+</span>
+<span class="font-label-caps text-label-caps bg-surface-bright text-secondary-fixed px-2 py-0.5 rounded tracking-wide">FIELD OPS</span>
+</div>
+<span class="font-code-badge text-code-badge text-outline">OIL-SUP-8893</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Debashis Gogoi</h3>
+<p class="font-body-sm text-body-sm text-secondary font-medium">Senior Field Construction Supervisor</p>
+<p class="font-label-caps text-label-caps text-outline mt-0.5">Field Execution Cell, Digboi Pipeline</p>
+<ul class="mt-space-md space-y-2">
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-secondary">check_circle</span>
+<span>VoiceTime Agent &amp; Transcripts</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-secondary">check_circle</span>
+<span>Camera Geotag &amp; OCR Photos</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-secondary">check_circle</span>
+<span>Offline SQLite Local Queue</span>
+</li>
+</ul>
+</div>
+<div class="mt-space-lg">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-xs hover:bg-surface-bright transition-all" type="button">
+<span>Sign In as Supervisor</span>
+<span class="material-symbols-outlined text-body-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Persona 3: Executive -->
+<div class="persona-card relative flex flex-col justify-between p-space-md rounded-xl bg-surface-container transition-all shadow-md hover:bg-surface-container-high cursor-pointer group" data-persona="executive">
+<div>
+<div class="flex items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-7 h-7 rounded bg-surface-bright text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">insights</span>
+</span>
+<span class="font-label-caps text-label-caps bg-surface-bright text-primary px-2 py-0.5 rounded tracking-wide">EXECUTIVE</span>
+</div>
+<span class="font-code-badge text-code-badge text-outline">OIL-CGM-1002</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Rajiv K. Sharma</h3>
+<p class="font-body-sm text-body-sm text-secondary font-medium">Chief General Manager (Infra Projects)</p>
+<p class="font-label-caps text-label-caps text-outline mt-0.5">Project Directorate, Oil India Limited</p>
+<ul class="mt-space-md space-y-2">
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-primary">check_circle</span>
+<span>Executive Health S-Curves</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-primary">check_circle</span>
+<span>What-If Monte Carlo Analysis</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-primary">check_circle</span>
+<span>Contractor Dispute Adjudication</span>
+</li>
+</ul>
+</div>
+<div class="mt-space-lg">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-xs hover:bg-surface-bright transition-all" type="button">
+<span>Sign In as GM / PM</span>
+<span class="material-symbols-outlined text-body-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Persona 4: Vigilance & Cryptography -->
+<div class="persona-card relative flex flex-col justify-between p-space-md rounded-xl bg-surface-container transition-all shadow-md hover:bg-surface-container-high cursor-pointer group" data-persona="vigilance">
+<div>
+<div class="flex items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-7 h-7 rounded bg-surface-bright text-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">encrypted</span>
+</span>
+<span class="font-label-caps text-label-caps bg-surface-bright text-tertiary-fixed px-2 py-0.5 rounded tracking-wide">VIGILANCE</span>
+</div>
+<span class="font-code-badge text-code-badge text-outline">OIL-VIG-0042</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Dr. Ananya Baruah</h3>
+<p class="font-body-sm text-body-sm text-secondary font-medium">Chief Vigilance &amp; Provenance Officer</p>
+<p class="font-label-caps text-label-caps text-outline mt-0.5">Corporate Vigilance &amp; Integrity Wing</p>
+<ul class="mt-space-md space-y-2">
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary-fixed">check_circle</span>
+<span>Immutable SHA-256 Provenance</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary-fixed">check_circle</span>
+<span>Anti-Tamper Audit Logs</span>
+</li>
+<li class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-sm text-tertiary-fixed">check_circle</span>
+<span>Activity Archetype DNA Inspector</span>
+</li>
+</ul>
+</div>
+<div class="mt-space-lg">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-xs hover:bg-surface-bright transition-all" type="button">
+<span>Sign In as Vigilance</span>
+<span class="material-symbols-outlined text-body-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Explanatory Hackathon Notice -->
+<div class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<span class="material-symbols-outlined text-headline-sm text-secondary flex-shrink-0 mt-0.5">info</span>
+<div>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Judge Evaluator Note:</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+            Switching roles dynamically changes the application context, permissions, and navigation desk (e.g. Field Supervisors create voice logs &amp; geotags; Controls commit schedule actuals to Primavera P6; Vigilance inspects SHA-256 ledger integrity).
+          </span>
+</div>
+</div>
+</div>
+<!-- Right Column: Enterprise Credential Auth Desk (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="bg-surface-container-high p-space-lg rounded-2xl shadow-2xl flex flex-col gap-space-md relative overflow-hidden">
+<!-- Card Header with Security Badges -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-headline-sm">fingerprint</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Enterprise Credential Login</h2>
+<p class="font-label-caps text-label-caps text-outline">OIL Active Directory Single Sign-On</p>
+</div>
+</div>
+<span class="font-code-badge text-code-badge px-2.5 py-1 rounded bg-tertiary/10 text-tertiary">SECURE SSL</span>
+</div>
+<!-- Quick Switch Persona Selector Grid -->
+<div>
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider block mb-2">QUICK SELECT ENTERPRISE PERSONA:</label>
+<div class="grid grid-cols-2 gap-space-xs" id="quickTabs">
+<button class="quick-tab-btn flex items-center gap-2 p-2 rounded-lg bg-primary-container/20 text-primary text-left transition-colors" data-fill="planner" type="button">
+<span class="material-symbols-outlined text-body-md text-tertiary">schema</span>
+<div class="min-w-0">
+<p class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Pranjal</p>
+<p class="font-label-caps text-label-caps text-outline truncate">Controls &amp; Baseline</p>
+</div>
+</button>
+<button class="quick-tab-btn flex items-center gap-2 p-2 rounded-lg bg-surface-container text-on-surface text-left hover:bg-surface-bright transition-colors" data-fill="supervisor" type="button">
+<span class="material-symbols-outlined text-body-md text-secondary">construction</span>
+<div class="min-w-0">
+<p class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Debashis</p>
+<p class="font-label-caps text-label-caps text-outline truncate">Field Execution</p>
+</div>
+</button>
+<button class="quick-tab-btn flex items-center gap-2 p-2 rounded-lg bg-surface-container text-on-surface text-left hover:bg-surface-bright transition-colors" data-fill="executive" type="button">
+<span class="material-symbols-outlined text-body-md text-primary">insights</span>
+<div class="min-w-0">
+<p class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Rajiv</p>
+<p class="font-label-caps text-label-caps text-outline truncate">Exec Oversight</p>
+</div>
+</button>
+<button class="quick-tab-btn flex items-center gap-2 p-2 rounded-lg bg-surface-container text-on-surface text-left hover:bg-surface-bright transition-colors" data-fill="vigilance" type="button">
+<span class="material-symbols-outlined text-body-md text-tertiary-fixed">encrypted</span>
+<div class="min-w-0">
+<p class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Dr. Ananya</p>
+<p class="font-label-caps text-label-caps text-outline truncate">Vigilance &amp; Audit</p>
+</div>
+</button>
+</div>
+</div>
+<!-- Form Fields -->
+<form class="flex flex-col gap-space-md" id="authForm" onsubmit="event.preventDefault(); triggerAuthSuccess();">
+<!-- Email / Corp ID Input -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps text-outline tracking-wider uppercase" for="enterpriseEmail">ENTERPRISE EMAIL OR EMPLOYEE ID</label>
+<div class="flex items-center px-3 py-2.5 rounded-lg bg-surface-container-lowest shadow-inner focus-within:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-outline text-body-lg mr-2">mail</span>
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md focus:outline-none" id="enterpriseEmail" placeholder="corp.user@oilindia.in" required="" type="text" value="pranjal.saikia@oilindia.in"/>
+</div>
+</div>
+<!-- Passcode Input -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-outline tracking-wider uppercase" for="securityPin">SECURITY PASSCODE / PIN</label>
+<span class="font-code-badge text-code-badge text-primary cursor-pointer hover:underline" id="demoPassBtn">Default: demo password</span>
+</div>
+<div class="flex items-center px-3 py-2.5 rounded-lg bg-surface-container-lowest shadow-inner focus-within:bg-surface-container-low transition-colors relative">
+<span class="material-symbols-outlined text-outline text-body-lg mr-2">key</span>
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md focus:outline-none tracking-widest" id="securityPin" placeholder="••••••••" required="" type="password" value="oil-secure-2025"/>
+<button class="text-outline hover:text-on-surface p-1 flex items-center justify-center transition-colors" id="togglePasswordBtn" type="button">
+<span class="material-symbols-outlined text-body-md" id="toggleEyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Options & Cryptographic Badge -->
+<div class="flex items-center justify-between pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary-container accent-primary-container" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Remember session</span>
+</label>
+<span class="font-label-caps text-label-caps text-outline tracking-wider">256-bit AES Auth</span>
+</div>
+<!-- Primary Sign-In Action -->
+<button class="w-full py-3 px-space-md rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-xs shadow-lg hover:brightness-110 active:scale-[0.99] transition-all" id="authSubmitBtn" type="submit">
+<span class="material-symbols-outlined text-body-lg">verified_user</span>
+<span id="submitLabel">Authorize &amp; Access SiteSync AI</span>
+<span class="material-symbols-outlined text-body-lg">arrow_forward</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center gap-space-sm my-1">
+<div class="flex-1 h-px bg-surface-container-highest"></div>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">OR SSO ACCESS</span>
+<div class="flex-1 h-px bg-surface-container-highest"></div>
+</div>
+<!-- Secondary NetWeaver Action -->
+<button class="w-full py-2.5 px-space-md rounded-lg bg-surface-container text-on-surface font-body-md text-body-md font-medium flex items-center justify-center gap-space-xs hover:bg-surface-bright transition-all shadow-sm" id="ssoBtn" type="button">
+<span class="material-symbols-outlined text-secondary text-body-lg">cloud_sync</span>
+<span>Sign In via Oil India SAP NetWeaver SSO</span>
+</button>
+</form>
+<!-- Live Ephemeral Security Check Trigger -->
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-low px-space-md py-space-sm rounded-lg">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-caps text-label-caps text-on-surface">EPPM Token Challenge active</span>
+</div>
+<button class="font-code-badge text-code-badge text-secondary hover:underline flex items-center gap-1" id="triggerTokenModal" type="button">
+<span>Inspect 2FA Token</span>
+<span class="material-symbols-outlined text-body-sm">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Quick Telemetry Diagnostic Widget -->
+<div class="p-space-md rounded-xl bg-surface-container flex flex-col gap-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline tracking-wider uppercase">Active Session Diagnostics</span>
+<span class="font-code-badge text-code-badge text-tertiary">READY</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Primavera P6 Cloud Bridge:</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface">Connected (TLS 1.3)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Field SQLite Synchronization:</span>
+<span class="font-telemetry-data text-telemetry-data text-secondary">Idle (0 in buffer)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Cryptographic Anchor:</span>
+<span class="font-telemetry-data text-telemetry-data text-outline truncate max-w-[180px]">0x9b42...fe8a</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Role Verification & Cryptographic 2FA Modal Dialog (Interactive overlay) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-md hidden" id="cryptoModal">
+<div class="w-full max-w-md bg-surface-container-high rounded-2xl shadow-2xl p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-headline-sm">security</span>
+</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">2FA Token Challenge</h3>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-bright flex items-center justify-center text-outline hover:text-on-surface" id="closeCryptoModal" type="button">
+<span class="material-symbols-outlined text-body-lg">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Oil India Limited zero-trust infrastructure enforces hardware token cryptographic verification for Project Planning and Baseline mutations.
+      </p>
+<div class="p-space-md rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-caps text-label-caps text-outline">
+<span>EPPM TOKEN GENERATOR</span>
+<span class="text-tertiary">VALID (18s)</span>
+</div>
+<div class="text-center font-telemetry-data text-headline-md tracking-widest text-secondary font-bold select-all py-1">
+          742 • 901
+        </div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-2/3 animate-pulse"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="w-full py-2.5 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:brightness-110 transition-all" onclick="triggerAuthSuccess()" type="button">
+<span class="material-symbols-outlined text-body-lg">verified</span>
+<span>Validate &amp; Enter Portal</span>
+</button>
+<button class="w-full py-2 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm hover:bg-surface-bright transition-all" id="cancelCryptoModal" type="button">
+          Dismiss
+        </button>
+</div>
+</div>
+</div>
+<!-- Role Change Success Toast Banner (Interactive feedback) -->
+<div class="fixed bottom-6 right-6 z-40 bg-surface-container-highest text-on-surface px-space-md py-3 rounded-xl shadow-2xl flex items-center gap-space-sm transform translate-y-24 opacity-0 transition-all duration-300" id="roleToast">
+<span class="material-symbols-outlined text-tertiary text-headline-sm" id="toastIcon">check_circle</span>
+<div>
+<p class="font-body-sm text-body-sm font-semibold text-on-surface" id="toastTitle">Persona Swapped</p>
+<p class="font-label-caps text-label-caps text-outline" id="toastDesc">Now configured as Lead Planning &amp; Controls</p>
+</div>
+</div>
+<!-- Portal Footer Monospaced Provenance Strip -->
+<footer class="mt-space-xl pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-outline">
+<span class="text-on-surface">SIH26122</span>
+<span>•</span>
+<span>Smart Automation</span>
+<span>•</span>
+<span>Oil India Limited Prototype</span>
+</div>
+<div class="flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-outline">
+<span>Enterprise Role-Based Access Control (RBAC) &amp; Immutable Provenance</span>
+</div>
+</footer>
+</div>
+<script>
+  (function() {
+    const personaData = {
+      planner: {
+        name: "Pranjal Saikia",
+        role: "Lead Planning & Controls Engineer",
+        email: "pranjal.saikia@oilindia.in",
+        badge: "CONTROLS",
+        code: "OIL-PLN-4421",
+        label: "Sign In as Planner"
+      },
+      supervisor: {
+        name: "Debashis Gogoi",
+        role: "Senior Field Construction Supervisor",
+        email: "debashis.gogoi@oilindia.in",
+        badge: "FIELD OPS",
+        code: "OIL-SUP-8893",
+        label: "Sign In as Supervisor"
+      },
+      executive: {
+        name: "Rajiv K. Sharma",
+        role: "Chief General Manager (Infra Projects)",
+        email: "rajiv.sharma@oilindia.in",
+        badge: "EXECUTIVE",
+        code: "OIL-CGM-1002",
+        label: "Sign In as GM / PM"
+      },
+      vigilance: {
+        name: "Dr. Ananya Baruah",
+        role: "Chief Vigilance & Provenance Officer",
+        email: "ananya.baruah@oilindia.in",
+        badge: "VIGILANCE",
+        code: "OIL-VIG-0042",
+        label: "Sign In as Vigilance"
+      }
+    };
+
+    const emailInput = document.getElementById('enterpriseEmail');
+    const submitLabel = document.getElementById('submitLabel');
+    const toast = document.getElementById('roleToast');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastDesc = document.getElementById('toastDesc');
+    const toggleEye = document.getElementById('togglePasswordBtn');
+    const securityPin = document.getElementById('securityPin');
+    const toggleEyeIcon = document.getElementById('toggleEyeIcon');
+    const cryptoModal = document.getElementById('cryptoModal');
+    const triggerModalBtn = document.getElementById('triggerTokenModal');
+    const closeModalBtn = document.getElementById('closeCryptoModal');
+    const cancelModalBtn = document.getElementById('cancelCryptoModal');
+    const quickDemoBtn = document.getElementById('quickDemoBtn');
+
+    function showToast(title, desc) {
+      toastTitle.textContent = title;
+      toastDesc.textContent = desc;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    function selectPersona(key) {
+      const p = personaData[key];
+      if (!p) return;
+
+      emailInput.value = p.email;
+      submitLabel.textContent = "Authorize as " + p.name.split(' ')[0];
+
+      // Update card styling
+      document.querySelectorAll('.persona-card').forEach(card => {
+        if (card.dataset.persona === key) {
+          card.classList.remove('bg-surface-container');
+          card.classList.add('bg-surface-container-high', 'shadow-xl');
+        } else {
+          card.classList.remove('bg-surface-container-high', 'shadow-xl');
+          card.classList.add('bg-surface-container');
+        }
+      });
+
+      // Update quick tabs styling
+      document.querySelectorAll('.quick-tab-btn').forEach(tab => {
+        if (tab.dataset.fill === key) {
+          tab.classList.add('bg-primary-container/20', 'text-primary');
+          tab.classList.remove('bg-surface-container');
+        } else {
+          tab.classList.remove('bg-primary-container/20', 'text-primary');
+          tab.classList.add('bg-surface-container');
+        }
+      });
+
+      showToast("Selected " + p.name, p.role + " (" + p.badge + ")");
+    }
+
+    // Bind card clicks
+    document.querySelectorAll('.persona-card').forEach(card => {
+      card.addEventListener('click', () => {
+        selectPersona(card.dataset.persona);
+      });
+    });
+
+    // Bind quick selector tabs
+    document.querySelectorAll('.quick-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectPersona(btn.dataset.fill);
+      });
+    });
+
+    // Password visibility toggle
+    toggleEye.addEventListener('click', () => {
+      if (securityPin.type === 'password') {
+        securityPin.type = 'text';
+        toggleEyeIcon.textContent = 'visibility_off';
+      } else {
+        securityPin.type = 'password';
+        toggleEyeIcon.textContent = 'visibility';
+      }
+    });
+
+    // Demo password auto-fill
+    document.getElementById('demoPassBtn').addEventListener('click', () => {
+      securityPin.value = 'oil-demo-2025';
+      showToast("Credentials Applied", "Demo passcode populated automatically");
+    });
+
+    // SSO click
+    document.getElementById('ssoBtn').addEventListener('click', () => {
+      showToast("Redirecting to SAP SSO", "Routing to Oil India NetWeaver SAML 2.0 Identity Hub...");
+    });
+
+    // Modal Triggers
+    triggerModalBtn.addEventListener('click', () => {
+      cryptoModal.classList.remove('hidden');
+    });
+
+    quickDemoBtn.addEventListener('click', () => {
+      cryptoModal.classList.remove('hidden');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      cryptoModal.classList.add('hidden');
+    });
+
+    cancelModalBtn.addEventListener('click', () => {
+      cryptoModal.classList.add('hidden');
+    });
+
+    window.triggerAuthSuccess = function() {
+      cryptoModal.classList.add('hidden');
+      const submitBtn = document.getElementById('authSubmitBtn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined text-body-lg animate-spin">refresh</span><span>Verifying Credentials...</span>';
+      
+      setTimeout(() => {
+        submitBtn.innerHTML = '<span class="material-symbols-outlined text-body-lg text-tertiary">check_circle</span><span>Authenticated! Launching Deck...</span>';
+        showToast("Access Granted", "Establishing encrypted session with Primavera P6 Bridge...");
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }, 2000);
+      }, 900);
+    };
+
+  })();
+</script></main></body></html>

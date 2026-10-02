@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"#dfe2ee","error":"#ffb4ab","surface-container":"#1c2028","inverse-on-surface":"#2c3039","surface-container-highest":"#31353e","on-secondary":"#003640","on-secondary-fixed":"#001f26","secondary-fixed-dim":"#4cd7f6","tertiary":"#4edea3","surface":"#0f131c","surface-variant":"#31353e","on-surface":"#dfe2ee","on-primary-container":"#00285d","on-tertiary-fixed-variant":"#005236","on-error":"#690005","on-primary":"#002e6a","secondary-fixed":"#acedff","surface-container-high":"#262a33","inverse-surface":"#dfe2ee","surface-dim":"#0f131c","on-tertiary-container":"#00311f","on-tertiary":"#003824","surface-bright":"#353942","outline-variant":"#424754","on-secondary-container":"#00424e","on-surface-variant":"#c2c6d6","error-container":"#93000a","surface-container-low":"#181c24","primary-fixed-dim":"#adc6ff","inverse-primary":"#005ac2","primary-fixed":"#d8e2ff","on-error-container":"#ffdad6","surface-container-lowest":"#0a0e16","tertiary-container":"#00a572","primary":"#adc6ff","tertiary-fixed-dim":"#4edea3","tertiary-fixed":"#6ffbbe","on-primary-fixed-variant":"#004395","primary-container":"#4d8eff","secondary":"#4cd7f6","on-tertiary-fixed":"#002113","secondary-container":"#03b5d3","on-secondary-fixed-variant":"#004e5c","surface-tint":"#adc6ff","background":"#0f131c","outline":"#8c909f","on-primary-fixed":"#001a42"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"1rem","space-sm":"0.5rem","gutter":"1.25rem","space-lg":"1.5rem","margin-md":"2rem","space-xs":"0.25rem","space-md":"1rem","margin-lg":"3.5rem","gutter-lg":"2rem","space-xl":"2.25rem"},fontFamily:{"display-hero-mobile":["Geist"],"code-badge":["JetBrains Mono"],"label-caps":["JetBrains Mono"],"headline-md":["Geist"],"telemetry-data":["JetBrains Mono"],"body-sm":["Inter"],"body-md":["Inter"],"display-hero":["Geist"],"body-lg":["Inter"],"headline-sm":["Inter"],"headline-lg":["Geist"]},fontSize:{"display-hero-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"code-badge":["11px",{"lineHeight":"16px","fontWeight":"600"}],"label-caps":["10px",{"lineHeight":"14px","fontWeight":"700"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"telemetry-data":["13px",{"lineHeight":"20px","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-sm":["17px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg":["30px",{"lineHeight":"38px","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary selection:text-on-secondary"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/90 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-gutter flex items-center gap-space-sm bg-surface-container-low/50"><div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary shadow-[0_0_12px_rgba(76,215,246,0.35)]"><span class="material-symbols-outlined text-[22px]">precision_manufacturing</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-semibold truncate">SiteSync AI</span><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded bg-primary-container/20 text-primary-fixed-dim uppercase tracking-wider">OIL</span></div><span class="font-label-caps text-label-caps text-outline truncate tracking-wider">SIH26122 • COMMAND DECK</span></div></div><div class="px-space-md pt-space-md pb-space-xs"><div class="font-label-caps text-label-caps uppercase text-outline px-space-sm pb-space-xs tracking-widest flex items-center justify-between"><span>Mission Control</span><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span></div></div><nav class="flex-1 px-space-sm space-y-1 overflow-y-auto" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_15px_rgba(77,142,255,0.25)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview-command" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">grid_view</span><span class="font-body-md text-body-md">Overview Command</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="eppm-planning-bridge" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">account_tree</span><span class="font-body-md text-body-md">EPPM Planning Bridge</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="field-telemetry" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">sensors</span><span class="font-body-md text-body-md flex-1">Field Telemetry</span><span class="font-code-badge text-code-badge px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold tracking-tight">LIVE</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="executive-health-s-curves" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">show_chart</span><span class="font-body-md text-body-md">Executive Health S-Curves</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="audit-and-provenance" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">verified_user</span><span class="font-body-md text-body-md">Audit & Provenance</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary-container text-on-primary-container font-semibold shadow-[0_0_15px_rgba(77,142,255,0.25)]" data-path="diagnostics-and-system-settings" href="#"><span class="material-symbols-outlined text-[20px] text-outline group-hover:text-secondary transition-colors">tune</span><span class="font-body-md text-body-md">Diagnostics & Settings</span></a></nav></div><div class="p-space-md bg-surface-container-low/80 m-space-sm rounded-xl space-y-space-xs shadow-inner"><div class="flex items-center justify-between font-label-caps text-label-caps"><span class="text-outline flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>SAP NetWeaver</span><span class="text-tertiary-fixed-dim font-code-badge text-code-badge uppercase tracking-wider">SYNCED</span></div><div class="font-telemetry-data text-telemetry-data text-on-surface-variant truncate">Pipe: <span class="text-on-surface font-semibold">Duliajan-08-N</span></div><div class="flex items-center justify-between pt-space-xs"><span class="font-code-badge text-code-badge text-outline">v4.1.8-SIH</span><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded bg-surface-container-high text-secondary-fixed-dim tracking-wider">SECURE SSL</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/85 backdrop-blur-xl z-40 shadow-[0_1px_12px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-gutter-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Oil India Limited</span><span class="text-outline-variant">|</span><span class="font-body-sm text-body-sm text-on-surface-variant hidden xl:inline">Intelligent Planning-to-Execution Bridge</span></div><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high font-label-caps text-label-caps text-secondary-fixed tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>PS-ID: 26122 • EPPM READY</span></div><div class="hidden lg:flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-outline"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span>Status: <span class="text-on-surface font-semibold">Optimal 99.98%</span></span></div></div><div class="flex items-center gap-space-md"><nav class="hidden 2xl:flex items-center gap-space-md"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="executive-health-s-curves" href="#">Executive Health & Analytics</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-high"><span class="material-symbols-outlined text-[18px] text-secondary">dark_mode</span><span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold">Dark</span></div><div class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest cursor-pointer transition-all"><span class="material-symbols-outlined text-[18px] text-outline">badge</span><span class="font-body-sm text-body-sm font-medium text-on-surface">Switch Persona</span><span class="material-symbols-outlined text-[16px] text-outline">arrow_drop_down</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface flex-1"><div class="flex flex-col w-full relative">
+<!-- Ambient backdrop lighting blooms -->
+<div class="absolute top-12 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-80 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Main System Surface Layout -->
+<div class="w-full px-gutter-lg py-space-lg space-y-space-lg max-w-[1720px] mx-auto">
+<!-- Top System Telemetry Strip -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-container-lowest/80 p-space-md rounded-xl shadow-lg">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-high">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-label-caps text-label-caps uppercase text-tertiary-fixed font-bold tracking-wider">HSM Vault Enclave: Operational</span>
+</div>
+<div class="flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-on-surface-variant">
+<span class="text-outline">Hardware TPM:</span>
+<span class="text-secondary font-semibold">Infineon SLB9670 FIPS-140-2</span>
+</div>
+<div class="hidden xl:flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-on-surface-variant">
+<span class="text-outline">Sync Epoch:</span>
+<span class="text-on-surface font-semibold">#9921-AZ-OIL</span>
+</div>
+<div class="hidden 2xl:flex items-center gap-space-xs font-telemetry-data text-telemetry-data text-on-surface-variant">
+<span class="text-outline">Fabric Raft Quorum:</span>
+<span class="text-tertiary-fixed font-semibold">4/4 Nodes Consolidated</span>
+</div>
+</div>
+<!-- Quick Action Controls & Compliance Seals -->
+<div class="flex items-center gap-space-sm">
+<div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low font-code-badge text-code-badge text-outline">
+<span class="material-symbols-outlined text-[14px] text-tertiary">gavel</span>
+<span>CVC VIGILANCE COMPLIANT</span>
+</div>
+<div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low font-code-badge text-code-badge text-outline">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+<span>ISO/IEC 27001</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/80 text-on-primary-container font-headline-sm text-body-sm shadow-md transition-all cursor-pointer" id="open-hsm-modal-trigger">
+<span class="material-symbols-outlined text-[18px]">vpn_key</span>
+<span>Open HSM Console</span>
+</button>
+</div>
+</div>
+<!-- Section 1: Network Topology & AI Microservice Mesh Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Node 1: VoiceTime Whisper Server -->
+<div class="bg-surface-container-low/90 rounded-xl p-space-md flex flex-col justify-between shadow-md relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">VoiceTime™ Audio Core</div>
+<div class="font-label-caps text-label-caps text-outline">Whisper v3 Field Transcription</div>
+</div>
+</div>
+<span class="font-code-badge text-code-badge px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">ONLINE</span>
+</div>
+<div class="py-space-md space-y-space-xs">
+<div class="flex justify-between font-telemetry-data text-telemetry-data">
+<span class="text-on-surface-variant">Inference Latency</span>
+<span class="text-on-surface font-semibold">34.2 ms</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 24%"></div>
+</div>
+<div class="flex justify-between font-code-badge text-code-badge text-outline">
+<span>Duliajan Supervisor Pipeline</span>
+<span>Batch: 12 Streams</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between font-code-badge text-code-badge text-outline bg-surface-container-lowest/60 p-space-xs rounded-lg">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>Assamese / English Dual</span>
+<span class="text-secondary font-mono">99.4% F1-Score</span>
+</div>
+</div>
+<!-- Node 2: Ground-Truth Vision YOLOv8 Node -->
+<div class="bg-surface-container-low/90 rounded-xl p-space-md flex flex-col justify-between shadow-md relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">GroundTruth YOLOv8</div>
+<div class="font-label-caps text-label-caps text-outline">Trench Depth & Welds Inspection</div>
+</div>
+</div>
+<span class="font-code-badge text-code-badge px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">INSPECTING</span>
+</div>
+<div class="py-space-md space-y-space-xs">
+<div class="flex justify-between font-telemetry-data text-telemetry-data">
+<span class="text-on-surface-variant">Edge GPU Load (Nvidia Orin)</span>
+<span class="text-on-surface font-semibold">68.7%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary-container h-1.5 rounded-full" style="width: 68%"></div>
+</div>
+<div class="flex justify-between font-code-badge text-code-badge text-outline">
+<span>Digboi Site Camera 04-A</span>
+<span>30 FPS RTSP Encrypted</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between font-code-badge text-code-badge text-outline bg-surface-container-lowest/60 p-space-xs rounded-lg">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>NDT Radiography ML</span>
+<span class="text-primary-fixed-dim font-mono">Zero Critical Faults</span>
+</div>
+</div>
+<!-- Node 3: BERT WBS Vocabulary Engine -->
+<div class="bg-surface-container-low/90 rounded-xl p-space-md flex flex-col justify-between shadow-md relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[20px]">neurology</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">BERT WBS Engine</div>
+<div class="font-label-caps text-label-caps text-outline">Natural Language Schedule Mapper</div>
+</div>
+</div>
+<span class="font-code-badge text-code-badge px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">ACTIVE</span>
+</div>
+<div class="py-space-md space-y-space-xs">
+<div class="flex justify-between font-telemetry-data text-telemetry-data">
+<span class="text-on-surface-variant">Token Alignment Matrix</span>
+<span class="text-on-surface font-semibold">98.1% Acc</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary-container h-1.5 rounded-full" style="width: 98%"></div>
+</div>
+<div class="flex justify-between font-code-badge text-code-badge text-outline">
+<span>Oil India Schedule Dictionary</span>
+<span>Vector DB: Pinecone</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between font-code-badge text-code-badge text-outline bg-surface-container-lowest/60 p-space-xs rounded-lg">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>EPS/WBS Mapped</span>
+<span class="text-secondary font-mono">2,140 Node Links</span>
+</div>
+</div>
+<!-- Node 4: SAP NetWeaver ERP RFC Gateway -->
+<div class="bg-surface-container-low/90 rounded-xl p-space-md flex flex-col justify-between shadow-md relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">sync_alt</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">SAP NetWeaver RFC</div>
+<div class="font-label-caps text-label-caps text-outline">ERP Materials & Milestones Sync</div>
+</div>
+</div>
+<span class="font-code-badge text-code-badge px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">HEALTHY</span>
+</div>
+<div class="py-space-md space-y-space-xs">
+<div class="flex justify-between font-telemetry-data text-telemetry-data">
+<span class="text-on-surface-variant">RFC Connection Pool</span>
+<span class="text-on-surface font-semibold">16 / 20 Active</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-tertiary h-1.5 rounded-full" style="width: 80%"></div>
+</div>
+<div class="flex justify-between font-code-badge text-code-badge text-outline">
+<span>Server: DULIAJAN-PRD-01</span>
+<span>BAPI Status: 200 OK</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between font-code-badge text-code-badge text-outline bg-surface-container-lowest/60 p-space-xs rounded-lg">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>WBS Cost Center 7120</span>
+<span class="text-tertiary-fixed font-mono">Zero Discrepancy</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Visual Diagnostics Grid (Charts & Edge Telemetry Terminal) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- 7 Columns: Latency & Throughput Diagnostics -->
+<div class="xl:col-span-7 bg-surface-container-low/80 rounded-xl p-space-lg flex flex-col justify-between shadow-xl space-y-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div>
+<div class="font-label-caps text-label-caps text-secondary-fixed uppercase tracking-wider">REAL-TIME TRAFFIC & HSM PACKET RATE</div>
+<div class="font-headline-md text-headline-md text-on-surface">Microservice Latency Matrix</div>
+</div>
+<div class="flex items-center gap-space-xs font-code-badge text-code-badge">
+<span class="px-space-xs py-1 rounded bg-surface-container text-tertiary-fixed">● Oracle P6 (18ms)</span>
+<span class="px-space-xs py-1 rounded bg-surface-container text-secondary">● NetWeaver (24ms)</span>
+<span class="px-space-xs py-1 rounded bg-surface-container text-primary-fixed-dim">● Fabric Peer (12ms)</span>
+</div>
+</div>
+<!-- Inline SVG Area Graph -->
+<div class="w-full h-64 bg-surface-container-lowest/90 rounded-xl p-space-md relative overflow-hidden flex flex-col justify-end">
+<div class="absolute inset-0 flex items-center justify-between px-space-md pointer-events-none opacity-10">
+<div class="w-full h-px bg-outline"></div>
+</div>
+<svg class="w-full h-48 overflow-visible" viewbox="0 0 700 200">
+<defs>
+<lineargradient id="primaryGlow" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4d8eff" stop-opacity="0.45"></stop>
+<stop offset="100%" stop-color="#4d8eff" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="cyanGlow" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4cd7f6" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#4cd7f6" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid horizontal reference lines -->
+<line opacity="0.3" stroke="#424754" stroke-dasharray="3 3" x1="0" x2="700" y1="40" y2="40"></line>
+<line opacity="0.3" stroke="#424754" stroke-dasharray="3 3" x1="0" x2="700" y1="90" y2="90"></line>
+<line opacity="0.3" stroke="#424754" stroke-dasharray="3 3" x1="0" x2="700" y1="140" y2="140"></line>
+<!-- P6 Latency Waveform -->
+<path d="M0,130 C60,110 110,140 180,90 C250,40 310,120 380,75 C450,30 520,95 590,60 C640,35 680,50 700,45 L700,200 L0,200 Z" fill="url(#cyanGlow)"></path>
+<path d="M0,130 C60,110 110,140 180,90 C250,40 310,120 380,75 C450,30 520,95 590,60 C640,35 680,50 700,45" fill="none" stroke="#4cd7f6" stroke-width="2.5"></path>
+<!-- Fabric Raft Waveform -->
+<path d="M0,170 C70,165 140,150 210,160 C280,170 350,145 420,150 C490,155 560,130 630,140 C670,145 690,138 700,135 L700,200 L0,200 Z" fill="url(#primaryGlow)"></path>
+<path d="M0,170 C70,165 140,150 210,160 C280,170 350,145 420,150 C490,155 560,130 630,140 C670,145 690,138 700,135" fill="none" stroke="#adc6ff" stroke-width="1.8"></path>
+<!-- Active Sensor marker pulse -->
+<circle cx="590" cy="60" fill="#4cd7f6" r="4"></circle>
+<circle class="animate-ping" cx="590" cy="60" fill="#4cd7f6" opacity="0.4" r="8"></circle>
+</svg>
+<!-- Graph time ticks -->
+<div class="flex justify-between items-center pt-space-xs font-code-badge text-code-badge text-outline">
+<span>T - 60m</span>
+<span>T - 45m</span>
+<span>T - 30m</span>
+<span>T - 15m</span>
+<span class="text-secondary font-bold">LIVE TELEMETRY</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm pt-space-xs">
+<div class="bg-surface-container p-space-sm rounded-lg">
+<div class="font-label-caps text-label-caps text-outline">AVERAGE ROUNDTRIP</div>
+<div class="font-headline-sm text-headline-sm text-tertiary-fixed">17.8 ms</div>
+<div class="font-code-badge text-code-badge text-outline">Standard Deviation: ±1.2ms</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg">
+<div class="font-label-caps text-label-caps text-outline">HSM SIGNATURE THROUGHPUT</div>
+<div class="font-headline-sm text-headline-sm text-secondary">1,480 req/s</div>
+<div class="font-code-badge text-code-badge text-outline">Curve: secp256k1</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg">
+<div class="font-label-caps text-label-caps text-outline">PACKET ERROR RATIO</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">0.00012%</div>
+<div class="font-code-badge text-code-badge text-tertiary">Zero Drops (TLS 1.3)</div>
+</div>
+</div>
+</div>
+<!-- 5 Columns: Real-Time Edge Telemetry Health Log Terminal -->
+<div class="xl:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-xl space-y-space-md border-t-0">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary">terminal</span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface font-bold tracking-wider">Supervisor Edge Ingest Stream</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-tertiary bg-tertiary-container/20 px-2 py-0.5 rounded">STREAMING</span>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+</div>
+<!-- Terminal Output Window with Simulated Real-Time Packets -->
+<div class="flex-1 bg-surface-dim p-space-md rounded-lg font-telemetry-data text-telemetry-data space-y-space-xs overflow-y-auto max-h-[300px] select-text" id="terminal-stream">
+<div class="text-outline">[11:42:01.092] <span class="text-secondary">[NODE-DULIAJAN-01]</span> Payload recv: 248KB (GPS: 27.3582° N, 95.3197° E)</div>
+<div class="text-tertiary-fixed">[11:42:01.108] [HSM-VERIFY] Sig 0x9f4a...e102 validated via Active FIPS Token</div>
+<div class="text-outline">[11:42:02.431] <span class="text-secondary">[NODE-DIGBOI-04]</span> Weld Radiography chunk #488 attached (BERT: Pipe-Joint-40)</div>
+<div class="text-on-surface-variant">[11:42:03.011] [ORACLE-P6] Activity A1088 updated: Actual Start Timestamp locked</div>
+<div class="text-outline">[11:42:03.782] <span class="text-secondary">[NODE-NUMALIGARH-02]</span> Trench depth scan: 2.14m conforming to spec OISD-141</div>
+<div class="text-tertiary-fixed">[11:42:04.220] [FABRIC-RAFT] Block #408,193 committed by Peer0.Duliajan [Batch: 4 tx]</div>
+<div class="text-outline">[11:42:05.104] <span class="text-secondary">[NODE-MORAN-03]</span> Acoustic Leak Detection ping: Ambient sound 42dB (Normal)</div>
+<div class="text-secondary-fixed-dim">[11:42:06.002] [SAP-RFC] BAPI_BUS2054_GETINFO: Cost Center 7120 balance verified</div>
+</div>
+<!-- Field Worker Node Health Chips -->
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<div class="bg-surface-container-low p-space-xs rounded flex items-center justify-between">
+<span class="font-code-badge text-code-badge text-on-surface-variant">Duliajan-Edge-01</span>
+<span class="font-code-badge text-code-badge text-tertiary">99.8% QOS</span>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded flex items-center justify-between">
+<span class="font-code-badge text-code-badge text-on-surface-variant">Digboi-Edge-04</span>
+<span class="font-code-badge text-code-badge text-tertiary">100% QOS</span>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded flex items-center justify-between">
+<span class="font-code-badge text-code-badge text-on-surface-variant">Numaligarh-Edge-02</span>
+<span class="font-code-badge text-code-badge text-tertiary">99.9% QOS</span>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded flex items-center justify-between">
+<span class="font-code-badge text-code-badge text-on-surface-variant">Moran-Edge-03</span>
+<span class="font-code-badge text-code-badge text-tertiary">99.4% QOS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Physical Site Operations & Infrastructure Overview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Assam Pipeline Grid Map</span>
+<span class="font-code-badge text-code-badge text-secondary">TELEMETRY GPS</span>
+</div>
+<!-- Embedded Location placeholder as required -->
+<div class="w-full h-44 bg-cover bg-center rounded-lg shadow-inner relative overflow-hidden flex items-end p-space-sm" data-location="Duliajan, Assam, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB1J0Z3yvIuCmek9oNl9jMjayyoZYf8GYeUZyidxmWulRV4_3lbArCPUe4L59DbilHcdPxsEE2S46kNemePBfg-S98aVLOZN-pMBLGhKP6NGrK1YyxLLwqkEWSOfOgN7flyGYCQMzbxMVM39KoJRHTR8a61Reme_1IEG0jKgiRrSyLcxyVDkb5xT2SJfVn0XcfrrqYDu45Ktw03tOJJZn9M9TzXb7aAQBJoQddfZgt8Y7oPhDrjkK4VVw')">
+<div class="bg-surface-container-lowest/90 px-space-sm py-1 rounded backdrop-blur-md flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-code-badge text-code-badge text-on-surface">Duliajan Operational Hub</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Active geo-fenced pipelines feeding raw pipeline sensor data to edge validation clusters.
+        </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Edge Worker Node #02</span>
+<span class="font-code-badge text-code-badge text-tertiary">FIELD TELEMETRY</span>
+</div>
+<div class="w-full h-44 rounded-lg overflow-hidden relative shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Ruggedized industrial IoT edge computing box mounted on an oil pipeline valve manifold in an industrial Assam crude petroleum field facility, dark rainy industrial lighting with glowing blue and amber diagnostic LEDs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsSdXZe2VtuFcV_6vhbFNx0xoEcL_n7ZsMMUU7jT75aqtx4JuKeZIlXDJr06UOdmmSm3ZLvxhMZgpQpxYw366apPn3hTwT4e1H89uW1LfAkYHnnUNteW-pxX1dcMclk_OWTq1ai-Uj9yNm7EGAngMEDXu_n-dSglyuzoEUZIeKJtXVd1IsBvgvt3PGggJgUBDOwzO4Nu8HFddmJngetFvlFV5ZqzavXuw8fb0l1rkRbRSW4QJa2YRV_Q"/>
+<div class="absolute bottom-2 left-2 bg-surface-container-lowest/90 px-space-sm py-1 rounded backdrop-blur-md flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-secondary">Numaligarh Refined Section</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Local SQLite caching gateway syncing bi-directionally with central Oracle Primavera P6 when connectivity restores.
+        </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Enterprise Regulatory Seals</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">security</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+            All cryptographic key pairs, P6 transaction commits, and supervisor sign-offs are audited automatically against statutory guidelines.
+          </p>
+</div>
+<div class="space-y-space-xs">
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+<span class="font-code-badge text-code-badge text-on-surface">CVC Vigilance Guidelines 2024</span>
+</div>
+<span class="font-code-badge text-code-badge text-tertiary-fixed font-bold">CERTIFIED</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">shield</span>
+<span class="font-code-badge text-code-badge text-on-surface">OIL India Cyber Directive 14-B</span>
+</div>
+<span class="font-code-badge text-code-badge text-secondary-fixed font-bold">COMPLIANT</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+<span class="font-code-badge text-code-badge text-on-surface">FIPS 140-2 Level 3 HSM Enclave</span>
+</div>
+<span class="font-code-badge text-code-badge text-primary-fixed font-bold">LOCKED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- POPUP / MODAL DIALOG: Cryptographic HSM Key Rotation & Oracle P6 Sync Gateway -->
+<!-- Always visible on screen as specified in prompt, with interactive dismiss toggle -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-md" id="hsm-modal-backdrop">
+<div class="relative w-full max-w-2xl bg-surface-container rounded-2xl shadow-2xl p-space-lg space-y-space-lg overflow-hidden">
+<!-- Modal Accent Top Bar Glow -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-primary to-tertiary"></div>
+<!-- Modal Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shadow-md">
+<span class="material-symbols-outlined text-[24px]">key_vertical</span>
+</div>
+<div>
+<div class="font-label-caps text-label-caps uppercase text-secondary-fixed-dim tracking-widest flex items-center gap-space-xs">
+<span>SECURITY COPROCESSOR • CONSOLE</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+              Cryptographic HSM Key Rotation & Oracle P6 Sync Gateway
+            </h2>
+</div>
+</div>
+<button aria-label="Dismiss Modal" class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer" id="close-hsm-modal-trigger">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- HSM Key Specification Badge Matrix -->
+<div class="bg-surface-container-lowest/90 p-space-md rounded-xl space-y-space-sm">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+<span class="font-telemetry-data text-telemetry-data text-tertiary-fixed font-bold">Active FIPS 140-2 Level 3 Key ID: #OIL-HSM-2024-991A</span>
+</div>
+<span class="font-code-badge text-code-badge px-2 py-0.5 rounded bg-surface-container-high text-outline">HARDWARE ENCRYPTED</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs">
+<div class="bg-surface-container-high/60 p-space-sm rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline">ASYMMETRIC ALGORITHM</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">ECDSA Curve: secp256k1</span>
+</div>
+<div class="bg-surface-container-high/60 p-space-sm rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline">TIME SINCE ROTATION</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+              Last Re-anchored: 14 mins ago
+            </span>
+</div>
+</div>
+</div>
+<!-- Live Connection Health Check List -->
+<div class="space-y-space-xs">
+<div class="font-label-caps text-label-caps uppercase text-outline tracking-wider px-space-xs">Synchronized Uplink Health Checks</div>
+<div class="space-y-2">
+<!-- Connection Item 1 -->
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">cloud_sync</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-md font-semibold text-on-surface">Oracle Primavera P6 Cloud API</div>
+<div class="font-code-badge text-code-badge text-outline">Port: 8443 • REST / OAuth2 Mutual TLS</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-secondary font-bold">18ms</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">CONNECTED</span>
+</div>
+</div>
+<!-- Connection Item 2 -->
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-md font-semibold text-on-surface">SAP NetWeaver ERP RFC Connector</div>
+<div class="font-code-badge text-code-badge text-outline">Pool Size: 16/20 • JCo 3.1 Architecture</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-primary-fixed-dim font-bold">POOL OK</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">SYNCED</span>
+</div>
+</div>
+<!-- Connection Item 3 -->
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">storage</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-md font-semibold text-on-surface">Field SQLite Edge Workers</div>
+<div class="font-code-badge text-code-badge text-outline">4 Nodes Online (Duliajan, Digboi, Numaligarh, Moran)</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-tertiary-fixed font-bold">4/4 ACTIVE</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">OPTIMAL</span>
+</div>
+</div>
+<!-- Connection Item 4 -->
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-md font-semibold text-on-surface">Hyperledger Fabric Orderer</div>
+<div class="font-code-badge text-code-badge text-outline">Peer Raft Cluster Healthy (Block Height: #408,192)</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-code-badge text-secondary font-bold">#408,192</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary-fixed font-bold">HEALTHY</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons Footer -->
+<div class="flex flex-col sm:flex-row items-center justify-end gap-space-sm pt-space-xs">
+<button class="w-full sm:w-auto px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-body-sm flex items-center justify-center gap-space-xs transition-colors cursor-pointer" id="download-pem-btn">
+<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
+<span>Download Audit Telemetry Bundle (.pem)</span>
+</button>
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-primary-container hover:bg-primary-container/85 text-on-primary-container font-headline-sm text-body-sm flex items-center justify-center gap-space-xs transition-all shadow-md cursor-pointer" id="sync-flush-btn">
+<span class="material-symbols-outlined text-[18px]">published_with_changes</span>
+<span>Trigger Manual Oracle P6 Sync Flush</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Interactive modal toggle logic
+  const modalBackdrop = document.getElementById('hsm-modal-backdrop');
+  const openModalBtn = document.getElementById('open-hsm-modal-trigger');
+  const closeModalBtn = document.getElementById('close-hsm-modal-trigger');
+  const syncFlushBtn = document.getElementById('sync-flush-btn');
+  const downloadPemBtn = document.getElementById('download-pem-btn');
+
+  if (closeModalBtn && modalBackdrop) {
+    closeModalBtn.addEventListener('click', () => {
+      modalBackdrop.classList.add('hidden');
+    });
+  }
+
+  if (openModalBtn && modalBackdrop) {
+    openModalBtn.addEventListener('click', () => {
+      modalBackdrop.classList.remove('hidden');
+    });
+  }
+
+  // Simulated Sync Flush feedback
+  if (syncFlushBtn) {
+    syncFlushBtn.addEventListener('click', () => {
+      const originalText = syncFlushBtn.innerHTML;
+      syncFlushBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span><span>Flushing Delta to Oracle P6...</span>';
+      syncFlushBtn.classList.add('opacity-75');
+
+      setTimeout(() => {
+        syncFlushBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Oracle P6 Flushed Successfully!</span>';
+        setTimeout(() => {
+          syncFlushBtn.innerHTML = originalText;
+          syncFlushBtn.classList.remove('opacity-75');
+        }, 2200);
+      }, 1500);
+    });
+  }
+
+  // Simulated PEM Telemetry Bundle Download
+  if (downloadPemBtn) {
+    downloadPemBtn.addEventListener('click', () => {
+      const orig = downloadPemBtn.innerHTML;
+      downloadPemBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-tertiary">lock_reset</span><span>Generating Signed PEM Certificate...</span>';
+      setTimeout(() => {
+        downloadPemBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-tertiary">download_done</span><span>Bundle Saved (OIL-2024.pem)</span>';
+        setTimeout(() => {
+          downloadPemBtn.innerHTML = orig;
+        }, 2000);
+      }, 1200);
+    });
+  }
+
+  // Auto-scroll the terminal logs gently to mimic a live socket feed
+  const terminal = document.getElementById('terminal-stream');
+  if (terminal) {
+    setInterval(() => {
+      const timestamp = new Date().toTimeString().split(' ')[0] + '.' + Math.floor(Math.random() * 900 + 100);
+      const nodes = ['NODE-DULIAJAN-01', 'NODE-DIGBOI-04', 'NODE-NUMALIGARH-02', 'NODE-MORAN-03'];
+      const node = nodes[Math.floor(Math.random() * nodes.length)];
+      const logLine = document.createElement('div');
+      logLine.className = 'text-outline text-telemetry-data font-telemetry-data';
+      logLine.innerHTML = '[' + timestamp + '] <span class="text-secondary">[' + node + ']</span> Encrypted packet heartbeat ACK (FIPS-140 verified)';
+      terminal.appendChild(logLine);
+      terminal.scrollTop = terminal.scrollHeight;
+      if (terminal.children.length > 20) {
+        terminal.removeChild(terminal.children[0]);
+      }
+    }, 4500);
+  }
+</script></main></div></body></html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-bright":"#353942","surface-container-highest":"#31353e","surface-container-high":"#262a33","on-tertiary-container":"#00311f","on-error-container":"#ffdad6","surface-tint":"#adc6ff","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","surface-container":"#1c2028","inverse-surface":"#dfe2ee","on-tertiary":"#003824","on-tertiary-fixed-variant":"#005236","primary-container":"#4d8eff","on-tertiary-fixed":"#002113","surface-variant":"#31353e","primary":"#adc6ff","secondary":"#4cd7f6","primary-fixed-dim":"#adc6ff","on-primary-container":"#00285d","secondary-fixed":"#acedff","tertiary":"#4edea3","tertiary-fixed-dim":"#4edea3","error-container":"#93000a","on-primary":"#002e6a","inverse-on-surface":"#2c3039","on-primary-fixed":"#001a42","primary-fixed":"#d8e2ff","on-secondary-fixed":"#001f26","error":"#ffb4ab","outline":"#8c909f","inverse-primary":"#005ac2","on-secondary-fixed-variant":"#004e5c","on-surface-variant":"#c2c6d6","tertiary-container":"#00a572","surface-container-lowest":"#0a0e16","surface-dim":"#0f131c","surface-container-low":"#181c24","surface":"#0f131c","on-secondary":"#003640","on-surface":"#dfe2ee","secondary-container":"#03b5d3","background":"#0f131c","on-primary-fixed-variant":"#004395","on-error":"#690005","secondary-fixed-dim":"#4cd7f6","outline-variant":"#424754","on-secondary-container":"#00424e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin-lg":"3.5rem","space-xl":"2.25rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin-md":"2rem","gutter-lg":"2rem","space-lg":"1.5rem","gutter":"1.25rem","margin":"1rem"},"fontFamily":{"label-caps":["JetBrains Mono"],"code-badge":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Geist"],"telemetry-data":["JetBrains Mono"],"headline-lg":["Geist"],"display-hero":["Geist"],"display-hero-mobile":["Geist"],"body-sm":["Inter"],"headline-sm":["Inter"]},"fontSize":{"label-caps":["10px",{"lineHeight":"14px","fontWeight":"700"}],"code-badge":["11px",{"lineHeight":"16px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"telemetry-data":["13px",{"lineHeight":"20px","fontWeight":"500"}],"headline-lg":["30px",{"lineHeight":"38px","fontWeight":"600"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}],"display-hero-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["17px",{"lineHeight":"24px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-max"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-secondary to-surface-container flex items-center justify-center shadow-[0_0_16px_rgba(76,215,246,0.35)] p-0.5"><div class="w-full h-full bg-surface-container-lowest rounded-[10px] flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[22px]">deployed_code</span></div></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">SiteSync</span><span class="font-headline-sm text-headline-sm text-secondary font-bold tracking-tight">AI</span><span class="font-label-caps text-label-caps bg-surface-container-high text-primary px-1.5 py-0.5 rounded uppercase tracking-wider">OIL INDIA LIMITED</span></div><span class="font-telemetry-data text-[11px] text-on-surface-variant">Intelligent Planning-to-Execution Bridge • SIH26122</span></div></div><div class="hidden xl:flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full shadow-[inset_0_0_12px_rgba(78,222,163,0.06)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-caps text-label-caps text-tertiary tracking-wide uppercase">PS-ID: 26122 • EPPM READY</span></div><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full"><span class="material-symbols-outlined text-secondary text-[16px]">speed</span><span class="font-telemetry-data text-telemetry-data text-on-surface">System Status:</span><span class="font-telemetry-data text-telemetry-data text-secondary font-semibold">Optimal 99.98%</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container p-1 rounded-full" title="Theme Active: Dark Mode"><button class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">light_mode</span></button><button class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_10px_rgba(77,142,255,0.4)]" type="button"><span class="material-symbols-outlined text-[16px]">dark_mode</span></button></div><button class="hidden sm:flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-3 py-1.5 rounded-lg transition-all" type="button"><span class="material-symbols-outlined text-[18px] text-secondary">supervised_user_circle</span><span class="font-body-sm text-body-sm font-medium">Switch Persona</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></button><button class="flex items-center gap-space-xs bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-3.5 py-1.5 rounded-lg font-headline-sm text-[13px] shadow-[0_0_18px_rgba(76,215,246,0.3)] hover:brightness-110 transition-all" type="button"><span class="material-symbols-outlined text-[17px]">bolt</span><span>Skip to Demo</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-20 bottom-0 w-64 bg-surface-container-low z-40 flex flex-col justify-between py-space-md"><div class="flex flex-col gap-space-md px-space-sm"><div class="px-3"><span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Mission Control</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="overview-command" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Overview Command</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="eppm-planning-bridge" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>EPPM Planning Bridge</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="field-telemetry" href="#"><span class="material-symbols-outlined text-[20px]">sensors</span><span>Field Telemetry</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="audit-provenance" href="#"><span class="material-symbols-outlined text-[20px]">verified_user</span><span>Audit &amp; Provenance</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="system-diagnostics" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span>Diagnostics</span></a></nav></div><div class="px-3 flex flex-col gap-space-sm"><div class="bg-surface-container-lowest p-3 rounded-lg"><div class="flex items-center justify-between mb-1"><span class="font-label-caps text-label-caps text-outline">SAP NETWEAVER</span><span class="font-code-badge text-code-badge text-tertiary">SYNCED</span></div><div class="font-telemetry-data text-[11px] text-on-surface-variant truncate">Pipeline: Duliajan-08-N</div></div><div class="flex items-center justify-between text-outline text-[11px] px-1"><span class="font-code-badge text-code-badge">v4.1.8-SIH</span><span class="font-code-badge text-code-badge text-secondary">SECURE SSL</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><main class="flex-1 pt-20 w-full px-space-lg bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive Navigation Highlighting Logic -->
+<script>
+    (function highlightActiveNav() {
+      const activeLink = document.querySelector('aside nav a[data-path="eppm-planning-bridge"]');
+      if (activeLink) {
+        document.querySelectorAll('aside nav a').forEach(el => {
+          el.className = "flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm";
+        });
+        activeLink.className = "flex items-center gap-space-sm px-3 py-2 bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_14px_rgba(77,142,255,0.35)] transition-all font-body-sm text-body-sm";
+      }
+    })();
+  </script>
+<!-- SUB-HEADER & ACTION BAR -->
+<section class="py-space-md flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps tracking-wider text-outline uppercase">
+<span>Mission Control</span>
+<span class="text-outline-variant">/</span>
+<span class="text-secondary">EPPM Planning Bridge</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface">Primavera P6 Live Synchronizer</span>
+</div>
+<div class="flex items-center gap-space-md">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight flex items-center gap-space-sm">
+            Baseline Reconciliation Suite
+            <span class="font-code-badge text-code-badge bg-surface-container-high text-secondary px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+              ORACLE P6 CLOUD v24.8.1
+            </span>
+</h1>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low px-3 py-2 rounded-xl shadow-inner">
+<span class="material-symbols-outlined text-tertiary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-[9px] uppercase tracking-wider text-outline">Target Reconciliation Baseline</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">Baseline B-04 (Approved 12-Oct-2024 by CVO)</span>
+</div>
+</div>
+</div>
+<!-- Controls Ribbon -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-wrap items-center justify-between gap-space-md shadow-md">
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Corridor Filter -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-outline text-[18px]">alt_route</span>
+<select class="bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none cursor-pointer" id="wbsFilter">
+<option class="bg-surface-container-high text-on-surface" value="all">Corridor: All Sections</option>
+<option class="bg-surface-container-high text-on-surface" value="digboi">Digboi Loop Line (DN88.01)</option>
+<option class="bg-surface-container-high text-on-surface" value="duliajan">Duliajan Terminal Feed (DN88.02)</option>
+<option class="bg-surface-container-high text-on-surface" value="dehing">Dehing River Crossing HDD (DN88.03)</option>
+</select>
+</div>
+<!-- Date Range -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-outline text-[18px]">date_range</span>
+<span class="font-code-badge text-code-badge text-on-surface">01-NOV-2024</span>
+<span class="text-outline">→</span>
+<span class="font-code-badge text-code-badge text-on-surface">18-NOV-2024</span>
+</div>
+<!-- Status Filter -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-outline text-[18px]">filter_list</span>
+<select class="bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none cursor-pointer">
+<option class="bg-surface-container-high text-on-surface">Status: Pending Commit (5)</option>
+<option class="bg-surface-container-high text-on-surface">Auto-Matched (42)</option>
+<option class="bg-surface-container-high text-on-surface">Discrepancy Flagged (2)</option>
+</select>
+</div>
+</div>
+<!-- Action CTAs -->
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-3 py-2 rounded-lg font-body-sm text-body-sm transition-all shadow-sm" id="refreshP6Btn" type="button">
+<span class="material-symbols-outlined text-secondary text-[18px] transition-transform duration-500" id="refreshIcon">sync</span>
+<span>Refresh P6 API Uplink</span>
+</button>
+<button class="flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-3 py-2 rounded-lg font-body-sm text-body-sm transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-primary text-[18px]">file_download</span>
+<span>Export XML / XER</span>
+</button>
+<button class="flex items-center gap-space-xs bg-primary-container hover:brightness-110 text-on-primary-container px-4 py-2 rounded-lg font-headline-sm text-[13px] shadow-[0_0_16px_rgba(77,142,255,0.4)] transition-all" id="batchCommitBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>Batch Authorize (5 Items)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SUMMARY ANALYTICS STRIP (3 Industrial Dark Metric Tiles) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-lg">
+<!-- Tile 1 -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-lg relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Semantic Grounding Engine</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">WBS Mapping Health</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[24px]">model_training</span>
+</div>
+</div>
+<div class="mt-space-md flex items-end justify-between">
+<div>
+<div class="font-display-hero text-[34px] leading-tight text-tertiary font-bold">98.2%</div>
+<span class="font-telemetry-data text-[12px] text-on-surface-variant">Auto-Tagged via BERT-OIL-V3 Engine</span>
+</div>
+<!-- SVG Micro-Sparkline -->
+<svg class="w-24 h-10 text-tertiary" fill="none" viewbox="0 0 100 40">
+<path d="M0 32 L15 28 L30 35 L45 20 L60 22 L75 12 L90 8 L100 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M0 32 L15 28 L30 35 L45 20 L60 22 L75 12 L90 8 L100 6 L100 40 L0 40 Z" fill="currentColor" fill-opacity="0.1"></path>
+</svg>
+</div>
+<div class="mt-space-sm w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 98.2%"></div>
+</div>
+</div>
+<!-- Tile 2 -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-lg relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Critical Path Slip Analysis</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Schedule Variance (SV)</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">timelapse</span>
+</div>
+</div>
+<div class="mt-space-md flex items-end justify-between">
+<div>
+<div class="font-display-hero text-[34px] leading-tight text-secondary font-bold">+2.4 Days</div>
+<span class="font-telemetry-data text-[12px] text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">shield</span> Contained in 7-day float buffer
+          </span>
+</div>
+<!-- Progress Ring SVG -->
+<div class="relative w-12 h-12 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="34, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="absolute font-code-badge text-[10px] text-on-surface font-bold">34%</span>
+</div>
+</div>
+<div class="mt-space-sm w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 34%"></div>
+</div>
+</div>
+<!-- Tile 3 -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-lg relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Earned Value Management (EVM)</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Net CapEx Cost Delta</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">currency_rupee</span>
+</div>
+</div>
+<div class="mt-space-md flex items-end justify-between">
+<div>
+<div class="font-display-hero text-[34px] leading-tight text-primary font-bold">-₹0.42 Cr</div>
+<span class="font-telemetry-data text-[12px] text-on-surface-variant">Under allocation on active WBS lines</span>
+</div>
+<!-- SVG Micro Bar Chart -->
+<svg class="w-20 h-10 text-primary" viewbox="0 0 80 40">
+<rect fill="currentColor" fill-opacity="0.3" height="16" rx="2" width="10" x="5" y="24"></rect>
+<rect fill="currentColor" fill-opacity="0.5" height="22" rx="2" width="10" x="22" y="18"></rect>
+<rect fill="currentColor" fill-opacity="0.7" height="28" rx="2" width="10" x="39" y="12"></rect>
+<rect fill="currentColor" height="34" rx="2" width="10" x="56" y="6"></rect>
+</svg>
+</div>
+<div class="mt-space-sm w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
+</div>
+</div>
+</section>
+<!-- MASTER SPLIT WORKSPACE -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- LEFT PANEL: WBS Hierarchy Tree & Candidate Feed (7 Cols) -->
+<section class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Section Header -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Active WBS Hierarchy &amp; Ingestion Queue</h2>
+<p class="font-telemetry-data text-[11px] text-on-surface-variant">Parsed daily field reports mapped to Primavera EPS codes</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-badge text-code-badge bg-surface-container text-outline px-2 py-1 rounded">5 CANDIDATES PENDING</span>
+</div>
+</div>
+<!-- Interactive WBS Tree View -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-xs font-telemetry-data text-[12px]">
+<div class="font-label-caps text-label-caps text-outline tracking-wider uppercase mb-1">Work Breakdown Structure (WBS) Path</div>
+<!-- Node 1 -->
+<div class="flex items-center gap-space-xs p-1.5 rounded-lg bg-surface-container text-on-surface cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-secondary text-[16px]">folder_open</span>
+<span class="font-semibold text-secondary">OIL.DN88</span>
+<span class="text-outline">/</span>
+<span>Duliajan-Numaligarh 88km Main Crude Trunk Pipeline</span>
+<span class="ml-auto font-code-badge text-[10px] text-outline">EPS ROOT</span>
+</div>
+<!-- Node 2 (Child) -->
+<div class="ml-6 flex items-center gap-space-xs p-1.5 rounded-lg bg-surface-container text-on-surface cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-tertiary text-[16px]">subdirectory_arrow_right</span>
+<span class="font-semibold text-tertiary">OIL.DN88.PIPE.WELD</span>
+<span class="text-outline">/</span>
+<span>Welding, Radiography &amp; Joint Coating</span>
+<span class="ml-auto font-code-badge text-[10px] bg-tertiary-container/30 text-tertiary px-1.5 py-0.5 rounded">98% SYNC</span>
+</div>
+<!-- Node 3 (Child with HDD focus) -->
+<div class="ml-12 flex items-center justify-between p-1.5 rounded-lg bg-surface-container-highest text-on-surface shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[16px]">subdirectory_arrow_right</span>
+<span class="font-semibold text-primary">OIL.DN88.CIVIL.HDD</span>
+<span class="text-outline">/</span>
+<span>Horizontal Directional Drilling (River Section)</span>
+</div>
+<span class="font-code-badge text-[10px] bg-primary text-on-primary font-bold px-1.5 py-0.5 rounded">ACTIVE TARGET</span>
+</div>
+<!-- Node 4 (Child) -->
+<div class="ml-6 flex items-center gap-space-xs p-1.5 rounded-lg bg-surface-container text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-outline text-[16px]">subdirectory_arrow_right</span>
+<span class="font-semibold text-on-surface">OIL.DN88.ELEC.CATH</span>
+<span class="text-outline">/</span>
+<span>Cathodic Protection &amp; Impressed Current Anode Bed</span>
+<span class="ml-auto font-code-badge text-[10px] text-outline">READY</span>
+</div>
+</div>
+<!-- Candidate DPR Activity Cards & Verification Table -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-md shadow-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">assignment_turned_in</span>
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface">Discovered DPR Activities Awaiting P6 Baseline Commit</span>
+</div>
+<button class="font-code-badge text-code-badge text-secondary hover:underline cursor-pointer" id="selectAllBtn">Toggle All</button>
+</div>
+<div class="flex flex-col gap-space-sm" id="candidateList">
+<!-- Candidate Item 1 -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-sm hover:bg-surface-container-high transition-all" data-id="ACT-4401">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary accent-primary cursor-pointer" type="checkbox"/>
+<span class="font-code-badge text-code-badge text-secondary font-bold">OIL.DN88.CIVIL.HDD.201</span>
+<span class="font-label-caps text-label-caps bg-surface-container-highest px-2 py-0.5 rounded text-on-surface-variant">DPR #418-DEHING</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-[10px] bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded-full flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 99.4% AI CONFIDENCE
+                </span>
+<span class="font-code-badge text-[10px] bg-surface-container-lowest text-outline px-2 py-0.5 rounded font-mono">GPS VERIFIED ±1.8m</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Dehing River North-Bank 24" Pullback Execution - Segment B</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Contractor daily entry: "Pullback completed till 420m marker, mud pressure normal at 48 bar with bentonite slurry recir."</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg grid grid-cols-1 sm:grid-cols-3 gap-space-sm font-telemetry-data text-[12px]">
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Field Reported</span>
+<span class="text-tertiary font-bold">420.0 Linear Meters</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">P6 Baseline Plan</span>
+<span class="text-on-surface font-bold">400.0 Linear Meters</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Schedule Variance</span>
+<span class="text-tertiary font-bold">+20m (+5.0% Ahead)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-xs text-outline font-telemetry-data text-[11px]">
+<span class="material-symbols-outlined text-[14px]">pin_drop</span>
+<span>Lat: 27.2849° N, Lon: 95.3194° E (Digboi Sector)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="btn-reject px-2.5 py-1 rounded bg-surface-container-highest hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-body-sm text-[12px] transition-colors" type="button">Reject</button>
+<button class="btn-commit px-3 py-1 rounded bg-primary-container text-on-primary-container hover:brightness-110 font-body-sm text-[12px] font-semibold transition-all" type="button">Commit to P6</button>
+</div>
+</div>
+</div>
+<!-- Candidate Item 2 -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-sm hover:bg-surface-container-high transition-all" data-id="ACT-4402">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary accent-primary cursor-pointer" type="checkbox"/>
+<span class="font-code-badge text-code-badge text-secondary font-bold">OIL.DN88.PIPE.WELD.104</span>
+<span class="font-label-caps text-label-caps bg-surface-container-highest px-2 py-0.5 rounded text-on-surface-variant">DPR #418-NUMAL</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-[10px] bg-secondary-container/30 text-secondary px-2 py-0.5 rounded-full flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 96.8% AI CONFIDENCE
+                </span>
+<span class="font-code-badge text-[10px] bg-surface-container-lowest text-outline px-2 py-0.5 rounded font-mono">GPS VERIFIED ±2.1m</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Automatic Internal Ultrasonic Weld Testing (AUT) Spool #14-22</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Contractor daily entry: "Radiography and AUT test completed for 18 joints at loop section near station yard."</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg grid grid-cols-1 sm:grid-cols-3 gap-space-sm font-telemetry-data text-[12px]">
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Field Reported</span>
+<span class="text-on-surface font-bold">18 Joints Certified</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">P6 Baseline Plan</span>
+<span class="text-on-surface font-bold">18 Joints</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Schedule Variance</span>
+<span class="text-secondary font-bold">0.0 (On Baseline)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-xs text-outline font-telemetry-data text-[11px]">
+<span class="material-symbols-outlined text-[14px]">pin_drop</span>
+<span>Lat: 27.3101° N, Lon: 95.2912° E (Duliajan East)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="btn-reject px-2.5 py-1 rounded bg-surface-container-highest hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-body-sm text-[12px] transition-colors" type="button">Reject</button>
+<button class="btn-commit px-3 py-1 rounded bg-primary-container text-on-primary-container hover:brightness-110 font-body-sm text-[12px] font-semibold transition-all" type="button">Commit to P6</button>
+</div>
+</div>
+</div>
+<!-- Candidate Item 3 (Discrepancy / Attention) -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-sm hover:bg-surface-container-high transition-all" data-id="ACT-4403">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<input class="w-4 h-4 rounded bg-surface-container-lowest text-primary accent-primary cursor-pointer" type="checkbox"/>
+<span class="font-code-badge text-code-badge text-primary font-bold">OIL.DN88.ELEC.CATH.082</span>
+<span class="font-label-caps text-label-caps bg-surface-container-highest px-2 py-0.5 rounded text-on-surface-variant">DPR #417-DULI</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-badge text-[10px] bg-error-container/30 text-error px-2 py-0.5 rounded-full flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> 82.1% DISCREPANCY FLAG
+                </span>
+<span class="font-code-badge text-[10px] bg-surface-container-lowest text-outline px-2 py-0.5 rounded font-mono">GEO-FENCE ±14m DEV</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Deep-Well Groundbed Deep Anode Installation &amp; Cabling</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Slang flagged: "Bari-Bonding done with auxiliary test coupons." BERT translated to: Cathodic Structure Bond.</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg grid grid-cols-1 sm:grid-cols-3 gap-space-sm font-telemetry-data text-[12px]">
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Field Reported</span>
+<span class="text-error font-bold">1 Station (Bonded)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">P6 Baseline Plan</span>
+<span class="text-on-surface font-bold">2 Stations Planned</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline text-[10px] uppercase font-label-caps">Schedule Variance</span>
+<span class="text-error font-bold">-1 Station (-1.5 Days)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-xs text-outline font-telemetry-data text-[11px]">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Requires Planner Sign-off before P6 ingestion</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="btn-reject px-2.5 py-1 rounded bg-surface-container-highest hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-body-sm text-[12px] transition-colors" type="button">Flag Discrepancy</button>
+<button class="btn-commit px-3 py-1 rounded bg-surface-container-high text-on-surface hover:bg-surface-bright font-body-sm text-[12px] font-semibold transition-all" type="button">Manual Override</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANEL: AI Semantic Resolver, Lexicon & Provenance Preview (5 Cols) -->
+<section class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Panel 1: Vernacular Lexicon & Semantic Resolver -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">translate</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Semantic Lexicon Trainer</h2>
+<p class="font-telemetry-data text-[11px] text-on-surface-variant">Fine-tune BERT-OIL-V3 against site contractor vernacular</p>
+</div>
+</div>
+<span class="font-code-badge text-code-badge text-tertiary bg-surface-container px-2 py-1 rounded">LOCAL WEIGHTS v3.4</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Active Contractor Jargon Mappings</label>
+<div class="flex flex-col gap-space-xs">
+<!-- Lexicon Row 1 -->
+<div class="bg-surface-container p-2.5 rounded-lg flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-telemetry-data text-[12px] text-secondary font-bold">"Bari-Bonding"</span>
+<span class="text-outline">→</span>
+<span class="font-telemetry-data text-[12px] text-on-surface">Cadweld Cathodic Pipeline Tie</span>
+</div>
+<span class="font-code-badge text-[10px] bg-tertiary-container/30 text-tertiary px-1.5 py-0.5 rounded">99.1% MATCH</span>
+</div>
+<!-- Lexicon Row 2 -->
+<div class="bg-surface-container p-2.5 rounded-lg flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-telemetry-data text-[12px] text-secondary font-bold">"Loop-Line"</span>
+<span class="text-outline">→</span>
+<span class="font-telemetry-data text-[12px] text-on-surface">Auxiliary 18" Bypass String</span>
+</div>
+<span class="font-code-badge text-[10px] bg-tertiary-container/30 text-tertiary px-1.5 py-0.5 rounded">98.4% MATCH</span>
+</div>
+<!-- Lexicon Row 3 -->
+<div class="bg-surface-container p-2.5 rounded-lg flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-telemetry-data text-[12px] text-secondary font-bold">"Rath Rig"</span>
+<span class="text-outline">→</span>
+<span class="font-telemetry-data text-[12px] text-on-surface">Trenchless HDD Rig Bore Machine</span>
+</div>
+<span class="font-code-badge text-[10px] bg-tertiary-container/30 text-tertiary px-1.5 py-0.5 rounded">97.8% MATCH</span>
+</div>
+</div>
+<!-- Add Term Form -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs mt-1">
+<span class="font-label-caps text-[10px] text-outline uppercase">Inject Site Dialect / Slang Alias</span>
+<div class="flex gap-space-xs">
+<input class="w-1/2 bg-surface-container px-3 py-1.5 rounded text-on-surface text-body-sm font-body-sm focus:outline-none" id="inputSlang" placeholder="Assamese slang (e.g., Mati-Bhorua)" type="text"/>
+<input class="w-1/2 bg-surface-container px-3 py-1.5 rounded text-on-surface text-body-sm font-body-sm focus:outline-none" id="inputStandard" placeholder="WBS standard phrase" type="text"/>
+</div>
+<button class="mt-1 bg-surface-container-high hover:bg-surface-bright text-secondary text-body-sm font-semibold py-1.5 px-3 rounded flex items-center justify-center gap-1 transition-all" id="addSlangBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span> Train Lexicon Weight
+            </button>
+</div>
+</div>
+</div>
+<!-- Panel 2: Cryptographic Audit Stamp & Writeback Preview -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Provenance &amp; Cryptographic Signer</h2>
+<p class="font-telemetry-data text-[11px] text-on-surface-variant">Immutable SHA-256 ECDSA write stamp for P6 writeback</p>
+</div>
+</div>
+<span class="font-code-badge text-code-badge bg-tertiary/10 text-tertiary px-2 py-1 rounded">RBAC COMPLIANT</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col gap-space-sm font-telemetry-data text-[12px]">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-caps text-[10px] uppercase">Signing Identity</span>
+<span class="text-tertiary font-bold">ER. P. HAZARIKA (OIL-PLN-4421)</span>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-caps text-[10px] uppercase">Oracle Cloud P6 Gateway</span>
+<span class="text-on-surface font-mono">epm-gw02.oilindia.in:8443</span>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-caps text-[10px] uppercase">Signature Standard</span>
+<span class="text-on-surface">ECDSA-secp256k1 + SHA-256</span>
+</div>
+<!-- Payload Hash Block -->
+<div class="mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-[10px] text-outline uppercase">Generated Commit Hash Digest</span>
+<span class="font-code-badge text-[10px] text-secondary cursor-pointer hover:underline" id="copyHashBtn">Copy Hash</span>
+</div>
+<div class="bg-surface-container p-2 rounded text-[11px] font-mono text-tertiary break-all select-all leading-relaxed" id="liveHash">
+              0x8f7a9d20c4e883b271b4028cf501e79391ab100a74d28cfb0941da73f41c9b68
+            </div>
+</div>
+</div>
+<!-- Pipeline Sync Latency & Telemetry Metric -->
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">bolt</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-[12px] text-on-surface font-medium">NetWeaver SOAP API Latency</span>
+<span class="font-telemetry-data text-[10px] text-outline">Direct leased line to Duliajan HQ Data Center</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-telemetry-data text-secondary font-bold">24 ms</div>
+<span class="font-code-badge text-[10px] text-tertiary">0 PACKET LOSS</span>
+</div>
+</div>
+<!-- Verification Checklist Banner -->
+<div class="bg-surface-container-high/40 p-3 rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">shield</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Government of India Smart Automation Guideline</span>
+<p class="font-body-sm text-[11px] text-on-surface-variant">All committed progress updates trigger non-repudiable audit logs accessible by the Chief Vigilance Officer (CVO) per SIH26122 standards.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Notification Toast Toast Container (Hidden by default, triggered via JS) -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-surface-container-high text-on-surface p-space-md rounded-xl shadow-2xl flex items-center gap-space-sm" id="toastNotification">
+<span class="material-symbols-outlined text-tertiary text-[24px]">check_circle</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[14px] font-bold text-on-surface" id="toastTitle">Sync Initiated</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant" id="toastBody">Writing updates to Oracle Primavera P6 Cloud...</span>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toast = document.getElementById('toastNotification');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastBody = document.getElementById('toastBody');
+
+      function showToast(title, msg) {
+        toastTitle.textContent = title;
+        toastBody.textContent = msg;
+        toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }, 3500);
+      }
+
+      // Refresh Button Animation & Simulation
+      const refreshBtn = document.getElementById('refreshP6Btn');
+      const refreshIcon = document.getElementById('refreshIcon');
+      refreshBtn.addEventListener('click', () => {
+        refreshIcon.classList.add('rotate-180');
+        setTimeout(() => refreshIcon.classList.remove('rotate-180'), 600);
+        showToast('P6 API Uplink Refreshed', 'Successfully fetched latest WBS baselines and milestones.');
+      });
+
+      // Batch Commit Button
+      const batchBtn = document.getElementById('batchCommitBtn');
+      batchBtn.addEventListener('click', () => {
+        showToast('Batch Committed to Oracle P6', '5 candidate records signed with ECDSA key #OIL-PLN-4421.');
+      });
+
+      // Individual Candidate Row Actions
+      document.querySelectorAll('.btn-commit').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = e.target.closest('[data-id]');
+          const id = card.getAttribute('data-id');
+          card.style.opacity = '0.5';
+          showToast('Single Item Reconciled', `Activity ${id} committed to baseline B-04.`);
+        });
+      });
+
+      document.querySelectorAll('.btn-reject').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = e.target.closest('[data-id]');
+          const id = card.getAttribute('data-id');
+          card.style.display = 'none';
+          showToast('Candidate Discarded', `Activity ${id} flagged back to site supervisor.`);
+        });
+      });
+
+      // Toggle All Checkboxes
+      const selectAllBtn = document.getElementById('selectAllBtn');
+      let allChecked = true;
+      selectAllBtn.addEventListener('click', () => {
+        allChecked = !allChecked;
+        document.querySelectorAll('#candidateList input[type="checkbox"]').forEach(cb => {
+          cb.checked = allChecked;
+        });
+      });
+
+      // Copy Hash Digest
+      const copyHashBtn = document.getElementById('copyHashBtn');
+      copyHashBtn.addEventListener('click', () => {
+        const hashText = document.getElementById('liveHash').innerText;
+        navigator.clipboard.writeText(hashText).then(() => {
+          showToast('Hash Copied', 'Cryptographic signature copied to clipboard.');
+        });
+      });
+
+      // Add Slang / Vernacular Training item
+      const addSlangBtn = document.getElementById('addSlangBtn');
+      const slangInp = document.getElementById('inputSlang');
+      const stdInp = document.getElementById('inputStandard');
+      addSlangBtn.addEventListener('click', () => {
+        if (slangInp.value && stdInp.value) {
+          showToast('Vernacular Weight Updated', `"${slangInp.value}" now maps to "${stdInp.value}" in BERT-OIL.`);
+          slangInp.value = '';
+          stdInp.value = '';
+        }
+      });
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-md px-space-lg shadow-[0_-1px_6px_rgba(0,0,0,0.3)]"><div class="flex flex-col md:flex-row items-center justify-between gap-space-sm"><div class="flex flex-wrap items-center gap-space-sm"><span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">SIH26122 • Smart Automation</span><span class="text-outline">•</span><span class="font-body-sm text-body-sm text-on-surface-variant">Oil India Limited Prototype</span></div><div class="flex items-center gap-space-xs text-outline"><span class="material-symbols-outlined text-[16px] text-tertiary">shield_lock</span><span class="font-code-badge text-code-badge text-on-surface-variant">Enterprise Role-Based Access Control (RBAC) &amp; Immutable Provenance</span></div></div></footer></div></body></html>

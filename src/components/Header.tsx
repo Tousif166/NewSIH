@@ -222,18 +222,31 @@ export const Header: React.FC = () => {
           <span className="hidden sm:inline text-[11px]">Commit</span>
         </button>
 
-        {/* Dark / Light Mode Toggle Button */}
-        <button
-          type="button"
+        {/* Dark / Light Mode Capsule Pill (Stitch Inspired) */}
+        <div 
           onClick={toggleTheme}
-          title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          className="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-amber-400 shadow-2xs transition-all active:scale-95 cursor-pointer shrink-0"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleTheme()}
+          title={theme === 'dark' ? 'Active: Dark Mode (Click for Light Mode)' : 'Active: Light Mode (Click for Dark Mode)'}
+          className="flex items-center gap-0.5 p-1 rounded-full bg-slate-100 dark:bg-[#1c2028] border border-slate-200 dark:border-[#31353e] cursor-pointer shadow-inner transition-colors shrink-0"
           aria-label="Toggle dark and light mode"
         >
-          <span className="material-symbols-outlined text-[18px]">
-            {theme === 'dark' ? 'light_mode' : 'dark_mode'}
-          </span>
-        </button>
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+            theme === 'light' 
+              ? 'bg-white text-amber-500 shadow-xs' 
+              : 'text-slate-400 hover:text-slate-200'
+          }`}>
+            <span className="material-symbols-outlined text-[15px]">light_mode</span>
+          </div>
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+            theme === 'dark' 
+              ? 'bg-[#4d8eff] text-white shadow-[0_0_8px_rgba(77,142,255,0.5)]' 
+              : 'text-slate-400 hover:text-slate-600'
+          }`}>
+            <span className="material-symbols-outlined text-[15px]">dark_mode</span>
+          </div>
+        </div>
 
         {/* User Avatar Circle */}
         <div 

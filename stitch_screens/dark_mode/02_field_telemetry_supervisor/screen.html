@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-bright":"#353942","surface-container-highest":"#31353e","surface-container-high":"#262a33","on-tertiary-container":"#00311f","on-error-container":"#ffdad6","surface-tint":"#adc6ff","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","surface-container":"#1c2028","inverse-surface":"#dfe2ee","on-tertiary":"#003824","on-tertiary-fixed-variant":"#005236","primary-container":"#4d8eff","on-tertiary-fixed":"#002113","surface-variant":"#31353e","primary":"#adc6ff","secondary":"#4cd7f6","primary-fixed-dim":"#adc6ff","on-primary-container":"#00285d","secondary-fixed":"#acedff","tertiary":"#4edea3","tertiary-fixed-dim":"#4edea3","error-container":"#93000a","on-primary":"#002e6a","inverse-on-surface":"#2c3039","on-primary-fixed":"#001a42","primary-fixed":"#d8e2ff","on-secondary-fixed":"#001f26","error":"#ffb4ab","outline":"#8c909f","inverse-primary":"#005ac2","on-secondary-fixed-variant":"#004e5c","on-surface-variant":"#c2c6d6","tertiary-container":"#00a572","surface-container-lowest":"#0a0e16","surface-dim":"#0f131c","surface-container-low":"#181c24","surface":"#0f131c","on-secondary":"#003640","on-surface":"#dfe2ee","secondary-container":"#03b5d3","background":"#0f131c","on-primary-fixed-variant":"#004395","on-error":"#690005","secondary-fixed-dim":"#4cd7f6","outline-variant":"#424754","on-secondary-container":"#00424e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin-lg":"3.5rem","space-xl":"2.25rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin-md":"2rem","gutter-lg":"2rem","space-lg":"1.5rem","gutter":"1.25rem","margin":"1rem"},"fontFamily":{"label-caps":["JetBrains Mono"],"code-badge":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Geist"],"telemetry-data":["JetBrains Mono"],"headline-lg":["Geist"],"display-hero":["Geist"],"display-hero-mobile":["Geist"],"body-sm":["Inter"],"headline-sm":["Inter"]},"fontSize":{"label-caps":["10px",{"lineHeight":"14px","fontWeight":"700"}],"code-badge":["11px",{"lineHeight":"16px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"telemetry-data":["13px",{"lineHeight":"20px","fontWeight":"500"}],"headline-lg":["30px",{"lineHeight":"38px","fontWeight":"600"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}],"display-hero-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["17px",{"lineHeight":"24px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-max"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-secondary to-surface-container flex items-center justify-center shadow-[0_0_16px_rgba(76,215,246,0.35)] p-0.5"><div class="w-full h-full bg-surface-container-lowest rounded-[10px] flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[22px]">deployed_code</span></div></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">SiteSync</span><span class="font-headline-sm text-headline-sm text-secondary font-bold tracking-tight">AI</span><span class="font-label-caps text-label-caps bg-surface-container-high text-primary px-1.5 py-0.5 rounded uppercase tracking-wider">OIL INDIA LIMITED</span></div><span class="font-telemetry-data text-[11px] text-on-surface-variant">Intelligent Planning-to-Execution Bridge • SIH26122</span></div></div><div class="hidden xl:flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full shadow-[inset_0_0_12px_rgba(78,222,163,0.06)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-caps text-label-caps text-tertiary tracking-wide uppercase">PS-ID: 26122 • EPPM READY</span></div><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full"><span class="material-symbols-outlined text-secondary text-[16px]">speed</span><span class="font-telemetry-data text-telemetry-data text-on-surface">System Status:</span><span class="font-telemetry-data text-telemetry-data text-secondary font-semibold">Optimal 99.98%</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container p-1 rounded-full" title="Theme Active: Dark Mode"><button class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">light_mode</span></button><button class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_10px_rgba(77,142,255,0.4)]" type="button"><span class="material-symbols-outlined text-[16px]">dark_mode</span></button></div><button class="hidden sm:flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-3 py-1.5 rounded-lg transition-all" type="button"><span class="material-symbols-outlined text-[18px] text-secondary">supervised_user_circle</span><span class="font-body-sm text-body-sm font-medium">Switch Persona</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></button><button class="flex items-center gap-space-xs bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-3.5 py-1.5 rounded-lg font-headline-sm text-[13px] shadow-[0_0_18px_rgba(76,215,246,0.3)] hover:brightness-110 transition-all" type="button"><span class="material-symbols-outlined text-[17px]">bolt</span><span>Skip to Demo</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-20 bottom-0 w-64 bg-surface-container-low z-40 flex flex-col justify-between py-space-md"><div class="flex flex-col gap-space-md px-space-sm"><div class="px-3"><span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Mission Control</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="overview-command" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Overview Command</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="eppm-planning-bridge" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>EPPM Planning Bridge</span></a><a aria-current="page" class="flex items-center gap-space-sm px-3 py-2 transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="field-telemetry" href="#"><span class="material-symbols-outlined text-[20px]">sensors</span><span>Field Telemetry</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="audit-provenance" href="#"><span class="material-symbols-outlined text-[20px]">verified_user</span><span>Audit &amp; Provenance</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="system-diagnostics" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span>Diagnostics</span></a></nav></div><div class="px-3 flex flex-col gap-space-sm"><div class="bg-surface-container-lowest p-3 rounded-lg"><div class="flex items-center justify-between mb-1"><span class="font-label-caps text-label-caps text-outline">SAP NETWEAVER</span><span class="font-code-badge text-code-badge text-tertiary">SYNCED</span></div><div class="font-telemetry-data text-[11px] text-on-surface-variant truncate">Pipeline: Duliajan-08-N</div></div><div class="flex items-center justify-between text-outline text-[11px] px-1"><span class="font-code-badge text-code-badge">v4.1.8-SIH</span><span class="font-code-badge text-code-badge text-secondary">SECURE SSL</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><main class="flex-1 pt-20 w-full px-space-lg bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive Top Action Status Bar -->
+<div class="w-full flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-lg mb-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-caps text-label-caps bg-surface-container-high text-secondary px-2.5 py-1 rounded tracking-wider uppercase">Field Telemetry Desk</span>
+<span class="font-code-badge text-code-badge text-outline">/</span>
+<span class="font-code-badge text-code-badge text-primary font-semibold tracking-wide">DIGBOI PIPELINE CORRIDOR • SEC-04</span>
+<span class="font-label-caps text-label-caps bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+          REAL-TIME TELEMETRY ON
+        </span>
+</div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Supervisor Ingestion &amp; Mobile DPR Engine</h1>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span>Assigned Persona:</span>
+<span class="text-on-surface font-medium">Debashis Gogoi</span>
+<span class="font-code-badge text-code-badge text-primary bg-surface-container px-1.5 py-0.5 rounded">OIL-SUP-8893</span>
+<span>• Field Construction Cell (Upper Assam Basin)</span>
+</p>
+</div>
+<!-- Telemetry System Pill Matrix -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="bg-surface-container px-3.5 py-2 rounded-xl flex items-center gap-3 shadow-md">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary animate-ping"></div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Offline SQLite DB</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold flex items-center gap-1">
+<span>4 Queued Records</span>
+<span class="text-tertiary">• Auto-Syncing</span>
+</span>
+</div>
+<button class="ml-2 bg-surface-container-high hover:bg-surface-bright text-secondary p-1.5 rounded-lg transition-colors" id="syncTriggerBtn" title="Force SQLite Push" type="button">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+<div class="bg-surface-container px-3.5 py-2 rounded-xl flex items-center gap-3 shadow-md">
+<span class="material-symbols-outlined text-secondary text-[22px]">satellite_alt</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">GNSS Precision</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">±1.18m (RTK Fix)</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary hover:bg-primary-fixed-dim px-4 py-2.5 rounded-xl font-headline-sm text-body-md flex items-center gap-2 transition-all shadow-md" type="button">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+<span>Push DPR Batch</span>
+</button>
+</div>
+</div>
+<!-- Primary Bento Operational Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- LEFT COLUMN: VoiceTime AI Agent & CV Geotag Inspector (7 Cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-lg">
+<!-- VoiceTime AI Agent Card -->
+<div class="bg-surface-container-low p-space-lg rounded-2xl shadow-xl flex flex-col gap-space-md relative overflow-hidden">
+<div class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight">VoiceTime™ Acoustic DPR Transcriber</h3>
+<span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full uppercase">P6 Natural Lang Parse</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time edge speech-to-intent mapped to Primavera WBS dictionaries</p>
+</div>
+</div>
+<span class="font-code-badge text-code-badge text-tertiary bg-surface-container px-2.5 py-1 rounded">BUFFER READY</span>
+</div>
+<!-- Waveform Visualization & Player Widget -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-sm shadow-inner">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<button class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-lg hover:brightness-110 transition-all" id="playbackToggle" type="button">
+<span class="material-symbols-outlined text-[24px]" id="playIcon">play_arrow</span>
+</button>
+<div class="flex flex-col">
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">REC_20241024_0814_OIL_DIGBOI.wav</span>
+<span class="font-code-badge text-code-badge text-on-surface-variant">Duration: 00:18.4 • Codec: Opus 48kHz • SNR: 32dB</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-outline bg-surface-container-lowest px-2 py-1 rounded">CONFIDENCE: 98.4%</span>
+</div>
+</div>
+<!-- Dynamic SVG Waveform Display -->
+<div class="w-full h-16 bg-surface-container-lowest rounded-lg p-2 flex items-center justify-between gap-1 overflow-hidden">
+<!-- Simulated dynamic sound bars -->
+<div class="flex-1 h-3 bg-secondary/40 rounded-full"></div>
+<div class="flex-1 h-6 bg-secondary/60 rounded-full"></div>
+<div class="flex-1 h-10 bg-secondary rounded-full"></div>
+<div class="flex-1 h-12 bg-secondary rounded-full"></div>
+<div class="flex-1 h-8 bg-secondary/70 rounded-full"></div>
+<div class="flex-1 h-4 bg-secondary/40 rounded-full"></div>
+<div class="flex-1 h-7 bg-primary rounded-full"></div>
+<div class="flex-1 h-11 bg-primary rounded-full"></div>
+<div class="flex-1 h-14 bg-primary rounded-full"></div>
+<div class="flex-1 h-9 bg-primary/70 rounded-full"></div>
+<div class="flex-1 h-5 bg-primary/50 rounded-full"></div>
+<div class="flex-1 h-3 bg-secondary/40 rounded-full"></div>
+<div class="flex-1 h-8 bg-secondary rounded-full"></div>
+<div class="flex-1 h-12 bg-secondary rounded-full"></div>
+<div class="flex-1 h-10 bg-secondary/80 rounded-full"></div>
+<div class="flex-1 h-6 bg-secondary/50 rounded-full"></div>
+<div class="flex-1 h-2 bg-outline-variant rounded-full"></div>
+<div class="flex-1 h-4 bg-tertiary/40 rounded-full"></div>
+<div class="flex-1 h-12 bg-tertiary rounded-full"></div>
+<div class="flex-1 h-14 bg-tertiary rounded-full"></div>
+<div class="flex-1 h-10 bg-tertiary/80 rounded-full"></div>
+<div class="flex-1 h-7 bg-tertiary/60 rounded-full"></div>
+<div class="flex-1 h-3 bg-tertiary/30 rounded-full"></div>
+<div class="flex-1 h-5 bg-outline rounded-full"></div>
+<div class="flex-1 h-9 bg-outline rounded-full"></div>
+<div class="flex-1 h-12 bg-primary rounded-full"></div>
+<div class="flex-1 h-14 bg-primary rounded-full"></div>
+<div class="flex-1 h-8 bg-primary/70 rounded-full"></div>
+<div class="flex-1 h-4 bg-outline-variant rounded-full"></div>
+<div class="flex-1 h-2 bg-outline-variant rounded-full"></div>
+</div>
+</div>
+<!-- Real-Time Voice Transcription Breakdown -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-caps text-label-caps uppercase">Detected Audio Transcript</span>
+<span class="font-label-caps text-label-caps text-tertiary">LEXICAL DISPATCH VERIFIED</span>
+</div>
+<div class="bg-surface-container p-3.5 rounded-xl font-body-md text-on-surface">
+            “Digboi KM 14+200 trenching completed, rock encountered at 1.8m depth. Heavy breaker deployed for CAT-320D excavator. Padding crew on standby.”
+          </div>
+</div>
+<!-- Extracted Primavera Entities Tags -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-outline uppercase">Extracted Primavera P6 Candidate Activities</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container p-3 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-primary">WBS: OIL.DIG.CIVIL.04</span>
+<span class="font-telemetry-data text-[12px] text-on-surface font-semibold truncate">Trench Excavation KM14</span>
+<div class="flex items-center justify-between mt-1 pt-1 bg-surface-container-low px-1.5 py-0.5 rounded">
+<span class="font-code-badge text-code-badge text-outline">ACTUAL: +120m</span>
+<span class="font-code-badge text-code-badge text-tertiary">CONF: 99%</span>
+</div>
+</div>
+<div class="bg-surface-container p-3 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-secondary">GEO_VAR: STRATA_HARD</span>
+<span class="font-telemetry-data text-[12px] text-on-surface font-semibold truncate">Rock Encountered 1.8m</span>
+<div class="flex items-center justify-between mt-1 pt-1 bg-surface-container-low px-1.5 py-0.5 rounded">
+<span class="font-code-badge text-code-badge text-outline">DELAY RISK: LOW</span>
+<span class="font-code-badge text-code-badge text-secondary">AUTO-LOG</span>
+</div>
+</div>
+<div class="bg-surface-container p-3 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">EQUIP: CAT-320D-BRK</span>
+<span class="font-telemetry-data text-[12px] text-on-surface font-semibold truncate">Pneumatic Breaker Shift</span>
+<div class="flex items-center justify-between mt-1 pt-1 bg-surface-container-low px-1.5 py-0.5 rounded">
+<span class="font-code-badge text-code-badge text-outline">UPTIME: 7.5 HRS</span>
+<span class="font-code-badge text-code-badge text-tertiary">MATCHED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Computer Vision & Geotag Photo Analysis Card -->
+<div class="bg-surface-container-low p-space-lg rounded-2xl shadow-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">document_scanner</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight">Camera Geotag &amp; Vision Inspector</h3>
+<span class="font-code-badge text-code-badge bg-surface-container px-2 py-0.5 rounded text-secondary font-mono">YOLOv8-OIL Pipeline Model</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Photogrammetric joint alignment verification &amp; spatial EXIF cryptostamping</p>
+</div>
+</div>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-body-sm text-body-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">add_a_photo</span>
+<span>Retake Scan</span>
+</button>
+</div>
+<!-- Vision Analysis Stage -->
+<div class="relative w-full rounded-xl overflow-hidden bg-surface-container-lowest h-80 flex items-center justify-center group shadow-inner">
+<img class="w-full h-full object-cover opacity-60" data-alt="High contrast industrial dark mode photo of pipeline construction in Assam oil fields, steel welded pipeline resting on support skids in deep red earth trench, excavation machinery in background under bright cinematic directional construction lights, realistic engineering documentary style with subtle neon data overlay markers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj8dC5uXcn-dBC-Vkbxu3m6PBSes6GnNVYhoTHu3VCnp4Kor0HzlX3bTNqFNGHge990tzxPqWfw1QP7aelBQ3vyi2mhfclBsrYFlcWYGMTpJZIfjxq4yGs5oRLkcIA452YmM73nlyoVTB78zq2KJ8bC40TqCV5UukABJnl7Q4ZKmXygv8cnNSF8Wj5wAfqT626tzl7R944fq2kfpEx8K-oQQ67veOKkpBVLpenOA2Y6ivUWEmijcNg3Q"/>
+<!-- AI Optical Overlay Grid & Bounding Boxes -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<!-- Bounding Box Joint #J-412 -->
+<div class="absolute left-1/4 top-1/3 w-48 h-32 rounded-lg bg-secondary/10 flex flex-col justify-between p-2 shadow-[0_0_24px_rgba(76,215,246,0.3)]">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps bg-secondary text-on-secondary px-1.5 py-0.5 rounded font-bold">WELD JOINT #J-412</span>
+<span class="font-code-badge text-code-badge text-secondary bg-surface-container-lowest/80 px-1 rounded">97.8%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-badge text-[10px] text-tertiary bg-surface-container-lowest/90 px-1 py-0.5 rounded font-mono">NDT STATUS: ACCEPTABLE</span>
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+</div>
+</div>
+<!-- Bounding Box Pipe Coating Detection -->
+<div class="absolute right-1/4 bottom-1/4 w-40 h-20 rounded bg-tertiary/10 flex flex-col justify-between p-1.5">
+<span class="font-label-caps text-[9px] bg-tertiary text-on-tertiary font-bold px-1 rounded self-start">3LPE COATING: PASS</span>
+<span class="font-code-badge text-[10px] text-tertiary self-end bg-surface-container-lowest/80 px-1 rounded font-mono">THICKNESS: 3.2mm</span>
+</div>
+<!-- Technical HUD Watermark Overlay -->
+<div class="absolute top-3 left-3 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1.5 rounded-lg flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">CV MODEL: PIPELINE-INSPECT-PROD-V2</span>
+</div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-surface-container/90 backdrop-blur-md px-3.5 py-2 rounded-xl text-on-surface">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">location_on</span>
+<div class="flex flex-col">
+<span class="font-telemetry-data text-telemetry-data font-semibold">27°23'42.1"N 95°37'19.4"E</span>
+<span class="font-code-badge text-code-badge text-on-surface-variant">Digboi Chainage: KM 14+200 • Elev: 154.2m MSL</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps bg-surface-container-high px-2 py-1 rounded text-primary">GPS ±1.2m</span>
+<span class="font-label-caps text-label-caps bg-surface-container-high px-2 py-1 rounded text-outline font-mono">10:42:19 IST</span>
+</div>
+</div>
+</div>
+<!-- EXIF Cryptographic Security Verification Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div class="bg-surface-container p-2.5 rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Camera Sensor</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold truncate">Trimble TDC600 V2</span>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Elevation Incline</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface font-semibold">+3.8° Grade</span>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">SHA-256 Provenance</span>
+<span class="font-code-badge text-[11px] text-tertiary truncate font-mono">8f9b...e21c (Signed)</span>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Tamper Audit</span>
+<span class="font-telemetry-data text-telemetry-data text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Zero Divergence
+            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Daily Progress Report (DPR) Ingestion Desk (5 Cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-lg">
+<!-- DPR Input Form Card -->
+<div class="bg-surface-container-low p-space-lg rounded-2xl shadow-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Shift DPR Ingestion</h2>
+<span class="font-telemetry-data text-[12px] text-on-surface-variant">Shift: 06:00 - 18:00 IST • Cell 04</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps bg-surface-container text-tertiary px-2.5 py-1 rounded uppercase tracking-wider font-mono">DPR-#OIL-2024-884</span>
+</div>
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); triggerSubmitFeedback();">
+<!-- Trenching & Progress Metric -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">Pipeline Corridor Section / Trench Chainage</label>
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded-xl text-on-surface">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">route</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface outline-none" type="text" value="KM 14+100 to KM 14+220 (120m Finished)"/>
+</div>
+</div>
+<!-- Multi-Param Field Metrics 2x2 Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<!-- Active Crew Size -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">Crew Count (Welders + Rigger)</label>
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded-xl text-on-surface">
+<span class="material-symbols-outlined text-outline text-[18px] mr-2">group</span>
+<input class="w-full bg-transparent font-telemetry-data text-telemetry-data text-on-surface outline-none" type="number" value="18"/>
+<span class="font-code-badge text-code-badge text-outline">PAX</span>
+</div>
+</div>
+<!-- Heavy Machinery Uptime -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">Machinery Uptime (CAT-320D)</label>
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded-xl text-on-surface">
+<span class="material-symbols-outlined text-outline text-[18px] mr-2">precision_manufacturing</span>
+<input class="w-full bg-transparent font-telemetry-data text-telemetry-data text-on-surface outline-none" type="text" value="7.5 / 8.0"/>
+<span class="font-code-badge text-code-badge text-tertiary">HRS</span>
+</div>
+</div>
+<!-- Ambient Weather Condition -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">Micro-Climate Conditions</label>
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded-xl text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px] mr-2">wb_sunny</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface outline-none" type="text" value="Clear 28°C • RH 68%"/>
+</div>
+</div>
+<!-- Safety Incidents -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">HSE Observation / Near Misses</label>
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded-xl text-on-surface">
+<span class="material-symbols-outlined text-tertiary text-[18px] mr-2">health_and_safety</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface outline-none" type="text" value="Zero Incidents (Toolbox Done)"/>
+</div>
+</div>
+</div>
+<!-- Contractor Verification & E-Signature -->
+<div class="bg-surface-container p-3.5 rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">EPC Contractor Lead Sign-Off</span>
+<span class="font-code-badge text-code-badge text-primary font-mono">PUNJ LLOYD ENG • VENDOR-ID: PL-992</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest p-2.5 rounded-lg">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">draw</span>
+</div>
+<div class="flex flex-col">
+<span class="font-telemetry-data text-[12px] text-on-surface font-semibold">Tapan Das, Site Incharge</span>
+<span class="font-code-badge text-[10px] text-outline font-mono">UID: 9812-3321-4412 • PKI Verified</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-tertiary bg-tertiary-container/30 px-2 py-0.5 rounded">AUTHENTICATED</span>
+</div>
+</div>
+<!-- Auto-Discovered Risk Variance Flag -->
+<div class="bg-surface-container p-3.5 rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">psychology</span>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-md font-semibold text-secondary">SiteSync AI Baseline Prediction</span>
+<span class="font-code-badge text-code-badge bg-surface-container-high px-1.5 rounded text-on-surface-variant font-mono">Δ +0.4 Day Margin</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Rock strata breaker requirement will automatically append Primavera Risk Register contingency code <code>GEO-RISK-019</code> on submission.</p>
+</div>
+</div>
+<!-- Submission Controls -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<button class="w-full bg-gradient-to-r from-primary-container to-secondary-container hover:brightness-110 text-on-primary-container py-3 rounded-xl font-headline-sm text-body-md flex items-center justify-center gap-2 transition-all shadow-lg font-semibold" id="submitDprBtn" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+<span>Commit DPR • Generate Cryptographic Hash</span>
+</button>
+<div class="flex items-center justify-between text-outline px-1">
+<span class="font-code-badge text-code-badge text-on-surface-variant">Auto-stores into Local SQLite if uplink drops</span>
+<span class="font-code-badge text-code-badge text-tertiary">ECDSA P-256</span>
+</div>
+</div>
+</form>
+</div>
+<!-- Quick SQLite Cache Health Card -->
+<div class="bg-surface-container-low p-space-md rounded-2xl shadow-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">cloud_sync</span>
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">Edge Storage Health</span>
+</div>
+<span class="font-code-badge text-code-badge text-on-surface-variant font-mono">SQLite v3.42.0</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full w-[24%]"></div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-telemetry-data text-[11px]">Storage: 12.8 MB / 512 MB Buffer</span>
+<span class="font-code-badge text-code-badge text-tertiary">INTEGRITY 100% OK</span>
+</div>
+</div>
+</div>
+</div>
+<!-- BOTTOM SECTION: Real-Time Event Telemetry Stream Log -->
+<div class="w-full mt-space-lg bg-surface-container-low p-space-lg rounded-2xl shadow-xl flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-lg text-on-surface font-semibold tracking-tight">Live Synchronized Field Event Ledger</h3>
+<span class="font-telemetry-data text-[12px] text-on-surface-variant">Distributed Oracle • Immutable Field-to-Primavera Audit Chain</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-tertiary bg-surface-container px-2.5 py-1 rounded uppercase tracking-wider flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          STREAM LISTENING (PORT 8443)
+        </span>
+</div>
+</div>
+<!-- Event Table Container -->
+<div class="w-full overflow-x-auto rounded-xl bg-surface-container-lowest shadow-inner">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/60 text-outline">
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase">Timestamp</th>
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase">Event Source</th>
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase">Telemetry Description</th>
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase">WBS Activity Target</th>
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase">Cryptographic Stamp</th>
+<th class="py-2.5 px-4 font-label-caps text-label-caps uppercase text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-telemetry-data text-telemetry-data">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4 text-on-surface whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-surface-container px-2 py-0.5 rounded text-outline font-mono">10:48:02 IST</span>
+</td>
+<td class="py-3 px-4 text-secondary whitespace-nowrap flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">sensors</span>
+<span>Acoustic Agent</span>
+</td>
+<td class="py-3 px-4 text-on-surface">VoiceTime transcript parsed into 3 Primavera activity candidates</td>
+<td class="py-3 px-4 text-primary whitespace-nowrap font-mono text-[12px]">OIL.DIG.CIVIL.04</td>
+<td class="py-3 px-4 text-outline font-mono text-[11px] whitespace-nowrap">0x4a8f...903c</td>
+<td class="py-3 px-4 text-right whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded">COMMITTED</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4 text-on-surface whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-surface-container px-2 py-0.5 rounded text-outline font-mono">10:44:11 IST</span>
+</td>
+<td class="py-3 px-4 text-secondary whitespace-nowrap flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+<span>Vision CV</span>
+</td>
+<td class="py-3 px-4 text-on-surface">Joint #J-412 detected. Alignment 0.2° deviation within tolerance</td>
+<td class="py-3 px-4 text-primary whitespace-nowrap font-mono text-[12px]">OIL.DIG.PIPE.09</td>
+<td class="py-3 px-4 text-outline font-mono text-[11px] whitespace-nowrap">0x192b...e614</td>
+<td class="py-3 px-4 text-right whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded">VERIFIED</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4 text-on-surface whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-surface-container px-2 py-0.5 rounded text-outline font-mono">10:30:45 IST</span>
+</td>
+<td class="py-3 px-4 text-secondary whitespace-nowrap flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">storage</span>
+<span>SQLite Cache</span>
+</td>
+<td class="py-3 px-4 text-on-surface">Local transaction queue synchronized (3 payloads dispatched to EPPM bridge)</td>
+<td class="py-3 px-4 text-primary whitespace-nowrap font-mono text-[12px]">OIL.DIG.COMM.01</td>
+<td class="py-3 px-4 text-outline font-mono text-[11px] whitespace-nowrap">0x77d1...ba28</td>
+<td class="py-3 px-4 text-right whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded">ACK_RECEIVED</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4 text-on-surface whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-surface-container px-2 py-0.5 rounded text-outline font-mono">10:12:00 IST</span>
+</td>
+<td class="py-3 px-4 text-secondary whitespace-nowrap flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+<span>Trimble GNSS</span>
+</td>
+<td class="py-3 px-4 text-on-surface">Centimeter-level spatial fix obtained for Chainage marker KM 14+200</td>
+<td class="py-3 px-4 text-primary whitespace-nowrap font-mono text-[12px]">OIL.DIG.SURV.02</td>
+<td class="py-3 px-4 text-outline font-mono text-[11px] whitespace-nowrap">0xcc91...33d0</td>
+<td class="py-3 px-4 text-right whitespace-nowrap">
+<span class="font-code-badge text-code-badge bg-tertiary-container/30 text-tertiary px-2 py-0.5 rounded">GEO_LOCKED</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Evaluator Callout Notice -->
+<div class="bg-surface-container p-space-md rounded-xl flex items-start gap-space-sm shadow-md">
+<span class="material-symbols-outlined text-secondary text-[24px] mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">Hackathon Evaluator Notice • Supervisor Workstation (SIH26122)</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          This console executes the frontline edge-capture milestone for Oil India Limited. Voice commands and inspection images collected in low-connectivity terrain are instantly normalized against Primavera P6 work-breakdown structures via the embedded SQLite queue, ensuring zero field-record omission.
+        </p>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic audio toggle simulation
+  const playbackBtn = document.getElementById('playbackToggle');
+  const playIcon = document.getElementById('playIcon');
+  let isPlaying = false;
+
+  if (playbackBtn && playIcon) {
+    playbackBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+    });
+  }
+
+  // Force SQLite Sync Notification
+  const syncBtn = document.getElementById('syncTriggerBtn');
+  if (syncBtn) {
+    syncBtn.addEventListener('click', () => {
+      syncBtn.classList.add('animate-spin');
+      setTimeout(() => {
+        syncBtn.classList.remove('animate-spin');
+        alert('SQLite Cache Synced with Oil India EPPM Server: 4 Records Committed.');
+      }, 700);
+    });
+  }
+
+  // DPR Submission micro-feedback
+  function triggerSubmitFeedback() {
+    const btn = document.getElementById('submitDprBtn');
+    if (!btn) return;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">sync</span><span>Hashing DPR with SHA-256...</span>';
+    btn.classList.add('opacity-80');
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">task_alt</span><span>Committed &amp; Signed (OIL-DPR-884)</span>';
+      btn.classList.remove('opacity-80');
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 2500);
+    }, 900);
+  }
+</script></main><footer class="w-full bg-surface-container-lowest py-space-md px-space-lg shadow-[0_-1px_6px_rgba(0,0,0,0.3)]"><div class="flex flex-col md:flex-row items-center justify-between gap-space-sm"><div class="flex flex-wrap items-center gap-space-sm"><span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">SIH26122 • Smart Automation</span><span class="text-outline">•</span><span class="font-body-sm text-body-sm text-on-surface-variant">Oil India Limited Prototype</span></div><div class="flex items-center gap-space-xs text-outline"><span class="material-symbols-outlined text-[16px] text-tertiary">shield_lock</span><span class="font-code-badge text-code-badge text-on-surface-variant">Enterprise Role-Based Access Control (RBAC) &amp; Immutable Provenance</span></div></div></footer></div></body></html>

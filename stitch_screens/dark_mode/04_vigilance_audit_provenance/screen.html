@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-bright":"#353942","surface-container-highest":"#31353e","surface-container-high":"#262a33","on-tertiary-container":"#00311f","on-error-container":"#ffdad6","surface-tint":"#adc6ff","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","surface-container":"#1c2028","inverse-surface":"#dfe2ee","on-tertiary":"#003824","on-tertiary-fixed-variant":"#005236","primary-container":"#4d8eff","on-tertiary-fixed":"#002113","surface-variant":"#31353e","primary":"#adc6ff","secondary":"#4cd7f6","primary-fixed-dim":"#adc6ff","on-primary-container":"#00285d","secondary-fixed":"#acedff","tertiary":"#4edea3","tertiary-fixed-dim":"#4edea3","error-container":"#93000a","on-primary":"#002e6a","inverse-on-surface":"#2c3039","on-primary-fixed":"#001a42","primary-fixed":"#d8e2ff","on-secondary-fixed":"#001f26","error":"#ffb4ab","outline":"#8c909f","inverse-primary":"#005ac2","on-secondary-fixed-variant":"#004e5c","on-surface-variant":"#c2c6d6","tertiary-container":"#00a572","surface-container-lowest":"#0a0e16","surface-dim":"#0f131c","surface-container-low":"#181c24","surface":"#0f131c","on-secondary":"#003640","on-surface":"#dfe2ee","secondary-container":"#03b5d3","background":"#0f131c","on-primary-fixed-variant":"#004395","on-error":"#690005","secondary-fixed-dim":"#4cd7f6","outline-variant":"#424754","on-secondary-container":"#00424e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin-lg":"3.5rem","space-xl":"2.25rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin-md":"2rem","gutter-lg":"2rem","space-lg":"1.5rem","gutter":"1.25rem","margin":"1rem"},"fontFamily":{"label-caps":["JetBrains Mono"],"code-badge":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Geist"],"telemetry-data":["JetBrains Mono"],"headline-lg":["Geist"],"display-hero":["Geist"],"display-hero-mobile":["Geist"],"body-sm":["Inter"],"headline-sm":["Inter"]},"fontSize":{"label-caps":["10px",{"lineHeight":"14px","fontWeight":"700"}],"code-badge":["11px",{"lineHeight":"16px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"telemetry-data":["13px",{"lineHeight":"20px","fontWeight":"500"}],"headline-lg":["30px",{"lineHeight":"38px","fontWeight":"600"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}],"display-hero-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["17px",{"lineHeight":"24px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-max"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-secondary to-surface-container flex items-center justify-center shadow-[0_0_16px_rgba(76,215,246,0.35)] p-0.5"><div class="w-full h-full bg-surface-container-lowest rounded-[10px] flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[22px]">deployed_code</span></div></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">SiteSync</span><span class="font-headline-sm text-headline-sm text-secondary font-bold tracking-tight">AI</span><span class="font-label-caps text-label-caps bg-surface-container-high text-primary px-1.5 py-0.5 rounded uppercase tracking-wider">OIL INDIA LIMITED</span></div><span class="font-telemetry-data text-[11px] text-on-surface-variant">Intelligent Planning-to-Execution Bridge • SIH26122</span></div></div><div class="hidden xl:flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full shadow-[inset_0_0_12px_rgba(78,222,163,0.06)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-caps text-label-caps text-tertiary tracking-wide uppercase">PS-ID: 26122 • EPPM READY</span></div><div class="flex items-center gap-space-xs bg-surface-container px-3 py-1.5 rounded-full"><span class="material-symbols-outlined text-secondary text-[16px]">speed</span><span class="font-telemetry-data text-telemetry-data text-on-surface">System Status:</span><span class="font-telemetry-data text-telemetry-data text-secondary font-semibold">Optimal 99.98%</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container p-1 rounded-full" title="Theme Active: Dark Mode"><button class="w-7 h-7 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">light_mode</span></button><button class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_10px_rgba(77,142,255,0.4)]" type="button"><span class="material-symbols-outlined text-[16px]">dark_mode</span></button></div><button class="hidden sm:flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-3 py-1.5 rounded-lg transition-all" type="button"><span class="material-symbols-outlined text-[18px] text-secondary">supervised_user_circle</span><span class="font-body-sm text-body-sm font-medium">Switch Persona</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></button><button class="flex items-center gap-space-xs bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-3.5 py-1.5 rounded-lg font-headline-sm text-[13px] shadow-[0_0_18px_rgba(76,215,246,0.3)] hover:brightness-110 transition-all" type="button"><span class="material-symbols-outlined text-[17px]">bolt</span><span>Skip to Demo</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-20 bottom-0 w-64 bg-surface-container-low z-40 flex flex-col justify-between py-space-md"><div class="flex flex-col gap-space-md px-space-sm"><div class="px-3"><span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Mission Control</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="overview-command" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Overview Command</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="eppm-planning-bridge" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>EPPM Planning Bridge</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="field-telemetry" href="#"><span class="material-symbols-outlined text-[20px]">sensors</span><span>Field Telemetry</span></a><a aria-current="page" class="flex items-center gap-space-sm px-3 py-2 transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="audit-provenance" href="#"><span class="material-symbols-outlined text-[20px]">verified_user</span><span>Audit &amp; Provenance</span></a><a class="flex items-center gap-space-sm px-3 py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-body-sm text-body-sm" data-path="system-diagnostics" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span>Diagnostics</span></a></nav></div><div class="px-3 flex flex-col gap-space-sm"><div class="bg-surface-container-lowest p-3 rounded-lg"><div class="flex items-center justify-between mb-1"><span class="font-label-caps text-label-caps text-outline">SAP NETWEAVER</span><span class="font-code-badge text-code-badge text-tertiary">SYNCED</span></div><div class="font-telemetry-data text-[11px] text-on-surface-variant truncate">Pipeline: Duliajan-08-N</div></div><div class="flex items-center justify-between text-outline text-[11px] px-1"><span class="font-code-badge text-code-badge">v4.1.8-SIH</span><span class="font-code-badge text-code-badge text-secondary">SECURE SSL</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><main class="flex-1 pt-20 w-full px-space-lg bg-surface"><div class="flex flex-col w-full">
+<!-- Subtle ambient canvas glow behind hero section -->
+<div class="relative w-full overflow-hidden pb-space-xl">
+<div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-secondary/10 blur-[130px] rounded-full"></div>
+<div class="pointer-events-none absolute top-20 right-10 w-[400px] h-[300px] bg-primary/10 blur-[120px] rounded-full"></div>
+<!-- Sub-Header / Breadcrumb Provenance Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md py-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps uppercase tracking-widest shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+            OIL INDIA CORP VIGILANCE DESK
+          </span>
+<span class="font-code-badge text-code-badge text-outline">•</span>
+<span class="font-code-badge text-code-badge text-secondary">CLEARANCE LVL: TS-ALPHA</span>
+<span class="font-code-badge text-code-badge text-outline">•</span>
+<span class="font-code-badge text-code-badge text-tertiary">LEDGER #9822-HYPERLEDGER</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+          Corporate Vigilance &amp; Cryptographic Provenance Suite
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+          Officer Persona: <strong class="text-on-surface font-semibold">Dr. Ananya Baruah (OIL-VIG-0042)</strong> — Continuous mathematical verification of EPPM schedule baselines against immutable decentralized field telemetry blocks.
+        </p>
+</div>
+<!-- Quick Action Badges & Live Status -->
+<div class="flex flex-wrap items-center gap-space-sm self-start lg:self-center">
+<div class="flex items-center gap-space-xs px-3.5 py-2 rounded-xl bg-surface-container-high shadow-md">
+<span class="material-symbols-outlined text-[18px] text-tertiary">verified</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-outline">Ledger Sync</span>
+<span class="font-telemetry-data text-telemetry-data font-semibold text-tertiary">SYNCED (BLOCK #408,192)</span>
+</div>
+</div>
+<button class="flex items-center gap-space-xs px-4 py-2.5 rounded-xl bg-primary text-on-primary font-headline-sm text-headline-sm hover:brightness-110 shadow-lg shadow-primary/20 transition-all" onclick="openVerificationModal('BLK-408192', '0x8f4d9a2c...b31e', 'Pranjal Saikia', 'Primavera Baseline Approval', '2025-05-18 14:32:09 IST')" type="button">
+<span class="material-symbols-outlined text-[18px]">policy</span>
+<span>Verify Top Block</span>
+</button>
+<button class="flex items-center gap-space-xs px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm shadow-md transition-all" onclick="openDnaModal('Pipeline Section Duliajan-08-N', 'WBS-7.2.1 Hydrostatic Trenching', 'Planned: 18mm/hr • Ground Truth: 11.2mm/hr')" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">strikethrough_s</span>
+<span>Archetype DNA Diff</span>
+</button>
+</div>
+</div>
+<!-- Security, Anomaly & Dispute Mitigation Metrics Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mt-space-md">
+<!-- Metric 1: Anomaly Rate -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Schedule Anomaly Rate</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-code-badge text-code-badge font-semibold">TOLERANCE &lt; 0.05%</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-on-surface font-bold">0.02%</span>
+<span class="font-telemetry-data text-telemetry-data text-tertiary flex items-center">
+<span class="material-symbols-outlined text-[16px]">trending_down</span> -0.04%
+          </span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full w-[12%]"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-2">Zero critical tamper vectors detected past 90 epochs</span>
+</div>
+<!-- Metric 2: Monte Carlo Dispute Mitigation -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Dispute Adjudication Prob.</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary font-code-badge text-code-badge font-semibold">MONTE CARLO</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-secondary font-bold">98.4%</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface-variant font-normal">Confidence</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-[98.4%]"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-2">Prevents INR 4.2 Cr contractor delay claims via Merkle proof</span>
+</div>
+<!-- Metric 3: Active Cryptographic Signatures -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">Immutable Signatures</span>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-code-badge text-code-badge font-semibold">SHA-256 ED25519</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-on-surface font-bold">14,289</span>
+<span class="font-telemetry-data text-telemetry-data text-primary font-semibold">VERIFIED</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-[100%]"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-2">100% field voice DPRs + drone geotags certified</span>
+</div>
+<!-- Metric 4: S-Curve Deviation Risk -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-wider">S-Curve Slip Deviation</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-bright text-outline font-code-badge text-code-badge">BASELINE V4.2</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-tertiary font-bold">+1.2d</span>
+<span class="font-telemetry-data text-telemetry-data text-on-surface-variant">within buffer</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden flex">
+<div class="bg-tertiary h-full rounded-full w-[85%]"></div>
+<div class="bg-secondary h-full rounded-full w-[10%]"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-2">Duliajan to Numaligarh spur tracking within normal envelope</span>
+</div>
+</div>
+<!-- Main Content Area: Split 8-col Ledger Table & 4-col S-Curve Risk Analyzer -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg mt-space-lg">
+<!-- Left Column (8 cols): Cryptographic Audit Ledger -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<div class="bg-surface-container p-space-lg rounded-xl shadow-xl flex flex-col">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">account_tree</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">
+                  Cryptographic Audit Ledger
+                </h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Every milestone shift, field check-in, and Primavera actualization committed with dual-key provenance.
+              </p>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant font-telemetry-data text-telemetry-data flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Hyperledger Fabric v2.5</span>
+</span>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface transition-colors" title="Export Ledger CSV" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-lowest text-outline font-label-caps text-label-caps uppercase tracking-wider">
+<tr>
+<th class="py-3 px-4 rounded-l-lg">Block Index</th>
+<th class="py-3 px-4">Timestamp (IST)</th>
+<th class="py-3 px-4">Actor Persona</th>
+<th class="py-3 px-4">Operation Type</th>
+<th class="py-3 px-4">Merkle Root Hash</th>
+<th class="py-3 px-4 text-center rounded-r-lg">Signature</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 space-y-1">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/60 transition-colors cursor-pointer group" onclick="openVerificationModal('BLK-408192', '0x8f4d9a2c...b31e', 'Pranjal Saikia (Lead Controls)', 'Primavera Baseline Approval', '18 May 2025 14:32:09')">
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-secondary font-bold group-hover:underline">
+                    #408192
+                  </td>
+<td class="py-3.5 px-4 font-telemetry-data text-telemetry-data text-on-surface-variant">
+                    14:32:09 • Today
+                  </td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-caps text-[10px]">PS</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Pranjal Saikia</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-code-badge text-code-badge">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                      Primavera Actuals Commit
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-outline">
+                    0x8f4d9a...b31e
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+                      VALID SSL
+                    </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/60 transition-colors cursor-pointer group" onclick="openVerificationModal('BLK-408191', '0x3c7e11aa...66f2', 'Debashis Gogoi (Field Sup)', 'Voice DPR Geotag Sign-off', '18 May 2025 12:15:44')">
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-secondary font-bold group-hover:underline">
+                    #408191
+                  </td>
+<td class="py-3.5 px-4 font-telemetry-data text-telemetry-data text-on-surface-variant">
+                    12:15:44 • Today
+                  </td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-caps text-[10px]">DG</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Debashis Gogoi</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary/10 text-secondary font-code-badge text-code-badge">
+<span class="material-symbols-outlined text-[14px]">mic</span>
+                      Voice DPR Sign-off
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-outline">
+                    0x3c7e11...66f2
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+                      VALID SSL
+                    </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/60 transition-colors cursor-pointer group" onclick="openVerificationModal('BLK-408190', '0x19a00e55...dc41', 'Rajiv K. Sharma (CGM Infra)', 'Critical Path Schedule Waiver', '17 May 2025 18:40:11')">
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-secondary font-bold group-hover:underline">
+                    #408190
+                  </td>
+<td class="py-3.5 px-4 font-telemetry-data text-telemetry-data text-on-surface-variant">
+                    18:40:11 • Yesterday
+                  </td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-bright text-on-surface flex items-center justify-center font-label-caps text-[10px]">RS</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Rajiv K. Sharma</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-code-badge text-code-badge">
+<span class="material-symbols-outlined text-[14px]">gavel</span>
+                      Milestone Schedule Waiver
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-outline">
+                    0x19a00e...dc41
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+                      VALID SSL
+                    </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/60 transition-colors cursor-pointer group" onclick="openVerificationModal('BLK-408189', '0x7e29bb31...9a17', 'IoT Bridge #04 (Duliajan North)', 'Sensor Pressure Telemetry Committal', '17 May 2025 16:11:00')">
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-secondary font-bold group-hover:underline">
+                    #408189
+                  </td>
+<td class="py-3.5 px-4 font-telemetry-data text-telemetry-data text-on-surface-variant">
+                    16:11:00 • Yesterday
+                  </td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-label-caps text-[10px]">IOT</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">IoT Drone Sentinel-04</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-code-badge text-code-badge">
+<span class="material-symbols-outlined text-[14px]">sensors</span>
+                      Ground-Truth Geotag
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-code-badge text-code-badge text-outline">
+                    0x7e29bb...9a17
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+                      VALID SSL
+                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between text-outline font-telemetry-data text-[12px] gap-2">
+<span>Displaying 4 of 408,192 verified cryptographic blocks • Zero rollbacks recorded</span>
+<button class="text-secondary hover:underline flex items-center gap-1" type="button">
+              Load full ledger chain history
+              <span class="material-symbols-outlined text-[14px]">east</span>
+</button>
+</div>
+</div>
+<!-- Field Photo Geotag & Drone Proof Showcase (Generative Alt integration) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary">FIELD GEOTAG RECORD • DIGBOI-04</span>
+<span class="font-code-badge text-code-badge text-tertiary">GPS LOCK: 27.382°N, 95.629°E</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">Automated Trench Depth Verification</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+                Continuous drone photogrammetry matches Primavera baseline excavation depth requirements against contractor submissions.
+              </p>
+</div>
+<div class="relative w-full h-44 rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="High tech industrial petroleum pipeline trench excavation in upper Assam India during dusk. Industrial excavators, heavy piping, drone telemetry overlay markers, cyber-industrial mood with deep teal and cyan glow accents on heavy machinery, sharp engineering clarity, photorealistic 8k." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3C_59Fs4QPoHFnUyAFSj_23_8e64G4lA6NMIHgYh33R180gGkNr2XtBGniyaV9KxtwnxPhWZ7XTcvBifjimXmEqQTqO7Bb9iBKXJp54hGpY7e7oS7faCBzxkrlbab6SIVShQwD9KAKLtMDIhGTqNO_OWBTYJ3bSyMBDR2yWvdzlK__-Wnr_MVnJ7RwEuzCNthNIA-tYTPo8TPoy9V7PeK17X-JVMxBFb2B6vE7ltojluXK6maZBgkiA"/>
+<div class="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-surface/90 backdrop-blur font-telemetry-data text-[11px] text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Depth: 2.45m (Spec: 2.40m) • Verified
+              </div>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-primary">INTELLIGENT TELEMETRY GATEWAY</span>
+<span class="font-code-badge text-code-badge text-primary">PORT: 8443 SSL-TLS1.3</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-2">Duliajan Control Tower Node</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+                Dual hardware security modules (HSM) signing EPPM baseline commits before transmission to Oil India central data repository.
+              </p>
+</div>
+<div class="relative w-full h-44 rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Futuristic cyber security command terminal inside an oil and gas refinery control room in Duliajan India. Multiple holographic monitors displaying green and cyan data trees, server racks with subtle glowing fiber optics, cool cinematic industrial lighting, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVtGJqCvG0p6ITNKH19peQNt714aTirsriQXzH9nKXuVMk_ScKA4QFb3shbuUFFR5WE2znEb9nYSYxa5JRFi9_rYbxtwaNFkVmYYzYAVEubObSnnVMGAXPqMUoaGvfdvhBvDBV8IvhH_lF4U2Z4Myzx_WTBnaxgMJThec02ZKhKP7AE2Ob6bixB5K8OAegt1oK9rdmzqiNhoIrPNXZ4wRGb4qCjrY0nPyqAZt84GvEsrgckx6g8tySkg"/>
+<div class="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-surface/90 backdrop-blur font-telemetry-data text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Hardware HSM: FIPS 140-2 Level 3 Active
+              </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (4 cols): S-Curve Dispute Probability & Audit Archetype Panel -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- S-Curve Audit Vector Visualizer (Inline SVG chart) -->
+<div class="bg-surface-container p-space-lg rounded-xl shadow-xl flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps uppercase text-outline">S-CURVE COMPARATIVE INTEGRITY</span>
+<span class="font-code-badge text-code-badge text-secondary font-semibold">DELTA: +0.02%</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Primavera Baseline vs Field Execution</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-4">
+            Dr. Baruah's AI watchdog detects discrepancies before contractors raise commercial claims.
+          </p>
+<!-- High-Precision SVG S-Curve & Deviation Bounds -->
+<div class="bg-surface-container-lowest p-3 rounded-lg relative">
+<svg class="w-full h-48 overflow-visible" fill="none" viewbox="0 0 320 180">
+<!-- Grid lines -->
+<line class="text-surface-bright" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.7" x1="20" x2="300" y1="20" y2="20"></line>
+<line class="text-surface-bright" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.7" x1="20" x2="300" y1="60" y2="60"></line>
+<line class="text-surface-bright" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.7" x1="20" x2="300" y1="100" y2="100"></line>
+<line class="text-surface-bright" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.7" x1="20" x2="300" y1="140" y2="140"></line>
+<!-- Planned EPPM Curve (Subtle Cyan Line) -->
+<path class="text-outline" d="M 20 160 C 90 155, 140 120, 180 80 C 220 40, 260 25, 300 22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<!-- Field Actuals Ground Truth Curve (Bright Primary / Cyan) -->
+<path class="text-secondary" d="M 20 160 C 90 158, 140 128, 180 84 C 210 50, 240 38, 270 30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3"></path>
+<!-- Deviation Anomaly Point at Milestone 6 -->
+<circle class="fill-tertiary animate-pulse" cx="180" cy="84" r="5"></circle>
+<circle class="stroke-tertiary/40" cx="180" cy="84" fill="none" r="9" stroke-width="2"></circle>
+<text class="fill-tertiary font-label-caps text-[9px] font-bold" x="190" y="80">ACTUALS: 64.2%</text>
+<text class="fill-outline font-label-caps text-[9px]" x="190" y="93">PLAN: 66.0%</text>
+<!-- Axis labels -->
+<text class="fill-outline font-code-badge text-[8px]" x="20" y="174">M1: MOBILIZATION</text>
+<text class="fill-outline font-code-badge text-[8px]" x="140" y="174">M6: TRENCHING</text>
+<text class="fill-outline font-code-badge text-[8px]" x="260" y="174">M12: EPC HANDOVER</text>
+</svg>
+<div class="flex items-center justify-between text-[11px] font-telemetry-data pt-2 px-1">
+<span class="flex items-center gap-1 text-outline">
+<span class="w-2.5 h-0.5 bg-outline inline-block"></span> Planned Schedule
+              </span>
+<span class="flex items-center gap-1 text-secondary">
+<span class="w-2.5 h-1 bg-secondary inline-block rounded-full"></span> Field Realized
+              </span>
+<span class="flex items-center gap-1 text-tertiary">
+<span class="w-2 h-2 bg-tertiary rounded-full inline-block"></span> Verified Linkage
+              </span>
+</div>
+</div>
+<div class="mt-space-md p-space-sm bg-surface-container-high rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">policy</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[13px] text-on-surface font-semibold">CVC Compliance Certificate</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Central Vigilance Commission guidelines for automated tender verification fully matched.</span>
+</div>
+</div>
+</div>
+<!-- Activity Archetype DNA Card -->
+<div class="bg-surface-container p-space-lg rounded-xl shadow-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary">ARCHETYPE REASONING</span>
+<span class="font-code-badge text-code-badge text-primary">BERT-OIL-V2</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Activity DNA Discrepancy Engine</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+              Natural Language semantic mapping compares field notes in Assamese/English against P6 dictionary codes.
+            </p>
+<div class="flex flex-col gap-2 mt-space-md">
+<div class="p-3 bg-surface-container-lowest rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-code-badge text-code-badge text-outline">WBS 102.4 • Digboi North</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Boring &amp; Pipeline Casing</span>
+</div>
+<span class="font-code-badge text-code-badge text-tertiary px-2 py-1 rounded bg-tertiary/10 font-bold">99.1% MATCH</span>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-code-badge text-code-badge text-outline">WBS 108.9 • Substation Rig #2</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Transformer Sump Casting</span>
+</div>
+<span class="font-code-badge text-code-badge text-secondary px-2 py-1 rounded bg-secondary/10 font-bold">94.8% MATCH</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-space-md py-2.5 px-4 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm flex items-center justify-center gap-2 transition-all" onclick="openDnaModal('Pipeline Section Duliajan-08-N', 'WBS-7.2.1 Hydrostatic Trenching', 'Planned: 18mm/hr • Ground Truth: 11.2mm/hr')" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">compare_arrows</span>
+<span>Launch DNA Comparative Diff</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- MODAL 1: Anti-Tamper Audit Verification Popup (Interactive Modal Dialog) -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-surface-container-lowest/80 backdrop-blur-md transition-opacity" id="auditModal">
+<div class="relative w-full max-w-2xl bg-surface-container-high rounded-xl shadow-2xl p-space-lg flex flex-col gap-space-md transform transition-transform scale-100">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold flex items-center gap-2">
+              Anti-Tamper Cryptographic Proof
+              <span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary uppercase">256-BIT IMMUTABLE</span>
+</h3>
+<span class="font-telemetry-data text-telemetry-data text-secondary" id="modalBlockIndex">BLK-408192 • Oil India Provenance Ledger</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors" onclick="closeVerificationModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Merkle Tree Path Visual Container -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between text-outline font-label-caps text-label-caps uppercase">
+<span>Decentralized Merkle Tree Verification Path</span>
+<span class="text-tertiary">Zero-Knowledge Proof Verified</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-high p-3 rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">ACTION COMMITTED</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold" id="modalAction">Primavera Baseline Approval</span>
+</div>
+<div class="text-right flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">ACTOR AGENT</span>
+<span class="font-telemetry-data text-telemetry-data text-primary" id="modalActor">Pranjal Saikia (OIL-PLN-4421)</span>
+</div>
+</div>
+<!-- Hash string display with copy button -->
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-outline uppercase">SHA-256 Block Payload Hash</span>
+<div class="flex items-center justify-between bg-surface-container p-2.5 rounded-lg">
+<span class="font-code-badge text-code-badge text-secondary truncate max-w-md" id="modalHashPayload">
+              0x8f4d9a2ce477121b6540c198f237dc9a9b7e41f021e5e893cc180ab52d91b31e
+            </span>
+<button class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-caps text-label-caps flex items-center gap-1 transition-colors" onclick="copyHashToClipboard()" title="Copy Hash" type="button">
+<span class="material-symbols-outlined text-[14px]" id="copyIcon">content_copy</span>
+<span id="copyText">COPY</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm mt-1 text-[11px] font-telemetry-data text-on-surface-variant">
+<div>Consensus Algorithm: <strong class="text-on-surface">Raft BFT (3/3 Nodes)</strong></div>
+<div>Committed Stamp: <strong class="text-on-surface" id="modalTimestamp">18 May 2025 14:32:09 IST</strong></div>
+</div>
+</div>
+<!-- Notice Callout -->
+<div class="p-space-sm bg-primary/10 rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+          This digital cryptographic certificate meets the legal requirements under India Information Technology Act 2000 Section 65B for electronic record admissibility in dispute arbitration.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm transition-colors" onclick="closeVerificationModal()" type="button">
+          Dismiss
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm hover:brightness-110 flex items-center gap-2 shadow-lg shadow-primary/20 transition-all" onclick="downloadSignedAuditPdf()" type="button">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+<span>Download Signed Proof PDF</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- MODAL 2: Activity Archetype DNA Inspector (Interactive Diff Modal)       -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-surface-container-lowest/80 backdrop-blur-md transition-opacity" id="dnaModal">
+<div class="relative w-full max-w-3xl bg-surface-container-high rounded-xl shadow-2xl p-space-lg flex flex-col gap-space-md">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">strikethrough_s</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold">
+              Activity Archetype DNA Inspector
+            </h3>
+<span class="font-telemetry-data text-telemetry-data text-secondary" id="dnaModalSub">
+              WBS-7.2.1 Hydrostatic Trenching • Duliajan-08-N Corridor
+            </span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors" onclick="closeDnaModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Diff Comparison Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Planned Baseline Column -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">Primavera EPPM Baseline Plan</span>
+<span class="font-code-badge text-code-badge text-outline">VERSION 4.2</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Planned Excavation Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">18.00 Linear Meters / Hour</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Machine Deployment Profile</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">2x Komatsu PC300 Hydraulic</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Soil Strata Classification</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Type B (Alluvial Brahmaputra Basin)</span>
+</div>
+</div>
+<!-- Ground Truth Field Column -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary uppercase">Field Ground-Truth Telemetry</span>
+<span class="font-code-badge text-code-badge text-secondary">LIVE IOT + DPR</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Actual Realized Rate</span>
+<span class="font-headline-sm text-headline-sm text-secondary font-bold">11.20 Linear Meters / Hour (-37.7%)</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Confirmed On-Site Telemetry</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">1x Active • 1x Idled (Fuel Delay)</span>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1">
+<span class="font-body-sm text-[11px] text-outline">Moisture Saturation Index</span>
+<span class="font-headline-sm text-headline-sm text-tertiary font-bold">Pre-Monsoon Sub-Soil Seepage (88%)</span>
+</div>
+</div>
+</div>
+<!-- Semantic AI Explainer -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">psychology</span>
+<span class="font-headline-sm text-[13px] text-on-surface font-semibold">AI Vigilance Discrepancy Attribution</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Discrepancy is attributed to non-contractor unseasonal precipitation in Tinsukia corridor rather than willful schedule default. Primavera schedule variance should be automatically re-baselined under Force Majeure clause 14.1 without financial penalty deduction.
+        </p>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm transition-colors" onclick="closeDnaModal()" type="button">
+          Close Inspector
+        </button>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:brightness-110 flex items-center gap-2 shadow-lg shadow-secondary/20 transition-all" onclick="alert('Archetype Re-Baseline recommendation flagged to Rajiv K. Sharma (CGM Infra).')" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Forward Re-Baseline to CGM</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inline Micro-Interaction Script -->
+<script>
+    function openVerificationModal(blockId, hash, actor, action, timestamp) {
+      document.getElementById('modalBlockIndex').innerText = blockId + ' • Oil India Provenance Ledger';
+      document.getElementById('modalHashPayload').innerText = '0x8f4d9a2ce477121b6540c198f237dc9a9b7e41f021e5e893cc180ab52d91b31e';
+      document.getElementById('modalActor').innerText = actor;
+      document.getElementById('modalAction').innerText = action;
+      document.getElementById('modalTimestamp').innerText = timestamp;
+      
+      const modal = document.getElementById('auditModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeVerificationModal() {
+      const modal = document.getElementById('auditModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openDnaModal(section, wbs, diffText) {
+      const modal = document.getElementById('dnaModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDnaModal() {
+      const modal = document.getElementById('dnaModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function copyHashToClipboard() {
+      const text = document.getElementById('modalHashPayload').innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('copyText').innerText = 'COPIED!';
+        document.getElementById('copyIcon').innerText = 'check';
+        setTimeout(() => {
+          document.getElementById('copyText').innerText = 'COPY';
+          document.getElementById('copyIcon').innerText = 'content_copy';
+        }, 2000);
+      });
+    }
+
+    function downloadSignedAuditPdf() {
+      const btn = event.currentTarget;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Generating Digital PDF...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span> Certificate Downloaded';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          closeVerificationModal();
+        }, 1500);
+      }, 1200);
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-md px-space-lg shadow-[0_-1px_6px_rgba(0,0,0,0.3)]"><div class="flex flex-col md:flex-row items-center justify-between gap-space-sm"><div class="flex flex-wrap items-center gap-space-sm"><span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">SIH26122 • Smart Automation</span><span class="text-outline">•</span><span class="font-body-sm text-body-sm text-on-surface-variant">Oil India Limited Prototype</span></div><div class="flex items-center gap-space-xs text-outline"><span class="material-symbols-outlined text-[16px] text-tertiary">shield_lock</span><span class="font-code-badge text-code-badge text-on-surface-variant">Enterprise Role-Based Access Control (RBAC) &amp; Immutable Provenance</span></div></div></footer></div></body></html>

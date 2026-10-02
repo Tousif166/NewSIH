@@ -1,0 +1,82 @@
+[
+  {
+    "index": 1,
+    "id": "6f6fbf36d5f84e6498a4668d17c570dc",
+    "slug": "01_enterprise_portal_auth",
+    "title": "SiteSync AI - Enterprise Portal & Auth (Dark Mode)",
+    "width": 2560,
+    "height": 2668,
+    "imageFile": "01_enterprise_portal_auth/screen.png",
+    "htmlFile": "01_enterprise_portal_auth/screen.html"
+  },
+  {
+    "index": 2,
+    "id": "1a631eab151244d5ad784fea68aca9ba",
+    "slug": "02_field_telemetry_supervisor",
+    "title": "SiteSync AI - Field Telemetry & Supervisor Console (Dark Mode)",
+    "width": 2560,
+    "height": 4422,
+    "imageFile": "02_field_telemetry_supervisor/screen.png",
+    "htmlFile": "02_field_telemetry_supervisor/screen.html"
+  },
+  {
+    "index": 3,
+    "id": "0db0023972494cf396ed39c102935a86",
+    "slug": "03_planner_command_dashboard",
+    "title": "SiteSync AI - Planner Command Dashboard (Dark Mode)",
+    "width": 2560,
+    "height": 3452,
+    "imageFile": "03_planner_command_dashboard/screen.png",
+    "htmlFile": "03_planner_command_dashboard/screen.html"
+  },
+  {
+    "index": 4,
+    "id": "527c0a852fb6400d80814f9713bb199f",
+    "slug": "04_vigilance_audit_provenance",
+    "title": "SiteSync AI - Vigilance Audit & Cryptographic Provenance (Dark Mode)",
+    "width": 2560,
+    "height": 3430,
+    "imageFile": "04_vigilance_audit_provenance/screen.png",
+    "htmlFile": "04_vigilance_audit_provenance/screen.html"
+  },
+  {
+    "index": 5,
+    "id": "b25678081de84835810b03a8cf779828",
+    "slug": "05_executive_health_scurves",
+    "title": "SiteSync AI - Executive Health S-Curves & Monte Carlo Risk Suite (Dark Mode)",
+    "width": 2560,
+    "height": 2552,
+    "imageFile": "05_executive_health_scurves/screen.png",
+    "htmlFile": "05_executive_health_scurves/screen.html"
+  },
+  {
+    "index": 6,
+    "id": "8ad2c7041a7841d0bf70286d2551229b",
+    "slug": "06_diagnostics_edge_sync",
+    "title": "SiteSync AI - Diagnostics, Edge Architecture & Sync Settings (Dark Mode)",
+    "width": 2560,
+    "height": 2792,
+    "imageFile": "06_diagnostics_edge_sync/screen.png",
+    "htmlFile": "06_diagnostics_edge_sync/screen.html"
+  },
+  {
+    "index": 7,
+    "id": "c6e5a4f2b9ed4542873ab7b4569a7350",
+    "slug": "07_overview_command_center",
+    "title": "SiteSync AI - Overview Command Center (Dark Mode)",
+    "width": 2560,
+    "height": 3262,
+    "imageFile": "07_overview_command_center/screen.png",
+    "htmlFile": "07_overview_command_center/screen.html"
+  },
+  {
+    "index": 8,
+    "id": "9f731410fcb847e085ef9131790a9599",
+    "slug": "08_eppm_planning_bridge",
+    "title": "SiteSync AI - EPPM Planning Bridge & Baseline Suite (Dark Mode)",
+    "width": 2560,
+    "height": 3736,
+    "imageFile": "08_eppm_planning_bridge/screen.png",
+    "htmlFile": "08_eppm_planning_bridge/screen.html"
+  }
+]
