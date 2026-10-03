@@ -101,35 +101,6 @@ export const ProjectDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Quick Access to 5-Min Judge Demonstration Console */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-900/10 via-indigo-900/10 to-blue-900/10 dark:from-blue-950/40 dark:via-indigo-950/40 dark:to-blue-950/40 border border-blue-200/80 dark:border-amber-500/25 shadow-2xs">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-8 h-8 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
-            <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
-          </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 truncate">
-                Smart India Hackathon SIH26122 Innovations Showcase
-              </span>
-              <span className="px-2 py-0.5 rounded text-[9px] bg-amber-400 text-slate-950 font-mono font-bold uppercase shrink-0">
-                JURY READY
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-600 dark:text-slate-300 truncate">
-              All 20 role-scoped modules and deep-dive technical engines have been moved to the 5-Minute Jury Demonstration Console.
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={() => setActiveTab('DEMO_WALKTHROUGH')}
-          className="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono text-xs font-semibold shadow-xs flex items-center gap-1.5 shrink-0 transition-all active:scale-95 cursor-pointer"
-        >
-          <span>Open 5-Min Judge Demo</span>
-          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-        </button>
-      </div>
-
       {/* 2. Executive KPI Summary Cards (Grid of 4) */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 animate-entrance delay-2">
         {/* SPI Card */}

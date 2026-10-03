@@ -309,14 +309,6 @@ export const Sidebar: React.FC = () => {
                 badgeClass: 'px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-900 font-mono text-[9px] font-bold border border-cyan-300',
                 isActive: isFloodPredictorOpen,
                 onClick: openFloodPredictor
-              },
-              {
-                tab: 'DEMO_WALKTHROUGH',
-                label: '5-Min Judge Demo',
-                icon: 'play_circle',
-                iconColor: 'text-amber-500',
-                badgeText: 'TOUR',
-                badgeClass: 'px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono text-[9px] font-bold border border-amber-300'
               }
             ]
           }
