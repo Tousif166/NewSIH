@@ -612,19 +612,21 @@ export const Sidebar: React.FC = () => {
 
       {/* Mobile Drawer Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden bg-slate-900/60 backdrop-blur-xs flex">
-          <div className="w-72 max-w-[85vw] h-full bg-white shadow-2xl flex flex-col overflow-y-auto">
-            <div className="p-2 flex justify-end border-b border-slate-100">
+        <div className="fixed inset-0 z-50 md:hidden bg-slate-950/70 backdrop-blur-xs flex animate-in fade-in duration-150">
+          <div className="w-72 max-w-[85vw] h-full bg-white dark:bg-[#070b14] border-r border-slate-200 dark:border-amber-500/20 shadow-2xl flex flex-col overflow-y-auto safe-area-pb">
+            <div className="p-2.5 flex items-center justify-between border-b border-slate-100 dark:border-amber-500/20 bg-slate-50/50 dark:bg-[#0c1220]">
+              <span className="font-mono text-[11px] font-bold text-slate-700 dark:text-amber-400">NAVIGATION MENU</span>
               <button 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-1 text-slate-400 hover:text-slate-800 rounded-md"
+                className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-amber-400 rounded-md cursor-pointer"
+                aria-label="Close navigation menu"
               >
                 <span className="material-symbols-outlined text-[20px]">close</span>
               </button>
             </div>
             {renderNavContent()}
           </div>
-          <div className="flex-1" onClick={() => setIsMobileMenuOpen(false)}></div>
+          <div className="flex-1 cursor-pointer" onClick={() => setIsMobileMenuOpen(false)} aria-label="Dismiss menu backdrop"></div>
         </div>
       )}
     </>

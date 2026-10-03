@@ -24,8 +24,15 @@ export const DroneProgressAuditorModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-6xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-300 overflow-hidden">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer"
+      onClick={() => setIsDroneAuditorOpen(false)}
+      aria-hidden="true"
+    >
+      <div 
+        className="relative w-full max-w-6xl max-h-[92vh] flex flex-col bg-white dark:bg-[#0c1220] rounded-2xl shadow-2xl border border-slate-300 dark:border-amber-500/20 overflow-hidden cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Top Header */}
         <div className="p-4 sm:p-5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">

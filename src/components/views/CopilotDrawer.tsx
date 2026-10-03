@@ -143,33 +143,42 @@ export const CopilotDrawer: React.FC = () => {
   if (!isCopilotOpen) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[500px] bg-white border-l border-slate-300 shadow-2xl flex flex-col animate-in slide-in-from-right duration-200">
-      {/* Header */}
-      <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-blue-700 text-white flex items-center justify-center shadow-xs">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-1.5 font-sans">
-              Ask SiteSync: Natural Language P6 Copilot
-              <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 font-bold uppercase font-mono">
-                EN + HINDI
-              </span>
-            </h2>
-            <p className="text-[10px] text-slate-500 font-mono">
-              Direct Neural Query Interface into Oracle EPPM P6.24
-            </p>
-          </div>
-        </div>
+    <>
+      {/* Mobile Backdrop Overlay */}
+      <div 
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 animate-in fade-in duration-150 cursor-pointer"
+        onClick={() => setIsCopilotOpen(false)}
+        aria-hidden="true"
+      />
 
-        <button
-          onClick={() => setIsCopilotOpen(false)}
-          className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
+      <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[500px] max-w-full bg-white dark:bg-[#070b14] border-l border-slate-300 dark:border-amber-500/20 shadow-2xl flex flex-col animate-in slide-in-from-right duration-200 safe-area-pb">
+        {/* Header */}
+        <div className="p-4 border-b border-slate-200 dark:border-amber-500/20 bg-slate-50 dark:bg-[#0c1220] flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-700 dark:bg-amber-500 text-white dark:text-slate-950 flex items-center justify-center shadow-xs">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-1.5 font-sans">
+                Ask SiteSync: Natural Language P6 Copilot
+                <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 font-bold uppercase font-mono border border-emerald-300 dark:border-emerald-700/50">
+                  EN + HINDI
+                </span>
+              </h2>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                Direct Neural Query Interface into Oracle EPPM P6.24
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsCopilotOpen(false)}
+            className="text-slate-400 hover:text-slate-700 dark:hover:text-amber-400 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            aria-label="Close Copilot"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
 
       {/* Suggested Quick Prompt Chips (Bilingual) */}
       <div className="p-2.5 bg-slate-50/80 border-b border-slate-200 overflow-x-auto no-scrollbar flex gap-2 shrink-0">
@@ -324,7 +333,7 @@ export const CopilotDrawer: React.FC = () => {
       </div>
 
       {/* Input Bar */}
-      <div className="p-3 border-t border-slate-200 bg-white">
+      <div className="p-3 border-t border-slate-200 dark:border-amber-500/20 bg-white dark:bg-[#0c1220]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -338,14 +347,14 @@ export const CopilotDrawer: React.FC = () => {
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder="Ask anything in English or Hindi (e.g. 'Kaunsa activity delayed hai?')..."
-              className="w-full pl-3 pr-9 py-2 rounded-lg border border-slate-300 text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50"
+              className="w-full pl-3 pr-9 py-2 rounded-lg border border-slate-300 dark:border-amber-500/30 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-amber-500 bg-slate-50 dark:bg-[#060a12]"
             />
             {/* Mic Button */}
             <button
               type="button"
               onClick={toggleMic}
               className={`absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md transition-colors cursor-pointer ${
-                isListening ? 'text-rose-600 animate-pulse' : 'text-slate-400 hover:text-slate-700'
+                isListening ? 'text-rose-600 animate-pulse' : 'text-slate-400 hover:text-slate-700 dark:hover:text-amber-400'
               }`}
               title="Voice Query Input"
             >
@@ -356,15 +365,16 @@ export const CopilotDrawer: React.FC = () => {
           <button
             type="submit"
             disabled={!inputQuery.trim()}
-            className="p-2 bg-blue-700 hover:bg-blue-800 disabled:opacity-40 text-white rounded-lg transition-colors cursor-pointer shrink-0 shadow-xs"
+            className="p-2 bg-blue-700 dark:bg-amber-500 hover:bg-blue-800 dark:hover:bg-amber-400 disabled:opacity-40 text-white dark:text-slate-950 rounded-lg transition-colors cursor-pointer shrink-0 shadow-xs"
           >
             <Send className="w-4 h-4" />
           </button>
         </form>
-        <span className="text-[10px] text-slate-400 font-mono mt-1 block text-center">
+        <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono mt-1 block text-center">
           Powered by SiteSync Neural P6 Semantic Matcher v4.8
         </span>
       </div>
     </div>
+    </>
   );
 };

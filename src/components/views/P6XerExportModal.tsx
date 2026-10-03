@@ -41,11 +41,18 @@ export const P6XerExportModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-300 overflow-hidden">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer"
+      onClick={() => setIsXerExportModalOpen(false)}
+      aria-hidden="true"
+    >
+      <div 
+        className="relative w-full max-w-5xl max-h-[92vh] flex flex-col bg-white dark:bg-[#0c1220] rounded-2xl shadow-2xl border border-slate-300 dark:border-amber-500/20 overflow-hidden cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
+        <div className="p-4 sm:p-5 bg-slate-900 dark:bg-[#070b14] text-white flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 dark:border-amber-500/20">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shadow-sm font-bold text-lg">
               P6
@@ -78,13 +85,13 @@ export const P6XerExportModal: React.FC = () => {
         </div>
 
         {/* Tab Switcher */}
-        <div className="px-5 py-2.5 bg-slate-100 border-b border-slate-200 flex items-center gap-2">
+        <div className="px-4 sm:px-5 py-2.5 bg-slate-100 dark:bg-[#080d19] border-b border-slate-200 dark:border-amber-500/20 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
           <button
             onClick={() => setActiveTab('DOWNLOAD_XER')}
-            className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
               activeTab === 'DOWNLOAD_XER'
-                ? 'bg-white text-slate-900 shadow-xs border border-slate-300'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-[#0f172a] text-slate-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
             <span className="material-symbols-outlined text-[16px] text-orange-600">file_download</span>
@@ -92,10 +99,10 @@ export const P6XerExportModal: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('ORACLE_EPPM_API')}
-            className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
               activeTab === 'ORACLE_EPPM_API'
-                ? 'bg-white text-slate-900 shadow-xs border border-slate-300'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-[#0f172a] text-slate-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
             <span className="material-symbols-outlined text-[16px] text-blue-600">sync_alt</span>

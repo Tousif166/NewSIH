@@ -32,8 +32,15 @@ export const StatutoryAuditDossierModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:fixed-none">
-      <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl border border-slate-300 flex flex-col max-h-[92vh] overflow-hidden print:max-h-none print:shadow-none print:border-none print:rounded-none">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:fixed-none cursor-pointer"
+      onClick={() => setIsDossierOpen(false)}
+      aria-hidden="true"
+    >
+      <div 
+        className="relative w-full max-w-5xl bg-white dark:bg-[#0c1220] rounded-2xl shadow-2xl border border-slate-300 dark:border-amber-500/20 flex flex-col max-h-[92vh] overflow-hidden print:max-h-none print:shadow-none print:border-none print:rounded-none cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Header */}
         <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-5 flex flex-wrap items-center justify-between gap-4 border-b border-slate-700 shrink-0">
@@ -86,51 +93,51 @@ export const StatutoryAuditDossierModal: React.FC = () => {
         </div>
 
         {/* Navigation Tabs Bar */}
-        <div className="bg-slate-100 border-b border-slate-200 px-5 py-2 flex flex-wrap items-center justify-between gap-2 shrink-0 print:hidden">
-          <div className="flex items-center gap-1">
+        <div className="bg-slate-100 dark:bg-[#080d19] border-b border-slate-200 dark:border-amber-500/20 px-3 sm:px-5 py-2 flex items-center justify-between gap-2 shrink-0 print:hidden overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={() => setActiveDossierTab('SUMMARY')}
-              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeDossierTab === 'SUMMARY'
-                  ? 'bg-white text-blue-900 shadow-xs border border-slate-300'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#0f172a] text-blue-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Executive Summary
             </button>
             <button
               onClick={() => setActiveDossierTab('DELAY_ATTRIBUTION')}
-              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeDossierTab === 'DELAY_ATTRIBUTION'
-                  ? 'bg-white text-blue-900 shadow-xs border border-slate-300'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#0f172a] text-blue-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Delay Attribution & LD Matrix
             </button>
             <button
               onClick={() => setActiveDossierTab('CONTEMPORANEOUS_LEDGER')}
-              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeDossierTab === 'CONTEMPORANEOUS_LEDGER'
-                  ? 'bg-white text-blue-900 shadow-xs border border-slate-300'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#0f172a] text-blue-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Contemporaneous Evidence Ledger ({dossier.contemporaneousLedgerCount})
             </button>
             <button
               onClick={() => setActiveDossierTab('CVC_COMPLIANCE')}
-              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeDossierTab === 'CVC_COMPLIANCE'
-                  ? 'bg-white text-blue-900 shadow-xs border border-slate-300'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#0f172a] text-blue-900 dark:text-amber-400 shadow-xs border border-slate-300 dark:border-amber-500/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               CVC & FIDIC Integrity Badges
             </button>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+          <div className="hidden lg:flex items-center gap-2 font-mono text-[11px] text-slate-500 dark:text-slate-400 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
             <span>EVIDENCE ANCHOR: MERKLE TREE ROOT SHA-256</span>
           </div>
