@@ -290,6 +290,33 @@ html.dark .border-amber-800\/40 {
   border-color: rgba(245, 158, 11, 0.45) !important;
 }
 
+/* Orange Badges & Regional Dispatch Presets */
+html.dark .bg-orange-50:not([class*="dark:bg-"]),
+html.dark [class*="bg-orange-50"]:not([class*="dark:bg-"]),
+html.dark .bg-orange-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-orange-100"]:not([class*="dark:bg-"]) {
+  background-color: rgba(249, 115, 22, 0.16) !important;
+  border-color: rgba(249, 115, 22, 0.45) !important;
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.15) !important;
+}
+html.dark span[class*="bg-orange-50"],
+html.dark button[class*="bg-orange-50"],
+html.dark span[class*="bg-orange-100"],
+html.dark button[class*="bg-orange-100"] {
+  color: #fdba74 !important;
+}
+html.dark .text-orange-900,
+html.dark .text-orange-950,
+html.dark .text-orange-800,
+html.dark .text-orange-700 {
+  color: #fb923c !important;
+}
+html.dark .border-orange-200,
+html.dark .border-orange-300,
+html.dark .border-orange-400 {
+  border-color: rgba(249, 115, 22, 0.45) !important;
+}
+
 /* Emerald Badges (Matching ZERO-HARM STATUTORY CERTIFICATION Reference) */
 html.dark .bg-emerald-50:not([class*="dark:bg-"]),
 html.dark .bg-emerald-50\/30:not([class*="dark:bg-"]),
