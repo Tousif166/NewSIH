@@ -106,9 +106,10 @@ html.dark .bg-white\/60 {
 }
 
 /* Secondary Wells, Row Groups & Nested Boxes */
-html.dark .bg-slate-50,
-html.dark .bg-slate-50\/70,
-html.dark .bg-slate-100 {
+html.dark .bg-slate-50:not([class*="dark:bg-"]),
+html.dark [class*="bg-slate-50"]:not([class*="dark:bg-"]),
+html.dark .bg-slate-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-slate-100"]:not([class*="dark:bg-"]) {
   background-color: #060a12 !important;
   border-color: rgba(245, 158, 11, 0.14) !important;
   color: #cbd5e1 !important;

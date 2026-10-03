@@ -111,55 +111,55 @@ export const ActivityDNAView: React.FC = () => {
               const summary = calculateEMBExposureSummary(embItems);
               return (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
-                    <span className="font-mono text-[10px] text-slate-500 font-bold uppercase block">Total Committed BoQ Value</span>
-                    <div className="text-xl font-bold font-mono text-slate-900 mt-1">
+                  <div className="p-4 rounded-xl bg-white dark:bg-[#0b111e] border border-slate-300 dark:border-amber-500/20 shadow-md">
+                    <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase block">Total Committed BoQ Value</span>
+                    <div className="text-xl font-bold font-mono text-slate-900 dark:text-slate-100 mt-1">
                       ₹{(summary.totalContractINR / 10000000).toFixed(2)} Cr
                     </div>
-                    <span className="text-[11px] text-slate-500 mt-1 block">Approved Contract Packages</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Approved Contract Packages</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
-                    <span className="font-mono text-[10px] text-amber-700 font-bold uppercase block">Contractor Invoiced Claims</span>
-                    <div className="text-xl font-bold font-mono text-amber-900 mt-1">
+                  <div className="p-4 rounded-xl bg-white dark:bg-[#0b111e] border border-slate-300 dark:border-amber-500/20 shadow-md">
+                    <span className="font-mono text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase block">Contractor Invoiced Claims</span>
+                    <div className="text-xl font-bold font-mono text-amber-900 dark:text-amber-300 mt-1">
                       ₹{(summary.totalClaimedINR / 10000000).toFixed(2)} Cr
                     </div>
-                    <span className="text-[11px] text-slate-500 mt-1 block">Average Claimed Progress: 73.8%</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Average Claimed Progress: 73.8%</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white border border-slate-300 shadow-xs">
-                    <span className="font-mono text-[10px] text-blue-700 font-bold uppercase block">AI Verified Schedule Progress</span>
-                    <div className="text-xl font-bold font-mono text-blue-900 mt-1">
+                  <div className="p-4 rounded-xl bg-white dark:bg-[#0b111e] border border-slate-300 dark:border-amber-500/20 shadow-md">
+                    <span className="font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold uppercase block">AI Verified Schedule Progress</span>
+                    <div className="text-xl font-bold font-mono text-blue-900 dark:text-sky-300 mt-1">
                       ₹{(summary.totalVerifiedINR / 10000000).toFixed(2)} Cr
                     </div>
-                    <span className="text-[11px] text-slate-500 mt-1 block">Physical Rolled-Up Earned Value</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">Physical Rolled-Up Earned Value</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 shadow-xs">
-                    <span className="font-mono text-[10px] text-rose-700 font-bold uppercase block">Overbilling Risk Blocked</span>
-                    <div className="text-xl font-bold font-mono text-rose-800 mt-1">
+                  <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-500/40 shadow-md">
+                    <span className="font-mono text-[10px] text-rose-700 dark:text-rose-300 font-bold uppercase block">Overbilling Risk Blocked</span>
+                    <div className="text-xl font-bold font-mono text-rose-800 dark:text-rose-300 mt-1">
                       ₹{(summary.totalRiskPreventedINR / 100000).toFixed(2)} Lakhs
                     </div>
-                    <span className="text-[11px] text-rose-700 font-semibold mt-1 block">{summary.itemsOnHold} Items on Audit Hold</span>
+                    <span className="text-[11px] text-rose-700 dark:text-rose-400 font-semibold mt-1 block">{summary.itemsOnHold} Items on Audit Hold</span>
                   </div>
                 </div>
               );
             })()}
 
             {/* Reconciliation Table */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-xs flex flex-col gap-4">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#0b111e] border border-slate-300 dark:border-amber-500/20 shadow-md flex flex-col gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900 font-mono">Running Account (RA) Bill Reconciliation Register</h3>
-                  <span className="text-xs text-slate-500 font-sans">Compare contractor invoice claimed progress vs schedule actuals</span>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 font-mono">Running Account (RA) Bill Reconciliation Register</h3>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-sans">Compare contractor invoice claimed progress vs schedule actuals</span>
                 </div>
-                <span className="font-mono text-xs text-slate-500">Cycle: RA Bill #06 (October 2026)</span>
+                <span className="font-mono text-xs text-slate-500 dark:text-slate-400">Cycle: RA Bill #06 (October 2026)</span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-sans text-xs">
                   <thead>
-                    <tr className="bg-slate-100 border-b border-slate-300 font-mono text-[11px] text-slate-700">
+                    <tr className="bg-slate-100 dark:bg-[#060a14] border-b border-slate-300 dark:border-slate-800 font-mono text-[11px] text-slate-700 dark:text-slate-300">
                       <th className="p-3">BoQ Item & Description</th>
                       <th className="p-3">Contractor</th>
                       <th className="p-3 text-right">Order Value</th>
@@ -170,9 +170,9 @@ export const ActivityDNAView: React.FC = () => {
                       <th className="p-3 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200 font-mono text-xs">
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-mono text-xs">
                     {embItems.map((item) => (
-                      <tr key={item.id} className="hover:bg-slate-50">
+                      <tr key={item.id} className="hover:bg-slate-50 dark:hover:bg-[#0c1424]">
                         <td className="p-3">
                           <span className="px-1.5 py-0.5 rounded bg-slate-200 text-slate-800 text-[10px] font-bold block w-fit mb-0.5">
                             {item.boqItemCode}
@@ -513,41 +513,41 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* 30-Day Linear Progression Velocity Chart */}
-          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
+          <div className="bg-white dark:bg-[#0b111e] p-5 rounded-2xl shadow-md border border-slate-300 dark:border-amber-500/20 flex flex-col gap-3 hover-elevate transition-all">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <div className="font-bold text-slate-900 text-sm tracking-tight">
+                <div className="font-bold text-slate-900 dark:text-slate-100 text-sm tracking-tight">
                   30-Day Linear Progression Velocity (Km Advancement vs Shifts)
                 </div>
-                <span className="font-mono text-[10px] text-slate-500">
+                <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
                   STATION KM 30+000 TO KM 60+000 CHRONOLOGY TELEMETRY
                 </span>
               </div>
-              <span className="px-2 py-0.5 bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[10px] font-semibold rounded flex items-center gap-1.5 self-start sm:self-auto">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+              <span className="px-2 py-0.5 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-500/40 text-rose-700 dark:text-rose-300 font-mono text-[10px] font-semibold rounded-md flex items-center gap-1.5 self-start sm:self-auto">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-600 dark:bg-rose-400 animate-pulse"></span>
                 ANOMALY PINPOINTED KM 42+650
               </span>
             </div>
 
             {/* Inline Visual Chart Graphic with interactive nodes and animations */}
-            <div className="w-full bg-slate-50 p-3 rounded-lg border border-slate-200 relative">
+            <div className="w-full bg-slate-50 dark:bg-[#060a14] p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80 relative overflow-hidden shadow-inner">
               {activeTooltip && (
-                <div className="absolute top-2 right-4 bg-white border border-slate-200 text-slate-900 font-mono text-xs px-2.5 py-1 rounded shadow-md z-30 flex items-center gap-2">
-                  <span className="text-blue-700 font-bold">{activeTooltip.day}</span>
-                  <span className="text-slate-300">•</span>
-                  <span className="text-slate-600">{activeTooltip.km}</span>
-                  <span className="text-emerald-700 font-bold">{activeTooltip.val}</span>
+                <div className="absolute top-2 right-4 bg-white dark:bg-[#0b111e] border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 font-mono text-xs px-2.5 py-1 rounded-md shadow-md z-30 flex items-center gap-2">
+                  <span className="text-blue-700 dark:text-sky-400 font-bold">{activeTooltip.day}</span>
+                  <span className="text-slate-300 dark:text-slate-600">•</span>
+                  <span className="text-slate-600 dark:text-slate-400">{activeTooltip.km}</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold">{activeTooltip.val}</span>
                 </div>
               )}
 
               <svg className="w-full h-44 overflow-visible" preserveAspectRatio="none" viewBox="0 0 760 160">
                 {/* Grid lines */}
-                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="30" y2="30"></line>
-                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="70" y2="70"></line>
-                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="110" y2="110"></line>
-                <line stroke="#cbd5e1" strokeWidth="1" x1="0" x2="760" y1="150" y2="150"></line>
+                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="30" y2="30" className="dark:stroke-slate-800/60"></line>
+                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="70" y2="70" className="dark:stroke-slate-800/60"></line>
+                <line stroke="#e2e8f0" strokeDasharray="3 3" strokeWidth="1" x1="0" x2="760" y1="110" y2="110" className="dark:stroke-slate-800/60"></line>
+                <line stroke="#cbd5e1" strokeWidth="1" x1="0" x2="760" y1="150" y2="150" className="dark:stroke-slate-800"></line>
 
-                {/* Historical Expected Baseline Curve (Gray dotted) */}
+                {/* Historical Expected Baseline Curve (Silver dashed) */}
                 <path
                   d="M 10 145 Q 200 120 380 80 T 750 20"
                   fill="none"
@@ -557,19 +557,21 @@ export const ActivityDNAView: React.FC = () => {
                   strokeWidth="2"
                 ></path>
 
-                {/* Predictive AI Model Velocity Curve (Cobalt) */}
+                {/* Predictive AI Model Velocity Curve (Sky Blue) */}
                 <path
                   d="M 10 145 Q 180 115 360 85 T 750 32"
                   fill="none"
-                  stroke="#2151da"
-                  strokeWidth="2"
+                  stroke="#0284c7"
+                  className="dark:stroke-sky-400"
+                  strokeWidth="2.5"
                 ></path>
 
-                {/* Real Telemetry Ground Truth Curve (Showing the drop at KM 42+650) */}
+                {/* Real Telemetry Ground Truth Curve (Luminous Amber in dark mode, Navy in light mode) */}
                 <path
                   d="M 10 145 L 120 130 L 220 112 L 310 95 L 390 88 L 440 92 L 490 94 L 540 85 L 620 70 L 710 52"
                   fill="none"
                   stroke="#0f172a"
+                  className="dark:stroke-amber-400"
                   strokeWidth="3"
                 ></path>
 
@@ -588,42 +590,40 @@ export const ActivityDNAView: React.FC = () => {
                     onMouseEnter={() => setActiveTooltip({ day: pt.day, km: pt.km, val: pt.val })}
                     onMouseLeave={() => setActiveTooltip(null)}
                   >
-                    <circle cx={pt.cx} cy={pt.cy} fill="#0f172a" r="3.5" className="hover:r-5 transition-all"></circle>
+                    <circle cx={pt.cx} cy={pt.cy} fill="#0f172a" className="dark:fill-amber-400 hover:r-5 transition-all" r="3.5"></circle>
                     <circle cx={pt.cx} cy={pt.cy} fill="transparent" r="14"></circle>
                   </g>
                 ))}
 
                 {/* Anomaly Marker at KM 42+650 */}
-                <circle cx="440" cy="92" fill="#dc2626" r="5" className="animate-pulse"></circle>
-                <circle cx="440" cy="92" fill="none" opacity="0.6" r="9" stroke="#dc2626" strokeWidth="1.5"></circle>
-                <line stroke="#dc2626" strokeDasharray="2 2" strokeWidth="1.5" x1="440" x2="440" y1="20" y2="150"></line>
+                <circle cx="440" cy="92" fill="#ef4444" r="5" className="animate-pulse"></circle>
+                <circle cx="440" cy="92" fill="none" opacity="0.6" r="9" stroke="#ef4444" strokeWidth="1.5"></circle>
+                <line stroke="#ef4444" strokeDasharray="2 2" strokeWidth="1.5" x1="440" x2="440" y1="20" y2="150"></line>
 
                 {/* Anomaly Badge */}
                 <rect
-                  className="transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
-                  fill="#ffffff"
-                  filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"
+                  className="transition-transform duration-200 hover:scale-[1.02] cursor-pointer fill-white dark:fill-[#1f0a0d] stroke-rose-500 dark:stroke-rose-500/70"
+                  filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"
                   height="38"
-                  rx="4"
-                  stroke="#dc2626"
+                  rx="6"
                   strokeWidth="1"
                   width="165"
                   x="445"
                   y="24"
                 ></rect>
-                <text fill="#dc2626" fontFamily="JetBrains Mono" fontSize="10" fontWeight="700" x="452" y="38">
+                <text fill="#dc2626" className="dark:fill-rose-400" fontFamily="JetBrains Mono" fontSize="10" fontWeight="700" x="452" y="38">
                   KM 42+650 ANOMALY
                 </text>
-                <text fill="#475569" fontFamily="Inter" fontSize="9" x="452" y="52">
+                <text fill="#475569" className="dark:fill-slate-300" fontFamily="Inter" fontSize="9" x="452" y="52">
                   Basement Rock Refusal (110m/d)
                 </text>
               </svg>
 
-              <div className="flex items-center justify-between font-mono text-[10px] text-slate-500 mt-2 px-1">
+              <div className="flex items-center justify-between font-mono text-[10px] text-slate-500 dark:text-slate-400 mt-2 px-1 border-t border-slate-200 dark:border-slate-800/80 pt-2">
                 <span>DAY 1 (KM 31.2)</span>
                 <span>DAY 10 (KM 36.8)</span>
-                <span className="text-rose-600 font-bold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+                <span className="text-rose-600 dark:text-rose-400 font-bold flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-600 dark:bg-rose-400 animate-pulse"></span>
                   DAY 18: REFUSAL HIT (KM 42.6)
                 </span>
                 <span>DAY 24: RECOVERY</span>
@@ -633,14 +633,14 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* Terrain & Soil Geological Learning Matrix */}
-          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
+          <div className="bg-white dark:bg-[#0b111e] p-5 rounded-2xl shadow-md border border-slate-300 dark:border-amber-500/20 flex flex-col gap-3 hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-blue-700">layers</span>
-                <span className="font-bold text-slate-900 text-sm tracking-tight">Terrain & Soil Geological Learning Matrix</span>
+                <span className="material-symbols-outlined text-[18px] text-blue-700 dark:text-sky-400">layers</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100 text-sm tracking-tight">Terrain & Soil Geological Learning Matrix</span>
               </div>
-              <span className="font-mono text-[10px] text-slate-500 flex items-center gap-1 font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+              <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-sky-400 animate-pulse"></span>
                 NAGA THRUST FAULT LINE CORRELATION
               </span>
             </div>
@@ -648,7 +648,7 @@ export const ActivityDNAView: React.FC = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse font-sans text-xs">
                 <thead>
-                  <tr className="bg-slate-50 text-slate-500 font-mono text-[10px] uppercase border-b border-slate-200">
+                  <tr className="bg-slate-50 dark:bg-[#060a14] text-slate-600 dark:text-slate-400 font-mono text-[10px] uppercase border-b border-slate-200 dark:border-slate-800">
                     <th className="p-2.5">Sector Corridor</th>
                     <th className="p-2.5">Primary Strata</th>
                     <th className="p-2.5 text-right">Rock RQD%</th>
@@ -657,54 +657,54 @@ export const ActivityDNAView: React.FC = () => {
                     <th className="p-2.5">Confirmed Mitigation</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-800">
-                  <tr className="hover:bg-slate-50 transition-colors cursor-pointer">
-                    <td className="p-2.5 font-mono font-bold text-blue-700">Numaligarh–Siliguri</td>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-800 dark:text-slate-200">
+                  <tr className="hover:bg-slate-50 dark:hover:bg-[#0d1525] transition-colors cursor-pointer">
+                    <td className="p-2.5 font-mono font-bold text-blue-700 dark:text-sky-400">Numaligarh–Siliguri</td>
                     <td className="p-2.5">Silty Alluvial Clay</td>
-                    <td className="p-2.5 text-right font-mono text-slate-500">12%</td>
-                    <td className="p-2.5 text-right font-mono text-slate-500">42.4%</td>
+                    <td className="p-2.5 text-right font-mono text-slate-500 dark:text-slate-400">12%</td>
+                    <td className="p-2.5 text-right font-mono text-slate-500 dark:text-slate-400">42.4%</td>
                     <td className="p-2.5 text-right font-mono">1.1x</td>
-                    <td className="p-2.5 font-mono text-[10px] text-slate-600">Standard Tiger Teeth Bucket</td>
+                    <td className="p-2.5 font-mono text-[10px] text-slate-600 dark:text-slate-400">Standard Tiger Teeth Bucket</td>
                   </tr>
-                  <tr className="bg-rose-50/50 hover:bg-rose-50 transition-colors cursor-pointer">
-                    <td className="p-2.5 font-mono font-bold text-rose-700 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Duliajan–Guwahati (Sec 4)
+                  <tr className="bg-rose-50/50 dark:bg-rose-950/20 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer">
+                    <td className="p-2.5 font-mono font-bold text-rose-700 dark:text-rose-400 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span> Duliajan–Guwahati (Sec 4)
                     </td>
-                    <td className="p-2.5 font-bold text-rose-700">Granitic Gneiss / Sandstone</td>
-                    <td className="p-2.5 text-right font-mono font-bold text-rose-700">88%</td>
-                    <td className="p-2.5 text-right font-mono text-slate-600">18.2%</td>
-                    <td className="p-2.5 text-right font-mono font-bold text-rose-700">3.4x</td>
-                    <td className="p-2.5 font-mono text-[10px] text-blue-700 font-bold">
+                    <td className="p-2.5 font-bold text-rose-700 dark:text-rose-300">Granitic Gneiss / Sandstone</td>
+                    <td className="p-2.5 text-right font-mono font-bold text-rose-700 dark:text-rose-400">88%</td>
+                    <td className="p-2.5 text-right font-mono text-slate-600 dark:text-slate-400">18.2%</td>
+                    <td className="p-2.5 text-right font-mono font-bold text-rose-700 dark:text-rose-400">3.4x</td>
+                    <td className="p-2.5 font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold">
                       Hydraulic Breaker + Ripper Shank
                     </td>
                   </tr>
-                  <tr className="hover:bg-slate-50 transition-colors cursor-pointer">
-                    <td className="p-2.5 font-mono font-bold text-blue-700">Barauni–Guwahati Spur</td>
+                  <tr className="hover:bg-slate-50 dark:hover:bg-[#0d1525] transition-colors cursor-pointer">
+                    <td className="p-2.5 font-mono font-bold text-blue-700 dark:text-sky-400">Barauni–Guwahati Spur</td>
                     <td className="p-2.5">Compact River Boulder Alluvium</td>
-                    <td className="p-2.5 text-right font-mono text-slate-500">45%</td>
-                    <td className="p-2.5 text-right font-mono text-slate-500">31.0%</td>
+                    <td className="p-2.5 text-right font-mono text-slate-500 dark:text-slate-400">45%</td>
+                    <td className="p-2.5 text-right font-mono text-slate-500 dark:text-slate-400">31.0%</td>
                     <td className="p-2.5 text-right font-mono">1.9x</td>
-                    <td className="p-2.5 font-mono text-[10px] text-slate-600">Heavy-Duty V-Bottom Ditcher</td>
+                    <td className="p-2.5 font-mono text-[10px] text-slate-600 dark:text-slate-400">Heavy-Duty V-Bottom Ditcher</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             {/* Field Operational Recommendation Callout with Core Sample Photo */}
-            <div className="bg-blue-50/60 p-3 rounded-lg flex flex-col sm:flex-row items-start gap-3 border border-blue-200/80">
+            <div className="bg-blue-50/60 dark:bg-[#071324] p-3 rounded-xl flex flex-col sm:flex-row items-start gap-3 border border-blue-200/80 dark:border-sky-500/30">
               <img
                 src="/images/pipeline-ortho-survey.jpg"
                 alt="Granitic Rock Strata Trench Sample"
-                className="w-full sm:w-20 h-16 rounded object-cover border border-blue-200 shrink-0 shadow-2xs"
+                className="w-full sm:w-20 h-16 rounded object-cover border border-blue-200 dark:border-slate-700 shrink-0 shadow-2xs"
               />
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[18px] text-blue-700 animate-pulse">lightbulb</span>
-                  <span className="font-mono text-[11px] text-slate-900 font-bold uppercase">
+                  <span className="material-symbols-outlined text-[18px] text-blue-700 dark:text-sky-400 animate-pulse">lightbulb</span>
+                  <span className="font-mono text-[11px] text-slate-900 dark:text-slate-100 font-bold uppercase">
                     Empirical Synthesis for KM 42+650:
                   </span>
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                   Neural corpus detects a 98.4% match with 2018 Duliajan Spur Sector 2 hard boulder ledge. Deploying heavy single-point ripper shanks before trenching restores velocity from 110m/d to 260m/d within 36 hours.
                 </p>
               </div>
@@ -715,14 +715,14 @@ export const ActivityDNAView: React.FC = () => {
         {/* Right Column (4 cols) */}
         <div className="lg:col-span-4 flex flex-col gap-4">
           {/* Institutional Memory Engine */}
-          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
-            <div className="flex items-center justify-between pb-2 bg-slate-50 -mx-5 -mt-5 px-5 py-3.5 rounded-t-xl border-b border-slate-200">
+          <div className="bg-white dark:bg-[#0b111e] p-5 rounded-2xl shadow-md border border-slate-300 dark:border-amber-500/20 flex flex-col gap-3 hover-elevate transition-all">
+            <div className="flex items-center justify-between pb-2 bg-slate-50 dark:bg-[#060a14] -mx-5 -mt-5 px-5 py-3.5 rounded-t-2xl border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-blue-700">history_edu</span>
-                <span className="font-bold text-slate-900 text-sm tracking-tight">Institutional Memory Engine</span>
+                <span className="material-symbols-outlined text-[18px] text-blue-700 dark:text-sky-400">history_edu</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100 text-sm tracking-tight">Institutional Memory Engine</span>
               </div>
-              <span className="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+              <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-500/40 px-1.5 py-0.5 rounded font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse"></span>
                 SHA-256 LEDGER
               </span>
             </div>
@@ -731,16 +731,16 @@ export const ActivityDNAView: React.FC = () => {
             <div className="flex flex-col gap-1.5">
               <div className="relative">
                 <input
-                  className="w-full bg-slate-50 text-slate-800 font-mono text-xs rounded px-3 py-2 pr-16 border border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                  className="w-full bg-slate-50 dark:bg-[#070c16] text-slate-800 dark:text-slate-200 font-mono text-xs rounded px-3 py-2 pr-16 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:focus:ring-amber-500"
                   readOnly
                   type="text"
                   value="Monsoon mud influx & Granitic Refusal"
                 />
-                <span className="absolute right-2 top-2 px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+                <span className="absolute right-2 top-2 px-1.5 py-0.5 rounded bg-blue-100 dark:bg-sky-950/80 text-blue-800 dark:text-sky-300 border border-blue-200 dark:border-sky-500/40 font-mono text-[10px] font-bold">
                   MATCH: 3
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-slate-500">
+              <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
                 Neural Semantic Retrieval Across 11 Historic OIL Pipelines
               </span>
             </div>
@@ -750,14 +750,16 @@ export const ActivityDNAView: React.FC = () => {
               {/* Card 1 */}
               <div
                 onClick={() => setSelectedCase(selectedCase === 0 ? null : 0)}
-                className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                  selectedCase === 0 ? 'bg-blue-50/60 border-blue-200 shadow-xs' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                  selectedCase === 0 
+                    ? 'bg-blue-50/60 dark:bg-sky-950/40 border-blue-200 dark:border-sky-500/40 shadow-xs' 
+                    : 'bg-slate-50 dark:bg-[#070c16] border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-blue-700 font-bold">#HIST-2019-BR04</span>
+                  <span className="font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold">#HIST-2019-BR04</span>
                   <div className="flex items-center gap-1">
-                    <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-bold">
+                    <span className="px-1.5 py-0.5 rounded bg-blue-100 dark:bg-sky-950/80 text-blue-800 dark:text-sky-300 border border-blue-200 dark:border-sky-500/40 font-mono text-[10px] font-bold">
                       +4.5d SAVED
                     </span>
                     <span className={`material-symbols-outlined text-[16px] text-slate-400 transition-transform ${selectedCase === 0 ? 'rotate-180' : ''}`}>
@@ -765,15 +767,15 @@ export const ActivityDNAView: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="font-bold text-slate-900 text-xs mt-1">Burhi Dihing HDD Riverbed Cobble Collapse</div>
+                <div className="font-bold text-slate-900 dark:text-slate-100 text-xs mt-1">Burhi Dihing HDD Riverbed Cobble Collapse</div>
                 {selectedCase === 0 && (
-                  <div className="mt-2 pt-2 border-t border-slate-200/70 text-xs text-slate-600 space-y-2">
+                  <div className="mt-2 pt-2 border-t border-slate-200/70 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 space-y-2">
                     <p>
                       Drill string stuck in gravel bed at 34m depth. Retrieved countermeasure: Sodium Bentonite slurry dosage increased by 22% with high-vis polymer plug. Bore freed in 14 hours.
                     </p>
-                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400">
                       <span>LOCATION: Burhi Dihing Crossing</span>
-                      <span className="text-blue-700 font-semibold flex items-center gap-0.5">
+                      <span className="text-blue-700 dark:text-sky-400 font-semibold flex items-center gap-0.5">
                         <span className="material-symbols-outlined text-[13px]">verified</span> OIL-TECH-88
                       </span>
                     </div>
@@ -784,14 +786,16 @@ export const ActivityDNAView: React.FC = () => {
               {/* Card 2 */}
               <div
                 onClick={() => setSelectedCase(selectedCase === 1 ? null : 1)}
-                className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                  selectedCase === 1 ? 'bg-rose-50/60 border-rose-200 shadow-xs' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                  selectedCase === 1 
+                    ? 'bg-rose-50/60 dark:bg-rose-950/40 border-rose-200 dark:border-rose-500/40 shadow-xs' 
+                    : 'bg-slate-50 dark:bg-[#070c16] border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-blue-700 font-bold">#HIST-2022-NG18</span>
+                  <span className="font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold">#HIST-2022-NG18</span>
                   <div className="flex items-center gap-1">
-                    <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-mono text-[10px] font-bold">
+                    <span className="px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/40 font-mono text-[10px] font-bold">
                       ₹4.2 Cr CLAIM NEGATED
                     </span>
                     <span className={`material-symbols-outlined text-[16px] text-slate-400 transition-transform ${selectedCase === 1 ? 'rotate-180' : ''}`}>
@@ -799,17 +803,17 @@ export const ActivityDNAView: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="font-bold text-slate-900 text-xs mt-1">
+                <div className="font-bold text-slate-900 dark:text-slate-100 text-xs mt-1">
                   Monsoon Idle Claim Disallowance via Telemetry Cross-Audit
                 </div>
                 {selectedCase === 1 && (
-                  <div className="mt-2 pt-2 border-t border-slate-200/70 text-xs text-slate-600 space-y-2">
+                  <div className="mt-2 pt-2 border-t border-slate-200/70 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 space-y-2">
                     <p>
                       Contractor claimed 18 days idle rain stoppage. Telematics cross-audited IMD Doppler radar and excavator engine runtimes: dry shifts demonstrated, saving dispute arbitration cost.
                     </p>
-                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400">
                       <span>LEGAL AUDIT: DISALLOWED</span>
-                      <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
+                      <span className="text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
                         <span className="material-symbols-outlined text-[13px]">gavel</span> EVIDENTIAL GRADE
                       </span>
                     </div>
@@ -820,14 +824,16 @@ export const ActivityDNAView: React.FC = () => {
               {/* Card 3 */}
               <div
                 onClick={() => setSelectedCase(selectedCase === 2 ? null : 2)}
-                className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                  selectedCase === 2 ? 'bg-blue-50/60 border-blue-200 shadow-xs' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                  selectedCase === 2 
+                    ? 'bg-blue-50/60 dark:bg-sky-950/40 border-blue-200 dark:border-sky-500/40 shadow-xs' 
+                    : 'bg-slate-50 dark:bg-[#070c16] border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-blue-700 font-bold">#HIST-2023-DJ09</span>
+                  <span className="font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold">#HIST-2023-DJ09</span>
                   <div className="flex items-center gap-1">
-                    <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-mono text-[10px] font-semibold">
+                    <span className="px-1.5 py-0.5 rounded bg-blue-100 dark:bg-sky-950/80 text-blue-800 dark:text-sky-300 border border-blue-200 dark:border-sky-500/40 font-mono text-[10px] font-semibold">
                       QUALITY CONTROL
                     </span>
                     <span className={`material-symbols-outlined text-[16px] text-slate-400 transition-transform ${selectedCase === 2 ? 'rotate-180' : ''}`}>
@@ -835,15 +841,15 @@ export const ActivityDNAView: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="font-bold text-slate-900 text-xs mt-1">Orbital Weld Heat-Affected Zone Porosity Spike</div>
+                <div className="font-bold text-slate-900 dark:text-slate-100 text-xs mt-1">Orbital Weld Heat-Affected Zone Porosity Spike</div>
                 {selectedCase === 2 && (
-                  <div className="mt-2 pt-2 border-t border-slate-200/70 text-xs text-slate-600 space-y-2">
+                  <div className="mt-2 pt-2 border-t border-slate-200/70 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 space-y-2">
                     <p>
                       Humidity at 96% caused hydrogen cracking risk in API 5L X70 pipe ends. Enclosed pre-heating bands sustained at 160°C eliminated all weld rejection anomalies.
                     </p>
-                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400">
                       <span>METALLURGY REPORT</span>
-                      <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
+                      <span className="text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
                         <span className="material-symbols-outlined text-[13px]">check_circle</span> 100% UT PASS
                       </span>
                     </div>
@@ -854,83 +860,83 @@ export const ActivityDNAView: React.FC = () => {
           </div>
 
           {/* Equipment & Operator Ground Truth Benchmarks */}
-          <div className="bg-white p-5 rounded-xl shadow-xs border border-slate-300 flex flex-col gap-3 hover-elevate">
+          <div className="bg-white dark:bg-[#0b111e] p-5 rounded-2xl shadow-md border border-slate-300 dark:border-amber-500/20 flex flex-col gap-3 hover-elevate transition-all">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-blue-700">engineering</span>
-                <span className="font-bold text-slate-900 text-sm tracking-tight">Equipment & Operator Benchmarks</span>
+                <span className="material-symbols-outlined text-[18px] text-blue-700 dark:text-sky-400">engineering</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100 text-sm tracking-tight">Equipment & Operator Benchmarks</span>
               </div>
-              <span className="font-mono text-[10px] text-slate-500 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+              <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse"></span>
                 TELEMATICS FEED
               </span>
             </div>
 
             <div className="flex flex-col gap-2.5">
               {/* Machine 1 */}
-              <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
+              <div className="bg-slate-50 dark:bg-[#070c16] hover:bg-blue-50/50 dark:hover:bg-[#0c1424] p-2.5 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-800 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
                     src="/images/pipeline-drone-4k.jpg"
                     alt="Komatsu PC300 Excavator"
-                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs"
                   />
                   <div className="flex flex-col">
-                    <span className="font-bold text-slate-900 text-xs">Komatsu PC300-8MO (#EX-442)</span>
-                    <span className="font-mono text-[10px] text-slate-500">Operator: Debashis Gogoi (14 yrs exp)</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">Komatsu PC300-8MO (#EX-442)</span>
+                    <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">Operator: Debashis Gogoi (14 yrs exp)</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end font-mono">
-                  <span className="text-xs text-blue-700 font-bold">108% EFF</span>
-                  <span className="text-[10px] text-slate-500">22.4 L/hr burn</span>
+                  <span className="text-xs text-blue-700 dark:text-sky-400 font-bold">108% EFF</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">22.4 L/hr burn</span>
                 </div>
               </div>
 
               {/* Machine 2 */}
-              <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
+              <div className="bg-slate-50 dark:bg-[#070c16] hover:bg-blue-50/50 dark:hover:bg-[#0c1424] p-2.5 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-800 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
                     src="/images/ndt-film-scan.jpg"
                     alt="CRC-Evans Welder"
-                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs"
                   />
                   <div className="flex flex-col">
-                    <span className="font-bold text-slate-900 text-xs">CRC-Evans Dual-Head Internal Welder</span>
-                    <span className="font-mono text-[10px] text-slate-500">Crew: Lead Tech Sunil Barua</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">CRC-Evans Dual-Head Internal Welder</span>
+                    <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">Crew: Lead Tech Sunil Barua</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end font-mono">
-                  <span className="text-xs text-slate-900 font-bold">94% UPTIME</span>
-                  <span className="text-[10px] text-emerald-700 font-semibold">0.4% defect rate</span>
+                  <span className="text-xs text-slate-900 dark:text-slate-100 font-bold">94% UPTIME</span>
+                  <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-semibold">0.4% defect rate</span>
                 </div>
               </div>
 
               {/* Machine 3 */}
-              <div className="bg-slate-50 hover:bg-blue-50/50 p-2.5 rounded-lg flex items-center justify-between border border-slate-200 transition-all cursor-pointer">
+              <div className="bg-slate-50 dark:bg-[#070c16] hover:bg-blue-50/50 dark:hover:bg-[#0c1424] p-2.5 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-800 transition-all cursor-pointer">
                 <div className="flex items-center gap-2.5">
                   <img
                     src="/images/pipeline-ortho-survey.jpg"
                     alt="Caterpillar 336D Excavator"
-                    className="w-10 h-9 rounded object-cover border border-slate-200 shrink-0 shadow-2xs"
+                    className="w-10 h-9 rounded object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs"
                   />
                   <div className="flex flex-col">
-                    <span className="font-bold text-slate-900 text-xs">Caterpillar 336D Excavator</span>
-                    <span className="font-mono text-[10px] text-slate-500">Crew: Sub-Contractor Squad 2</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">Caterpillar 336D Excavator</span>
+                    <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">Crew: Sub-Contractor Squad 2</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end font-mono">
-                  <span className="text-xs text-slate-700 font-bold">92% EFF</span>
-                  <span className="text-[10px] text-slate-500">26.8 L/hr burn</span>
+                  <span className="text-xs text-slate-700 dark:text-slate-300 font-bold">92% EFF</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">26.8 L/hr burn</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-1 pt-2 bg-slate-50 p-2 rounded flex items-center justify-between font-mono text-[10px] border border-slate-200">
-              <span className="text-slate-600 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            <div className="mt-1 pt-2 bg-slate-50 dark:bg-[#060a14] p-2 rounded-xl flex items-center justify-between font-mono text-[10px] border border-slate-200 dark:border-slate-800">
+              <span className="text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse"></span>
                 ACTIVE SENSORS: 48 UNITS
               </span>
-              <span className="text-blue-700 font-bold">DATA SYNCED WITH OIL P6</span>
+              <span className="text-blue-700 dark:text-sky-400 font-bold">DATA SYNCED WITH OIL P6</span>
             </div>
           </div>
         </div>

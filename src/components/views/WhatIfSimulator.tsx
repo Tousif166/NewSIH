@@ -584,41 +584,41 @@ export const WhatIfSimulator: React.FC = () => {
           </div>
 
           {/* Gaussian Distribution SVG Curve */}
-          <div className="relative w-full h-48 bg-slate-50/50 rounded p-3 flex flex-col justify-end overflow-hidden shadow-2xs border border-slate-200">
+          <div className="relative w-full h-48 bg-slate-50/50 dark:bg-[#060a14] rounded-xl p-3 flex flex-col justify-end overflow-hidden shadow-2xs border border-slate-200 dark:border-slate-800">
             <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 500 160">
               <defs>
                 <linearGradient id="curveShimmer" x1="0%" x2="100%" y1="0%" y2="0%">
-                  <stop offset="0%" stopColor="#eff4ff" stopOpacity="0.3"></stop>
-                  <stop offset="50%" stopColor="#dbeafe" stopOpacity="0.75"></stop>
-                  <stop offset="100%" stopColor="#eff4ff" stopOpacity="0.3"></stop>
+                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.15"></stop>
+                  <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.4"></stop>
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.15"></stop>
                 </linearGradient>
               </defs>
-              <line x1="0" x2="500" y1="40" y2="40" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1"></line>
-              <line x1="0" x2="500" y1="80" y2="80" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1"></line>
-              <line x1="0" x2="500" y1="120" y2="120" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1"></line>
+              <line x1="0" x2="500" y1="40" y2="40" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1" className="dark:stroke-slate-800"></line>
+              <line x1="0" x2="500" y1="80" y2="80" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1" className="dark:stroke-slate-800"></line>
+              <line x1="0" x2="500" y1="120" y2="120" stroke="#e2e8f0" strokeDasharray="3,3" strokeWidth="1" className="dark:stroke-slate-800"></line>
               <path d="M 40,150 Q 150,150 200,90 T 260,25 T 320,80 T 360,110 L 360,150 Z" fill="url(#curveShimmer)"></path>
-              <path d="M 40,150 Q 150,150 200,90 T 260,25 T 320,80 T 420,145 L 480,150" fill="none" stroke="#1d4ed8" strokeWidth="2.5"></path>
-              <line x1="260" x2="260" y1="20" y2="150" stroke="#1d4ed8" strokeDasharray="4,2" strokeWidth="1.5"></line>
-              <circle cx="260" cy="25" fill="#1d4ed8" r="4"></circle>
-              <line x1="360" x2="360" y1="80" y2="150" stroke="#059669" strokeWidth="2"></line>
-              <circle cx="360" cy="110" fill="#059669" r="4.5" stroke="#ffffff" strokeWidth="1.5"></circle>
-              <line x1="450" x2="450" y1="130" y2="150" stroke="#b91c1c" strokeDasharray="2,2" strokeWidth="1.5"></line>
-              <circle cx="450" cy="148" fill="#b91c1c" r="3"></circle>
+              <path d="M 40,150 Q 150,150 200,90 T 260,25 T 320,80 T 420,145 L 480,150" fill="none" stroke="#0284c7" strokeWidth="2.5"></path>
+              <line x1="260" x2="260" y1="20" y2="150" stroke="#0284c7" strokeDasharray="4,2" strokeWidth="1.5"></line>
+              <circle cx="260" cy="25" fill="#0284c7" r="4"></circle>
+              <line x1="360" x2="360" y1="80" y2="150" stroke="#10b981" strokeWidth="2"></line>
+              <circle cx="360" cy="110" fill="#10b981" r="4.5" stroke="#ffffff" strokeWidth="1.5"></circle>
+              <line x1="450" x2="450" y1="130" y2="150" stroke="#ef4444" strokeDasharray="2,2" strokeWidth="1.5"></line>
+              <circle cx="450" cy="148" fill="#ef4444" r="3"></circle>
             </svg>
 
             {/* Dynamic Labels Overlay */}
             <div className="absolute top-4 left-[46%] -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
-              <span className="px-1.5 py-0.5 rounded bg-blue-700 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-xs">
+              <span className="px-1.5 py-0.5 rounded bg-blue-700 dark:bg-sky-600 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-xs">
                 P50: 12 NOV
               </span>
-              <span className="text-[8px] sm:text-[9px] font-mono text-slate-500">Most Likely</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-slate-500 dark:text-slate-400">Most Likely</span>
             </div>
             <div className="absolute top-12 left-[68%] -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
               <div className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded bg-emerald-600 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
                 <span>P85: 24 NOV</span>
               </div>
-              <span className="text-[8px] sm:text-[9px] font-mono text-emerald-800 font-bold bg-white/90 px-1 rounded shadow-2xs mt-0.5">
+              <span className="text-[8px] sm:text-[9px] font-mono text-emerald-800 dark:text-emerald-300 font-bold bg-white/90 dark:bg-[#071912]/90 border border-transparent dark:border-emerald-500/30 px-1 rounded shadow-2xs mt-0.5">
                 Contract Goal (94.2%)
               </span>
             </div>
@@ -626,26 +626,26 @@ export const WhatIfSimulator: React.FC = () => {
               <span className="px-1.5 py-0.5 rounded bg-rose-600 text-white font-mono text-[9px] sm:text-[10px] font-bold shadow-xs">
                 P99: 15 JAN
               </span>
-              <span className="text-[8px] sm:text-[9px] font-mono text-rose-700">Tail-Risk</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-rose-700 dark:text-rose-400">Tail-Risk</span>
             </div>
           </div>
 
           {/* Probability Milestone Summary Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center pt-1 font-mono text-[10px]">
-            <div className="bg-slate-50 p-2 rounded border border-blue-100 flex flex-col gap-0.5">
-              <span className="text-slate-500">P50 BASELINE ESTIMATE</span>
-              <span className="text-sm font-bold text-slate-900 font-mono">12 NOV 2025</span>
-              <span className="text-blue-700 font-semibold">Kurtosis: 3.12 (Normal)</span>
+            <div className="bg-slate-50 dark:bg-[#070c16] p-2 rounded-lg border border-blue-100 dark:border-slate-800 flex flex-col gap-0.5">
+              <span className="text-slate-500 dark:text-slate-400">P50 BASELINE ESTIMATE</span>
+              <span className="text-sm font-bold text-slate-900 dark:text-slate-100 font-mono">12 NOV 2025</span>
+              <span className="text-blue-700 dark:text-sky-400 font-semibold">Kurtosis: 3.12 (Normal)</span>
             </div>
-            <div className="bg-emerald-50 p-2 rounded border border-emerald-200 flex flex-col gap-0.5 shadow-2xs">
-              <span className="text-emerald-800 font-semibold">P85 COMMODITY WINDOW</span>
-              <span className="text-sm font-bold text-emerald-900 font-mono">24 NOV 2025</span>
-              <span className="text-emerald-700 font-bold">94.2% In-Budget Target</span>
+            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2 rounded-lg border border-emerald-200 dark:border-emerald-600/40 flex flex-col gap-0.5 shadow-2xs">
+              <span className="text-emerald-900 dark:text-emerald-300 font-bold">P85 HIGH CONFIDENCE</span>
+              <span className="text-sm font-bold text-emerald-800 dark:text-emerald-300 font-mono">24 NOV 2025</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-semibold">Variance: +12 Days</span>
             </div>
-            <div className="bg-slate-50 p-2 rounded border border-blue-100 flex flex-col gap-0.5">
-              <span className="text-slate-500">P99 EXTREME TAIL</span>
-              <span className="text-sm font-bold text-rose-700 font-mono">15 JAN 2026</span>
-              <span className="text-rose-700 font-semibold">Risk Exposure: 4.8%</span>
+            <div className="bg-rose-50 dark:bg-rose-950/40 p-2 rounded-lg border border-rose-200 dark:border-rose-600/40 flex flex-col gap-0.5">
+              <span className="text-rose-900 dark:text-rose-300 font-bold">P99 TAIL-RISK EXPOSURE</span>
+              <span className="text-sm font-bold text-rose-800 dark:text-rose-300 font-mono">15 JAN 2026</span>
+              <span className="text-rose-700 dark:text-rose-400 font-semibold">Tail Spread: +52 Days</span>
             </div>
           </div>
         </div>
