@@ -886,43 +886,47 @@ export const ScheduleExplorer: React.FC = () => {
               </div>
 
               {/* Level 1 Subtasks & Lifecycle Chronology Card */}
-              <div className="flex flex-col gap-2.5 p-3 bg-purple-50/60 rounded-xl border border-purple-200 font-mono text-[11px]">
+              <div className="flex flex-col gap-2.5 p-3 bg-purple-50/70 dark:bg-[#0c0f20] rounded-xl border border-purple-200 dark:border-purple-500/25 font-mono text-[11px] shadow-2xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-purple-950 uppercase flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[15px] text-purple-700">splitscreen</span>
+                  <span className="font-bold text-purple-950 dark:text-purple-200 uppercase tracking-wider flex items-center gap-1.5 text-xs">
+                    <span className="material-symbols-outlined text-[16px] text-purple-700 dark:text-purple-400">splitscreen</span>
                     Execution Subtasks &amp; Lifecycle
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-200 text-purple-900 font-bold">
+                  <span className="text-[9px] px-2 py-0.5 rounded bg-purple-200 dark:bg-purple-950/80 text-purple-900 dark:text-purple-300 font-bold border border-purple-300/60 dark:border-purple-500/40 tracking-wider">
                     N-to-1 ROLLUP
                   </span>
                 </div>
                 
-                <div className="flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between text-slate-700">
-                    <span>1. Trenching &amp; Subgrade:</span>
-                    <span className="font-bold text-emerald-700">100% (Weight: 25%)</span>
+                <div className="flex flex-col gap-1.5 pt-0.5">
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+                    <span className="font-medium">1. Trenching &amp; Subgrade:</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">100% <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal">(Weight: 25%)</span></span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-700">
-                    <span>2. Bedding Cushion Prep:</span>
-                    <span className="font-bold text-emerald-700">100% (Weight: 15%)</span>
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+                    <span className="font-medium">2. Bedding Cushion Prep:</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">100% <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal">(Weight: 15%)</span></span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-700">
-                    <span>3. Pipe Stringing &amp; Alignment:</span>
-                    <span className="font-bold text-blue-700">80% (Weight: 30%)</span>
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+                    <span className="font-medium">3. Pipe Stringing &amp; Alignment:</span>
+                    <span className="font-bold text-sky-600 dark:text-sky-400">80% <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal">(Weight: 30%)</span></span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-700">
-                    <span>4. Joint Fit-up &amp; NDT:</span>
-                    <span className="font-bold text-blue-700">40% (Weight: 20%)</span>
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+                    <span className="font-medium">4. Joint Fit-up &amp; NDT:</span>
+                    <span className="font-bold text-sky-600 dark:text-sky-400">40% <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal">(Weight: 20%)</span></span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-700">
-                    <span>5. Backfilling &amp; Compaction:</span>
-                    <span className="font-bold text-slate-400">0% (Weight: 10%)</span>
+                  <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
+                    <span className="font-medium">5. Backfilling &amp; Compaction:</span>
+                    <span className="font-semibold text-slate-400 dark:text-slate-500">0% <span className="text-[10px] text-slate-400 dark:text-slate-600 font-normal">(Weight: 10%)</span></span>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-purple-200/80 flex items-center justify-between text-[10px]">
-                  <span className="text-slate-500">Actual Start: 24-SEP-2024</span>
-                  <span className="font-bold text-purple-900">Duration: 5d / 14d</span>
+                <div className="pt-2 border-t border-purple-200 dark:border-purple-500/20 flex items-center justify-between text-[10px]">
+                  <span className="text-slate-600 dark:text-slate-400 font-mono">
+                    Actual Start: <strong className="text-slate-800 dark:text-slate-200">24-SEP-2024</strong>
+                  </span>
+                  <span className="font-bold text-purple-900 dark:text-purple-300 font-mono">
+                    Duration: <span className="text-purple-700 dark:text-purple-400">5d</span> / 14d
+                  </span>
                 </div>
               </div>
 

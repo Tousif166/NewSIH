@@ -414,28 +414,45 @@ html.dark .border-red-300 {
   border-color: rgba(239, 68, 68, 0.4) !important;
 }
 
-/* Violet / Cryptographic Provenance */
-html.dark .bg-purple-50,
-html.dark .bg-violet-50,
-html.dark .bg-purple-100,
-html.dark .bg-violet-100 {
+/* Violet / Cryptographic Provenance & Subtasks Rollup */
+html.dark .bg-purple-50:not([class*="dark:bg-"]),
+html.dark [class*="bg-purple-50"]:not([class*="dark:bg-"]),
+html.dark .bg-purple-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-purple-100"]:not([class*="dark:bg-"]),
+html.dark .bg-purple-200:not([class*="dark:bg-"]),
+html.dark [class*="bg-purple-200"]:not([class*="dark:bg-"]),
+html.dark .bg-violet-50:not([class*="dark:bg-"]),
+html.dark [class*="bg-violet-50"]:not([class*="dark:bg-"]),
+html.dark .bg-violet-100:not([class*="dark:bg-"]),
+html.dark [class*="bg-violet-100"]:not([class*="dark:bg-"]),
+html.dark .bg-violet-200:not([class*="dark:bg-"]),
+html.dark [class*="bg-violet-200"]:not([class*="dark:bg-"]) {
   background-color: rgba(168, 85, 247, 0.14) !important;
-  color: #c084fc !important;
-  border-color: rgba(168, 85, 247, 0.35) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
 }
-html.dark .text-purple-700,
-html.dark .text-purple-800,
+html.dark .text-purple-950,
 html.dark .text-purple-900,
-html.dark .text-violet-700,
+html.dark .text-purple-800,
+html.dark .text-purple-700,
+html.dark .text-violet-950,
+html.dark .text-violet-900,
 html.dark .text-violet-800,
-html.dark .text-violet-900 {
+html.dark .text-violet-700 {
   color: #c084fc !important;
 }
-html.dark .border-purple-200,
-html.dark .border-purple-300,
-html.dark .border-violet-200,
-html.dark .border-violet-300 {
-  border-color: rgba(168, 85, 247, 0.35) !important;
+html.dark .border-purple-100:not([class*="dark:border-"]),
+html.dark [class*="border-purple-100"]:not([class*="dark:border-"]),
+html.dark .border-purple-200:not([class*="dark:border-"]),
+html.dark [class*="border-purple-200"]:not([class*="dark:border-"]),
+html.dark .border-purple-300:not([class*="dark:border-"]),
+html.dark [class*="border-purple-300"]:not([class*="dark:border-"]),
+html.dark .border-violet-100:not([class*="dark:border-"]),
+html.dark [class*="border-violet-100"]:not([class*="dark:border-"]),
+html.dark .border-violet-200:not([class*="dark:border-"]),
+html.dark [class*="border-violet-200"]:not([class*="dark:border-"]),
+html.dark .border-violet-300:not([class*="dark:border-"]),
+html.dark [class*="border-violet-300"]:not([class*="dark:border-"]) {
+  border-color: rgba(168, 85, 247, 0.3) !important;
 }
 
 /* Tables, Data Matrices & Zebra Striping for Easy Legibility */
