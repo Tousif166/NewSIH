@@ -64,10 +64,10 @@ export const StatutoryAuditDossierModal: React.FC = () => {
             <button
               onClick={handlePrintPDF}
               disabled={isExporting}
-              className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+              className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono text-xs font-black flex items-center gap-1.5 transition-all shadow-md cursor-pointer active:scale-95"
             >
-              <span className="material-symbols-outlined text-[16px]">print</span>
-              <span>{isExporting ? 'Preparing...' : 'Print / Export PDF'}</span>
+              <span className="material-symbols-outlined text-[16px] text-slate-950 font-bold">print</span>
+              <span className="text-slate-950 font-bold">{isExporting ? 'Preparing...' : 'Print / Export PDF'}</span>
             </button>
             <button
               onClick={handleDownloadJSON}

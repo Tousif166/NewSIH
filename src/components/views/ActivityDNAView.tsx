@@ -166,7 +166,7 @@ export const ActivityDNAView: React.FC = () => {
                       <th className="p-3 text-center">Claimed %</th>
                       <th className="p-3 text-center">AI Verified %</th>
                       <th className="p-3 text-right">Overbilling Risk</th>
-                      <th className="p-3 text-center">Audit Status</th>
+                      <th className="p-3 text-center whitespace-nowrap min-w-[120px]">Audit Status</th>
                       <th className="p-3 text-right">Action</th>
                     </tr>
                   </thead>
@@ -198,11 +198,11 @@ export const ActivityDNAView: React.FC = () => {
                             <span className="text-emerald-700">₹0 (Matched)</span>
                           )}
                         </td>
-                        <td className="p-3 text-center">
-                          <span className={`px-2 py-1 rounded-full text-[10px] font-extrabold ${
+                        <td className="p-3 text-center whitespace-nowrap">
+                          <span className={`whitespace-nowrap inline-flex items-center justify-center px-2.5 py-1 rounded-full text-[10px] font-extrabold tracking-wide ${
                             item.auditStatus === 'APPROVED'
-                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                              : 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse'
+                              ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40 shadow-xs'
+                              : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/40 shadow-xs animate-pulse'
                           }`}>
                             {item.auditStatus === 'APPROVED' ? 'CLEARED' : 'AUDIT HOLD'}
                           </span>

@@ -112,10 +112,10 @@ export const IoTPredictiveMaintenance: React.FC = () => {
 
             <button
               onClick={() => setActiveTab('PIPELINE_3D')}
-              className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-mono font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
-              <span className="material-symbols-outlined text-[16px]">view_in_ar</span>
-              View in 3D Twin
+              <span className="material-symbols-outlined text-[16px] text-slate-950 font-bold">view_in_ar</span>
+              <span className="text-slate-950 font-bold">View in 3D Twin</span>
             </button>
           </div>
         </div>
@@ -153,15 +153,15 @@ export const IoTPredictiveMaintenance: React.FC = () => {
       </div>
 
       {/* Anomaly Simulator Controls Bar */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm">
+      <div className="bg-white dark:bg-[#0c1220] border border-slate-200/80 dark:border-amber-500/20 rounded-2xl p-4 shadow-sm">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[20px] text-indigo-600">science</span>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+            <span className="material-symbols-outlined text-[20px] text-indigo-600 dark:text-indigo-400">science</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
               Interactive Fault & Anomaly Injection Testbench:
             </span>
           </div>
-          <span className="text-[11px] font-mono text-slate-500">
+          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
             Simulate real oilfield failure signatures to test automated ML diagnostics
           </span>
         </div>
@@ -173,20 +173,26 @@ export const IoTPredictiveMaintenance: React.FC = () => {
               <button
                 key={preset.id}
                 onClick={() => handleApplyPreset(preset.id)}
-                className={`p-3 rounded-xl border text-left transition-all relative ${
+                className={`p-3 rounded-xl border text-left transition-all relative cursor-pointer ${
                   isActive 
-                    ? 'bg-indigo-50 border-indigo-400 text-indigo-950 shadow-sm ring-1 ring-indigo-400' 
-                    : 'bg-slate-50/60 border-slate-200 hover:bg-slate-100/80 text-slate-700'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-400 dark:border-indigo-400/80 text-indigo-950 dark:text-indigo-100 shadow-sm ring-1 ring-indigo-400 dark:ring-indigo-500/50' 
+                    : 'bg-slate-50/60 dark:bg-[#070b14]/70 border-slate-200 dark:border-slate-800 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold font-mono">
+                  <span className={`text-xs font-bold font-mono ${
+                    isActive ? 'text-indigo-950 dark:text-indigo-200' : 'text-slate-700 dark:text-slate-300'
+                  }`}>
                     {preset.id === 'NORMAL' ? '🟢 NOMINAL' : preset.id === 'BEARING_CAVITATION' ? '🔴 CAVITATION' : preset.id === 'PARAFFIN_WAXING' ? '🟠 WAX DEPOSITION' : '🌊 RIVER SCOUR'}
                   </span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>}
+                  {isActive && <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-ping"></span>}
                 </div>
-                <div className="text-[11px] font-semibold text-slate-800 line-clamp-1">{preset.title}</div>
-                <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 leading-tight">{preset.description}</p>
+                <div className={`text-[11px] font-semibold line-clamp-1 ${
+                  isActive ? 'text-indigo-950 dark:text-white font-bold' : 'text-slate-800 dark:text-slate-200'
+                }`}>{preset.title}</div>
+                <p className={`text-[10px] mt-1 line-clamp-2 leading-tight ${
+                  isActive ? 'text-indigo-900/80 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'
+                }`}>{preset.description}</p>
               </button>
             );
           })}
@@ -198,29 +204,29 @@ export const IoTPredictiveMaintenance: React.FC = () => {
         {/* Left Column: Live Sensor Gauges */}
         <div className="lg:col-span-2 space-y-5">
           {/* Station Metadata & Key Vitals Card */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+          <div className="bg-white dark:bg-[#0c1220] border border-slate-200/80 dark:border-amber-500/20 rounded-2xl p-5 shadow-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-700">
+                  <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-300">
                     CHAINAGE KM {selectedStation.chainageKm.toFixed(1)}
                   </span>
                   <span className="text-xs font-mono text-slate-400">Updated: {lastUpdated}</span>
                 </div>
-                <h2 className="text-lg font-black text-slate-900 mt-1">{selectedStation.name}</h2>
-                <div className="text-xs text-slate-500 font-mono mt-0.5">{selectedStation.specifications.equipmentModel}</div>
+                <h2 className="text-lg font-black text-slate-900 dark:text-white mt-1">{selectedStation.name}</h2>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">{selectedStation.specifications.equipmentModel}</div>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className={`px-3 py-1.5 rounded-xl border text-center ${
-                  selectedStation.status === 'CRITICAL' ? 'bg-rose-50 border-rose-200 text-rose-800' :
-                  selectedStation.status === 'WARNING' ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                  'bg-emerald-50 border-emerald-200 text-emerald-800'
+                  selectedStation.status === 'CRITICAL' ? 'bg-rose-50 dark:bg-rose-950/60 border-rose-200 dark:border-rose-500/40 text-rose-800 dark:text-rose-300' :
+                  selectedStation.status === 'WARNING' ? 'bg-amber-50 dark:bg-amber-950/60 border-amber-200 dark:border-amber-500/40 text-amber-800 dark:text-amber-300' :
+                  'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-300'
                 }`}>
                   <div className="text-[10px] font-mono font-bold uppercase tracking-wider">Health Status</div>
                   <div className="text-sm font-black font-mono">{selectedStation.status}</div>
                 </div>
-                <div className="px-3 py-1.5 rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-900 text-center">
+                <div className="px-3 py-1.5 rounded-xl border border-indigo-100 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200 text-center">
                   <div className="text-[10px] font-mono font-bold uppercase tracking-wider">Remaining Life (RUL)</div>
                   <div className="text-sm font-black font-mono">{selectedStation.rulHours} hrs</div>
                 </div>
@@ -230,44 +236,44 @@ export const IoTPredictiveMaintenance: React.FC = () => {
             {/* 4 Primary Telemetry Meter Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-5">
               {/* Metric 1: Line Pressure */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-slate-500 text-xs font-mono mb-1">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800">
+                <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-mono mb-1">
                   <span>Line Pressure</span>
-                  <span className="material-symbols-outlined text-[16px] text-blue-600">compress</span>
+                  <span className="material-symbols-outlined text-[16px] text-blue-600 dark:text-blue-400">compress</span>
                 </div>
-                <div className="text-2xl font-black font-mono text-slate-900">
-                  {selectedStation.currentTelemetry.pressureBar} <span className="text-xs font-normal text-slate-500">bar</span>
+                <div className="text-2xl font-black font-mono text-slate-900 dark:text-white">
+                  {selectedStation.currentTelemetry.pressureBar} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">bar</span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500 mt-1 flex items-center justify-between">
+                <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1 flex items-center justify-between">
                   <span>MAOP: {selectedStation.specifications.maopBar} bar</span>
-                  <span className="text-blue-600 font-semibold">
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">
                     {Math.round((selectedStation.currentTelemetry.pressureBar / selectedStation.specifications.maopBar) * 100)}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 mt-1.5 overflow-hidden">
                   <div 
-                    className="bg-blue-600 h-1.5 rounded-full transition-all duration-500" 
+                    className="bg-blue-600 dark:bg-blue-500 h-1.5 rounded-full transition-all duration-500" 
                     style={{ width: `${Math.min(100, (selectedStation.currentTelemetry.pressureBar / selectedStation.specifications.maopBar) * 100)}%` }}
                   ></div>
                 </div>
               </div>
 
               {/* Metric 2: Crude Oil Temperature */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-slate-500 text-xs font-mono mb-1">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800">
+                <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-mono mb-1">
                   <span>Crude Temp</span>
-                  <span className="material-symbols-outlined text-[16px] text-amber-600">device_thermostat</span>
+                  <span className="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">device_thermostat</span>
                 </div>
-                <div className="text-2xl font-black font-mono text-slate-900">
-                  {selectedStation.currentTelemetry.temperatureC} <span className="text-xs font-normal text-slate-500">°C</span>
+                <div className="text-2xl font-black font-mono text-slate-900 dark:text-white">
+                  {selectedStation.currentTelemetry.temperatureC} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">°C</span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500 mt-1 flex items-center justify-between">
+                <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1 flex items-center justify-between">
                   <span>WAT: {selectedStation.specifications.waxAppearanceTempC}°C</span>
-                  <span className={selectedStation.currentTelemetry.temperatureC < 30 ? 'text-rose-600 font-bold' : 'text-emerald-600'}>
+                  <span className={selectedStation.currentTelemetry.temperatureC < 30 ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-emerald-600 dark:text-emerald-400'}>
                     {selectedStation.currentTelemetry.temperatureC < 30 ? 'WAX RISK' : 'SAFE'}
                   </span>
                 </div>
-                <div className="w-full bg-slate-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 mt-1.5 overflow-hidden">
                   <div 
                     className={`h-1.5 rounded-full transition-all duration-500 ${selectedStation.currentTelemetry.temperatureC < 30 ? 'bg-rose-500' : 'bg-amber-500'}`} 
                     style={{ width: `${Math.min(100, (selectedStation.currentTelemetry.temperatureC / 60) * 100)}%` }}
@@ -278,25 +284,25 @@ export const IoTPredictiveMaintenance: React.FC = () => {
               {/* Metric 3: Triaxial Vibration (ISO 10816-3) */}
               <div className={`p-3.5 rounded-xl border ${
                 selectedStation.currentTelemetry.vibrationMmS > selectedStation.specifications.isoVibrationLimitMmS 
-                  ? 'bg-rose-50/70 border-rose-300' 
-                  : 'bg-slate-50 border-slate-200/80'
+                  ? 'bg-rose-50/70 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/40' 
+                  : 'bg-slate-50 dark:bg-[#070b14] border-slate-200/80 dark:border-slate-800'
               }`}>
-                <div className="flex items-center justify-between text-slate-500 text-xs font-mono mb-1">
+                <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-mono mb-1">
                   <span>Vibration (RMS)</span>
-                  <span className="material-symbols-outlined text-[16px] text-rose-600">vibration</span>
+                  <span className="material-symbols-outlined text-[16px] text-rose-600 dark:text-rose-400">vibration</span>
                 </div>
                 <div className={`text-2xl font-black font-mono ${
-                  selectedStation.currentTelemetry.vibrationMmS > selectedStation.specifications.isoVibrationLimitMmS ? 'text-rose-700' : 'text-slate-900'
+                  selectedStation.currentTelemetry.vibrationMmS > selectedStation.specifications.isoVibrationLimitMmS ? 'text-rose-700 dark:text-rose-400' : 'text-slate-900 dark:text-white'
                 }`}>
-                  {selectedStation.currentTelemetry.vibrationMmS} <span className="text-xs font-normal text-slate-500">mm/s</span>
+                  {selectedStation.currentTelemetry.vibrationMmS} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">mm/s</span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500 mt-1 flex items-center justify-between">
+                <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1 flex items-center justify-between">
                   <span>ISO Limit: {selectedStation.specifications.isoVibrationLimitMmS}</span>
-                  <span className={selectedStation.currentTelemetry.vibrationMmS > 4.5 ? 'text-rose-600 font-bold' : 'text-emerald-600 font-bold'}>
+                  <span className={selectedStation.currentTelemetry.vibrationMmS > 4.5 ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-emerald-600 dark:text-emerald-400 font-bold'}>
                     {selectedStation.currentTelemetry.vibrationMmS > 7.1 ? 'UNACCEPTABLE' : selectedStation.currentTelemetry.vibrationMmS > 4.5 ? 'UNSATISFACTORY' : 'ACCEPTABLE'}
                   </span>
                 </div>
-                <div className="w-full bg-slate-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 mt-1.5 overflow-hidden">
                   <div 
                     className={`h-1.5 rounded-full transition-all duration-500 ${selectedStation.currentTelemetry.vibrationMmS > 4.5 ? 'bg-rose-600' : 'bg-emerald-500'}`} 
                     style={{ width: `${Math.min(100, (selectedStation.currentTelemetry.vibrationMmS / 10) * 100)}%` }}
@@ -305,21 +311,21 @@ export const IoTPredictiveMaintenance: React.FC = () => {
               </div>
 
               {/* Metric 4: Crude Viscosity & Flow */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-slate-500 text-xs font-mono mb-1">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800">
+                <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-mono mb-1">
                   <span>Viscosity / Flow</span>
-                  <span className="material-symbols-outlined text-[16px] text-teal-600">water_drop</span>
+                  <span className="material-symbols-outlined text-[16px] text-teal-600 dark:text-teal-400">water_drop</span>
                 </div>
-                <div className="text-2xl font-black font-mono text-slate-900">
-                  {selectedStation.currentTelemetry.viscosityCSt} <span className="text-xs font-normal text-slate-500">cSt</span>
+                <div className="text-2xl font-black font-mono text-slate-900 dark:text-white">
+                  {selectedStation.currentTelemetry.viscosityCSt} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">cSt</span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500 mt-1 flex items-center justify-between">
+                <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1 flex items-center justify-between">
                   <span>Rate: {selectedStation.currentTelemetry.flowM3H} m³/h</span>
-                  <span className="text-teal-600 font-semibold">{selectedStation.currentTelemetry.acousticLeakDb} dB</span>
+                  <span className="text-teal-600 dark:text-teal-400 font-semibold">{selectedStation.currentTelemetry.acousticLeakDb} dB</span>
                 </div>
-                <div className="w-full bg-slate-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 mt-1.5 overflow-hidden">
                   <div 
-                    className="bg-teal-600 h-1.5 rounded-full transition-all duration-500" 
+                    className="bg-teal-600 dark:bg-teal-500 h-1.5 rounded-full transition-all duration-500" 
                     style={{ width: `${Math.min(100, (selectedStation.currentTelemetry.viscosityCSt / 60) * 100)}%` }}
                   ></div>
                 </div>
@@ -328,23 +334,23 @@ export const IoTPredictiveMaintenance: React.FC = () => {
           </div>
 
           {/* 48-Hour Predictive Failure Forecast Graph */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <div className="bg-white dark:bg-[#0c1220] border border-slate-200/80 dark:border-amber-500/20 rounded-2xl p-5 shadow-sm">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4">
               <div>
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-indigo-600">trending_up</span>
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[18px] text-indigo-600 dark:text-indigo-400">trending_up</span>
                   48-Hour Machine Learning Degradation Forecast
                 </h3>
-                <p className="text-xs text-slate-500 font-mono mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                   Long Short-Term Memory (LSTM) Autoencoder predicting vibration drift and pressure collapse
                 </p>
               </div>
 
               <div className="flex items-center gap-3 text-[11px] font-mono">
-                <span className="flex items-center gap-1.5 text-slate-600">
-                  <span className="w-3 h-0.5 bg-indigo-600 inline-block"></span> Predicted Vibration
+                <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+                  <span className="w-3 h-0.5 bg-indigo-600 dark:bg-indigo-400 inline-block"></span> Predicted Vibration
                 </span>
-                <span className="flex items-center gap-1.5 text-slate-600">
+                <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
                   <span className="w-3 h-0.5 bg-rose-500 inline-block border-dashed"></span> ISO Trip Threshold (4.5)
                 </span>
               </div>
@@ -412,36 +418,36 @@ export const IoTPredictiveMaintenance: React.FC = () => {
         {/* Right Column: AI Diagnostics & Action Dispatcher */}
         <div className="space-y-5">
           {/* AI Root Cause & Failure Diagnosis */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <div className="bg-white dark:bg-[#0c1220] border border-slate-200/80 dark:border-amber-500/20 rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-3">
-              <span className="material-symbols-outlined text-[20px] text-indigo-600">psychology</span>
-              <h3 className="font-bold text-sm text-slate-900">Edge ML Failure Diagnostics</h3>
+              <span className="material-symbols-outlined text-[20px] text-indigo-600 dark:text-indigo-400">psychology</span>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Edge ML Failure Diagnostics</h3>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2.5 font-mono text-xs">
-              <div className="flex justify-between items-center text-slate-600">
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-2.5 font-mono text-xs">
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
                 <span>Failure Probability:</span>
-                <span className={`font-bold ${selectedStation.failureRiskPct > 50 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                <span className={`font-bold ${selectedStation.failureRiskPct > 50 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                   {selectedStation.failureRiskPct}%
                 </span>
               </div>
-              <div className="w-full bg-slate-200 rounded-full h-1.5">
+              <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5">
                 <div 
                   className={`h-1.5 rounded-full ${selectedStation.failureRiskPct > 50 ? 'bg-rose-600' : 'bg-emerald-600'}`}
                   style={{ width: `${selectedStation.failureRiskPct}%` }}
                 ></div>
               </div>
 
-              <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-700">
-                <strong className="text-slate-900 block font-sans font-bold mb-0.5">Dominant Anomaly Mode:</strong>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-700 dark:text-slate-300">
+                <strong className="text-slate-900 dark:text-white block font-sans font-bold mb-0.5">Dominant Anomaly Mode:</strong>
                 {selectedStation.dominantFailureMode}
               </div>
             </div>
 
             {/* Prescriptive Recommended Actions */}
             <div className="mt-4 space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">Prescriptive Action Protocol:</h4>
-              <ul className="text-xs text-slate-600 space-y-1.5 list-disc pl-4 font-mono">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Prescriptive Action Protocol:</h4>
+              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 list-disc pl-4 font-mono">
                 {selectedStation.id === 'BPS-02' ? (
                   <>
                     <li>Switch duty train to standby Pump P-202 immediately.</li>
@@ -465,24 +471,24 @@ export const IoTPredictiveMaintenance: React.FC = () => {
             </div>
 
             {/* Autonomous Work Order Dispatch */}
-            <div className="mt-5 pt-4 border-t border-slate-100">
+            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
               {workOrderGenerated ? (
-                <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl text-emerald-950 font-mono text-xs space-y-1">
+                <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-500/40 rounded-xl text-emerald-950 dark:text-emerald-100 font-mono text-xs space-y-1">
                   <div className="font-bold flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+                    <span className="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                     SAP-PM WO #9481 DISPATCHED
                   </div>
-                  <div className="text-[10px] text-emerald-800">
+                  <div className="text-[10px] text-emerald-800 dark:text-emerald-300">
                     Assigned: Margherita Mechanical Crew A • Priority 1 Urgent
                   </div>
-                  <div className="text-[10px] text-emerald-800">
+                  <div className="text-[10px] text-emerald-800 dark:text-emerald-300">
                     Primavera P6 Milestone linked: ACT-DJ-402 (Pre-Commissioning Inspection)
                   </div>
                 </div>
               ) : (
                 <button
                   onClick={handleGenerateWorkOrder}
-                  className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-slate-950 font-mono font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">build</span>
                   Trigger Preventive SAP-PM Work Order
