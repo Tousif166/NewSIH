@@ -640,41 +640,41 @@ export const ConflictCenter: React.FC = () => {
 
           <div className="min-w-[900px] flex flex-col gap-4">
             {/* Day Scale */}
-            <div className="grid grid-cols-7 gap-2 text-center font-mono text-[10px] text-slate-600">
-              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+            <div className="grid grid-cols-7 gap-2 text-center font-mono text-[10px] text-slate-600 dark:text-slate-300">
+              <div className="p-2 rounded bg-slate-50 dark:bg-[#070c14] border border-slate-200 dark:border-slate-800">
                 01–04 OCT <br />
-                <span className="text-slate-500">W1-TRENCH</span>
+                <span className="text-slate-500 dark:text-slate-400">W1-TRENCH</span>
               </div>
-              <div className="p-2 rounded bg-rose-50 border border-rose-200">
+              <div className="p-2 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/40">
                 05–08 OCT <br />
-                <span className="text-red-700 font-bold">RAIN-PEAK</span>
+                <span className="text-red-700 dark:text-rose-400 font-bold">RAIN-PEAK</span>
               </div>
-              <div className="p-2 rounded bg-sky-50 border border-sky-200">
+              <div className="p-2 rounded bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-500/40">
                 09–12 OCT <br />
-                <span className="text-sky-700 font-bold">SAR-DRY</span>
+                <span className="text-sky-700 dark:text-sky-400 font-bold">SAR-DRY</span>
               </div>
-              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+              <div className="p-2 rounded bg-slate-50 dark:bg-[#070c14] border border-slate-200 dark:border-slate-800">
                 13–16 OCT <br />
-                <span className="text-slate-500">HAUL-CLEAR</span>
+                <span className="text-slate-500 dark:text-slate-400">HAUL-CLEAR</span>
               </div>
-              <div className="p-2 rounded bg-emerald-50 border border-emerald-200">
+              <div className="p-2 rounded bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/40">
                 17–20 OCT <br />
-                <span className="text-emerald-700 font-bold">WELD-PREP</span>
+                <span className="text-emerald-700 dark:text-emerald-400 font-bold">WELD-PREP</span>
               </div>
-              <div className="p-2 rounded bg-rose-50 border border-rose-200">
+              <div className="p-2 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/40">
                 21–24 OCT <br />
-                <span className="text-red-700 font-bold">J-118 DRIFT</span>
+                <span className="text-red-700 dark:text-rose-400 font-bold">J-118 DRIFT</span>
               </div>
-              <div className="p-2 rounded bg-blue-50 border border-blue-200">
+              <div className="p-2 rounded bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-500/40">
                 25–28 OCT <br />
-                <span className="text-blue-700 font-bold">ARBITRATE</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">ARBITRATE</span>
               </div>
             </div>
 
             {/* Horizontal Event Track Ribbon with Ample Vertical Spacing to prevent any tooltip collisions */}
-            <div className="relative h-28 my-14 rounded-lg bg-slate-50 border border-slate-200 flex items-center px-4 overflow-visible">
+            <div className="relative h-28 my-14 rounded-lg bg-slate-50 dark:bg-[#070c14] border border-slate-200 dark:border-slate-800 flex items-center px-4 overflow-visible">
               {/* Central Baseline Datum Line */}
-              <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-300 -translate-y-1/2"></div>
+              <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-300 dark:bg-slate-700 -translate-y-1/2"></div>
 
               {/* Event Node 1: Weather */}
               <div

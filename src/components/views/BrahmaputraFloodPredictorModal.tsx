@@ -56,30 +56,30 @@ export const BrahmaputraFloodPredictorModal: React.FC = () => {
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 flex flex-col gap-5">
           
           {/* Active Flood Alert Banner */}
-          <div className="p-4 rounded-xl bg-rose-50 border-2 border-rose-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-300 dark:border-rose-500/60 shadow-lg shadow-rose-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-rose-700 text-[28px] animate-pulse">flood</span>
+              <span className="material-symbols-outlined text-rose-700 dark:text-rose-400 text-[28px] animate-pulse">flood</span>
               <div>
-                <div className="font-bold text-sm text-rose-950 flex items-center gap-2">
+                <div className="font-bold text-sm text-rose-950 dark:text-rose-100 flex items-center gap-2">
                   <span>FLASH FLOOD WARNING: Burhi Dihing River Gauge Exceeded Danger Level (+0.34m)</span>
                   <span className="px-2 py-0.5 rounded bg-rose-700 text-white font-mono text-[10px] font-bold">
                     IMD RED ALERT
                   </span>
                 </div>
-                <div className="text-xs text-rose-800 mt-0.5">
+                <div className="text-xs text-rose-800 dark:text-rose-200 mt-0.5">
                   68.4mm rainfall recorded in last 24h at Khowang. Flash flood cresting in active trenching sector at KM 42+650 within 18 hours.
                 </div>
               </div>
             </div>
-            <div className="font-mono text-xs font-bold text-rose-900 bg-white px-3 py-1.5 rounded-lg border border-rose-200 shadow-2xs shrink-0">
+            <div className="font-mono text-xs font-bold text-rose-900 dark:text-rose-200 bg-white dark:bg-[#070c16] px-3 py-1.5 rounded-lg border border-rose-200 dark:border-rose-500/40 shadow-2xs shrink-0">
               ₹42.0L Equipment At Risk
             </div>
           </div>
 
           {/* River Gauge Telemetry Grid */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[16px] text-blue-600">water_drop</span>
+            <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-blue-600 dark:text-sky-400">water_drop</span>
               <span>CWC River Gauges & IMD Rainfall Radar (132km RoW Crossings)</span>
             </span>
 
@@ -92,43 +92,43 @@ export const BrahmaputraFloodPredictorModal: React.FC = () => {
                     key={station.stationId}
                     className={`p-3.5 rounded-xl border flex flex-col justify-between transition-all ${
                       isOverDanger 
-                        ? 'bg-rose-50/80 border-rose-300 ring-2 ring-rose-500/20' 
+                        ? 'bg-rose-50/80 dark:bg-rose-950/30 border-rose-300 dark:border-rose-500/40 ring-2 ring-rose-500/20' 
                         : isOverWarning 
-                        ? 'bg-amber-50/80 border-amber-300' 
-                        : 'bg-slate-50 border-slate-200'
+                        ? 'bg-amber-50/80 dark:bg-amber-950/25 border-amber-300 dark:border-amber-500/40' 
+                        : 'bg-slate-50 dark:bg-[#070c14] border-slate-200 dark:border-slate-800'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-[10px] font-mono text-slate-500 font-bold">{station.stationId}</span>
+                        <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold">{station.stationId}</span>
                         <span className={`px-1.5 py-0.2 rounded font-mono text-[9px] font-bold ${
                           isOverDanger 
-                            ? 'bg-rose-200 text-rose-900' 
+                            ? 'bg-rose-200 dark:bg-rose-900/60 text-rose-900 dark:text-rose-200 border border-rose-300/60 dark:border-rose-500/40' 
                             : isOverWarning 
-                            ? 'bg-amber-200 text-amber-900' 
-                            : 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-amber-200 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 border border-amber-300/60 dark:border-amber-500/40' 
+                            : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-500/40'
                         }`}>
                           {station.floodRiskStatus}
                         </span>
                       </div>
-                      <h4 className="text-xs font-bold text-slate-900 leading-tight">{station.name}</h4>
-                      <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">{station.chainageImpactKm}</span>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-tight">{station.name}</h4>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 block">{station.chainageImpactKm}</span>
                     </div>
 
-                    <div className="mt-3 pt-2.5 border-t border-slate-200/80 space-y-1.5 text-xs font-mono">
+                    <div className="mt-3 pt-2.5 border-t border-slate-200/80 dark:border-slate-800 space-y-1.5 text-xs font-mono">
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 text-[10px]">Water Level:</span>
-                        <span className={`font-bold ${isOverDanger ? 'text-rose-700' : 'text-slate-900'}`}>
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px]">Water Level:</span>
+                        <span className={`font-bold ${isOverDanger ? 'text-rose-700 dark:text-rose-400' : 'text-slate-900 dark:text-slate-100'}`}>
                           {station.currentWaterLevelM} m
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className="text-slate-400">Danger Mark:</span>
-                        <span className="text-slate-700">{station.dangerLevelM} m</span>
+                        <span className="text-slate-400 dark:text-slate-500">Danger Mark:</span>
+                        <span className="text-slate-700 dark:text-slate-300">{station.dangerLevelM} m</span>
                       </div>
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className="text-slate-400">24h Rainfall:</span>
-                        <span className="font-bold text-blue-700">{station.rainfall24hMm} mm</span>
+                        <span className="text-slate-400 dark:text-slate-500">24h Rainfall:</span>
+                        <span className="font-bold text-blue-700 dark:text-sky-400">{station.rainfall24hMm} mm</span>
                       </div>
                     </div>
                   </div>

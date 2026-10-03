@@ -200,13 +200,13 @@ export const DelayCascadeSimulator: React.FC = () => {
       </div>
 
       {/* ANIMATED CASCADE NETWORK VISUALIZER */}
-      <div className="bg-white rounded-xl p-5 border border-slate-300 shadow-xs flex flex-col gap-4 hover-elevate">
+      <div className="bg-white dark:bg-[#0b111e] rounded-xl p-5 border border-slate-300 dark:border-slate-800 shadow-xs flex flex-col gap-4 hover-elevate">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-900 font-mono flex items-center gap-2">
-            <span className="material-symbols-outlined text-blue-700 text-[18px]">account_tree</span>
+          <span className="text-xs font-bold text-slate-900 dark:text-slate-100 font-mono flex items-center gap-2">
+            <span className="material-symbols-outlined text-blue-700 dark:text-sky-400 text-[18px]">account_tree</span>
             DYNAMIC DELAY CASCADE RIPPLE WAVE (DIRECTED ACYCLIC GRAPH)
           </span>
-          <span className="text-[11px] font-mono text-slate-500">
+          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
             {simulationResult.affectedNodes.length} activities impacted along the network
           </span>
         </div>
@@ -221,10 +221,10 @@ export const DelayCascadeSimulator: React.FC = () => {
                 key={item.nodeId}
                 className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${
                   isRoot
-                    ? 'bg-rose-50 border-rose-400 ring-2 ring-rose-300 shadow-sm'
+                    ? 'bg-rose-50 dark:bg-rose-950/30 border-rose-400 dark:border-rose-500/40 ring-2 ring-rose-300 dark:ring-rose-500/30 shadow-sm'
                     : item.becameCritical
-                    ? 'bg-amber-50/70 border-amber-300'
-                    : 'bg-slate-50 border-slate-200'
+                    ? 'bg-amber-50/70 dark:bg-amber-950/25 border-amber-300 dark:border-amber-500/30 shadow-2xs'
+                    : 'bg-slate-50 dark:bg-[#070c14] border-slate-200 dark:border-slate-800'
                 }`}
               >
                 {/* Node Identity */}
@@ -232,28 +232,28 @@ export const DelayCascadeSimulator: React.FC = () => {
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
                     isRoot 
                       ? 'bg-rose-600 text-white shadow-xs' 
-                      : 'bg-blue-100 text-blue-900'
+                      : 'bg-blue-100 dark:bg-sky-950/80 text-blue-900 dark:text-sky-300 border border-blue-200 dark:border-sky-500/30'
                   }`}>
                     L{item.cascadeLevel}
                   </div>
 
                   <div className="flex flex-col gap-0.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs font-bold text-slate-900">{item.code}</span>
-                      <span className="text-xs text-slate-700 font-sans font-semibold">{item.name}</span>
+                      <span className="font-mono text-xs font-bold text-slate-900 dark:text-slate-100">{item.code}</span>
+                      <span className="text-xs text-slate-700 dark:text-slate-300 font-sans font-semibold">{item.name}</span>
                       {isRoot && (
-                        <span className="px-2 py-0.2 rounded bg-rose-200 text-rose-900 font-mono text-[9px] font-bold">
+                        <span className="px-2 py-0.5 rounded bg-rose-200 dark:bg-rose-900/60 text-rose-900 dark:text-rose-200 font-mono text-[9px] font-bold border border-rose-300/60 dark:border-rose-500/40 tracking-wider">
                           ORIGIN OF DELAY
                         </span>
                       )}
                       {item.becameCritical && !isRoot && (
-                        <span className="px-2 py-0.2 rounded bg-amber-200 text-amber-950 font-mono text-[9px] font-bold">
+                        <span className="px-2 py-0.5 rounded bg-amber-200 dark:bg-amber-900/60 text-amber-950 dark:text-amber-200 font-mono text-[9px] font-bold border border-amber-300/60 dark:border-amber-500/40 tracking-wider">
                           BECAME CRITICAL (0 FLOAT)
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] text-slate-500 font-mono">
-                      Planned Finish: Day {item.originalFinishDay} → <strong>New Finish: Day {item.newFinishDay}</strong>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                      Planned Finish: Day {item.originalFinishDay} → <strong className="text-slate-800 dark:text-slate-200">New Finish: Day {item.newFinishDay}</strong>
                     </span>
                   </div>
                 </div>
@@ -261,18 +261,18 @@ export const DelayCascadeSimulator: React.FC = () => {
                 {/* Delay Impact Metrics */}
                 <div className="flex items-center gap-4 flex-wrap self-end sm:self-center font-mono text-xs">
                   <div className="flex flex-col items-end">
-                    <span className="text-[10px] text-slate-500 uppercase">Delay Transmitted</span>
-                    <strong className="text-rose-700 font-bold">+{item.delayPushedDays} Days</strong>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Delay Transmitted</span>
+                    <strong className="text-rose-700 dark:text-rose-400 font-bold">+{item.delayPushedDays} Days</strong>
                   </div>
 
                   <div className="flex flex-col items-end">
-                    <span className="text-[10px] text-slate-500 uppercase">Float Absorbed</span>
-                    <strong className="text-blue-700 font-bold">{item.floatConsumed} Days</strong>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Float Absorbed</span>
+                    <strong className="text-blue-700 dark:text-sky-400 font-bold">{item.floatConsumed} Days</strong>
                   </div>
 
                   <div className="flex flex-col items-end">
-                    <span className="text-[10px] text-slate-500 uppercase">Remaining Float</span>
-                    <strong className={item.remainingFloat === 0 ? 'text-rose-700' : 'text-emerald-700'}>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Remaining Float</span>
+                    <strong className={item.remainingFloat === 0 ? 'text-rose-700 dark:text-rose-400 font-bold' : 'text-emerald-700 dark:text-emerald-400 font-bold'}>
                       {item.remainingFloat} Days
                     </strong>
                   </div>

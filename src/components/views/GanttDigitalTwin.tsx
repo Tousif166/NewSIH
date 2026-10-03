@@ -318,12 +318,12 @@ export const GanttDigitalTwin: React.FC = () => {
             </div>
 
             {/* High Clarity Technical GIS & Telematics Canvas (Clean Non-Overlapping Layout) */}
-            <div className="w-full bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200 rounded-xl relative overflow-hidden flex flex-col gap-4 p-4 shadow-2xs">
+            <div className="w-full bg-gradient-to-b from-slate-50 to-slate-100/70 dark:from-[#0b111e] dark:to-[#070c14] border border-slate-200 dark:border-slate-800 rounded-xl relative overflow-hidden flex flex-col gap-4 p-4 shadow-2xs">
               {/* Engineering Grid Overlay */}
-              <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="absolute inset-0 w-full h-full opacity-30 dark:opacity-15 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <pattern id="light-contour-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-                    <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-300"></path>
+                    <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-300 dark:text-slate-700"></path>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#light-contour-grid)"></rect>
@@ -333,36 +333,36 @@ export const GanttDigitalTwin: React.FC = () => {
                   stroke="currentColor"
                   strokeWidth="3.5"
                   strokeDasharray="8 4"
-                  className="text-blue-600/50"
+                  className="text-blue-600/50 dark:text-amber-500/30"
                 ></path>
               </svg>
 
               {/* Top Header Row: HDD Waterway Crossing Callout + Status Badges */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 bg-white/95 border border-slate-200 p-3 rounded-lg shadow-2xs backdrop-blur-xs">
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 bg-white/95 dark:bg-[#070c16]/95 border border-slate-200 dark:border-slate-800 p-3 rounded-lg shadow-2xs backdrop-blur-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center shrink-0 shadow-2xs">
+                  <div className="w-8 h-8 rounded bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/40 text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-2xs">
                     <span className="material-symbols-outlined text-[19px]">water</span>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">MAJOR WATERWAY CROSSING:</span>
-                    <span className="font-mono text-xs text-slate-900 font-bold">
+                    <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">MAJOR WATERWAY CROSSING:</span>
+                    <span className="font-mono text-xs text-slate-900 dark:text-slate-100 font-bold">
                       BURHI DIHING RIVER HDD - 1,240M [PULLBACK COMPLETED]
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono text-[9px] font-bold">
+                    <span className="px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40 font-mono text-[9px] font-bold">
                       VERIFIED 100%
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 font-mono text-[10px] text-slate-600">
+                <div className="flex items-center gap-3 font-mono text-[10px] text-slate-600 dark:text-slate-400">
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     RTK FIX: ±1.2cm
                   </span>
-                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-300 dark:text-slate-700">•</span>
                   <span>CORRIDOR SPREAD 2</span>
-                  <span className="text-slate-300">•</span>
-                  <span className="text-blue-700 font-bold">KM 42+650 DATUM</span>
+                  <span className="text-slate-300 dark:text-slate-700">•</span>
+                  <span className="text-blue-700 dark:text-amber-400 font-bold">KM 42+650 DATUM</span>
                 </div>
               </div>
 
@@ -370,125 +370,125 @@ export const GanttDigitalTwin: React.FC = () => {
               <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 items-stretch">
                 {/* Card 1: Geotechnical Profile */}
                 {layerGeo && (
-                  <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
+                  <div className="bg-white/95 dark:bg-[#070c16]/95 border border-slate-200 dark:border-slate-800 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="font-mono text-[10px] text-slate-500 uppercase font-bold">
+                        <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold">
                           GEOTECHNICAL PROFILE @ KM 42+650
                         </span>
-                        <span className="px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[9px] font-bold">
+                        <span className="px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/80 border border-rose-200 dark:border-rose-500/40 text-rose-700 dark:text-rose-300 font-mono text-[9px] font-bold">
                           SLOPE INSTABILITY
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-xs py-0.5">
-                        <span className="text-slate-500">Strata Classification:</span>
-                        <span className="text-slate-900 font-semibold font-mono text-[11px]">Granite-Sandstone Blend</span>
+                        <span className="text-slate-500 dark:text-slate-400">Strata Classification:</span>
+                        <span className="text-slate-900 dark:text-slate-100 font-semibold font-mono text-[11px]">Granite-Sandstone Blend</span>
                       </div>
                       <div className="flex items-center justify-between text-xs py-0.5">
-                        <span className="text-slate-500">Rock Density / Hardness:</span>
-                        <span className="text-slate-800 font-mono text-[11px] font-medium">2,650 kg/m³ | RQD 68%</span>
+                        <span className="text-slate-500 dark:text-slate-400">Rock Density / Hardness:</span>
+                        <span className="text-slate-800 dark:text-slate-200 font-mono text-[11px] font-medium">2,650 kg/m³ | RQD 68%</span>
                       </div>
                       <div className="flex items-center justify-between text-xs py-0.5">
-                        <span className="text-slate-500">Measured Trench Depth:</span>
-                        <span className="text-emerald-700 font-bold font-mono text-[11px]">2.42m (Req. 2.40m min)</span>
+                        <span className="text-slate-500 dark:text-slate-400">Measured Trench Depth:</span>
+                        <span className="text-emerald-700 dark:text-emerald-400 font-bold font-mono text-[11px]">2.42m (Req. 2.40m min)</span>
                       </div>
                     </div>
 
                     <div>
-                      <div className="flex justify-between items-center text-[9px] font-mono text-slate-400 mb-1">
+                      <div className="flex justify-between items-center text-[9px] font-mono text-slate-400 dark:text-slate-500 mb-1">
                         <span>TOPSOIL (30%)</span>
                         <span>SANDSTONE (45%)</span>
                         <span>GRANITE (25%)</span>
                       </div>
-                      <div className="w-full h-2 rounded bg-slate-100 border border-slate-200 overflow-hidden flex">
-                        <div className="w-[30%] bg-amber-200" title="Alluvium topsoil"></div>
-                        <div className="w-[45%] bg-amber-400" title="Weathered sandstone"></div>
-                        <div className="w-[25%] bg-slate-600" title="Granite bedrock layer"></div>
+                      <div className="w-full h-2 rounded bg-slate-100 dark:bg-[#0b111e] border border-slate-200 dark:border-slate-800 overflow-hidden flex">
+                        <div className="w-[30%] bg-amber-200 dark:bg-amber-600/80" title="Alluvium topsoil"></div>
+                        <div className="w-[45%] bg-amber-400 dark:bg-amber-500" title="Weathered sandstone"></div>
+                        <div className="w-[25%] bg-slate-600 dark:bg-slate-700" title="Granite bedrock layer"></div>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {/* Card 2: Machine Telematics Node: Komatsu PC300 with Equipment Photo */}
-                <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
+                <div className="bg-white/95 dark:bg-[#070c16]/95 border border-slate-200 dark:border-slate-800 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-2.5">
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-blue-700 text-[16px]">precision_manufacturing</span>
-                        <span className="font-mono text-[10px] text-slate-900 font-bold">KOMATSU PC300-8M0</span>
+                        <span className="material-symbols-outlined text-blue-700 dark:text-sky-400 text-[16px]">precision_manufacturing</span>
+                        <span className="font-mono text-[10px] text-slate-900 dark:text-slate-100 font-bold">KOMATSU PC300-8M0</span>
                       </div>
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[9px] font-semibold flex items-center gap-1">
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-300 font-mono text-[9px] font-semibold flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>CAN-BUS LIVE
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 text-xs mb-2">
-                      <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
-                        <span className="text-slate-500 text-[10px] font-mono">ENGINE LOAD</span>
-                        <span className="text-rose-600 font-bold font-mono text-xs">84.2% [PEAK]</span>
+                      <div className="bg-slate-50 dark:bg-[#0b111e] border border-slate-200 dark:border-slate-800 p-1.5 rounded flex flex-col">
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px] font-mono">ENGINE LOAD</span>
+                        <span className="text-rose-600 dark:text-rose-400 font-bold font-mono text-xs">84.2% [PEAK]</span>
                       </div>
-                      <div className="bg-slate-50 border border-slate-200 p-1.5 rounded flex flex-col">
-                        <span className="text-slate-500 text-[10px] font-mono">DIESEL BURN RATE</span>
-                        <span className="text-slate-900 font-bold font-mono text-xs">22.4 L/hr</span>
+                      <div className="bg-slate-50 dark:bg-[#0b111e] border border-slate-200 dark:border-slate-800 p-1.5 rounded flex flex-col">
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px] font-mono">DIESEL BURN RATE</span>
+                        <span className="text-slate-900 dark:text-slate-100 font-bold font-mono text-xs">22.4 L/hr</span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Hydraulic Pressure:</span>
-                      <span className="text-slate-800 font-mono text-[11px] font-semibold">34.8 MPa [Ripper Active]</span>
+                      <span className="text-slate-500 dark:text-slate-400">Hydraulic Pressure:</span>
+                      <span className="text-slate-800 dark:text-slate-200 font-mono text-[11px] font-semibold">34.8 MPa [Ripper Active]</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                     <img
                       src="/images/pipeline-ortho-survey.jpg"
                       alt="Komatsu PC300 Heavy Excavator"
-                      className="w-12 h-10 object-cover rounded border border-slate-200 shadow-2xs shrink-0"
+                      className="w-12 h-10 object-cover rounded border border-slate-200 dark:border-slate-700 shadow-2xs shrink-0"
                     />
                     <div className="flex flex-col min-w-0 font-mono text-[10px]">
-                      <span className="text-slate-800 font-bold truncate">HE-04 SPREAD 2</span>
-                      <span className="text-slate-500">Rock Trenching Assigned</span>
+                      <span className="text-slate-800 dark:text-slate-200 font-bold truncate">HE-04 SPREAD 2</span>
+                      <span className="text-slate-500 dark:text-slate-400">Rock Trenching Assigned</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Card 3: RTK Positioning Coordinates (RTK Layer) */}
                 {layerRtk && (
-                  <div className="bg-white/95 border border-slate-200 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-1.5">
+                  <div className="bg-white/95 dark:bg-[#070c16]/95 border border-slate-200 dark:border-slate-800 p-3.5 rounded-lg shadow-2xs flex flex-col justify-between gap-1.5">
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="font-mono text-[10px] text-blue-700 font-bold flex items-center gap-1">
+                        <span className="font-mono text-[10px] text-blue-700 dark:text-sky-400 font-bold flex items-center gap-1">
                           <span className="material-symbols-outlined text-[14px] animate-pulse">my_location</span>
                           TRIMBLE R12i GNSS BASE
                         </span>
-                        <span className="font-mono text-[9px] text-emerald-700 bg-emerald-50 px-1 rounded font-bold border border-emerald-200">
+                        <span className="font-mono text-[9px] text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 px-1 rounded font-bold border border-emerald-200 dark:border-emerald-500/40">
                           DOP 0.7 (FIXED)
                         </span>
                       </div>
                       <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
-                        <span className="text-slate-500">LATITUDE:</span>
-                        <span className="text-slate-900 font-bold">27° 23' 21.12" N (27.3892°)</span>
+                        <span className="text-slate-500 dark:text-slate-400">LATITUDE:</span>
+                        <span className="text-slate-900 dark:text-slate-100 font-bold">27° 23' 21.12" N (27.3892°)</span>
                       </div>
                       <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
-                        <span className="text-slate-500">LONGITUDE:</span>
-                        <span className="text-slate-900 font-bold">95° 37' 02.64" E (95.6174°)</span>
+                        <span className="text-slate-500 dark:text-slate-400">LONGITUDE:</span>
+                        <span className="text-slate-900 dark:text-slate-100 font-bold">95° 37' 02.64" E (95.6174°)</span>
                       </div>
                       <div className="flex items-center justify-between font-mono text-[10px] py-0.5">
-                        <span className="text-slate-500">ELEVATION (MSL):</span>
-                        <span className="text-blue-700 font-bold">+142.48 m AMSL</span>
+                        <span className="text-slate-500 dark:text-slate-400">ELEVATION (MSL):</span>
+                        <span className="text-blue-700 dark:text-sky-400 font-bold">+142.48 m AMSL</span>
                       </div>
                     </div>
 
-                    <div className="w-full bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 flex items-center justify-between">
-                      <span className="text-[10px] text-slate-500 font-mono">CHAINAGE OFFSET</span>
-                      <span className="font-mono text-xs text-emerald-700 font-bold">CL + 0.12m TOLERANCE</span>
+                    <div className="w-full bg-slate-50 dark:bg-[#0b111e] border border-slate-200 dark:border-slate-800 rounded px-2.5 py-1.5 flex items-center justify-between">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">CHAINAGE OFFSET</span>
+                      <span className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-bold">CL + 0.12m TOLERANCE</span>
                     </div>
                   </div>
                 )}
 
                 {/* Card 4: Dedicated Live UAV Aerial Camera (UAV Layer) - COMPLETELY SEPARATE, ZERO OVERLAP */}
                 {layerUav && (
-                  <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-2xs flex flex-col justify-between hover:shadow-md transition-shadow">
+                  <div className="bg-white dark:bg-[#070c16] border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden shadow-2xs flex flex-col justify-between hover:shadow-md transition-shadow">
                     <div className="relative w-full h-32 bg-slate-900 overflow-hidden group">
                       <img
                         src="/images/pipeline-drone-4k.jpg"
@@ -496,7 +496,7 @@ export const GanttDigitalTwin: React.FC = () => {
                         className="w-full h-full object-cover opacity-95 transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                      <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-white/95 text-blue-800 font-mono text-[9px] font-bold flex items-center gap-1 shadow-2xs border border-slate-200">
+                      <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-white/95 dark:bg-[#070c16]/95 text-blue-800 dark:text-sky-300 font-mono text-[9px] font-bold flex items-center gap-1 shadow-2xs border border-slate-200 dark:border-slate-700">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
                         UAV ORTHO CAM-3
                       </div>
@@ -508,26 +508,26 @@ export const GanttDigitalTwin: React.FC = () => {
                         <span className="text-emerald-400 font-semibold font-mono">GSD: 1.8cm • 45M</span>
                       </div>
                     </div>
-                    <div className="p-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between font-mono text-[10px] text-slate-600">
+                    <div className="p-2 bg-slate-50 dark:bg-[#0b111e] border-t border-slate-200 dark:border-slate-800 flex items-center justify-between font-mono text-[10px] text-slate-600 dark:text-slate-400">
                       <span className="truncate">Corridor Spread 2</span>
-                      <span className="text-blue-700 font-bold">11:15 IST</span>
+                      <span className="text-blue-700 dark:text-amber-400 font-bold">11:15 IST</span>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Bottom Twin Status Strip */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between pt-2.5 bg-white/95 border-t border-slate-200 px-3 py-2 rounded-lg shadow-2xs">
-                <div className="flex items-center gap-3 text-slate-600 font-mono text-[10px]">
+              <div className="relative z-10 flex flex-wrap items-center justify-between pt-2.5 bg-white/95 dark:bg-[#070c16]/95 border-t border-slate-200 dark:border-slate-800 px-3 py-2 rounded-lg shadow-2xs">
+                <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400 font-mono text-[10px]">
                   <span>24" API 5L X70 PSL2 SUBMERGED ARC WELDED</span>
-                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-300 dark:text-slate-700">•</span>
                   <span>WALL THICKNESS: 14.3mm</span>
-                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-300 dark:text-slate-700">•</span>
                   <span>3LPE EXTERNAL COATING</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-slate-500">PHYSICAL COMPLETION:</span>
-                  <span className="font-mono text-[11px] text-blue-700 font-bold">54.2 KM / 132.0 KM (41.06%)</span>
+                  <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">PHYSICAL COMPLETION:</span>
+                  <span className="font-mono text-[11px] text-blue-700 dark:text-amber-400 font-bold">54.2 KM / 132.0 KM (41.06%)</span>
                 </div>
               </div>
             </div>

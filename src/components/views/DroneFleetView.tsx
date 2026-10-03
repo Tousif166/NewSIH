@@ -98,26 +98,28 @@ export const DroneFleetView: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left 2 Cols: Interactive Before/After Split Slider */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#0b111e] border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-mono text-[10px] font-bold border border-emerald-300 dark:border-emerald-500/40">
                     CHAINAGE KM {selectedOrtho.chainageKm}
                   </span>
-                  <span className="text-xs font-mono text-slate-500">Dual Orthophoto Alignment</span>
+                  <span className="text-xs font-mono text-slate-500 dark:text-slate-400">Dual Orthophoto Alignment</span>
                 </div>
-                <h3 className="text-base font-black text-slate-900 mt-1">{selectedOrtho.locationName}</h3>
+                <h3 className="text-base font-black text-slate-900 dark:text-slate-100 mt-1">{selectedOrtho.locationName}</h3>
               </div>
 
               {/* Sector Selector */}
-              <div className="flex rounded-lg bg-slate-100 p-0.5 border border-slate-200">
+              <div className="flex rounded-lg bg-slate-100 dark:bg-[#070c14] p-0.5 border border-slate-200 dark:border-slate-800">
                 {ORTHOPHOTO_SECTORS.map(sec => (
                   <button
                     key={sec.id}
                     onClick={() => setSelectedOrtho(sec)}
                     className={`px-3 py-1 rounded text-xs font-mono font-bold transition-all ${
-                      selectedOrtho.id === sec.id ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                      selectedOrtho.id === sec.id 
+                        ? 'bg-white dark:bg-[#0f172a] text-slate-900 dark:text-emerald-400 shadow-xs border border-slate-200/60 dark:border-emerald-500/30' 
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     Ch. {sec.chainageKm}
@@ -127,46 +129,60 @@ export const DroneFleetView: React.FC = () => {
             </div>
 
             {/* Split Image Canvas Area */}
-            <div className="relative w-full h-[380px] rounded-xl overflow-hidden border border-slate-300 shadow-inner select-none">
+            <div className="relative w-full h-[380px] rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 shadow-inner select-none bg-slate-950">
               {/* Background (After / Current Flight Image) */}
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-stone-800 to-emerald-950 flex items-center justify-center">
-                {/* Synthetic Orthophoto Current Details */}
-                <div className="w-full h-full p-6 flex flex-col justify-between text-white relative">
-                  {/* Pipeline Trench Trench line */}
-                  <div className="absolute inset-x-8 top-1/2 -translate-y-1/2 h-14 bg-stone-950 border-y-2 border-amber-600/80 shadow-2xl flex items-center justify-around">
-                    <span className="font-mono text-[9px] text-amber-400 font-bold tracking-widest uppercase">
-                      24" Welded Pipe Stringing in Trench
-                    </span>
-                  </div>
+              <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/images/pipeline-drone-4k.jpg"
+                  alt="Current Flight UAV Photogrammetry"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/40"></div>
 
-                  <div className="flex justify-between items-start z-10">
-                    <span className="px-2.5 py-1 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold">
-                      CURRENT FLIGHT: {selectedOrtho.currentDate}
-                    </span>
-                    <span className="text-right font-mono text-[10px] text-slate-300 bg-black/60 px-2 py-1 rounded">
-                      GSD 1.15 cm/px • Zenmuse P1 Photogrammetry
-                    </span>
-                  </div>
+                {/* Pipeline Trench Callout Ribbon */}
+                <div className="absolute inset-x-8 top-1/2 -translate-y-1/2 h-12 bg-black/60 backdrop-blur-xs border-y-2 border-amber-500/80 shadow-2xl flex items-center justify-around pointer-events-none">
+                  <span className="font-mono text-[10px] text-amber-300 font-bold tracking-widest uppercase flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    24" Welded Pipe Stringing in Trench
+                  </span>
+                </div>
 
-                  <div className="z-10 font-mono text-[11px] text-emerald-200 bg-black/60 p-2 rounded max-w-sm">
-                    {selectedOrtho.currentStage}
-                  </div>
+                {/* Current Flight Telemetry HUD (Fixed on Top-Right & Bottom-Right to PREVENT collisions) */}
+                <div className="absolute top-4 right-4 flex flex-col items-end gap-1.5 z-10 pointer-events-none">
+                  <span className="px-2.5 py-1 rounded bg-slate-950/85 text-emerald-300 border border-emerald-500/50 text-[10px] font-mono font-bold backdrop-blur-xs shadow-md">
+                    CURRENT FLIGHT: {selectedOrtho.currentDate}
+                  </span>
+                  <span className="text-right font-mono text-[9px] text-slate-300 bg-black/75 px-2 py-0.5 rounded border border-white/10 backdrop-blur-xs">
+                    GSD 1.15 cm/px • Zenmuse P1 Photogrammetry
+                  </span>
+                </div>
+
+                <div className="absolute bottom-4 right-4 z-10 font-mono text-[10px] text-emerald-200 bg-black/80 border border-emerald-500/40 p-2 rounded-lg backdrop-blur-xs max-w-xs text-right shadow-md pointer-events-none">
+                  {selectedOrtho.currentStage}
                 </div>
               </div>
 
               {/* Foreground (Before / Baseline Survey Image) with Clipping Mask based on Slider */}
               <div 
-                className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-green-950 to-emerald-800 overflow-hidden"
+                className="absolute inset-0 overflow-hidden border-r-2 border-emerald-400 shadow-2xl"
                 style={{ width: `${sliderPos}%` }}
               >
-                <div className="w-full h-full p-6 flex flex-col justify-between text-white relative" style={{ width: '100%', minWidth: '600px' }}>
-                  <div className="flex justify-between items-start z-10">
-                    <span className="px-2.5 py-1 rounded bg-slate-950/80 text-slate-300 border border-white/20 text-[10px] font-mono font-bold">
+                <div className="relative h-full" style={{ width: '100%', minWidth: '700px' }}>
+                  <img
+                    src="/images/pipeline-ortho-survey.jpg"
+                    alt="Baseline Virgin RoW Survey"
+                    className="w-full h-full object-cover filter saturate-75"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/40"></div>
+
+                  {/* Baseline Telemetry HUD (Fixed on Top-Left & Bottom-Left) */}
+                  <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                    <span className="px-2.5 py-1 rounded bg-slate-950/85 text-slate-200 border border-white/30 text-[10px] font-mono font-bold backdrop-blur-xs shadow-md">
                       BASELINE SURVEY: {selectedOrtho.baselineDate}
                     </span>
                   </div>
 
-                  <div className="z-10 font-mono text-[11px] text-slate-200 bg-black/60 p-2 rounded max-w-sm">
+                  <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-slate-200 bg-black/80 border border-white/20 p-2 rounded-lg backdrop-blur-xs max-w-xs shadow-md pointer-events-none">
                     {selectedOrtho.baselineStage}
                   </div>
                 </div>
@@ -174,10 +190,10 @@ export const DroneFleetView: React.FC = () => {
 
               {/* Slider Divider Line */}
               <div 
-                className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-2xl flex items-center justify-center z-30"
+                className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-2xl flex items-center justify-center z-30 pointer-events-none"
                 style={{ left: `${sliderPos}%` }}
               >
-                <div className="w-8 h-8 rounded-full bg-white text-slate-900 shadow-xl flex items-center justify-center font-bold text-xs border border-slate-300">
+                <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 text-slate-900 dark:text-emerald-400 shadow-2xl flex items-center justify-center font-bold text-xs border-2 border-emerald-400">
                   <span className="material-symbols-outlined text-[16px]">swap_horiz</span>
                 </div>
               </div>
@@ -193,29 +209,29 @@ export const DroneFleetView: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs font-mono text-slate-500 pt-1">
-              <span>← Drag slider left to reveal Today's Excavation & Pipe Stringing</span>
+            <div className="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400 pt-1">
+              <span>← Drag slider left to reveal Today's Excavation &amp; Pipe Stringing</span>
               <span>Slide right to view Virgin Baseline →</span>
             </div>
           </div>
 
           {/* AI Object Detection Bounding Boxes */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-3">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-emerald-600">center_focus_strong</span>
+          <div className="bg-white dark:bg-[#0b111e] border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-3">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px] text-emerald-600 dark:text-emerald-400">center_focus_strong</span>
               Automated Computer Vision Detections (YOLOv11 Drone-Trained)
             </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {selectedOrtho.aiDetections.map((det, idx) => (
-                <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <div key={idx} className="p-3 rounded-xl bg-slate-50 dark:bg-[#070c14] border border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
                   <div>
-                    <div className="font-mono text-xs font-bold text-slate-800">{det.label}</div>
-                    <div className="text-[10px] font-mono text-slate-500 mt-0.5">
+                    <div className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200">{det.label}</div>
+                    <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
                       Confidence: {det.confidencePct}% • Category: {det.category}
                     </div>
                   </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-mono font-bold text-sm">
+                  <div className="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300/60 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-300 font-mono font-bold text-sm">
                     {det.count}x
                   </div>
                 </div>
@@ -226,33 +242,33 @@ export const DroneFleetView: React.FC = () => {
 
         {/* Right 1 Col: Volumetric Earthwork & P6 Sync Card */}
         <div className="space-y-4">
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-              <span className="material-symbols-outlined text-[20px] text-emerald-600">terrain</span>
-              <h3 className="font-bold text-sm text-slate-900">LiDAR Volumetric Earthwork</h3>
+          <div className="bg-white dark:bg-[#0b111e] border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <span className="material-symbols-outlined text-[20px] text-emerald-600 dark:text-emerald-400">terrain</span>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">LiDAR Volumetric Earthwork</h3>
             </div>
 
             <div className="space-y-3 font-mono text-xs">
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex justify-between items-center">
-                <span className="text-slate-500">Excavation Cut Volume:</span>
-                <span className="font-bold text-slate-900">{selectedOrtho.volumetricCutM3.toLocaleString()} m³</span>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#070c14] border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
+                <span className="text-slate-500 dark:text-slate-400">Excavation Cut Volume:</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{selectedOrtho.volumetricCutM3.toLocaleString()} m³</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex justify-between items-center">
-                <span className="text-slate-500">Backfill Fill Volume:</span>
-                <span className="font-bold text-slate-900">{selectedOrtho.volumetricFillM3.toLocaleString()} m³</span>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#070c14] border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
+                <span className="text-slate-500 dark:text-slate-400">Backfill Fill Volume:</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{selectedOrtho.volumetricFillM3.toLocaleString()} m³</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex justify-between items-center">
-                <span className="text-emerald-800 font-semibold">Net Balance:</span>
-                <span className="font-black text-emerald-900">
+              <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 flex justify-between items-center">
+                <span className="text-emerald-800 dark:text-emerald-300 font-semibold">Net Balance:</span>
+                <span className="font-black text-emerald-900 dark:text-emerald-200">
                   +{(selectedOrtho.volumetricCutM3 - selectedOrtho.volumetricFillM3).toLocaleString()} m³
                 </span>
               </div>
             </div>
 
             {/* Trench Depth Conformance Metric */}
-            <div className="p-4 rounded-xl bg-slate-900 text-white space-y-2 font-mono text-xs">
+            <div className="p-4 rounded-xl bg-slate-900 dark:bg-[#070c14] border border-slate-800 text-white space-y-2 font-mono text-xs">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Trench Depth Conformance:</span>
                 <span className="font-bold text-emerald-400">99.1% (PASSED)</span>
@@ -260,7 +276,7 @@ export const DroneFleetView: React.FC = () => {
               <div className="text-[11px] text-slate-300">
                 Design: {selectedOrtho.trenchDepthDesignM.toFixed(2)}m • Measured: {selectedOrtho.trenchDepthMeasuredM.toFixed(2)}m
               </div>
-              <div className="w-full bg-slate-700 rounded-full h-1.5 mt-2">
+              <div className="w-full bg-slate-700 dark:bg-slate-800 rounded-full h-1.5 mt-2">
                 <div className="bg-emerald-400 h-1.5 rounded-full" style={{ width: '99.1%' }}></div>
               </div>
             </div>
@@ -270,7 +286,7 @@ export const DroneFleetView: React.FC = () => {
               <button
                 disabled={isSyncingP6}
                 onClick={handleSyncP6}
-                className={`w-full py-2.5 px-4 rounded-xl font-mono font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 ${
+                className={`w-full py-2.5 px-4 rounded-xl font-mono font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer ${
                   isSynced 
                     ? 'bg-emerald-600 text-white' 
                     : 'bg-emerald-700 hover:bg-emerald-600 text-white'
@@ -285,12 +301,12 @@ export const DroneFleetView: React.FC = () => {
           </div>
 
           {/* CVC Vigilance Compliance Tag */}
-          <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-950 text-xs font-mono space-y-1.5">
+          <div className="p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/30 rounded-2xl text-amber-950 dark:text-amber-200 text-xs font-mono space-y-1.5">
             <div className="font-bold flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[16px] text-amber-600">verified_user</span>
+              <span className="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">verified_user</span>
               CVC Fraud Prevention Seal
             </div>
-            <p className="text-[11px] text-amber-900 leading-relaxed">
+            <p className="text-[11px] text-amber-900 dark:text-amber-300/90 leading-relaxed">
               Orthophoto point cloud automatically prevents subcontractor ghost billing on earthwork excavation quantities by cross-verifying with e-MB claims.
             </p>
           </div>
